@@ -7,7 +7,6 @@ $(document).ready(function () {
     basicConceptsOfZooKeeperChart();
     ZooKeeperDesignGoalsChart();
     typicalApplicationScenariosOfZooKeeperChart();
-    consistencyTypeChart();
 });
 
 /*************************************************************系部信息开始**********************************************************/
@@ -438,75 +437,6 @@ function typicalApplicationScenariosOfZooKeeperChart() {
                     {value: 1, name: 'Master选举'},
                     {value: 1, name: '分布式锁'},
                     {value: 1, name: '分布式队列'}
-                ],
-                label: {
-                    normal: {
-                        show: true,
-                        textStyle: {
-                            fontSize: 15
-                        }
-                    }
-                },
-                emphasis: {
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
-            }
-        ]
-    };
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-    }
-    resize(myChart);
-}
-
-/**
- * 一致性类型图表
- */
-function consistencyTypeChart() {
-    var consistencyTypeChart = $('#consistencyType');
-    consistencyTypeChart.removeAttr("_echarts_instance_");
-    var myChart = echarts.init(consistencyTypeChart[0], 'macarons');
-    myChart.on('mouseover', function (params) {
-        if (params.name === "最终一致性") {
-            layer.tips('属于弱一致性', consistencyTypeChart, {
-                tips: [2, '#008B45'],
-                time: 1500
-            });
-        }
-    });
-    var option = null;
-    option = {
-        title: {
-            text: '一致性类型',
-            subtext: '前言-问题的提出',
-            left: 'center'
-        },
-        tooltip: {
-            trigger: 'item',
-            formatter: '{b} : {c} ({d}%)'
-        },
-        legend: {
-            bottom: 10,
-            left: 'center',
-            data: ['强一致性', '弱一致性', '最终一致性'],
-            textStyle: {
-                fontSize: 15
-            }
-        },
-        series: [
-            {
-                type: 'pie',
-                radius: '65%',
-                center: ['50%', '50%'],
-                selectedMode: 'single',
-                data: [
-                    {value: 1, name: '强一致性'},
-                    {value: 1, name: '弱一致性'},
-                    {value: 1, name: '最终一致性'}
                 ],
                 label: {
                     normal: {
