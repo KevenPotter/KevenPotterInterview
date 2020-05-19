@@ -136,6 +136,22 @@ function layerCapture(id, time, widePercentage, highPercentage) {
 }
 
 /**
+ * @param context 提示消息
+ * @param id 元素ID值
+ * @param time 显示时长(毫秒)
+ * @author KevenPotter
+ * @date 2020-05-19 20:25:59
+ * @description 该方法旨在封装了layer插件的提示框消息,使其使用方式更加便捷
+ */
+function layerTips(context, id, time) {
+    if (null == time) time = 3000;
+    layer.tips(context, id, {
+        tips: [2, '#008B45'],
+        time: time
+    });
+}
+
+/**
  * @param object
  * @author KevenPotter
  * @date 2020-01-10 08:50:40

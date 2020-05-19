@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>单例模式</title>
+    <title>六大原则</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -79,8 +79,8 @@
                         <a id="design_patterns_page_button" href="#designPatternsPage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>设计模式</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="designPatternsPage" class="collapse ">
                             <ul class="nav">
-                                <li><a href="../designPatternsPage/six_principles.html" class="">六大原则</a></li>
-                                <li><a href="../designPatternsPage/singleton_pattern.html" class="active">单例模式</a></li>
+                                <li><a href="../designPatternsPage/six_principles.html" class="active">六大原则</a></li>
+                                <li><a href="../designPatternsPage/singleton_pattern.html" class="">单例模式</a></li>
                             </ul>
                         </div>
                     </li>
@@ -94,19 +94,19 @@
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
-                <h3 class="page-title">单例模式</h3>
+                <h3 class="page-title">六大原则概览</h3>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">单例模式种类</h3>
+                                <h3 class="panel-title">六大原则概览</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="singletonPatternTypes" style="height:600%;"></div>
+                                <div id="overviewOfTheSixPrinciples" style="height:600%;"></div>
                             </div>
                         </div>
                     </div>
@@ -125,62 +125,63 @@
 </div>
 <!-- END WRAPPER -->
 
-<!-- 单例模式_静态常量-->
-<div id="singletonPattern_staticConstant" class="panel" style="display: none">
+<!-- 六大原则_单一职责原则 -->
+<div id="sixPrinciples_SRP" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">种类一：静态常量</h3>
+        <h3 class="panel-title">单一职责原则</h3>
     </div>
     <div class="panel-body">
-        <pre>
-            <code class="java">
-class SingleTon_1 {
-
-    // 1.构造器私有化(防止new)
-    private SingleTon_1() {
-    }
-
-    // 2.在本类内部创建一个对象示实例
-    private final static SingleTon_1 instance = new SingleTon_1();
-
-    // 3.向外暴露一个静态的公共方法,返回实例对象-getInstance()
-    public static SingleTon_1 getInstance() {
-        return instance;
-    }
-}
-            </code>
-        </pre>
+        <p><b>单一职责的解释</b></p>
+        <p>There should never be more than one reason for a class to change</p>
+        <p><b>单一职责的遵守</b></p>
+        <p>This is sometimes hard to see</p>
+        <p><b>单一职责的好处</b></p>
+        <ul>
+            <li>类的复杂性降低，实现什么职责都有清晰明确的定义；</li>
+            <li>可读性提高，复杂性降低，那当然可读性提高了；</li>
+            <li>可维护性提高，可读性提高，那当然更容易维护了；</li>
+            <li>变更引起的风险降低，变更是必不可少的，如果接口的单一职责做得好,一个接口修改只对相应的实现类有影响，对其他的接口无影响，这对系统的扩展性、维护性大的都有非常大的帮助。</li>
+        </ul>
+        <p><b>单一职责的坏处</b></p>
+        <ul>
+            <li>生搬硬套单一职责原则会引起类的剧增，给维护带来非常多的麻烦；</li>
+            <li>过分细分类的职责也会人为地增加系统的复杂性。</li>
+        </ul>
+        <p class="note"><b>注意</b></p>
+        <p>单一职责原则提出了一个编写程序的标准，用“职责”或“变化原因”来衡量接口或类设计得是否优良，但是“职责”和“变化原因”都是不可度量的，因项目而异，因环境而异。</p>
+        <p>类的单一职责确实受非常多因素的制约，纯理论地来讲，这个原则是非常优秀的。但是现实有现实的难处，你必须去考虑项目工期、成本、人员技术水平、硬件情况、网络情况，甚至有时候还要考虑政府政策、垄断协议等因素。</p>
     </div>
 </div>
 
-<!-- 单例模式_静态代码块-->
-<div id="singletonPattern_staticCodeBlock" class="panel" style="display: none">
+<!-- 六大原则_里氏替换原则 -->
+<div id="sixPrinciples_LSP" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">种类二：静态代码块</h3>
+        <h3 class="panel-title">里氏替换原则</h3>
     </div>
     <div class="panel-body">
-        <pre>
-            <code class="java">
-class SingleTon_2 {
-
-    // 1.构造器私有化(防止new)
-    private SingleTon_2() {
-    }
-
-    // 2.在本类内部创建一个对象示实例
-    private final static SingleTon_2 instance;
-
-    static {
-        // 在静态代码块中创建单例对象
-        instance = new SingleTon_2();
-    }
-
-    // 3.向外暴露一个静态的公共方法,返回实例对象-getInstance()
-    public static SingleTon_2 getInstance() {
-        return instance;
-    }
-}
-            </code>
-        </pre>
+        <p><b>里氏替换的定义一：</b></p>
+        <p>If for each object o1 of type S there is an object o2 of type T such that for all programs P defined in terms of T, the behavior of P is unchanged when o1 is substituted for o2 then S is a subtype of T.</p>
+        <p>如果对每一个类型为S的对象o1，都有类型为T的对象o2，使得以T定义的所有程序P在所有的对象o1都代换成o2时，程序P的行为没有发生变化，那么类型S是类型T的子类型。</p>
+        <p><b>里氏替换的定义二：</b></p>
+        <p>Functions that use pointers or references to base classes must be able to use objects of derived classes without knowing it.</p>
+        <p>所有引用基类的地方必须能透明地使用其子类的对象。</p>
+        <p><b>里氏替换的通俗理解</b></p>
+        <p>只要父类能出现的地方子类就可以出现，而且替换位子类也不会产生任何错误或异常，使用者可能根本就不需要知道是父类还是子类。但是，反过来就不行了，有子类出现的地方，父类未必就能适应。</p>
+        <p><b>里氏替换的通俗理解</b></p>
+        <ul>
+            <li>类的复杂性降低，实现什么职责都有清晰明确的定义；</li>
+            <li>可读性提高，复杂性降低，那当然可读性提高了；</li>
+            <li>可维护性提高，可读性提高，那当然更容易维护了；</li>
+            <li>变更引起的风险降低，变更是必不可少的，如果接口的单一职责做得好,一个接口修改只对相应的实现类有影响，对其他的接口无影响，这对系统的扩展性、维护性大的都有非常大的帮助。</li>
+        </ul>
+        <p><b>单一职责的坏处</b></p>
+        <ul>
+            <li>生搬硬套单一职责原则会引起类的剧增，给维护带来非常多的麻烦；</li>
+            <li>过分细分类的职责也会人为地增加系统的复杂性。</li>
+        </ul>
+        <p class="note"><b>注意</b></p>
+        <p>单一职责原则提出了一个编写程序的标准，用“职责”或“变化原因”来衡量接口或类设计得是否优良，但是“职责”和“变化原因”都是不可度量的，因项目而异，因环境而异。</p>
+        <p>类的单一职责确实受非常多因素的制约，纯理论地来讲，这个原则是非常优秀的。但是现实有现实的难处，你必须去考虑项目工期、成本、人员技术水平、硬件情况、网络情况，甚至有时候还要考虑政府政策、垄断协议等因素。</p>
     </div>
 </div>
 
@@ -363,7 +364,7 @@ enum SingleTon_8 {
 <script type="text/javascript" src="../../assets/scripts/common-method.js"></script>
 <script type="text/javascript" src="../../assets/scripts/base.js"></script>
 <script type="text/javascript" src="../../assets/scripts/responseStatusCode.js"></script>
-<script type="text/javascript" src="../../assets/scripts/designPatternsJs/singleton_pattern.js"></script>
+<script type="text/javascript" src="../../assets/scripts/designPatternsJs/six_principles.js"></script>
 <script>hljs.initHighlightingOnLoad()</script>
 </body>
 

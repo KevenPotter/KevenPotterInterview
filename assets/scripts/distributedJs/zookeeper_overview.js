@@ -10,8 +10,6 @@ $(document).ready(function () {
     typicalApplicationScenariosOfZooKeeperChart();
 });
 
-/*************************************************************系部信息开始**********************************************************/
-
 /**
  * ZooKeeper是什么
  */
