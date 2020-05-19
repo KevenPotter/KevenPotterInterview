@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>单例模式</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- Javascript -->
+    <script type="text/javascript" src="../../assets/vendor/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/bootstrap/js/bootstrap-paginator.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/echarts/theme/macarons.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/layer/layer.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/laydate/laydate.js"></script>
+    <script type="text/javascript" src="../../assets/scripts/klorofil-common.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/ui-choose/js/ui-choose.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/highlight/highlight.pack.js"></script>
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="../../assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/vendor/bootstrap-select/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="../../assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/vendor/linearicons/style.css">
+    <link rel="stylesheet" href="../../assets/vendor/ui-choose/css/ui-choose.css">
+    <link rel="stylesheet" href="../../assets/vendor/highlight/styles/solarized-light.css">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <!-- CUSTOMIZE CSS -->
+    <link rel="stylesheet" href="../../assets/css/roundButton.css">
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" href="../../assets/css/demo.css">
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../../assets/img/favicon.png">
+</head>
+
+<body>
+<!-- WRAPPER -->
+<div id="wrapper">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="brand">
+            <a href="../../index.html"><img src="../../assets/img/logo-KevenPotter.png" alt="KevenPotter Logo" class="img-responsive logo"></a>
+        </div>
+        <div class="container-fluid">
+            <div class="navbar-btn">
+                <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+            </div>
+            <form class="navbar-form navbar-left">
+                <div class="input-group">
+                    <input type="text" value="" class="form-control" placeholder="搜索内容...">
+                    <span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+                </div>
+            </form>
+        </div>
+    </nav>
+    <!-- END NAVBAR -->
+    <!-- LEFT SIDEBAR -->
+    <div id="sidebar-nav" class="sidebar">
+        <div class="sidebar-scroll">
+            <nav>
+                <ul class="nav">
+                    <li><a href="../../index.html" class=""><i class="lnr lnr-home"></i> <span>首页</span></a></li>
+                    <li>
+                        <a href="#distributedPage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>分布式</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="distributedPage" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="../distributedPage/distributed_overview.html" class="">分布式概述</a></li>
+                                <li><a href="../distributedPage/zookeeper_overview.html" class="">ZooKeeper概述</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a id="design_patterns_page_button" href="#designPatternsPage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>设计模式</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="designPatternsPage" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="../designPatternsPage/singleton_pattern.html" class="active">单例模式</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- END LEFT SIDEBAR -->
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <h3 class="page-title">单例模式</h3>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">单例模式种类</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="singletonPatternTypes" style="height:600%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END MAIN CONTENT -->
+    </div>
+    <!-- END MAIN -->
+    <div class="clearfix"></div>
+    <footer>
+        <div class="container-fluid">
+            <p class="copyright">Copyright &copy; https://github.com/KevenPotter/KevenPotterInterview <a href="https://github.com/KevenPotter/KevenPotterInterview" target="_blank" title="KevenPotter">KevenPotter</a> - Collect from <a href="https://github.com/KevenPotter" title="Github" target="_blank">KevenPotter主页</a></p>
+        </div>
+    </footer>
+</div>
+<!-- END WRAPPER -->
+
+<!-- 单例模式_静态常量-->
+<div id="singletonPattern_staticConstant" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">种类一：静态常量</h3>
+    </div>
+    <div class="panel-body">
+        <pre>
+            <code class="java">
+class SingleTon_1 {
+
+    // 1.构造器私有化(防止new)
+    private SingleTon_1() {
+    }
+
+    // 2.在本类内部创建一个对象示实例
+    private final static SingleTon_1 instance = new SingleTon_1();
+
+    // 3.向外暴露一个静态的公共方法,返回实例对象-getInstance()
+    public static SingleTon_1 getInstance() {
+        return instance;
+    }
+}
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 单例模式_静态代码块-->
+<div id="singletonPattern_staticCodeBlock" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">种类二：静态代码块</h3>
+    </div>
+    <div class="panel-body">
+        <pre>
+            <code class="java">
+class SingleTon_2 {
+
+    // 1.构造器私有化(防止new)
+    private SingleTon_2() {
+    }
+
+    // 2.在本类内部创建一个对象示实例
+    private final static SingleTon_2 instance;
+
+    static {
+        // 在静态代码块中创建单例对象
+        instance = new SingleTon_2();
+    }
+
+    // 3.向外暴露一个静态的公共方法,返回实例对象-getInstance()
+    public static SingleTon_2 getInstance() {
+        return instance;
+    }
+}
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 单例模式_线程不安全-->
+<div id="singletonPattern_threadUnsafe" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">种类三：线程不安全</h3>
+    </div>
+    <div class="panel-body">
+        <pre>
+            <code class="java">
+class SingleTon_3 {
+
+    // 1.构造器私有化(防止new)
+    private SingleTon_3() {
+    }
+
+    // 2.在本类内部创建一个对象示实例
+    private static SingleTon_3 instance;
+
+    // 3.提供一个静态的共有方法,当使用到该方法时,采取创建instance
+    public static SingleTon_3 getInstance() {
+        if (instance == null) {
+            instance = new SingleTon_3();
+        }
+        return instance;
+    }
+}
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 单例模式_同步方法-->
+<div id="singletonPattern_synchronizationMethod" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">种类四：同步方法</h3>
+    </div>
+    <div class="panel-body">
+        <pre>
+            <code class="java">
+class SingleTon_4 {
+
+    // 1.构造器私有化(防止new)
+    private SingleTon_4() {
+    }
+
+    // 2.在本类内部创建一个对象示实例
+    private static SingleTon_4 instance;
+
+    // 3.提供一个静态的共有方法,加入同步处理的代码,解决线程安全问题
+    public static synchronized SingleTon_4 getInstance() {
+        if (instance == null) {
+            instance = new SingleTon_4();
+        }
+        return instance;
+    }
+}
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 单例模式_同步代码块-->
+<div id="singletonPattern_synchronousCodeBlock" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">种类五：同步代码块</h3>
+    </div>
+    <div class="panel-body">
+        <pre>
+            <code class="java">
+class SingleTon_5 {
+
+    // 1.构造器私有化(防止new)
+    private SingleTon_5() {
+    }
+
+    // 2.在本类内部创建一个对象示实例
+    private static SingleTon_5 instance;
+
+    // 3.提供一个静态的共有方法,加入同步处理的代码,解决线程安全问题
+    public static SingleTon_5 getInstance() {
+        if (instance == null) {
+            synchronized (SingleTon_5.class) {
+                instance = new SingleTon_5();
+            }
+        }
+        return instance;
+    }
+}
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 单例模式_双重检查-->
+<div id="singletonPattern_doubleCheck" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">种类六：双重检查</h3>
+    </div>
+    <div class="panel-body">
+        <pre>
+            <code class="java">
+class SingleTon_6 {
+
+    // 1.构造器私有化(防止new)
+    private SingleTon_6() {
+    }
+
+    // 2.在本类内部创建一个对象示实例
+    private static volatile SingleTon_6 instance;
+
+    // 3.提供一个静态的共有方法,加入双重检查代码,解决线程安全问题,同时解决懒加载问题
+    public static SingleTon_6 getInstance() {
+        if (instance == null) {
+            synchronized (SingleTon_6.class) {
+                if (instance == null) {
+                    instance = new SingleTon_6();
+                }
+            }
+        }
+        return instance;
+    }
+}
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 单例模式_静态内部类-->
+<div id="singletonPattern_staticInnerClass" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">种类七：静态内部类</h3>
+    </div>
+    <div class="panel-body">
+        <pre>
+            <code class="java">
+class SingleTon_7 {
+
+    // 1.构造器私有化(防止new)
+    private SingleTon_7() {
+    }
+
+    // 2.写一个静态内部类,该类中有一个静态属性SingleTon_7
+    private static class SingleTonInstance {
+        private static final SingleTon_7 INSTANCE = new SingleTon_7();
+    }
+
+    // 3.提供一个静态的共有方法,加入双重检查代码,解决线程安全问题,同时解决懒加载问题
+    public static SingleTon_7 getInstance() {
+        return SingleTonInstance.INSTANCE;
+    }
+}
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 单例模式_枚举-->
+<div id="singletonPattern_enumerate" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">种类八：枚举</h3>
+    </div>
+    <div class="panel-body">
+        <pre>
+            <code class="java">
+enum SingleTon_8 {
+    INSTANCE;
+
+    public void sayOK() {
+        System.out.println("OK");
+    }
+}
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- CUSTOM JAVASCRIPT -->
+<script type="text/javascript" src="../../assets/scripts/common-method.js"></script>
+<script type="text/javascript" src="../../assets/scripts/base.js"></script>
+<script type="text/javascript" src="../../assets/scripts/responseStatusCode.js"></script>
+<script type="text/javascript" src="../../assets/scripts/designPatternsJs/singleton_pattern.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+
+</html>

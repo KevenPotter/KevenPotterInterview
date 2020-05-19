@@ -2,6 +2,7 @@
  * @description 页面初始化加载事件
  */
 $(document).ready(function () {
+    $('#distributed_page_button').click();
     whatIsZooKeeperChart();
     consistencyFeatureGuaranteedByZooKeeperChart();
     basicConceptsOfZooKeeperChart();
@@ -98,19 +99,19 @@ function consistencyFeatureGuaranteedByZooKeeperChart() {
     myChart.on('mouseover', function (params) {
         switch (params.name) {
             case '顺序一致性':
-                layerCapture('consistencyFeatureGuaranteedByZooKeeper_sequentialConsistency', 5000, 20, 20);
+                layerCapture('consistencyFeatureGuaranteedByZooKeeper_sequentialConsistency', 5000, 30, 30);
                 break;
             case '原子性':
-                layerCapture('consistencyFeatureGuaranteedByZooKeeper_atomicity', 5000, 20, 20);
+                layerCapture('consistencyFeatureGuaranteedByZooKeeper_atomicity', 5000, 30, 30);
                 break;
             case '单一视图(Single System Image)':
-                layerCapture('consistencyFeatureGuaranteedByZooKeeper_singleSystemImage', 5000, 20, 20);
+                layerCapture('consistencyFeatureGuaranteedByZooKeeper_singleSystemImage', 5000, 30, 30);
                 break;
             case '可靠性':
-                layerCapture('consistencyFeatureGuaranteedByZooKeeper_reliability', 5000, 20, 20);
+                layerCapture('consistencyFeatureGuaranteedByZooKeeper_reliability', 5000, 30, 30);
                 break;
             case '实时性':
-                layerCapture('consistencyFeatureGuaranteedByZooKeeper_realTime', 10000, 20, 20);
+                layerCapture('consistencyFeatureGuaranteedByZooKeeper_realTime', 10000, 30, 30);
                 break;
         }
     });

@@ -2,6 +2,7 @@
  * @description 页面初始化加载事件
  */
 $(document).ready(function () {
+    $('#distributed_page_button').click();
     distributedFeatureChart();
     distributedEnvironmentIssuesChart();
     CAPTheoryChart();

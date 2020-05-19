@@ -129,7 +129,9 @@ function layerCapture(id, time, widePercentage, highPercentage) {
         title: false,
         content: $('#' + id + ''),
         area: [widePercentage / 100 * windowWidth + 'px', highPercentage / 100 * windowHeight + 'px'],
-        time: time
+        time: time,
+        anim: 4,
+        move: true
     });
 }
 
