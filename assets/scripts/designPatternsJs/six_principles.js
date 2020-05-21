@@ -170,7 +170,7 @@ function sixPrinciples_ISP_type_of_interfaceChart() {
         legend: {
             bottom: 10,
             left: 'center',
-            data: ['实例接口（ObjectInterface）', '类接口（Class Interface）'],
+            data: ['实例接口（Object Interface）', '类接口（Class Interface）'],
             textStyle: {
                 fontSize: 15
             }
@@ -182,7 +182,7 @@ function sixPrinciples_ISP_type_of_interfaceChart() {
                 center: ['50%', '50%'],
                 selectedMode: 'single',
                 data: [
-                    {value: 1, name: '实例接口（ObjectInterface）'},
+                    {value: 1, name: '实例接口（Object Interface）'},
                     {value: 1, name: '类接口（Class Interface）'}
                 ],
                 label: {
