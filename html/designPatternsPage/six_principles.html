@@ -111,13 +111,14 @@
                         </div>
                     </div>
                 </div>
-                <div id="sixPrinciples_ISP_type_of_interface_panel" class="row" style="display: none">
+                <div class="row">
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">接口的类型（两种）</h3>
+                                <h3 class="panel-title">接口隔离原则-接口的类型</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
@@ -128,16 +129,21 @@
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">接口的类型（解释）</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
                                 <div style="height:400%;">
+                                    <h4 class="blod">接口的类型：</h4>
                                     <ul>
                                         <li>实例接口：在Java中声明一个类，然后用new关键字产生一个实例，它是对一个类型的事物的描述，这是一种接口。比如你定义Person这个类，然后使用Person zhangSan = new Person()产生了一个实例，这个实例要遵从的标准就是Person这个类，Person类就是zhangSan的接口。疑惑？看不懂？不要紧，那是因为让Java语言浸染的时间太长了，只要知道从这个角度来看，Java中的类也是一种接口。</li>
-                                        <li></li>
+                                        <li>类接口：Java中经常使用的interface关键字定义的接口。</li>
+                                    </ul>
+                                    <hr>
+                                    <h4 class="blod">隔离的定义：</h4>
+                                    <ul>
                                         <li>Clients should not be forced to depend upon interfaces that they don't use.（客户端不应该依赖它不需要的接口。）</li>
                                         <li>The dependency of one class to another one should depend on the smallest possible interface.（类间的依赖关系应该建立在最小的接口上。）</li>
                                     </ul>

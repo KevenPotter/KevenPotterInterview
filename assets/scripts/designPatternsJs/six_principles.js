@@ -4,6 +4,7 @@
 $(document).ready(function () {
     $('#design_patterns_page_button').click();
     overviewOfTheSixPrinciplesChart();
+    sixPrinciples_ISP_type_of_interfaceChart();
 });
 
 /**
@@ -53,9 +54,6 @@ function overviewOfTheSixPrinciplesChart() {
                 layerCapture('sixPrinciples_DIP', 0, 60, 70);
                 break;
             case '接口隔离原则':
-                debugger;
-                $('#sixPrinciples_ISP_type_of_interface_panel').css("display", "block");
-                sixPrinciples_ISP_type_of_interfaceChart();
                 layerCapture('sixPrinciples_ISP', 0, 60, 70);
                 break;
             case '同步代码块（线程安全）':
