@@ -28,8 +28,8 @@ function overviewOfTheSixPrinciplesChart() {
             case '接口隔离原则':
                 layerTips('Interface Segregation Principle (ISP)', overviewOfTheSixPrinciplesChart);
                 break;
-            case '同步代码块（线程安全）':
-                layerCapture('singletonPattern_synchronousCodeBlock', 0, 60, 70);
+            case '迪米特法则':
+                layerTips('Law of Demeter (LoD)<br>Least Knowledge Principle (LKP)', overviewOfTheSixPrinciplesChart);
                 break;
             case '双重检查':
                 layerCapture('singletonPattern_doubleCheck', 0, 60, 70);
@@ -56,8 +56,8 @@ function overviewOfTheSixPrinciplesChart() {
             case '接口隔离原则':
                 layerCapture('sixPrinciples_ISP', 0, 60, 70);
                 break;
-            case '同步代码块（线程安全）':
-                layerCapture('singletonPattern_synchronousCodeBlock', 0, 60, 70);
+            case '迪米特法则':
+                layerCapture('sixPrinciples_LoD', 0, 60, 70);
                 break;
             case '双重检查':
                 layerCapture('singletonPattern_doubleCheck', 0, 60, 70);
