@@ -2510,7 +2510,15 @@ ul.activity-timeline > li:last-child:after {
 
 .note {
     color: red;
+}
+
+.note-italic {
+    color: red;
     font-style: italic;
+}
+
+.blod {
+    font-weight: bold;
 }
 
 /*# sourceMappingURL=main.css.map */

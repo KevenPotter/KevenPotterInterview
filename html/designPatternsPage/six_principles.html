@@ -111,6 +111,41 @@
                         </div>
                     </div>
                 </div>
+                <div id="sixPrinciples_ISP_type_of_interface_panel" class="row" style="display: none">
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">接口的类型（两种）</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="sixPrinciples_ISP_type_of_interface" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">接口的类型（解释）</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div style="height:400%;">
+                                    <ul>
+                                        <li>实例接口：在Java中声明一个类，然后用new关键字产生一个实例，它是对一个类型的事物的描述，这是一种接口。比如你定义Person这个类，然后使用Person zhangSan = new Person()产生了一个实例，这个实例要遵从的标准就是Person这个类，Person类就是zhangSan的接口。疑惑？看不懂？不要紧，那是因为让Java语言浸染的时间太长了，只要知道从这个角度来看，Java中的类也是一种接口。</li>
+                                        <li></li>
+                                        <li>Clients should not be forced to depend upon interfaces that they don't use.（客户端不应该依赖它不需要的接口。）</li>
+                                        <li>The dependency of one class to another one should depend on the smallest possible interface.（类间的依赖关系应该建立在最小的接口上。）</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- END MAIN CONTENT -->
@@ -131,23 +166,23 @@
         <h3 class="panel-title">单一职责原则</h3>
     </div>
     <div class="panel-body">
-        <p><b>单一职责的解释</b></p>
+        <h4 class="blod"><b>单一职责的解释：</b></h4>
         <p>There should never be more than one reason for a class to change</p>
-        <p><b>单一职责的遵守</b></p>
+        <h4 class="blod"><b>单一职责的遵守：</b></h4>
         <p>This is sometimes hard to see</p>
-        <p><b>单一职责的好处</b></p>
+        <h4 class="blod"><b>单一职责的好处：</b></h4>
         <ul>
             <li>类的复杂性降低，实现什么职责都有清晰明确的定义；</li>
             <li>可读性提高，复杂性降低，那当然可读性提高了；</li>
             <li>可维护性提高，可读性提高，那当然更容易维护了；</li>
             <li>变更引起的风险降低，变更是必不可少的，如果接口的单一职责做得好,一个接口修改只对相应的实现类有影响，对其他的接口无影响，这对系统的扩展性、维护性大的都有非常大的帮助。</li>
         </ul>
-        <p><b>单一职责的坏处</b></p>
+        <h4 class="blod">单一职责的坏处：</h4>
         <ul>
             <li>生搬硬套单一职责原则会引起类的剧增，给维护带来非常多的麻烦；</li>
             <li>过分细分类的职责也会人为地增加系统的复杂性。</li>
         </ul>
-        <p class="note"><b>注意</b></p>
+        <p class="note"><b>注意：</b></p>
         <p>单一职责原则提出了一个编写程序的标准，用“职责”或“变化原因”来衡量接口或类设计得是否优良，但是“职责”和“变化原因”都是不可度量的，因项目而异，因环境而异。</p>
         <p>类的单一职责确实受非常多因素的制约，纯理论地来讲，这个原则是非常优秀的。但是现实有现实的难处，你必须去考虑项目工期、成本、人员技术水平、硬件情况、网络情况，甚至有时候还要考虑政府政策、垄断协议等因素。</p>
     </div>
@@ -159,204 +194,130 @@
         <h3 class="panel-title">里氏替换原则</h3>
     </div>
     <div class="panel-body">
-        <p><b>里氏替换的定义一：</b></p>
+        <h4 class="blod">里氏替换的定义一：</h4>
         <p>If for each object o1 of type S there is an object o2 of type T such that for all programs P defined in terms of T, the behavior of P is unchanged when o1 is substituted for o2 then S is a subtype of T.</p>
         <p>如果对每一个类型为S的对象o1，都有类型为T的对象o2，使得以T定义的所有程序P在所有的对象o1都代换成o2时，程序P的行为没有发生变化，那么类型S是类型T的子类型。</p>
-        <p><b>里氏替换的定义二：</b></p>
+        <h4 class="blod">里氏替换的定义二：</h4>
         <p>Functions that use pointers or references to base classes must be able to use objects of derived classes without knowing it.</p>
         <p>所有引用基类的地方必须能透明地使用其子类的对象。</p>
-        <p><b>里氏替换的通俗理解</b></p>
+        <h4 class="blod">里氏替换的通俗理解：</h4>
         <p>只要父类能出现的地方子类就可以出现，而且替换位子类也不会产生任何错误或异常，使用者可能根本就不需要知道是父类还是子类。但是，反过来就不行了，有子类出现的地方，父类未必就能适应。</p>
-        <p><b>里氏替换的通俗理解</b></p>
+        <h4 class="blod">里氏替换的好处：</h4>
         <ul>
-            <li>类的复杂性降低，实现什么职责都有清晰明确的定义；</li>
-            <li>可读性提高，复杂性降低，那当然可读性提高了；</li>
-            <li>可维护性提高，可读性提高，那当然更容易维护了；</li>
-            <li>变更引起的风险降低，变更是必不可少的，如果接口的单一职责做得好,一个接口修改只对相应的实现类有影响，对其他的接口无影响，这对系统的扩展性、维护性大的都有非常大的帮助。</li>
+            <li>增强程序的健壮性；</li>
+            <li>版本升级时保持良好的兼容性；</li>
+            <li>增加的子类可以继续运行。</li>
         </ul>
-        <p><b>单一职责的坏处</b></p>
+        <h4 class="note blod">里氏替换的四层含义：</h4>
         <ul>
-            <li>生搬硬套单一职责原则会引起类的剧增，给维护带来非常多的麻烦；</li>
-            <li>过分细分类的职责也会人为地增加系统的复杂性。</li>
+            <li>子类必须完全实现父类的方法；</li>
+            <li>子类可以有自己的个性</li>
+            <li>覆盖或实现父类的方法时输入参数可以被放大</li>
+            <li>覆写或实现父类的方法时输出结果可以被缩小</li>
         </ul>
-        <p class="note"><b>注意</b></p>
-        <p>单一职责原则提出了一个编写程序的标准，用“职责”或“变化原因”来衡量接口或类设计得是否优良，但是“职责”和“变化原因”都是不可度量的，因项目而异，因环境而异。</p>
-        <p>类的单一职责确实受非常多因素的制约，纯理论地来讲，这个原则是非常优秀的。但是现实有现实的难处，你必须去考虑项目工期、成本、人员技术水平、硬件情况、网络情况，甚至有时候还要考虑政府政策、垄断协议等因素。</p>
+        <p class="note-italic"><b>注意：</b></p>
+        <p>尽量避免子类的“个性”，一旦子类有“个性”，这个子类和父类之间的关系就很难调和了。</p>
+        <p>把子类当做父类使用，子类的“个性”被抹杀——委屈了点；把子类单独作为一个业务来使用，则会让代码间的耦合关系变得扑朔迷离——缺乏类替换的标准。</p>
     </div>
 </div>
 
-<!-- 单例模式_线程不安全-->
-<div id="singletonPattern_threadUnsafe" class="panel" style="display: none">
+<!-- 六大原则_依赖倒置原则 -->
+<div id="sixPrinciples_DIP" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">种类三：线程不安全</h3>
+        <h3 class="panel-title">依赖倒置原则</h3>
     </div>
     <div class="panel-body">
-        <pre>
-            <code class="java">
-class SingleTon_3 {
-
-    // 1.构造器私有化(防止new)
-    private SingleTon_3() {
-    }
-
-    // 2.在本类内部创建一个对象示实例
-    private static SingleTon_3 instance;
-
-    // 3.提供一个静态的共有方法,当使用到该方法时,采取创建instance
-    public static SingleTon_3 getInstance() {
-        if (instance == null) {
-            instance = new SingleTon_3();
-        }
-        return instance;
-    }
-}
-            </code>
-        </pre>
+        <h4 class="blod">依赖倒置的定义：</h4>
+        <p>High level modules should not depend upon low level modules. Both should depend upon abstractions. Abstractions should not depend upon details. Details should depend upon abstractions.</p>
+        <h4 class="note blod">依赖倒置的三层含义：</h4>
+        <ul>
+            <li>高层模块不应该依赖低层模块，两者都应该依赖其抽象；</li>
+            <li>抽象不应该依赖细节；</li>
+            <li>细节应该依赖抽象。</li>
+        </ul>
+        <h4 class="blod">依赖倒置在Java语言中的表现：</h4>
+        <ul>
+            <li>模块间的依赖通过抽象发生，实现类之间不发生直接的依赖关系，其依赖关系是通过接口或抽象类产生的；</li>
+            <li>接口或抽象类不依赖于实现类；</li>
+            <li>实现类依赖或抽象类。</li>
+        </ul>
+        <p class="note-italic">精简的来说：</p>
+        <p>面向接口编程——OOD（Object-Oriented Design，面向对象设计）</p>
+        <h4 class="blod">依赖倒置的好处：</h4>
+        <ul>
+            <li>可以减少类间的耦合性；</li>
+            <li>可以提高系统的稳定性；</li>
+            <li>可以降低并行开发引起的风险；</li>
+            <li>可以提高代码的可读性和可维护性。</li>
+        </ul>
+        <h4 class="blod">依赖的三种写法</h4>
+        <ul>
+            <li>1.构造函数传递依赖对象</li>
+            <li>2.Setter方法传递依赖对象</li>
+            <li>3.接口声明依赖对象</li>
+        </ul>
+        <h4 class="blod">依赖倒置的本质：</h4>
+        <p>其本质就是通过抽象（接口或抽象类）使各个类或模块的实现彼此独立，不互相影响，实现模块间的松耦合。</p>
+        <h4 class="blod">依赖倒置的实现规则：</h4>
+        <ul>
+            <li>每个类尽量都有接口或抽象类，或者抽象类和接口两者都具备；</li>
+            <li>变量的表面类型尽量是接口或者是抽象类；</li>
+            <li>任何类都不应该从具体类派生；</li>
+            <li>尽量不要覆写基类的方法；</li>
+            <li>结合里氏替换原则使用。</li>
+        </ul>
+        <p class="note-italic"><b>注意</b></p>
+        <p>依赖倒置原则是6个设计原则中最难以实现的原则，它是实现<b>开闭原则</b>的重要途径，依赖倒置原则没有实现，就别想实现<b>对扩展开放，对修改关闭</b>。</p>
     </div>
 </div>
 
-<!-- 单例模式_同步方法-->
-<div id="singletonPattern_synchronizationMethod" class="panel" style="display: none">
+<!-- 六大原则_接口隔离原则 -->
+<div id="sixPrinciples_ISP" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">种类四：同步方法</h3>
+        <h3 class="panel-title">接口隔离原则</h3>
     </div>
     <div class="panel-body">
-        <pre>
-            <code class="java">
-class SingleTon_4 {
-
-    // 1.构造器私有化(防止new)
-    private SingleTon_4() {
-    }
-
-    // 2.在本类内部创建一个对象示实例
-    private static SingleTon_4 instance;
-
-    // 3.提供一个静态的共有方法,加入同步处理的代码,解决线程安全问题
-    public static synchronized SingleTon_4 getInstance() {
-        if (instance == null) {
-            instance = new SingleTon_4();
-        }
-        return instance;
-    }
-}
-            </code>
-        </pre>
-    </div>
-</div>
-
-<!-- 单例模式_同步代码块-->
-<div id="singletonPattern_synchronousCodeBlock" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">种类五：同步代码块</h3>
-    </div>
-    <div class="panel-body">
-        <pre>
-            <code class="java">
-class SingleTon_5 {
-
-    // 1.构造器私有化(防止new)
-    private SingleTon_5() {
-    }
-
-    // 2.在本类内部创建一个对象示实例
-    private static SingleTon_5 instance;
-
-    // 3.提供一个静态的共有方法,加入同步处理的代码,解决线程安全问题
-    public static SingleTon_5 getInstance() {
-        if (instance == null) {
-            synchronized (SingleTon_5.class) {
-                instance = new SingleTon_5();
-            }
-        }
-        return instance;
-    }
-}
-            </code>
-        </pre>
-    </div>
-</div>
-
-<!-- 单例模式_双重检查-->
-<div id="singletonPattern_doubleCheck" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">种类六：双重检查</h3>
-    </div>
-    <div class="panel-body">
-        <pre>
-            <code class="java">
-class SingleTon_6 {
-
-    // 1.构造器私有化(防止new)
-    private SingleTon_6() {
-    }
-
-    // 2.在本类内部创建一个对象示实例
-    private static volatile SingleTon_6 instance;
-
-    // 3.提供一个静态的共有方法,加入双重检查代码,解决线程安全问题,同时解决懒加载问题
-    public static SingleTon_6 getInstance() {
-        if (instance == null) {
-            synchronized (SingleTon_6.class) {
-                if (instance == null) {
-                    instance = new SingleTon_6();
-                }
-            }
-        }
-        return instance;
-    }
-}
-            </code>
-        </pre>
-    </div>
-</div>
-
-<!-- 单例模式_静态内部类-->
-<div id="singletonPattern_staticInnerClass" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">种类七：静态内部类</h3>
-    </div>
-    <div class="panel-body">
-        <pre>
-            <code class="java">
-class SingleTon_7 {
-
-    // 1.构造器私有化(防止new)
-    private SingleTon_7() {
-    }
-
-    // 2.写一个静态内部类,该类中有一个静态属性SingleTon_7
-    private static class SingleTonInstance {
-        private static final SingleTon_7 INSTANCE = new SingleTon_7();
-    }
-
-    // 3.提供一个静态的共有方法,加入双重检查代码,解决线程安全问题,同时解决懒加载问题
-    public static SingleTon_7 getInstance() {
-        return SingleTonInstance.INSTANCE;
-    }
-}
-            </code>
-        </pre>
-    </div>
-</div>
-
-<!-- 单例模式_枚举-->
-<div id="singletonPattern_enumerate" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">种类八：枚举</h3>
-    </div>
-    <div class="panel-body">
-        <pre>
-            <code class="java">
-enum SingleTon_8 {
-    INSTANCE;
-
-    public void sayOK() {
-        System.out.println("OK");
-    }
-}
-            </code>
-        </pre>
+        <h4 class="blod">接口的类型（两种）：</h4>
+        <p>High level modules should not depend upon low level modules. Both should depend upon abstractions. Abstractions should not depend upon details. Details should depend upon abstractions.</p>
+        <h4 class="note blod">依赖倒置的三层含义：</h4>
+        <ul>
+            <li>高层模块不应该依赖低层模块，两者都应该依赖其抽象；</li>
+            <li>抽象不应该依赖细节；</li>
+            <li>细节应该依赖抽象。</li>
+        </ul>
+        <h4 class="blod">依赖倒置在Java语言中的表现：</h4>
+        <ul>
+            <li>模块间的依赖通过抽象发生，实现类之间不发生直接的依赖关系，其依赖关系是通过接口或抽象类产生的；</li>
+            <li>接口或抽象类不依赖于实现类；</li>
+            <li>实现类依赖或抽象类。</li>
+        </ul>
+        <p class="note-italic">精简的来说：</p>
+        <p>面向接口编程——OOD（Object-Oriented Design，面向对象设计）</p>
+        <h4 class="blod">依赖倒置的好处：</h4>
+        <ul>
+            <li>可以减少类间的耦合性；</li>
+            <li>可以提高系统的稳定性；</li>
+            <li>可以降低并行开发引起的风险；</li>
+            <li>可以提高代码的可读性和可维护性。</li>
+        </ul>
+        <h4 class="blod">依赖的三种写法</h4>
+        <ul>
+            <li>1.构造函数传递依赖对象</li>
+            <li>2.Setter方法传递依赖对象</li>
+            <li>3.接口声明依赖对象</li>
+        </ul>
+        <h4 class="blod">依赖倒置的本质：</h4>
+        <p>其本质就是通过抽象（接口或抽象类）使各个类或模块的实现彼此独立，不互相影响，实现模块间的松耦合。</p>
+        <h4 class="blod">依赖倒置的实现规则：</h4>
+        <ul>
+            <li>每个类尽量都有接口或抽象类，或者抽象类和接口两者都具备；</li>
+            <li>变量的表面类型尽量是接口或者是抽象类；</li>
+            <li>任何类都不应该从具体类派生；</li>
+            <li>尽量不要覆写基类的方法；</li>
+            <li>结合里氏替换原则使用。</li>
+        </ul>
+        <p class="note-italic"><b>注意</b></p>
+        <p>依赖倒置原则是6个设计原则中最难以实现的原则，它是实现<b>开闭原则</b>的重要途径，依赖倒置原则没有实现，就别想实现<b>对扩展开放，对修改关闭</b>。</p>
     </div>
 </div>
 

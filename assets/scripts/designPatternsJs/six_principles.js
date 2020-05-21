@@ -21,11 +21,11 @@ function overviewOfTheSixPrinciplesChart() {
             case '里氏替换原则':
                 layerTips('Liskov Substitution Principle (LSP)', overviewOfTheSixPrinciplesChart);
                 break;
-            case '线程不安全':
-                layerCapture('singletonPattern_threadUnsafe', 0, 60, 70);
+            case '依赖倒置原则':
+                layerTips('Dependence Inversion Principle (DIP)', overviewOfTheSixPrinciplesChart);
                 break;
-            case '同步方法（线程安全）':
-                layerCapture('singletonPattern_synchronizationMethod', 0, 60, 70);
+            case '接口隔离原则':
+                layerTips('Interface Segregation Principle (ISP)', overviewOfTheSixPrinciplesChart);
                 break;
             case '同步代码块（线程安全）':
                 layerCapture('singletonPattern_synchronousCodeBlock', 0, 60, 70);
@@ -49,11 +49,14 @@ function overviewOfTheSixPrinciplesChart() {
             case '里氏替换原则':
                 layerCapture('sixPrinciples_LSP', 0, 60, 60);
                 break;
-            case '线程不安全':
-                layerCapture('singletonPattern_threadUnsafe', 0, 60, 70);
+            case '依赖倒置原则':
+                layerCapture('sixPrinciples_DIP', 0, 60, 70);
                 break;
-            case '同步方法（线程安全）':
-                layerCapture('singletonPattern_synchronizationMethod', 0, 60, 70);
+            case '接口隔离原则':
+                debugger;
+                $('#sixPrinciples_ISP_type_of_interface_panel').css("display", "block");
+                sixPrinciples_ISP_type_of_interfaceChart();
+                layerCapture('sixPrinciples_ISP', 0, 60, 70);
                 break;
             case '同步代码块（线程安全）':
                 layerCapture('singletonPattern_synchronousCodeBlock', 0, 60, 70);
@@ -112,6 +115,77 @@ function overviewOfTheSixPrinciplesChart() {
                     {value: 1, name: '接口隔离原则'},
                     {value: 1, name: '迪米特法则'},
                     {value: 1, name: '开闭原则'}
+                ],
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 15
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
+}
+
+/**
+ * 接口隔离原则-接口的类型图表
+ */
+function sixPrinciples_ISP_type_of_interfaceChart() {
+    var sixPrinciples_ISP_type_of_interfaceChart = $('#sixPrinciples_ISP_type_of_interface');
+    sixPrinciples_ISP_type_of_interfaceChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(sixPrinciples_ISP_type_of_interfaceChart[0], 'macarons');
+    var option = null;
+    option = {
+        title: {
+            text: '接口隔离原则-接口的类型',
+            subtext: '《设计模式之禅》-P28',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b} : {c} ({d}%)'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        legend: {
+            bottom: 10,
+            left: 'center',
+            data: ['实例接口（ObjectInterface）', '类接口（Class Interface）'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '75%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: [
+                    {value: 1, name: '实例接口（ObjectInterface）'},
+                    {value: 1, name: '类接口（Class Interface）'}
                 ],
                 label: {
                     normal: {
