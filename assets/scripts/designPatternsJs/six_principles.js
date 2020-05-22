@@ -31,14 +31,8 @@ function overviewOfTheSixPrinciplesChart() {
             case '迪米特法则':
                 layerTips('Law of Demeter (LoD)<br>Least Knowledge Principle (LKP)', overviewOfTheSixPrinciplesChart);
                 break;
-            case '双重检查':
-                layerCapture('singletonPattern_doubleCheck', 0, 60, 70);
-                break;
-            case '静态内部类':
-                layerCapture('singletonPattern_staticInnerClass', 0, 60, 60);
-                break;
-            case '枚举':
-                layerCapture('singletonPattern_enumerate', 0, 60, 60);
+            case '开闭原则':
+                layerTips('Open Close Principle (OCP)', overviewOfTheSixPrinciplesChart);
                 break;
         }
     });
@@ -59,14 +53,8 @@ function overviewOfTheSixPrinciplesChart() {
             case '迪米特法则':
                 layerCapture('sixPrinciples_LoD', 0, 60, 70);
                 break;
-            case '双重检查':
-                layerCapture('singletonPattern_doubleCheck', 0, 60, 70);
-                break;
-            case '静态内部类':
-                layerCapture('singletonPattern_staticInnerClass', 0, 60, 60);
-                break;
-            case '枚举':
-                layerCapture('singletonPattern_enumerate', 0, 60, 60);
+            case '开闭原则':
+                layerCapture('sixPrinciples_OCP', 0, 60, 70);
                 break;
         }
     });
