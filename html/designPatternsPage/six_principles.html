@@ -152,6 +152,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">设计模式概览</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="design_patterns_overview" style="height:600%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- END MAIN CONTENT -->
@@ -316,11 +332,11 @@
         <p>迪米特法则对类的低耦合提出了明确的要求</p>
         <ol>
             <li>只和朋友交流；</li>
-            <p>一个类只和朋友交流，不与陌生类交流，不要出现getA().getB().getC().getD()这种情况（在一种极端的情况下允许出现这种访问，即每一个点号后面的返回类型都相同），类与类之间的关系是建立在类间的，而不是方法间，因此一个方法尽量不引入一个类中不存在的对象，当然，JDK API提供的类除外。</p>
+            一个类只和朋友交流，不与陌生类交流，不要出现getA().getB().getC().getD()这种情况（在一种极端的情况下允许出现这种访问，即每一个点号后面的返回类型都相同），类与类之间的关系是建立在类间的，而不是方法间，因此一个方法尽量不引入一个类中不存在的对象，当然，JDK API提供的类除外。
             <li>朋友间也是有距离的；</li>
-            <p>迪米特法则要求类“羞涩”一点，尽量不要对外公布太多的public方法和非静态的public变量，尽量内敛。多使用private、package-private、protected等访问权限。</p>
+            迪米特法则要求类“羞涩”一点，尽量不要对外公布太多的public方法和非静态的public变量，尽量内敛。多使用private、package-private、protected等访问权限。
             <li>是自己的就是自己的；</li>
-            <p>如果一个方法放在本类中，既不增加类间关系，也不对本类产生负面影响，就放置在本类中。</p>
+            如果一个方法放在本类中，既不增加类间关系，也不对本类产生负面影响，就放置在本类中。
             <li>谨慎使用Serializable。</li>
         </ol>
         <h4 class="note blod">迪米特法则的朋友类定义：</h4>
@@ -349,12 +365,120 @@
         <h4 class="note blod">变化的三种类型：</h4>
         <ol>
             <li>逻辑变化：</li>
-            <p>只变化一个逻辑，而不涉及其他模块，比如原有的一个算法是a*b+c，现在需要修改为a*b*c，可以通过修改原有类中的方法的方式来完成，前提条件是所有依赖或关联类都按照相同的逻辑处理。</p>
+            只变化一个逻辑，而不涉及其他模块，比如原有的一个算法是a*b+c，现在需要修改为a*b*c，可以通过修改原有类中的方法的方式来完成，前提条件是所有依赖或关联类都按照相同的逻辑处理。
             <li>子模块变化：</li>
-            <p>一个模块变化，会对其他的模块产生影响，特别是一个低层次的模块变化必然引起高层模块的变化，因此在通过扩展完成变化时，高层次的模块修改是必然的。</p>
+            一个模块变化，会对其他的模块产生影响，特别是一个低层次的模块变化必然引起高层模块的变化，因此在通过扩展完成变化时，高层次的模块修改是必然的。
             <li>可见视图变化：</li>
-            <p>可见视图是提供给客户使用的界面，如JSP程序、Swing界面等，该部分的变化一般会引起连锁反应（特别是在国内做项目，做欧美的外包项目一般不会影响太大）。如果仅仅是界面上按钮、文字的重新排布倒是简单，最司空见惯的是业务耦合变化。</p>
+            可见视图是提供给客户使用的界面，如JSP程序、Swing界面等，该部分的变化一般会引起连锁反应（特别是在国内做项目，做欧美的外包项目一般不会影响太大）。如果仅仅是界面上按钮、文字的重新排布倒是简单，最司空见惯的是业务耦合变化。
         </ol>
+    </div>
+</div>
+
+<!-- 设计模式_单例模式 -->
+<div id="design_patterns_singleton_pattern" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">单例模式</h3>
+    </div>
+    <div class="panel-body">
+        <h4 class="blod">单例模式的定义：</h4>
+        <p>Ensure a class only one instance, and provide a global point of access to it.</p>
+        <p>确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例。</p>
+    </div>
+</div>
+
+<!-- 设计模式_工厂方法模式 -->
+<div id="design_patterns_factory_method_pattern" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">工厂方法模式</h3>
+    </div>
+    <div class="panel-body">
+        <h4 class="blod">工厂方法模式的定义：</h4>
+        <p>Define an interface for creating an object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses.</p>
+        <p>定义一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化延迟到其子类。</p>
+    </div>
+</div>
+
+<!-- 设计模式_抽象工厂模式 -->
+<div id="design_patterns_abstract_factory_pattern" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">抽象工厂模式</h3>
+    </div>
+    <div class="panel-body">
+        <h4 class="blod">抽象工厂模式的定义：</h4>
+        <p>Provide an interface for creating families of related or dependent objects without specifying their concrete classes.</p>
+        <p>为创建一组相关或相互依赖的对象提供一个接口，而且无需指定它们的具体类。</p>
+    </div>
+</div>
+
+<!-- 设计模式_模板方法模式 -->
+<div id="design_patterns_template_method_pattern" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">模板方法模式</h3>
+    </div>
+    <div class="panel-body">
+        <h4 class="blod">模板方法模式的定义：</h4>
+        <p>Define the skeleton of algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm's structure.</p>
+        <p>定义一个操作中的算法的框架，而将一些步骤延迟到子类中。使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</p>
+    </div>
+</div>
+
+<!-- 设计模式_建造者模式 -->
+<div id="design_patterns_builder_pattern" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">建造者模式</h3>
+    </div>
+    <div class="panel-body">
+        <h4 class="blod">建造者模式的定义：</h4>
+        <p>Separate the construction of a complex object from its representation so that the same construction process can create different representations.</p>
+        <p>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</p>
+    </div>
+</div>
+
+<!-- 设计模式_代理模式 -->
+<div id="design_patterns_proxy_pattern" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">代理模式</h3>
+    </div>
+    <div class="panel-body">
+        <h4 class="blod">代理模式的定义：</h4>
+        <p>Provide a surrogate or placeholder for another object to control access to it.</p>
+        <p>为其他对象提供一种代理以控制对这个对象的访问。</p>
+    </div>
+</div>
+
+<!-- 设计模式_原型模式 -->
+<div id="design_patterns_prototype_pattern" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">原型模式</h3>
+    </div>
+    <div class="panel-body">
+        <h4 class="blod">原型模式的定义：</h4>
+        <p>Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype.</p>
+        <p>用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。</p>
+    </div>
+</div>
+
+<!-- 设计模式_中介者模式 -->
+<div id="design_patterns_mediator_pattern" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">中介者模式</h3>
+    </div>
+    <div class="panel-body">
+        <h4 class="blod">中介者模式的定义：</h4>
+        <p>Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it lets you vary their interaction independently.</p>
+        <p>用一个中介对象封装一系列的对象交互，中介者使各对象不需要显式地相互作用，从而使其耦合松散，而且可以独立地改变它们之间的交互。</p>
+    </div>
+</div>
+
+<!-- 设计模式_命令模式 -->
+<div id="design_patterns_command_pattern" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">命令模式</h3>
+    </div>
+    <div class="panel-body">
+        <h4 class="blod">命令模式的定义：</h4>
+        <p>Encapsulate a request sa an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.</p>
+        <p>用一个中介对象封装一系列的对象交互，中介者使各对象不需要显式地相互作用，从而使其耦合松散，而且可以独立地改变它们之间的交互。</p>
     </div>
 </div>
 
