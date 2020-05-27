@@ -234,6 +234,48 @@ function design_patterns_overview_chart() {
             case '命令模式':
                 layerCapture('design_patterns_command_pattern', 0, 40, 30);
                 break;
+            case '责任链模式':
+                layerCapture('design_patterns_chain_of_responsibility_pattern', 0, 40, 30);
+                break;
+            case '装饰模式':
+                layerCapture('design_patterns_decorator_pattern', 0, 40, 30);
+                break;
+            case '策略模式':
+                layerCapture('design_patterns_strategy_pattern', 0, 40, 25);
+                break;
+            case '适配器模式':
+                layerCapture('design_patterns_adapter_pattern', 0, 40, 30);
+                break;
+            case '迭代器模式':
+                layerCapture('design_patterns_iterator_pattern', 0, 40, 30);
+                break;
+            case '组合模式':
+                layerCapture('design_patterns_composite_pattern', 0, 40, 30);
+                break;
+            case '观察者模式':
+                layerCapture('design_patterns_observer_pattern', 0, 40, 30);
+                break;
+            case '门面模式':
+                layerCapture('design_patterns_facade_pattern', 0, 40, 30);
+                break;
+            case '备忘录模式':
+                layerCapture('design_patterns_memento_pattern', 0, 40, 30);
+                break;
+            case '访问者模式':
+                layerCapture('design_patterns_visitor_pattern', 0, 40, 30);
+                break;
+            case '状态模式':
+                layerCapture('design_patterns_state_pattern', 0, 40, 30);
+                break;
+            case '解释器模式':
+                layerCapture('design_patterns_interpreter_pattern', 0, 40, 30);
+                break;
+            case '享元模式':
+                layerCapture('design_patterns_flyweight_pattern', 0, 40, 25);
+                break;
+            case '桥梁模式':
+                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                break;
         }
     });
     var option = null;
