@@ -132,25 +132,25 @@ function the_advantages_and_disadvantages_of_the_singleton_pattern_chart() {
     myChart.on('click', function (params) {
         switch (params.name) {
             case '减少内存开支':
-                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                layerCapture('singleton_mode_advantages_reduce_memory_expenses', 10000, 40, 20);
                 break;
             case '减少系统性能开销':
-                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                layerCapture('singleton_mode_advantages_reduce_system_performance_overhead', 10000, 40, 20);
                 break;
             case '避免资源多重占用':
-                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                layerCapture('singleton_mode_advantages_avoid_multiple_resources', 10000, 40, 20);
                 break;
             case '优化共享资源访问':
-                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                layerCapture('singleton_mode_advantages_avoid_multiple_resources_optimize_access_to_shared_resources', 10000, 40, 20);
                 break;
             case '扩展困难':
-                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                layerCapture('singleton_pattern_disadvantages_difficult_to_expand', 10000, 40, 20);
                 break;
             case '对测试不利':
-                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                layerCapture('singleton_pattern_disadvantages_not_good_for_testing', 10000, 40, 20);
                 break;
             case '与SRP有冲突':
-                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                layerCapture('singleton_pattern_disadvantages_conflict_with_SRP', 10000, 40, 20);
                 break;
         }
     });
@@ -225,6 +225,7 @@ function the_advantages_and_disadvantages_of_the_singleton_pattern_chart() {
     resize(myChart);
     $('#singleton_pattern_generic_class_diagram_panel_body')
         .css('padding-top', $('#the_advantages_and_disadvantages_of_the_singleton_pattern_panel_body').height() / 4)
+        .css('padding-left', $('#the_advantages_and_disadvantages_of_the_singleton_pattern_panel_body').width() / 5)
         .css('height', $('#the_advantages_and_disadvantages_of_the_singleton_pattern_panel_body').height());
 }
 
