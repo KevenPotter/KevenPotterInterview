@@ -3,7 +3,14 @@
  */
 $(document).ready(function () {
     $('#design_patterns_page_button').click();
+    // 单例模式的定义提示
+    singletonPatternDefinitionTips();
+    // 单例模式种类图表
     singletonPatternTypesChart();
+    // 单例模式通用类图放大镜
+    singletonPatternGenericClassDiagram();
+    // 单例模式的优缺点图表
+    the_advantages_and_disadvantages_of_the_singleton_pattern_chart();
 });
 
 /**
@@ -93,6 +100,132 @@ function singletonPatternTypesChart() {
         myChart.setOption(option, true);
     }
     resize(myChart);
+}
+
+/**
+ * 单例模式的定义提示
+ */
+function singletonPatternDefinitionTips() {
+    $('#singleton_pattern_definition_tips').mouseover(function () {
+        layer.tips('确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例。', $('#singleton_pattern_definition_tips'), {tips: 3});
+    });
+}
+
+/**
+ * 单例模式通用类图放大镜
+ */
+function singletonPatternGenericClassDiagram() {
+    $('#singleton_pattern_generic_class_diagram').blowup({
+        "cursor": false,
+        "width": 300,
+        "height": 300
+    });
+}
+
+/**
+ * 单例模式的优缺点图表
+ */
+function the_advantages_and_disadvantages_of_the_singleton_pattern_chart() {
+    var the_advantages_and_disadvantages_of_the_singleton_pattern_chart = $('#the_advantages_and_disadvantages_of_the_singleton_pattern');
+    the_advantages_and_disadvantages_of_the_singleton_pattern_chart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(the_advantages_and_disadvantages_of_the_singleton_pattern_chart[0], 'macarons');
+    myChart.on('click', function (params) {
+        switch (params.name) {
+            case '减少内存开支':
+                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                break;
+            case '减少系统性能开销':
+                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                break;
+            case '避免资源多重占用':
+                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                break;
+            case '优化共享资源访问':
+                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                break;
+            case '扩展困难':
+                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                break;
+            case '对测试不利':
+                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                break;
+            case '与SRP有冲突':
+                layerCapture('design_patterns_bridge_pattern', 0, 40, 25);
+                break;
+        }
+    });
+    var option = null;
+    option = {
+        title: {
+            text: '单例模式的优缺点',
+            subtext: '《设计模式之禅》-P60',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+            left: 'center',
+            top: 'bottom',
+            data: ['减少内存开支', '减少系统性能开销', '避免资源多重占用', '优化共享资源访问', '扩展困难', '对测试不利', '与SRP有冲突'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        series: [
+            {
+                name: '优点',
+                type: 'pie',
+                radius: [20, 110],
+                center: ['25%', '50%'],
+                roseType: 'radius',
+                label: {
+                    show: false,
+                    textStyle: {
+                        fontSize: 15
+                    }
+                },
+                emphasis: {
+                    label: {
+                        show: true
+                    }
+                },
+                data: [
+                    {value: 1, name: '减少内存开支'},
+                    {value: 2, name: '减少系统性能开销'},
+                    {value: 3, name: '避免资源多重占用'},
+                    {value: 4, name: '优化共享资源访问'}
+                ]
+            },
+            {
+                name: '缺点',
+                type: 'pie',
+                radius: [30, 110],
+                center: ['75%', '50%'],
+                roseType: 'area',
+                data: [
+                    {value: 1, name: '扩展困难'},
+                    {value: 2, name: '对测试不利'},
+                    {value: 3, name: '与SRP有冲突'}
+                ]
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
+    $('#singleton_pattern_generic_class_diagram_panel_body')
+        .css('padding-top', $('#the_advantages_and_disadvantages_of_the_singleton_pattern_panel_body').height() / 4)
+        .css('height', $('#the_advantages_and_disadvantages_of_the_singleton_pattern_panel_body').height());
 }
 
 /**
