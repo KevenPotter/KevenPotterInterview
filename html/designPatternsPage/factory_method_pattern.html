@@ -144,28 +144,37 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title note blod ">单例模式使用场景（《设计模式之禅》-P61）</h3>
+                                <h3 class="panel-title">工厂方法模式的扩展</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div id="extension_of_the_factory_method_pattern_panel_body" class="panel-body">
+                                <div id="extension_of_the_factory_method_pattern" style="height:500%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title note blod ">工厂方法模式使用场景（《设计模式之禅》-P71）</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel">
-                                <div class="panel-body blod">
+                                <div id="factory_method_pattern_usage_scenarios_panel_body" class="panel-body blod">
                                     <ol>
-                                        <li>要求生成唯一序列号的环境；</li>
-                                        <li>在整个项目中需要一个共享访问点或共享数据，例如一个Web页面上的计数器，可以不用把每次刷新都记录到数据库中，使用单例模式保持计数器的值，并确保是线程安全的；</li>
-                                        <li>创建一个对象需要消耗的资源过多，如要访问IO和数据库等资源；</li>
-                                        <li>需要定义大量的静态常量和静态方法（如工具类）的环境，可以采用单例模式（当然，也可以直接声明为为static的方式）。</li>
+                                        <li>在所有需要生成对象的地方都可以使用，但是需要慎重地考虑是否增加一个工厂类进行管理，增加代码的复杂度；</li>
+                                        <li>需要灵活的、可扩展的框架时，可以考虑采用工厂方法模式；</li>
+                                        <li>可以用在异构项目中；</li>
+                                        <li>可以使用在测试驱动开发的框架下。</li>
                                     </ol>
-                                    <p class="note-italic">注意事项（《设计模式之禅》-P61）：</p>
-                                    <ul>
-                                        <li>高并发情况下需要考虑线程同步问题</li>
-                                        <li>单例类不要实现Cloneable接口</li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -348,36 +357,6 @@ public class Client {
     </div>
     <div class="panel-body">
         <p>最后，工厂方法模式是典型的解耦框架。高层模块值需要知道产品的抽象类，其他的实现类都不用关心，符合迪米特法则，我不需要的就不要去交流；也符合依赖倒置原则，只依赖产品类的抽象；当然也符合里氏替换原则，使用产品子类替换产品父类，没问题！</p>
-    </div>
-</div>
-
-<!-- 单例模式缺点_扩展困难 -->
-<div id="singleton_pattern_disadvantages_difficult_to_expand" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">扩展困难</h3>
-    </div>
-    <div class="panel-body">
-        <p>单例模式一般没有接口，扩展很困难，若要扩展，除了修改代码基本上没有第二种途径可以实现。单例模式为什么不能增加接口呢？因为接口对单例模式是没有任何意义的，它要求“自行实例化”，并且提供单一实例，接口或抽象类是不可能被实例化的。当然，在特殊情况下，单例模式可以实现接口、被继承等，需要在系统开发中根据环境判断。</p>
-    </div>
-</div>
-
-<!-- 单例模式缺点_对测试不利 -->
-<div id="singleton_pattern_disadvantages_not_good_for_testing" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">对测试不利</h3>
-    </div>
-    <div class="panel-body">
-        <p>单例模式对测试是不利的。在并行开发环境中，如果单例模式没有完成，是不能进行测试的，没有接口也不能使用mock的方法虚拟一个对象。</p>
-    </div>
-</div>
-
-<!-- 单例模式缺点_与SRP有冲突 -->
-<div id="singleton_pattern_disadvantages_conflict_with_SRP" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">与SRP有冲突</h3>
-    </div>
-    <div class="panel-body">
-        <p>单例模式与单一职责原则有冲突。一个类应该只实现一个逻辑，而不关心它是否是单例的，是不是要单例取决于环境，单例模式把“要单例”和业务逻辑融合在一个类中。</p>
     </div>
 </div>
 

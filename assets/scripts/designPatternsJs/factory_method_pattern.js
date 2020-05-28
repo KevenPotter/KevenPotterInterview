@@ -11,6 +11,8 @@ $(document).ready(function () {
     factoryMethodPatternGenericClassDiagram();
     // 工厂方法模式的优缺点图表
     the_advantages_and_disadvantages_of_the_factory_method_pattern_chart();
+    // 工厂方法模式的扩展图表
+    extension_of_the_factory_method_pattern_chart();
 });
 
 /**
@@ -38,7 +40,7 @@ function general_template_for_factory_method_pattern_chart() {
                 layerCapture('factory_method_pattern_concrete_creator', 0, 60, 40);
                 break;
             case 'Client':
-                layerCapture('factory_method_pattern_client', 0, 60, 70);
+                layerCapture('factory_method_pattern_client', 0, 60, 40);
                 break;
         }
     });
@@ -153,15 +155,6 @@ function the_advantages_and_disadvantages_of_the_factory_method_pattern_chart() 
             case '典型的解耦框架':
                 layerCapture('factory_method_mode_advantages_typical_decoupling_framework', 10000, 40, 20);
                 break;
-            // case '扩展困难':
-            //     layerCapture('singleton_pattern_disadvantages_difficult_to_expand', 10000, 40, 20);
-            //     break;
-            // case '对测试不利':
-            //     layerCapture('singleton_pattern_disadvantages_not_good_for_testing', 10000, 40, 20);
-            //     break;
-            // case '与SRP有冲突':
-            //     layerCapture('singleton_pattern_disadvantages_conflict_with_SRP', 10000, 40, 20);
-            //     break;
         }
     });
     var option = null;
@@ -195,7 +188,6 @@ function the_advantages_and_disadvantages_of_the_factory_method_pattern_chart() 
                 name: '优点',
                 type: 'pie',
                 radius: [20, 110],
-                center: ['25%', '50%'],
                 roseType: 'radius',
                 label: {
                     show: false,
@@ -214,19 +206,7 @@ function the_advantages_and_disadvantages_of_the_factory_method_pattern_chart() 
                     {value: 3, name: '屏蔽产品类'},
                     {value: 4, name: '典型的解耦框架'}
                 ]
-            },
-            // {
-            //     name: '缺点',
-            //     type: 'pie',
-            //     radius: [30, 110],
-            //     center: ['75%', '50%'],
-            //     roseType: 'area',
-            //     data: [
-            //         {value: 1, name: '扩展困难'},
-            //         {value: 2, name: '对测试不利'},
-            //         {value: 3, name: '与SRP有冲突'}
-            //     ]
-            // }
+            }
         ]
     };
     if (option && typeof option === "object") {
@@ -237,6 +217,66 @@ function the_advantages_and_disadvantages_of_the_factory_method_pattern_chart() 
         .css('padding-top', $('#the_advantages_and_disadvantages_of_the_factory_method_pattern_panel_body').height() / 4)
         .css('padding-left', $('#the_advantages_and_disadvantages_of_the_factory_method_pattern_panel_body').width() / 5)
         .css('height', $('#the_advantages_and_disadvantages_of_the_factory_method_pattern_panel_body').height());
+}
+
+/**
+ * 工厂方法模式的扩展图表
+ */
+function extension_of_the_factory_method_pattern_chart() {
+    var extension_of_the_factory_method_pattern_chart = $('#extension_of_the_factory_method_pattern');
+    extension_of_the_factory_method_pattern_chart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(extension_of_the_factory_method_pattern_chart[0], 'macarons');
+    var option = null;
+    option = {
+        title: {
+            text: '工厂方法模式的扩展',
+            subtext: '《设计模式之禅》-P71',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b} : {c} ({d}%)'
+        },
+        legend: {
+            left: 'center',
+            top: 'bottom',
+            data: ['缩小为简单工厂模式', '升级为多个工厂类', '替代单例模式', '延迟初始化'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        series: [
+            {
+                name: '工厂方法模式的扩展',
+                type: 'pie',
+                roseType: 'area',
+                data: [
+                    {value: 1, name: '缩小为简单工厂模式'},
+                    {value: 1, name: '升级为多个工厂类'},
+                    {value: 1, name: '替代单例模式'},
+                    {value: 1, name: '延迟初始化'}
+                ]
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
+    $('#factory_method_pattern_usage_scenarios_panel_body')
+        .css('padding-top', $('#extension_of_the_factory_method_pattern_panel_body').height() / 4)
+        .css('height', $('#extension_of_the_factory_method_pattern_panel_body').height());
 }
 
 /**
