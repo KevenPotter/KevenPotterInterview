@@ -96,7 +96,7 @@
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
-                <h3 id="singleton_pattern_definition_tips" class="page-title">单例模式</h3>
+                <h3 id="factory_method_pattern_definition_tips" class="page-title">工厂方法模式</h3>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel">
@@ -117,28 +117,28 @@
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">单例模式通用类图</h3>
+                                <h3 class="panel-title">工厂方法模式通用类图</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
-                            <div id="singleton_pattern_generic_class_diagram_panel_body" class="panel-body">
-                                <img id="singleton_pattern_generic_class_diagram" style="max-height: 100%; max-width: 100%;" src="../../assets/img/designPatterns/factory_method_pattern_generic_class_diagram.png" alt="单例模式通用类图">
+                            <div id="factory_method_pattern_generic_class_diagram_panel_body" class="panel-body">
+                                <img id="factory_method_pattern_generic_class_diagram" style="max-height: 100%; max-width: 100%;" src="../../assets/img/designPatterns/factory_method_pattern_generic_class_diagram.png" alt="单例模式通用类图">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">单例模式的优缺点</h3>
+                                <h3 class="panel-title">工厂方法模式的优缺点</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
-                            <div id="the_advantages_and_disadvantages_of_the_singleton_pattern_panel_body" class="panel-body">
-                                <div id="the_advantages_and_disadvantages_of_the_singleton_pattern" style="height:500%;"></div>
+                            <div id="the_advantages_and_disadvantages_of_the_factory_method_pattern_panel_body" class="panel-body">
+                                <div id="the_advantages_and_disadvantages_of_the_factory_method_pattern" style="height:500%;"></div>
                             </div>
                         </div>
                     </div>
@@ -185,26 +185,41 @@
 </div>
 <!-- END WRAPPER -->
 
-<!-- 单例模式_静态常量-->
-<div id="singletonPattern_staticConstant" class="panel" style="display: none">
+<!-- 工厂方法模式_抽象产品-->
+<div id="factory_method_pattern_abstract_product" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">种类一：静态常量</h3>
+        <h3 class="panel-title">Product</h3>
     </div>
     <div class="panel-body">
         <pre>
             <code class="java">
-class SingleTon_1 {
+public abstract class Product {
 
-    // 1.构造器私有化(防止new)
-    private SingleTon_1() {
+    // 1.产品类的公共方法
+    public void method1() {
+        // 业务逻辑处理
     }
 
-    // 2.在本类内部创建一个对象示实例
-    private final static SingleTon_1 instance = new SingleTon_1();
+    // 2.抽象方法
+    public abstract void method2();
+}
+            </code>
+        </pre>
+    </div>
+</div>
 
-    // 3.向外暴露一个静态的公共方法,返回实例对象-getInstance()
-    public static SingleTon_1 getInstance() {
-        return instance;
+<!-- 工厂方法模式_具体产品1-->
+<div id="factory_method_pattern_concrete_product_1" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">ConcreteProduct1</h3>
+    </div>
+    <div class="panel-body">
+        <pre>
+            <code class="java">
+public class ConcreteProduct1 extends Product {
+
+    public void method2() {
+        // 业务逻辑处理
     }
 }
             </code>
@@ -212,31 +227,18 @@ class SingleTon_1 {
     </div>
 </div>
 
-<!-- 单例模式_静态代码块-->
-<div id="singletonPattern_staticCodeBlock" class="panel" style="display: none">
+<!-- 工厂方法模式_具体产品2-->
+<div id="factory_method_pattern_concrete_product_2" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">种类二：静态代码块</h3>
+        <h3 class="panel-title">ConcreteProduct2</h3>
     </div>
     <div class="panel-body">
         <pre>
             <code class="java">
-class SingleTon_2 {
+public class ConcreteProduct2 extends Product {
 
-    // 1.构造器私有化(防止new)
-    private SingleTon_2() {
-    }
-
-    // 2.在本类内部创建一个对象示实例
-    private final static SingleTon_2 instance;
-
-    static {
-        // 在静态代码块中创建单例对象
-        instance = new SingleTon_2();
-    }
-
-    // 3.向外暴露一个静态的公共方法,返回实例对象-getInstance()
-    public static SingleTon_2 getInstance() {
-        return instance;
+    public void method2() {
+        // 业务逻辑处理
     }
 }
             </code>
@@ -244,29 +246,42 @@ class SingleTon_2 {
     </div>
 </div>
 
-<!-- 单例模式_线程不安全-->
-<div id="singletonPattern_threadUnsafe" class="panel" style="display: none">
+<!-- 工厂方法模式_抽象工厂-->
+<div id="factory_method_pattern_abstract_creator" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">种类三：线程不安全</h3>
+        <h3 class="panel-title">Creator</h3>
     </div>
     <div class="panel-body">
         <pre>
             <code class="java">
-class SingleTon_3 {
+public abstract class Creator {
 
-    // 1.构造器私有化(防止new)
-    private SingleTon_3() {
-    }
+    // 创建一个产品对象，其输入参数类型可以自行设置
+    public abstract &ltT extends Product&gt T createProduct(Class&ltT&gt c);
+}
+            </code>
+        </pre>
+    </div>
+</div>
 
-    // 2.在本类内部创建一个对象示实例
-    private static SingleTon_3 instance;
+<!-- 工厂方法模式_具体工厂-->
+<div id="factory_method_pattern_concrete_creator" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">ConcreteCreator</h3>
+    </div>
+    <div class="panel-body">
+        <pre>
+            <code class="java">
+public class ConcreteCreator extends Creator {
 
-    // 3.提供一个静态的共有方法,当使用到该方法时,采取创建instance
-    public static SingleTon_3 getInstance() {
-        if (instance == null) {
-            instance = new SingleTon_3();
+    public &ltT extends Product&gt T createProduct(Class&ltT&gt c) {
+        Product product = null;
+        try {
+            product = (Product)Class.forName(c.getName()).newInstance();
+        } catch (Exception e) {
+            // 异常处理
         }
-        return instance;
+        return (T)product;
     }
 }
             </code>
@@ -274,29 +289,20 @@ class SingleTon_3 {
     </div>
 </div>
 
-<!-- 单例模式_同步方法-->
-<div id="singletonPattern_synchronizationMethod" class="panel" style="display: none">
+<!-- 工厂方法模式_场景类-->
+<div id="factory_method_pattern_client" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">种类四：同步方法</h3>
+        <h3 class="panel-title">Client</h3>
     </div>
     <div class="panel-body">
         <pre>
             <code class="java">
-class SingleTon_4 {
+public class Client {
 
-    // 1.构造器私有化(防止new)
-    private SingleTon_4() {
-    }
-
-    // 2.在本类内部创建一个对象示实例
-    private static SingleTon_4 instance;
-
-    // 3.提供一个静态的共有方法,加入同步处理的代码,解决线程安全问题
-    public static synchronized SingleTon_4 getInstance() {
-        if (instance == null) {
-            instance = new SingleTon_4();
-        }
-        return instance;
+    public static void main(String[] args) {
+        Creator creator = new ConcreteCreator();
+        Product product = creator.createProduct(ConcreteProduct1.class);
+        // 继续业务处理
     }
 }
             </code>
@@ -304,158 +310,44 @@ class SingleTon_4 {
     </div>
 </div>
 
-<!-- 单例模式_同步代码块-->
-<div id="singletonPattern_synchronousCodeBlock" class="panel" style="display: none">
+<!-- 工厂方法模式优点_良好的封装性 -->
+<div id="factory_method_mode_advantages_good_encapsulation" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">种类五：同步代码块</h3>
+        <h3 class="panel-title">良好的封装性</h3>
     </div>
     <div class="panel-body">
-        <pre>
-            <code class="java">
-class SingleTon_5 {
-
-    // 1.构造器私有化(防止new)
-    private SingleTon_5() {
-    }
-
-    // 2.在本类内部创建一个对象示实例
-    private static SingleTon_5 instance;
-
-    // 3.提供一个静态的共有方法,加入同步处理的代码,解决线程安全问题
-    public static SingleTon_5 getInstance() {
-        if (instance == null) {
-            synchronized (SingleTon_5.class) {
-                instance = new SingleTon_5();
-            }
-        }
-        return instance;
-    }
-}
-            </code>
-        </pre>
+        <p>首先，良好的封装性，代码结构清晰。一个对象创建是有条件约束的，如一个调用者需要一个具体的产品对象，只要知道这个产品的类名（或约束字符串）就可以了，不用知道创建对象的艰辛过程，降低模块间的耦合。</p>
     </div>
 </div>
 
-<!-- 单例模式_双重检查-->
-<div id="singletonPattern_doubleCheck" class="panel" style="display: none">
+<!-- 工厂方法模式优点_优秀的扩展性 -->
+<div id="factory_method_mode_advantages_excellent_scalability" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">种类六：双重检查</h3>
+        <h3 class="panel-title">优秀的扩展性</h3>
     </div>
     <div class="panel-body">
-        <pre>
-            <code class="java">
-class SingleTon_6 {
-
-    // 1.构造器私有化(防止new)
-    private SingleTon_6() {
-    }
-
-    // 2.在本类内部创建一个对象示实例
-    private static volatile SingleTon_6 instance;
-
-    // 3.提供一个静态的共有方法,加入双重检查代码,解决线程安全问题,同时解决懒加载问题
-    public static SingleTon_6 getInstance() {
-        if (instance == null) {
-            synchronized (SingleTon_6.class) {
-                if (instance == null) {
-                    instance = new SingleTon_6();
-                }
-            }
-        }
-        return instance;
-    }
-}
-            </code>
-        </pre>
+        <p>其次，工厂方法模式的扩展性非常优秀。在增加产品类的情况下，只要适当地修改具体的工厂类或扩展一个工厂类，就可以完成“拥抱变化”。例如在我们的例子中，需要增加一个棕色人种，则只需要增加一个BrownHuman类，工厂类不用任何修改就可完成系统扩展。</p>
     </div>
 </div>
 
-<!-- 单例模式_静态内部类-->
-<div id="singletonPattern_staticInnerClass" class="panel" style="display: none">
+<!-- 工厂方法模式优点_屏蔽产品类 -->
+<div id="factory_method_mode_advantages_shielding_products" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">种类七：静态内部类</h3>
+        <h3 class="panel-title">屏蔽产品类</h3>
     </div>
     <div class="panel-body">
-        <pre>
-            <code class="java">
-class SingleTon_7 {
-
-    // 1.构造器私有化(防止new)
-    private SingleTon_7() {
-    }
-
-    // 2.写一个静态内部类,该类中有一个静态属性SingleTon_7
-    private static class SingleTonInstance {
-        private static final SingleTon_7 INSTANCE = new SingleTon_7();
-    }
-
-    // 3.提供一个静态的共有方法,加入双重检查代码,解决线程安全问题,同时解决懒加载问题
-    public static SingleTon_7 getInstance() {
-        return SingleTonInstance.INSTANCE;
-    }
-}
-            </code>
-        </pre>
+        <p>再次，屏蔽产品类。这一特点非常重要，产品类的实现如何变化，调用者都不需要关心，它只需要关心产品的接口，只要接口保持不变，系统中的上层模块就不要发生变化。因为产品类的实例化工作是由工厂类负责的，一个产品对象具体由哪一个产品生成是由工厂类决定的。</p>
+        <p>在数据库开发中，大家应该能够深刻体会到工厂方法模式的好处：如果使用JDBC连接数据库，数据库从MySQL切换到Oracle，需要改动的地方就是切换一下驱动名称（前提条件是SQL语句是标准语句），其他的都不需要修改，这是工厂方法模式灵活性的一个直接案例。</p>
     </div>
 </div>
 
-<!-- 单例模式_枚举-->
-<div id="singletonPattern_enumerate" class="panel" style="display: none">
+<!-- 工厂方法模式优点_典型的解耦框架 -->
+<div id="factory_method_mode_advantages_typical_decoupling_framework" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">种类八：枚举</h3>
+        <h3 class="panel-title">典型的解耦框架</h3>
     </div>
     <div class="panel-body">
-        <pre>
-            <code class="java">
-enum SingleTon_8 {
-    INSTANCE;
-
-    public void sayOK() {
-        System.out.println("OK");
-    }
-}
-            </code>
-        </pre>
-    </div>
-</div>
-
-<!-- 单例模式优点_减少内存开支 -->
-<div id="singleton_mode_advantages_reduce_memory_expenses" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">减少内存开支</h3>
-    </div>
-    <div class="panel-body">
-        <p>由于单例模式在内存中只有一个实例，减少了内存开支，特别是一个对象需要频繁地创建、销毁时，而且创建或销毁时性能又无法优化，单例模式的优势就非常明显。</p>
-    </div>
-</div>
-
-<!-- 单例模式优点_减少系统性能开销 -->
-<div id="singleton_mode_advantages_reduce_system_performance_overhead" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">减少系统性能开销</h3>
-    </div>
-    <div class="panel-body">
-        <p>由于单例模式只生成一个实例，所以减少了系统的性能开销，当一个对象的产生需要比较多的资源时，如读取配置、产生其他依赖对象时，则可以通过在应用启动时直接产生一个单例对象，然后用永久驻留内存的方式来解决（在Java EE中采用单例模式时需要注意JVM垃圾回收机制）。</p>
-    </div>
-</div>
-
-<!-- 单例模式优点_避免资源多重占用 -->
-<div id="singleton_mode_advantages_avoid_multiple_resources" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">避免资源多重占用</h3>
-    </div>
-    <div class="panel-body">
-        <p>单例模式可以避免对资源的多重占用，例如一个写文件动作，由于只有一个实例存在内存中，避免对同一个资源文件的同时写操作。</p>
-    </div>
-</div>
-
-<!-- 单例模式优点_优化共享资源访问 -->
-<div id="singleton_mode_advantages_avoid_multiple_resources_optimize_access_to_shared_resources" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">优化共享资源访问</h3>
-    </div>
-    <div class="panel-body">
-        <p>单例模式可以在系统设置全局的访问点，优化和共享资源访问，例如可以设计一个单例类，负责所有数据表的映射处理。</p>
+        <p>最后，工厂方法模式是典型的解耦框架。高层模块值需要知道产品的抽象类，其他的实现类都不用关心，符合迪米特法则，我不需要的就不要去交流；也符合依赖倒置原则，只依赖产品类的抽象；当然也符合里氏替换原则，使用产品子类替换产品父类，没问题！</p>
     </div>
 </div>
 
