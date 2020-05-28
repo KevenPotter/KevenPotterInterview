@@ -5,8 +5,8 @@ $(document).ready(function () {
     $('#design_patterns_page_button').click();
     // 工厂方法模式的定义提示
     factoryMethodPatternDefinitionTips();
-    // 单例模式种类图表
-    singletonPatternTypesChart();
+    // 工厂方法模式通用模板图表
+    general_template_for_factory_method_pattern_chart();
     // 工厂方法模式通用类图放大镜
     factoryMethodPatternGenericClassDiagram();
     // 工厂方法模式的优缺点图表
@@ -14,12 +14,12 @@ $(document).ready(function () {
 });
 
 /**
- * 单例模式种类图表
+ * 工厂方法模式通用模板图表
  */
-function singletonPatternTypesChart() {
-    var singletonPatternTypesChart = $('#singletonPatternTypes');
-    singletonPatternTypesChart.removeAttr("_echarts_instance_");
-    var myChart = echarts.init(singletonPatternTypesChart[0], 'macarons');
+function general_template_for_factory_method_pattern_chart() {
+    var general_template_for_factory_method_pattern_chart = $('#general_template_for_factory_method_pattern');
+    general_template_for_factory_method_pattern_chart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(general_template_for_factory_method_pattern_chart[0], 'macarons');
     myChart.on('click', function (params) {
         switch (params.name) {
             case 'Product':
