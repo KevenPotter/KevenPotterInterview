@@ -3,52 +3,62 @@
  */
 $(document).ready(function () {
     $('#design_patterns_page_button').click();
-    // 工厂方法模式的定义提示
-    factoryMethodPatternDefinitionTips();
-    // 工厂方法模式通用模板图表
-    general_template_for_factory_method_pattern_chart();
-    // 工厂方法模式通用类图放大镜
-    factoryMethodPatternGenericClassDiagram();
+    // 抽象工厂模式的定义提示
+    abstractFactoryPatternDefinitionTips();
+    // 抽象工厂模式通用模板图表
+    general_template_for_abstract_factory_pattern_chart();
+    // 抽象工厂模式通用类图放大镜
+    abstract_factory_method_pattern_generic_class_diagram();
     // 抽象工厂模式的优缺点图表
     the_advantages_and_disadvantages_of_the_abstract_factory_pattern_chart();
-    // 工厂方法模式的扩展图表
-    extension_of_the_factory_method_pattern_chart();
 });
 
 /**
- * 工厂方法模式通用模板图表
+ * 抽象工厂模式通用模板图表
  */
-function general_template_for_factory_method_pattern_chart() {
-    var general_template_for_factory_method_pattern_chart = $('#general_template_for_factory_method_pattern');
-    general_template_for_factory_method_pattern_chart.removeAttr("_echarts_instance_");
-    var myChart = echarts.init(general_template_for_factory_method_pattern_chart[0], 'macarons');
+function general_template_for_abstract_factory_pattern_chart() {
+    var general_template_for_abstract_factory_pattern_chart = $('#general_template_for_abstract_factory_pattern');
+    general_template_for_abstract_factory_pattern_chart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(general_template_for_abstract_factory_pattern_chart[0], 'macarons');
     myChart.on('click', function (params) {
         switch (params.name) {
-            case 'Product':
-                layerCapture('factory_method_pattern_abstract_product', 0, 60, 40);
+            case 'AbstractProductA':
+                layerCapture('abstract_factory_pattern_abstract_product_A', 0, 60, 40);
                 break;
-            case 'ConcreteProduct1':
-                layerCapture('factory_method_pattern_concrete_product_1', 0, 60, 40);
+            case 'ProductA1':
+                layerCapture('abstract_factory_pattern_concrete_product_A1', 0, 60, 40);
                 break;
-            case 'ConcreteProduct2':
-                layerCapture('factory_method_pattern_concrete_product_2', 0, 60, 40);
+            case 'ProductA2':
+                layerCapture('abstract_factory_pattern_concrete_product_A2', 0, 60, 40);
                 break;
-            case 'Creator':
-                layerCapture('factory_method_pattern_abstract_creator', 0, 60, 40);
+            case 'AbstractProductB':
+                layerCapture('abstract_factory_pattern_abstract_product_B', 0, 60, 40);
                 break;
-            case 'ConcreteCreator':
-                layerCapture('factory_method_pattern_concrete_creator', 0, 60, 40);
+            case 'ProductB1':
+                layerCapture('abstract_factory_pattern_concrete_product_B1', 0, 60, 40);
+                break;
+            case 'ProductB2':
+                layerCapture('abstract_factory_pattern_concrete_product_B2', 0, 60, 40);
+                break;
+            case 'AbstractCreator':
+                layerCapture('abstract_factory_pattern_abstract_creator', 0, 60, 40);
+                break;
+            case 'Creator1':
+                layerCapture('abstract_factory_pattern_concrete_creator1', 0, 60, 40);
+                break;
+            case 'Creator2':
+                layerCapture('abstract_factory_pattern_concrete_creator2', 0, 60, 40);
                 break;
             case 'Client':
-                layerCapture('factory_method_pattern_client', 0, 60, 40);
+                layerCapture('abstract_factory_pattern_client', 0, 60, 50);
                 break;
         }
     });
     var option = null;
     option = {
         title: {
-            text: '工厂方法模式通用模板',
-            subtext: '《设计模式之禅》-P69',
+            text: '抽象工厂模式通用模板',
+            subtext: '《设计模式之禅》-P84',
             left: 'center'
         },
         tooltip: {
@@ -69,26 +79,42 @@ function general_template_for_factory_method_pattern_chart() {
         series: [{
             type: 'treemap',
             data: [{
-                name: 'Product',
-                value: 7,
+                name: 'AbstractCreator',
+                value: 5,
                 children: [{
-                    name: 'Product',
+                    name: 'Creator2',
                     value: 2
                 }, {
-                    name: 'ConcreteProduct1',
+                    name: 'Creator1',
+                    value: 2
+                }, {
+                    name: 'AbstractCreator',
+                    value: 1
+                }]
+            }, {
+                name: 'AbstractProductB',
+                value: 7,
+                children: [{
+                    name: 'ProductB1',
                     value: 3
                 }, {
-                    name: 'ConcreteProduct2',
+                    name: 'AbstractProductB',
+                    value: 2
+                }, {
+                    name: 'ProductB2',
                     value: 2
                 }]
             }, {
-                name: 'Creator',
-                value: 3,
+                name: 'AbstractProductA',
+                value: 7,
                 children: [{
-                    name: 'Creator',
-                    value: 1
+                    name: 'ProductA1',
+                    value: 3
                 }, {
-                    name: 'ConcreteCreator',
+                    name: 'AbstractProductA',
+                    value: 2
+                }, {
+                    name: 'ProductA2',
                     value: 2
                 }]
             }, {
@@ -115,19 +141,19 @@ function general_template_for_factory_method_pattern_chart() {
 }
 
 /**
- * 工厂方法模式的定义提示
+ * 抽象工厂模式的定义提示
  */
-function factoryMethodPatternDefinitionTips() {
-    $('#factory_method_pattern_definition_tips').mouseover(function () {
-        layer.tips('定义一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化延迟到其子类。', $('#factory_method_pattern_definition_tips'), {tips: 3});
+function abstractFactoryPatternDefinitionTips() {
+    $('#abstract_factory_pattern_definition_tips').mouseover(function () {
+        layer.tips('为创建一组相关或相互依赖的对象提供一个接口，而且无需指定它们的具体类。', $('#abstract_factory_pattern_definition_tips'), {tips: 3});
     });
 }
 
 /**
- * 工厂方法模式通用类图放大镜
+ * 抽象工厂模式通用类图放大镜
  */
-function factoryMethodPatternGenericClassDiagram() {
-    $('#factory_method_pattern_generic_class_diagram').blowup({
+function abstract_factory_method_pattern_generic_class_diagram() {
+    $('#abstract_factory_pattern_generic_class_diagram').blowup({
         "cursor": false,
         "width": 300,
         "height": 300
@@ -218,70 +244,10 @@ function the_advantages_and_disadvantages_of_the_abstract_factory_pattern_chart(
         myChart.setOption(option, true);
     }
     resize(myChart);
-    $('#factory_method_pattern_generic_class_diagram_panel_body')
+    $('#abstract_factory_pattern_generic_class_diagram_panel_body')
         .css('padding-top', $('#the_advantages_and_disadvantages_of_the_abstract_factory_pattern_panel_body').height() / 4)
         .css('padding-left', $('#the_advantages_and_disadvantages_of_the_abstract_factory_pattern_panel_body').width() / 5)
         .css('height', $('#the_advantages_and_disadvantages_of_the_abstract_factory_pattern_panel_body').height());
-}
-
-/**
- * 工厂方法模式的扩展图表
- */
-function extension_of_the_factory_method_pattern_chart() {
-    var extension_of_the_factory_method_pattern_chart = $('#extension_of_the_factory_method_pattern');
-    extension_of_the_factory_method_pattern_chart.removeAttr("_echarts_instance_");
-    var myChart = echarts.init(extension_of_the_factory_method_pattern_chart[0], 'macarons');
-    var option = null;
-    option = {
-        title: {
-            text: '工厂方法模式的扩展',
-            subtext: '《设计模式之禅》-P71',
-            left: 'center'
-        },
-        tooltip: {
-            trigger: 'item',
-            formatter: '{b} : {c} ({d}%)'
-        },
-        legend: {
-            left: 'center',
-            top: 'bottom',
-            data: ['缩小为简单工厂模式', '升级为多个工厂类', '替代单例模式', '延迟初始化'],
-            textStyle: {
-                fontSize: 15
-            }
-        },
-        toolbox: {
-            show: true,
-            feature: {
-                restore: {
-                    show: true
-                },
-                saveAsImage: {
-                    pixelRatio: 2
-                }
-            }
-        },
-        series: [
-            {
-                name: '工厂方法模式的扩展',
-                type: 'pie',
-                roseType: 'area',
-                data: [
-                    {value: 1, name: '缩小为简单工厂模式'},
-                    {value: 1, name: '升级为多个工厂类'},
-                    {value: 1, name: '替代单例模式'},
-                    {value: 1, name: '延迟初始化'}
-                ]
-            }
-        ]
-    };
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-    }
-    resize(myChart);
-    $('#factory_method_pattern_usage_scenarios_panel_body')
-        .css('padding-top', $('#extension_of_the_factory_method_pattern_panel_body').height() / 4)
-        .css('height', $('#extension_of_the_factory_method_pattern_panel_body').height());
 }
 
 /**

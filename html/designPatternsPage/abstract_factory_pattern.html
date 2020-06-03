@@ -97,19 +97,19 @@
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
-                <h3 id="factory_method_pattern_definition_tips" class="page-title">抽象工厂模式</h3>
+                <h3 id="abstract_factory_pattern_definition_tips" class="page-title">抽象工厂模式</h3>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">单例模式种类</h3>
+                                <h3 class="panel-title">抽象工厂模式通用模板</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="general_template_for_factory_method_pattern" style="height:600%;"></div>
+                                <div id="general_template_for_abstract_factory_pattern" style="height:600%;"></div>
                             </div>
                         </div>
                     </div>
@@ -118,21 +118,21 @@
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">工厂方法模式通用类图</h3>
+                                <h3 class="panel-title">抽象工厂模式通用类图</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
-                            <div id="factory_method_pattern_generic_class_diagram_panel_body" class="panel-body">
-                                <img id="factory_method_pattern_generic_class_diagram" style="max-height: 100%; max-width: 100%;" src="../../assets/img/designPatterns/factory_method_pattern_generic_class_diagram.png" alt="单例模式通用类图">
+                            <div id="abstract_factory_pattern_generic_class_diagram_panel_body" class="panel-body">
+                                <img id="abstract_factory_pattern_generic_class_diagram" style="max-height: 100%; max-width: 100%;" src="../../assets/img/designPatterns/abstract_factory_pattern_generic_class_diagram.png" alt="抽象工厂模式通用类图">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">工厂方法模式的优缺点</h3>
+                                <h3 class="panel-title">抽象工厂模式的优缺点</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
@@ -145,37 +145,20 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">工厂方法模式的扩展</h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div id="extension_of_the_factory_method_pattern_panel_body" class="panel-body">
-                                <div id="extension_of_the_factory_method_pattern" style="height:500%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title note blod ">工厂方法模式使用场景（《设计模式之禅》-P71）</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel">
-                                <div id="factory_method_pattern_usage_scenarios_panel_body" class="panel-body blod">
-                                    <ol>
-                                        <li>在所有需要生成对象的地方都可以使用，但是需要慎重地考虑是否增加一个工厂类进行管理，增加代码的复杂度；</li>
-                                        <li>需要灵活的、可扩展的框架时，可以考虑采用工厂方法模式；</li>
-                                        <li>可以用在异构项目中；</li>
-                                        <li>可以使用在测试驱动开发的框架下。</li>
-                                    </ol>
+                                <div class="panel-body blod">
+                                    <p class="note blod">抽象工厂模式使用场景（《设计模式之禅》-P86）</p>
+                                    <p>抽象工厂模式的使用场景定义非常简单：一个对象族（或是一组没有任何关系的对象）都由相同的约束，则可以使用抽象工厂模式。什么意思呢？例如一个文本编辑器和一个图片处理器，都是软件实体，但是*nix下的文本编辑器和Windows下的文本编辑器虽然功能和界面都相同，但是代码实现是不同的，图片处理器也有类似情况。也就是具有了共同的约束条件：操作系统类型。于是我们可以使用抽象工厂模式，产生不同操作系统下的编辑器和图片处理器。</p>
+                                    <p class="note blod">抽象工厂模式的注意事项（《设计模式之禅》-P86）</p>
+                                    <p>在抽象工厂模式的缺点中，我们提到抽象工厂模式的产品族扩展比较困难，但是一定要清楚，是产品族扩展困难，而不是产品等级。在该模式下，产品等级是非常容易扩展的，增加一个产品等级，只要增加一个工厂类负责新增加出来的产品生产任务即可。也就是说横向扩展容易，纵向扩展困难。抽象工厂模式是符合开闭原则的。</p>
                                 </div>
                             </div>
                         </div>
@@ -195,40 +178,39 @@
 </div>
 <!-- END WRAPPER -->
 
-<!-- 抽象工厂模式_抽象产品-->
-<div id="factory_method_pattern_abstract_product" class="panel" style="display: none">
+<!-- 抽象工厂模式_抽象产品A-->
+<div id="abstract_factory_pattern_abstract_product_A" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">Product</h3>
+        <h3 class="panel-title">AbstractProductA</h3>
     </div>
     <div class="panel-body">
         <pre>
             <code class="java">
-public interface Human {
+public abstract class AbstractProductA {
 
-    // 1.每个人种都有响应的颜色
-    public void getColor();
-    // 2.人类会说话
-    public void talk();
-    // 3.每个人都有性别
-    public void getSex();
+    // 1.每个产品共有的方法
+    public void shareMethod(){
+    }
+    // 2.每个产品相同方法，不同实现
+    public abstract void doSomething();
 }
             </code>
         </pre>
     </div>
 </div>
 
-<!-- 工厂方法模式_具体产品1-->
-<div id="factory_method_pattern_concrete_product_1" class="panel" style="display: none">
+<!-- 抽象工厂模式_具体产品A1-->
+<div id="abstract_factory_pattern_concrete_product_A1" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">ConcreteProduct1</h3>
+        <h3 class="panel-title">ProductA1</h3>
     </div>
     <div class="panel-body">
         <pre>
             <code class="java">
-public class ConcreteProduct1 extends Product {
+public class ProductA1 extends AbstractProductA {
 
-    public void method2() {
-        // 业务逻辑处理
+    public void doSomething() {
+        System.out.println("产品A1的实现方法");
     }
 }
             </code>
@@ -236,18 +218,18 @@ public class ConcreteProduct1 extends Product {
     </div>
 </div>
 
-<!-- 工厂方法模式_具体产品2-->
-<div id="factory_method_pattern_concrete_product_2" class="panel" style="display: none">
+<!-- 抽象工厂模式_具体产品A2-->
+<div id="abstract_factory_pattern_concrete_product_A2" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">ConcreteProduct2</h3>
+        <h3 class="panel-title">ProductA2</h3>
     </div>
     <div class="panel-body">
         <pre>
             <code class="java">
-public class ConcreteProduct2 extends Product {
+public class ProductA2 extends AbstractProductA {
 
-    public void method2() {
-        // 业务逻辑处理
+    public void doSomething() {
+        System.out.println("产品A2的实现方法");
     }
 }
             </code>
@@ -255,42 +237,39 @@ public class ConcreteProduct2 extends Product {
     </div>
 </div>
 
-<!-- 工厂方法模式_抽象工厂-->
-<div id="factory_method_pattern_abstract_creator" class="panel" style="display: none">
+<!-- 抽象工厂模式_抽象产品B-->
+<div id="abstract_factory_pattern_abstract_product_B" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">Creator</h3>
+        <h3 class="panel-title">AbstractProductB</h3>
     </div>
     <div class="panel-body">
         <pre>
             <code class="java">
-public abstract class Creator {
+public abstract class AbstractProductB {
 
-    // 创建一个产品对象，其输入参数类型可以自行设置
-    public abstract &ltT extends Product&gt T createProduct(Class&ltT&gt c);
+    // 1.每个产品共有的方法
+    public void shareMethod(){
+    }
+    // 2.每个产品相同方法，不同实现
+    public abstract void doSomething();
 }
             </code>
         </pre>
     </div>
 </div>
 
-<!-- 工厂方法模式_具体工厂-->
-<div id="factory_method_pattern_concrete_creator" class="panel" style="display: none">
+<!-- 抽象工厂模式_具体产品B1-->
+<div id="abstract_factory_pattern_concrete_product_B1" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">ConcreteCreator</h3>
+        <h3 class="panel-title">ProductB1</h3>
     </div>
     <div class="panel-body">
         <pre>
             <code class="java">
-public class ConcreteCreator extends Creator {
+public class ProductB1 extends AbstractProductB {
 
-    public &ltT extends Product&gt T createProduct(Class&ltT&gt c) {
-        Product product = null;
-        try {
-            product = (Product)Class.forName(c.getName()).newInstance();
-        } catch (Exception e) {
-            // 异常处理
-        }
-        return (T)product;
+    public void doSomething() {
+        System.out.println("产品B1的实现方法");
     }
 }
             </code>
@@ -298,8 +277,97 @@ public class ConcreteCreator extends Creator {
     </div>
 </div>
 
-<!-- 工厂方法模式_场景类-->
-<div id="factory_method_pattern_client" class="panel" style="display: none">
+<!-- 抽象工厂模式_具体产品B2-->
+<div id="abstract_factory_pattern_concrete_product_B2" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">ProductB2</h3>
+    </div>
+    <div class="panel-body">
+        <pre>
+            <code class="java">
+public class ProductB2 extends AbstractProductB {
+
+    public void doSomething() {
+        System.out.println("产品B2的实现方法");
+    }
+}
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 抽象工厂模式_抽象工厂-->
+<div id="abstract_factory_pattern_abstract_creator" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">AbstractCreator</h3>
+    </div>
+    <div class="panel-body">
+        <pre>
+            <code class="java">
+public abstract class AbstractCreator {
+
+    // 创建A产品家族
+    public abstract AbstractProductA createProductA();
+    // 创建B产品家族
+    public abstract AbstractProductB createProductB();
+}
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 抽象工厂模式_具体工厂1-->
+<div id="abstract_factory_pattern_concrete_creator1" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">Creator1</h3>
+    </div>
+    <div class="panel-body">
+        <pre>
+            <code class="java">
+public class Creator1 extends AbstractCreator {
+
+    // 只生产产品等级为1的A产品
+    public AbstractProductA createProductA() {
+        return new ProductA1();
+    }
+
+    // 只生产产品等级为1的B产品
+    public AbstractProductB createProductB() {
+        return new ProductB1();
+    }
+}
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 抽象工厂模式_具体工厂2-->
+<div id="abstract_factory_pattern_concrete_creator2" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">Creator2</h3>
+    </div>
+    <div class="panel-body">
+        <pre>
+            <code class="java">
+public class Creator2 extends AbstractCreator {
+
+    // 只生产产品等级为2的A产品
+    public AbstractProductA createProductA() {
+        return new ProductA2();
+    }
+
+    // 只生产产品等级为2的B产品
+    public AbstractProductB createProductB() {
+        return new ProductB2();
+    }
+}
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 抽象工厂模式_场景类-->
+<div id="abstract_factory_pattern_client" class="panel" style="display: none">
     <div class="panel-heading">
         <h3 class="panel-title">Client</h3>
     </div>
@@ -309,8 +377,17 @@ public class ConcreteCreator extends Creator {
 public class Client {
 
     public static void main(String[] args) {
-        Creator creator = new ConcreteCreator();
-        Product product = creator.createProduct(ConcreteProduct1.class);
+        // 定义出两个工厂
+        AbstractCreator creator1 = new Creator1();
+        AbstractCreator creator2 = new Creator2();
+        // 产生A1对象
+        AbstractProductA a1 = creator1.createProductA();
+        // 产生A2对象
+        AbstractProductA a2 = creator2.createProductA();
+        // 产生B1对象
+        AbstractProductB b1 = creator1.createProductB();
+        // 产生B2对象
+        AbstractProductB b2 = creator2.createProductB();
         // 继续业务处理
     }
 }
