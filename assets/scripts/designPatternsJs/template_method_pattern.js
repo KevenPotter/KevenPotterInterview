@@ -11,8 +11,6 @@ $(document).ready(function () {
     template_method_pattern_generic_class_diagram();
     // 模板方法模式的优缺点图表
     the_advantages_and_disadvantages_of_the_template_method_pattern_chart();
-    // 工厂方法模式的扩展图表
-    extension_of_the_factory_method_pattern_chart();
 });
 
 /**
@@ -131,25 +129,25 @@ function the_advantages_and_disadvantages_of_the_template_method_pattern_chart()
     var myChart = echarts.init(the_advantages_and_disadvantages_of_the_template_method_pattern_chart[0], 'macarons');
     myChart.on('click', function (params) {
         switch (params.name) {
-            case '良好的封装性':
-                layerCapture('factory_method_mode_advantages_good_encapsulation', 10000, 40, 20);
+            case '封装不变部分，扩展可变部分':
+                layerCapture('template_method_mode_advantages_encapsulate_the_unchanged_part_expand_the_variable_part', 10000, 40, 20);
                 break;
-            case '优秀的扩展性':
-                layerCapture('factory_method_mode_advantages_excellent_scalability', 10000, 40, 20);
+            case '提取公共部分代码，便于维护':
+                layerCapture('template_method_mode_advantages_extract_common_part_code_for_easy_maintenance', 10000, 40, 20);
                 break;
-            case '屏蔽产品类':
-                layerCapture('factory_method_mode_advantages_shielding_products', 10000, 40, 20);
+            case '行为由父类控制，子类实现':
+                layerCapture('template_method_mode_advantages_the_behavior_is_controlled_by_the_parent_class_and_implemented_by_the_child_class', 10000, 40, 20);
                 break;
-            case '典型的解耦框架':
-                layerCapture('factory_method_mode_advantages_typical_decoupling_framework', 10000, 40, 20);
+            case '不符合设计习惯，难于理解':
+                layerCapture('template_method_mode_disadvantages_not_in_line_with_design_habits_difficult_to_understand', 10000, 40, 20);
                 break;
         }
     });
     var option = null;
     option = {
         title: {
-            text: '抽象工厂模式的优缺点',
-            subtext: '《设计模式之禅》-P86',
+            text: '模板方法模式的优缺点',
+            subtext: '《设计模式之禅》-P94',
             left: 'center'
         },
         tooltip: {
@@ -159,7 +157,7 @@ function the_advantages_and_disadvantages_of_the_template_method_pattern_chart()
         legend: {
             left: 'center',
             top: 'bottom',
-            data: ['良好的封装性', '产品族内的约束为非公开状态', '扩展困难'],
+            data: ['封装不变部分，扩展可变部分', '提取公共部分代码，便于维护', '行为由父类控制，子类实现', "不符合设计习惯，难于理解"],
             textStyle: {
                 fontSize: 15
             }
@@ -190,8 +188,9 @@ function the_advantages_and_disadvantages_of_the_template_method_pattern_chart()
                     }
                 },
                 data: [
-                    {value: 1, name: '良好的封装性'},
-                    {value: 2, name: '产品族内的约束为非公开状态'}
+                    {value: 1, name: '封装不变部分，扩展可变部分'},
+                    {value: 2, name: '提取公共部分代码，便于维护'},
+                    {value: 3, name: '行为由父类控制，子类实现'}
                 ]
             }, {
                 name: '缺点',
@@ -200,7 +199,7 @@ function the_advantages_and_disadvantages_of_the_template_method_pattern_chart()
                 center: ['75%', '50%'],
                 roseType: 'area',
                 data: [
-                    {value: 1, name: '扩展困难'}
+                    {value: 1, name: '不符合设计习惯，难于理解'}
                 ]
             }
         ]
@@ -210,69 +209,9 @@ function the_advantages_and_disadvantages_of_the_template_method_pattern_chart()
     }
     resize(myChart);
     $('#template_method_pattern_generic_class_diagram_panel_body')
-        .css('padding-top', $('#the_advantages_and_disadvantages_of_the_factory_method_pattern_panel_body').height() / 4)
-        .css('padding-right', $('#the_advantages_and_disadvantages_of_the_factory_method_pattern_panel_body').width() / 7)
-        .css('height', $('#the_advantages_and_disadvantages_of_the_factory_method_pattern_panel_body').height());
-}
-
-/**
- * 工厂方法模式的扩展图表
- */
-function extension_of_the_factory_method_pattern_chart() {
-    var extension_of_the_factory_method_pattern_chart = $('#extension_of_the_factory_method_pattern');
-    extension_of_the_factory_method_pattern_chart.removeAttr("_echarts_instance_");
-    var myChart = echarts.init(extension_of_the_factory_method_pattern_chart[0], 'macarons');
-    var option = null;
-    option = {
-        title: {
-            text: '工厂方法模式的扩展',
-            subtext: '《设计模式之禅》-P71',
-            left: 'center'
-        },
-        tooltip: {
-            trigger: 'item',
-            formatter: '{b} : {c} ({d}%)'
-        },
-        legend: {
-            left: 'center',
-            top: 'bottom',
-            data: ['缩小为简单工厂模式', '升级为多个工厂类', '替代单例模式', '延迟初始化'],
-            textStyle: {
-                fontSize: 15
-            }
-        },
-        toolbox: {
-            show: true,
-            feature: {
-                restore: {
-                    show: true
-                },
-                saveAsImage: {
-                    pixelRatio: 2
-                }
-            }
-        },
-        series: [
-            {
-                name: '工厂方法模式的扩展',
-                type: 'pie',
-                roseType: 'area',
-                data: [
-                    {value: 1, name: '缩小为简单工厂模式'},
-                    {value: 1, name: '升级为多个工厂类'},
-                    {value: 1, name: '替代单例模式'},
-                    {value: 1, name: '延迟初始化'}
-                ]
-            }
-        ]
-    };
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-    }
-    resize(myChart);
-    $('#factory_method_pattern_usage_scenarios_panel_body')
-        .css('padding-top', $('#extension_of_the_factory_method_pattern_panel_body').height() / 4)
-        .css('height', $('#extension_of_the_factory_method_pattern_panel_body').height());
+        .css('padding-top', $('#the_advantages_and_disadvantages_of_the_template_method_pattern_panel_body').height() / 4)
+        .css('padding-right', $('#the_advantages_and_disadvantages_of_the_template_method_pattern_panel_body').width() / 7)
+        .css('height', $('#the_advantages_and_disadvantages_of_the_template_method_pattern_panel_body').height());
 }
 
 /**
