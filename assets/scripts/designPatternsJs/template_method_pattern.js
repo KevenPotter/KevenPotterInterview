@@ -3,52 +3,46 @@
  */
 $(document).ready(function () {
     $('#design_patterns_page_button').click();
-    // 工厂方法模式的定义提示
-    factoryMethodPatternDefinitionTips();
-    // 工厂方法模式通用模板图表
-    general_template_for_factory_method_pattern_chart();
-    // 工厂方法模式通用类图放大镜
-    factoryMethodPatternGenericClassDiagram();
-    // 工厂方法模式的优缺点图表
-    the_advantages_and_disadvantages_of_the_factory_method_pattern_chart();
+    // 模板方法模式的定义提示
+    template_method_pattern_definition_tips();
+    // 模板方法模式通用模板图表
+    general_template_for_template_method_pattern_chart();
+    // 模板方法模式通用类图放大镜
+    template_method_pattern_generic_class_diagram();
+    // 模板方法模式的优缺点图表
+    the_advantages_and_disadvantages_of_the_template_method_pattern_chart();
     // 工厂方法模式的扩展图表
     extension_of_the_factory_method_pattern_chart();
 });
 
 /**
- * 工厂方法模式通用模板图表
+ * 模板方法模式通用模板图表
  */
-function general_template_for_factory_method_pattern_chart() {
-    var general_template_for_factory_method_pattern_chart = $('#general_template_for_factory_method_pattern');
-    general_template_for_factory_method_pattern_chart.removeAttr("_echarts_instance_");
-    var myChart = echarts.init(general_template_for_factory_method_pattern_chart[0], 'macarons');
+function general_template_for_template_method_pattern_chart() {
+    var general_template_for_template_method_pattern_chart = $('#general_template_for_template_method_pattern');
+    general_template_for_template_method_pattern_chart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(general_template_for_template_method_pattern_chart[0], 'macarons');
     myChart.on('click', function (params) {
         switch (params.name) {
-            case 'Product':
-                layerCapture('factory_method_pattern_abstract_product', 0, 60, 40);
+            case 'AbstractClass':
+                layerCapture('template_method_pattern_abstract_template', 0, 60, 40);
                 break;
-            case 'ConcreteProduct1':
-                layerCapture('factory_method_pattern_concrete_product_1', 0, 60, 40);
+            case 'ConcreteClass1':
+                layerCapture('template_method_pattern_concrete_template_1', 0, 60, 40);
                 break;
-            case 'ConcreteProduct2':
-                layerCapture('factory_method_pattern_concrete_product_2', 0, 60, 40);
-                break;
-            case 'Creator':
-                layerCapture('factory_method_pattern_abstract_creator', 0, 60, 40);
-                break;
-            case 'ConcreteCreator':
-                layerCapture('factory_method_pattern_concrete_creator', 0, 60, 40);
+            case 'ConcreteClass2':
+                layerCapture('template_method_pattern_concrete_template_2', 0, 60, 40);
                 break;
             case 'Client':
-                layerCapture('factory_method_pattern_client', 0, 60, 40);
+                layerCapture('template_method_pattern_client', 0, 60, 40);
                 break;
         }
     });
     var option = null;
     option = {
         title: {
-            text: '工厂方法模式通用模板',
-            subtext: '《设计模式之禅》-P69',
+            text: '模板方法模式通用模板',
+            subtext: '《设计模式之禅》-P93',
             left: 'center'
         },
         tooltip: {
@@ -69,27 +63,21 @@ function general_template_for_factory_method_pattern_chart() {
         series: [{
             type: 'treemap',
             data: [{
-                name: 'Product',
-                value: 7,
+                name: 'AbstractClass',
+                value: 2,
                 children: [{
-                    name: 'Product',
-                    value: 2
-                }, {
-                    name: 'ConcreteProduct1',
-                    value: 3
-                }, {
-                    name: 'ConcreteProduct2',
+                    name: 'AbstractClass',
                     value: 2
                 }]
             }, {
-                name: 'Creator',
-                value: 3,
+                name: 'ConcreteClass',
+                value: 2,
                 children: [{
-                    name: 'Creator',
+                    name: 'ConcreteClass2',
                     value: 1
                 }, {
-                    name: 'ConcreteCreator',
-                    value: 2
+                    name: 'ConcreteClass1',
+                    value: 1
                 }]
             }, {
                 name: 'Client',
@@ -115,19 +103,19 @@ function general_template_for_factory_method_pattern_chart() {
 }
 
 /**
- * 工厂方法模式的定义提示
+ * 模板方法模式的定义提示
  */
-function factoryMethodPatternDefinitionTips() {
-    $('#factory_method_pattern_definition_tips').mouseover(function () {
-        layer.tips('定义一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化延迟到其子类。', $('#factory_method_pattern_definition_tips'), {tips: 3});
+function template_method_pattern_definition_tips() {
+    $('#template_method_pattern_definition_tips').mouseover(function () {
+        layer.tips('定义一个操作中的算法的框架，而将一些步骤延迟到子类中。使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。', $('#template_method_pattern_definition_tips'), {tips: 3});
     });
 }
 
 /**
- * 工厂方法模式通用类图放大镜
+ * 模板方法模式通用类图放大镜
  */
-function factoryMethodPatternGenericClassDiagram() {
-    $('#factory_method_pattern_generic_class_diagram').blowup({
+function template_method_pattern_generic_class_diagram() {
+    $('#template_method_pattern_generic_class_diagram').blowup({
         "cursor": false,
         "width": 300,
         "height": 300
@@ -135,12 +123,12 @@ function factoryMethodPatternGenericClassDiagram() {
 }
 
 /**
- * 工厂方法模式的优缺点图表
+ * 模板方法模式的优缺点图表
  */
-function the_advantages_and_disadvantages_of_the_factory_method_pattern_chart() {
-    var the_advantages_and_disadvantages_of_the_factory_method_pattern_chart = $('#the_advantages_and_disadvantages_of_the_factory_method_pattern');
-    the_advantages_and_disadvantages_of_the_factory_method_pattern_chart.removeAttr("_echarts_instance_");
-    var myChart = echarts.init(the_advantages_and_disadvantages_of_the_factory_method_pattern_chart[0], 'macarons');
+function the_advantages_and_disadvantages_of_the_template_method_pattern_chart() {
+    var the_advantages_and_disadvantages_of_the_template_method_pattern_chart = $('#the_advantages_and_disadvantages_of_the_template_method_pattern');
+    the_advantages_and_disadvantages_of_the_template_method_pattern_chart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(the_advantages_and_disadvantages_of_the_template_method_pattern_chart[0], 'macarons');
     myChart.on('click', function (params) {
         switch (params.name) {
             case '良好的封装性':
@@ -160,8 +148,8 @@ function the_advantages_and_disadvantages_of_the_factory_method_pattern_chart() 
     var option = null;
     option = {
         title: {
-            text: '工厂方法模式的优缺点',
-            subtext: '《设计模式之禅》-P70',
+            text: '抽象工厂模式的优缺点',
+            subtext: '《设计模式之禅》-P86',
             left: 'center'
         },
         tooltip: {
@@ -171,7 +159,7 @@ function the_advantages_and_disadvantages_of_the_factory_method_pattern_chart() 
         legend: {
             left: 'center',
             top: 'bottom',
-            data: ['良好的封装性', '优秀的扩展性', '屏蔽产品类', '典型的解耦框架'],
+            data: ['良好的封装性', '产品族内的约束为非公开状态', '扩展困难'],
             textStyle: {
                 fontSize: 15
             }
@@ -188,6 +176,7 @@ function the_advantages_and_disadvantages_of_the_factory_method_pattern_chart() 
                 name: '优点',
                 type: 'pie',
                 radius: [20, 110],
+                center: ['25%', '50%'],
                 roseType: 'radius',
                 label: {
                     show: false,
@@ -202,9 +191,16 @@ function the_advantages_and_disadvantages_of_the_factory_method_pattern_chart() 
                 },
                 data: [
                     {value: 1, name: '良好的封装性'},
-                    {value: 2, name: '优秀的扩展性'},
-                    {value: 3, name: '屏蔽产品类'},
-                    {value: 4, name: '典型的解耦框架'}
+                    {value: 2, name: '产品族内的约束为非公开状态'}
+                ]
+            }, {
+                name: '缺点',
+                type: 'pie',
+                radius: [30, 110],
+                center: ['75%', '50%'],
+                roseType: 'area',
+                data: [
+                    {value: 1, name: '扩展困难'}
                 ]
             }
         ]
@@ -213,9 +209,9 @@ function the_advantages_and_disadvantages_of_the_factory_method_pattern_chart() 
         myChart.setOption(option, true);
     }
     resize(myChart);
-    $('#factory_method_pattern_generic_class_diagram_panel_body')
+    $('#template_method_pattern_generic_class_diagram_panel_body')
         .css('padding-top', $('#the_advantages_and_disadvantages_of_the_factory_method_pattern_panel_body').height() / 4)
-        .css('padding-left', $('#the_advantages_and_disadvantages_of_the_factory_method_pattern_panel_body').width() / 5)
+        .css('padding-right', $('#the_advantages_and_disadvantages_of_the_factory_method_pattern_panel_body').width() / 7)
         .css('height', $('#the_advantages_and_disadvantages_of_the_factory_method_pattern_panel_body').height());
 }
 

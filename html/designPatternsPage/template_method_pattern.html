@@ -98,19 +98,19 @@
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
-                <h3 id="factory_method_pattern_definition_tips" class="page-title">工厂方法模式</h3>
+                <h3 id="template_method_pattern_definition_tips" class="page-title">模板方法模式</h3>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">工厂方法模式通用模板</h3>
+                                <h3 class="panel-title">模板方法模式通用模板</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="general_template_for_factory_method_pattern" style="height:600%;"></div>
+                                <div id="general_template_for_template_method_pattern" style="height:600%;"></div>
                             </div>
                         </div>
                     </div>
@@ -119,14 +119,14 @@
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">工厂方法模式通用类图</h3>
+                                <h3 class="panel-title">模板方法模式通用类图</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
-                            <div id="factory_method_pattern_generic_class_diagram_panel_body" class="panel-body">
-                                <img id="factory_method_pattern_generic_class_diagram" style="max-height: 100%; max-width: 100%;" src="../../assets/img/designPatterns/factory_method_pattern_generic_class_diagram.png" alt="单例模式通用类图">
+                            <div id="template_method_pattern_generic_class_diagram_panel_body" class="panel-body">
+                                <img id="template_method_pattern_generic_class_diagram" style="max-height: 100%; max-width: 100%;" src="../../assets/img/designPatterns/template_method_pattern_generic_class_diagram.png" alt="模板方法模式通用类图">
                             </div>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
                                 </div>
                             </div>
                             <div id="the_advantages_and_disadvantages_of_the_factory_method_pattern_panel_body" class="panel-body">
-                                <div id="the_advantages_and_disadvantages_of_the_factory_method_pattern" style="height:500%;"></div>
+                                <div id="the_advantages_and_disadvantages_of_the_template_method_pattern" style="height:500%;"></div>
                             </div>
                         </div>
                     </div>
@@ -170,6 +170,13 @@
                             </div>
                             <div class="panel">
                                 <div id="factory_method_pattern_usage_scenarios_panel_body" class="panel-body blod">
+                                    <p class="note blod">抽象模板方法的种类（《设计模式之禅》-P93）</p>
+                                    <ol>
+                                        <li>基本方法：</li>
+                                        基本方法也叫作基本操作，是由子类实现的方法，并且在模板方法被调用。
+                                        <li>模板方法：</li>
+                                        可以有一个或几个，一般是一个具体的方法，也就是一个框架，实现对基本方法的调度，完成固定的逻辑。为了防止恶意的操作，一般模板方法都加上final关键字，不允许被覆写。
+                                    </ol>
                                     <p class="note blod">工厂方法模式使用场景（《设计模式之禅》-P71）</p>
                                     <ol>
                                         <li>在所有需要生成对象的地方都可以使用，但是需要慎重地考虑是否增加一个工厂类进行管理，增加代码的复杂度；</li>
@@ -196,41 +203,27 @@
 </div>
 <!-- END WRAPPER -->
 
-<!-- 工厂方法模式_抽象产品-->
-<div id="factory_method_pattern_abstract_product" class="panel" style="display: none">
+<!-- 模板方法模式_抽象模板类-->
+<div id="template_method_pattern_abstract_template" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">Product</h3>
+        <h3 class="panel-title">AbstractClass</h3>
     </div>
     <div class="panel-body">
         <pre>
             <code class="java">
-public abstract class Product {
+public abstract class AbstractClass {
 
-    // 1.产品类的公共方法
-    public void method1() {
-        // 业务逻辑处理
-    }
-
-    // 2.抽象方法
-    public abstract void method2();
-}
-            </code>
-        </pre>
-    </div>
-</div>
-
-<!-- 工厂方法模式_具体产品1-->
-<div id="factory_method_pattern_concrete_product_1" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">ConcreteProduct1</h3>
-    </div>
-    <div class="panel-body">
-        <pre>
-            <code class="java">
-public class ConcreteProduct1 extends Product {
-
-    public void method2() {
-        // 业务逻辑处理
+    // 1.基本方法
+    protected abstract void doSomething();
+    // 2.基本方法
+    protected abstract void doAnything();
+    // 3.模板方法
+    protected abstract void templateMethod() {
+        /*
+         * 调用基本方法，完成相关的逻辑
+         */
+         this.doAnything();
+         this.doSomething();
     }
 }
             </code>
@@ -238,17 +231,22 @@ public class ConcreteProduct1 extends Product {
     </div>
 </div>
 
-<!-- 工厂方法模式_具体产品2-->
-<div id="factory_method_pattern_concrete_product_2" class="panel" style="display: none">
+<!-- 模板方法模式_具体模板1-->
+<div id="template_method_pattern_concrete_template_1" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">ConcreteProduct2</h3>
+        <h3 class="panel-title">ConcreteClass1</h3>
     </div>
     <div class="panel-body">
         <pre>
             <code class="java">
-public class ConcreteProduct2 extends Product {
+public class ConcreteClass1 extends AbstractClass {
 
-    public void method2() {
+    // 实现基本方法
+    protected void doAnything() {
+        // 业务逻辑处理
+    }
+
+    protected void doSomething() {
         // 业务逻辑处理
     }
 }
@@ -257,42 +255,23 @@ public class ConcreteProduct2 extends Product {
     </div>
 </div>
 
-<!-- 工厂方法模式_抽象工厂-->
-<div id="factory_method_pattern_abstract_creator" class="panel" style="display: none">
+<!-- 模板方法模式_具体模板2-->
+<div id="template_method_pattern_concrete_template_2" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">Creator</h3>
+        <h3 class="panel-title">ConcreteClass2</h3>
     </div>
     <div class="panel-body">
         <pre>
             <code class="java">
-public abstract class Creator {
+public class ConcreteClass2 extends AbstractClass {
 
-    // 创建一个产品对象，其输入参数类型可以自行设置
-    public abstract &ltT extends Product&gt T createProduct(Class&ltT&gt c);
-}
-            </code>
-        </pre>
-    </div>
-</div>
+    // 实现基本方法
+    protected void doAnything() {
+        // 业务逻辑处理
+    }
 
-<!-- 工厂方法模式_具体工厂-->
-<div id="factory_method_pattern_concrete_creator" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">ConcreteCreator</h3>
-    </div>
-    <div class="panel-body">
-        <pre>
-            <code class="java">
-public class ConcreteCreator extends Creator {
-
-    public &ltT extends Product&gt T createProduct(Class&ltT&gt c) {
-        Product product = null;
-        try {
-            product = (Product)Class.forName(c.getName()).newInstance();
-        } catch (Exception e) {
-            // 异常处理
-        }
-        return (T)product;
+    protected void doSomething() {
+        // 业务逻辑处理
     }
 }
             </code>
@@ -300,8 +279,8 @@ public class ConcreteCreator extends Creator {
     </div>
 </div>
 
-<!-- 工厂方法模式_场景类-->
-<div id="factory_method_pattern_client" class="panel" style="display: none">
+<!-- 模板方法模式_场景类-->
+<div id="template_method_pattern_client" class="panel" style="display: none">
     <div class="panel-heading">
         <h3 class="panel-title">Client</h3>
     </div>
@@ -311,9 +290,11 @@ public class ConcreteCreator extends Creator {
 public class Client {
 
     public static void main(String[] args) {
-        Creator creator = new ConcreteCreator();
-        Product product = creator.createProduct(ConcreteProduct1.class);
-        // 继续业务处理
+        AbstractClass class1 = new ConcreteClass1();
+        AbstractClass class2 = new ConcreteClass2();
+        // 调用模板方法
+        class1.templateMethod();
+        class2.templateMethod();
     }
 }
             </code>
@@ -366,7 +347,7 @@ public class Client {
 <script type="text/javascript" src="../../assets/scripts/common-method.js"></script>
 <script type="text/javascript" src="../../assets/scripts/base.js"></script>
 <script type="text/javascript" src="../../assets/scripts/responseStatusCode.js"></script>
-<script type="text/javascript" src="../../assets/scripts/designPatternsJs/factory_method_pattern.js"></script>
+<script type="text/javascript" src="../../assets/scripts/designPatternsJs/template_method_pattern.js"></script>
 <script>hljs.initHighlightingOnLoad()</script>
 </body>
 
