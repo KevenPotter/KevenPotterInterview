@@ -2521,4 +2521,8 @@ ul.activity-timeline > li:last-child:after {
     font-weight: bold;
 }
 
+.center-10 {
+    margin-top: 10%;
+}
+
 /*# sourceMappingURL=main.css.map */

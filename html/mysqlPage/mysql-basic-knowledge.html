@@ -86,7 +86,7 @@
                         </div>
                     </li>
                     <li>
-                        <a id="database_page_button" href="#databasePage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-laptop"></i> <span>数据库</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <a id="database_page_button" href="#databasePage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-database"></i> <span>数据库</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="databasePage" class="collapse ">
                             <ul class="nav">
                                 <li><a href="mysql-basic-knowledge.html" class="active">基础知识</a></li>
@@ -106,7 +106,155 @@
             <div class="container-fluid">
                 <h3 class="page-title">基础知识</h3>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div id="seven_JOIN_theories_INNER_JOIN_panel" class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">七种JOIN模式-INNER_JOIN模式</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <img style="max-height: 100%; max-width: 100%;" class="col-md-6" src="../../assets/img/mysql/INNER_JOIN.png" alt="INNER_JOIN模式">
+                                <ul class="col-md-6 center-10">
+                                    <li><b>SELECT</b> &nbsp;&lt;select_list&gt;</li>
+                                    <li><b>FROM TableA A</b></li>
+                                    <li><b><span class="note">INNER</span> JOIN TableB B</b></li>
+                                    <li><b>ON</b> A.key = B.key</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="seven_JOIN_theories_LEFT_JOIN_panel" class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">七种JOIN模式-LEFT_JOIN模式</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <img style="max-height: 100%; max-width: 100%;" class="col-md-6" src="../../assets/img/mysql/LEFT_JOIN.png" alt="LEFT_JOIN模式">
+                                <ul class="col-md-6 center-10">
+                                    <li><b>SELECT</b> &nbsp;&lt;select_list&gt;</li>
+                                    <li><b>FROM TableA A</b></li>
+                                    <li><b><span class="note">LEFT</span> JOIN TableB B</b></li>
+                                    <li><b>ON</b> A.key = B.key</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="seven_JOIN_theories_RIGHT_JOIN_panel" class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">七种JOIN模式-RIGHT_JOIN模式</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <img style="max-height: 100%; max-width: 100%;" class="col-md-6" src="../../assets/img/mysql/RIGHT_JOIN.png" alt="RIGHT_JOIN模式">
+                                <ul class="col-md-6 center-10">
+                                    <li><b>SELECT</b> &nbsp;&lt;select_list&gt;</li>
+                                    <li><b>FROM TableA A</b></li>
+                                    <li><b><span class="note">RIGHT</span> JOIN TableB B</b></li>
+                                    <li><b>ON</b> A.key = B.key</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div id="seven_JOIN_theories_LEFT_JOIN_B_KEY_NULL_panel" class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">七种JOIN模式-LEFT_JOIN_B_KEY_NULL模式</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <img style="max-height: 100%; max-width: 100%;" class="col-md-6" src="../../assets/img/mysql/LEFT_JOIN_B_KEY_NULL.png" alt="LEFT_JOIN_B_KEY_NULL模式">
+                                <ul class="col-md-6 center-10">
+                                    <li><b>SELECT</b> &nbsp;&lt;select_list&gt;</li>
+                                    <li><b>FROM TableA A</b></li>
+                                    <li><b><span class="note">LEFT</span> JOIN TableB B</b></li>
+                                    <li><b>ON</b> A.key = B.key</li>
+                                    <li><b><span class="note">WHERE B.key IS NULL</span></b></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="seven_JOIN_theories_RIGHT_JOIN_A_KEY_NULL_panel" class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">七种JOIN模式-RIGHT_JOIN_A_KEY_NULL模式</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <img style="max-height: 100%; max-width: 100%;" class="col-md-6" src="../../assets/img/mysql/RIGHT_JOIN_A_KEY_NULL.png" alt="RIGHT_JOIN_A_KEY_NULL模式">
+                                <ul class="col-md-6 center-10">
+                                    <li><b>SELECT</b> &nbsp;&lt;select_list&gt;</li>
+                                    <li><b>FROM TableA A</b></li>
+                                    <li><b><span class="note">RIGHT</span> JOIN TableB B</b></li>
+                                    <li><b>ON</b> A.key = B.key</li>
+                                    <li><b><span class="note">WHERE A.key IS NULL</span></b></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="seven_JOIN_theories_FULL_OUTER_JOIN_panel" class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">七种JOIN模式-FULL_OUTER_JOIN模式</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <img style="max-height: 100%; max-width: 100%;" class="col-md-6" src="../../assets/img/mysql/FULL_OUTER_JOIN.png" alt="FULL_OUTER_JOIN模式">
+                                <ul class="col-md-6 center-10">
+                                    <li><b>SELECT</b> &nbsp;&lt;select_list&gt;</li>
+                                    <li><b>FROM TableA A</b></li>
+                                    <li><b><span class="note">FULL OUTER</span> JOIN TableB B</b></li>
+                                    <li><b>ON</b> A.key = B.key</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div id="seven_JOIN_theories_FULL_OUTER_JOIN_A_B_KEY_NULL_panel" class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">七种JOIN模式-LEFT_JOIN_B_KEY_NULL模式</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <img style="max-height: 100%; max-width: 100%;" class="col-md-6" src="../../assets/img/mysql/FULL_OUTER_JOIN_A_B_KEY_NULL.png" alt="FULL_OUTER_JOIN_A_B_KEY_NULL模式">
+                                <ul class="col-md-6 center-10">
+                                    <li><b>SELECT</b> &nbsp;&lt;select_list&gt;</li>
+                                    <li><b>FROM TableA A</b></li>
+                                    <li><b><span class="note">FULL OUTER</span> JOIN TableB B</b></li>
+                                    <li><b>ON</b> A.key = B.key</li>
+                                    <li><b><span class="note">WHERE A.key IS NULL</span></b></li>
+                                    <li><b><span class="note">OR B.key IS NULL</span></b></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="panel">
                             <div class="panel-heading">
                                 <h3 class="panel-title">SQL执行加载顺序</h3>
@@ -132,7 +280,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="panel">
                             <div class="panel-heading">
                                 <h3 class="panel-title">SQL执行加载顺序</h3>
@@ -157,84 +305,6 @@
                                         <li><b>LIMIT</b> &nbsp;&lt;limit_number&gt;</li>
                                     </ol>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">CAP理论</h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="CAPTheory" style="height:400%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">BASE理论</h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="BASETheory" style="height:400%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">一致性类型</h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="consistencyType" style="height:400%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">两阶段提交</h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="twoPhaseCommit" style="height:500%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">三阶段提交</h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="threePhaseCommit" style="height:500%;"></div>
                             </div>
                         </div>
                     </div>

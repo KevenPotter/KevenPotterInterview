@@ -278,15 +278,3 @@ function extension_of_the_factory_method_pattern_chart() {
         .css('padding-top', $('#extension_of_the_factory_method_pattern_panel_body').height() / 4)
         .css('height', $('#extension_of_the_factory_method_pattern_panel_body').height());
 }
-
-/**
- * @param ECharts 图表
- * @author KevenPotter
- * @date 2020-02-08 18:08:32
- * @description 依据浏览器大小重新定义图表尺寸
- */
-function resize(ECharts) {
-    $(window).resize(function () {
-        ECharts.resize();
-    });
-}

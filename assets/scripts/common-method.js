@@ -6,51 +6,6 @@ $(document).ready(function () {
     windowWidth = $(window).width();
 });
 
-/**
- * @author KevenPotter
- * @date 2019-12-06 16:03:58
- * @description 加载系别列表
- */
-function loadDepartmentsList() {
-    var departmentsSelect = $('#departmentsSelect');
-    $.ajax({
-        url: studentManagementSystem + "/department/departments",
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
-            var departmentsArray = data.data;
-            departmentsSelect.append('<option value="' + null + '">请选择系别</option>');
-            for (var departmentIndex = 0, length = departmentsArray.length; departmentIndex < length; departmentIndex++) {
-                var item = departmentsArray[departmentIndex];
-                departmentsSelect.append('<option id="' + departmentIndex + '" value="' + item.departmentId + '">' + item.departmentName + '</option>');
-            }
-        }
-    });
-}
-
-/**
- * @author KevenPotter
- * @date 2020-01-21 10:24:37
- * @description 加载采用了[Selectpicker]样式的系别列表
- */
-function loadDepartmentsListBySelectpicker() {
-    var departmentsSelect = $('#departmentsSelect');
-    $.ajax({
-        url: studentManagementSystem + "/department/departments",
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
-            var departmentsArray = data.data;
-            departmentsSelect.append('<option value="' + null + '">请选择系别</option>');
-            for (var departmentIndex = 0, length = departmentsArray.length; departmentIndex < length; departmentIndex++) {
-                var item = departmentsArray[departmentIndex];
-                departmentsSelect.append('<option id="' + departmentIndex + '" value="' + item.departmentId + '">' + item.departmentName + '</option>');
-            }
-            bootstrapSelectFlush(departmentsSelect);
-        }
-    });
-
-}
 
 /**
  * @param element bootstrap-select元素
@@ -94,8 +49,8 @@ function clearValue(element) {
  * @description 此方法旨在对参数进行非空验证
  */
 function isEmpty(parameter) {
-    if ("" == parameter || null == parameter || undefined == parameter || "null" == parameter) return true;
-    return false;
+    return "" == parameter || null == parameter || undefined == parameter || "null" == parameter;
+
 }
 
 /**
@@ -191,4 +146,16 @@ function addErrorStyle(divElement, spanElement) {
     if (!isEmpty(spanElement)) {
         spanElement.removeClass("glyphicon glyphicon-ok form-control-feedback").addClass("glyphicon glyphicon-remove form-control-feedback");
     }
+}
+
+/**
+ * @param ECharts 图表
+ * @author KevenPotter
+ * @date 2020-02-08 18:08:32
+ * @description 依据浏览器大小重新定义图表尺寸
+ */
+function resize(ECharts) {
+    $(window).resize(function () {
+        ECharts.resize();
+    });
 }
