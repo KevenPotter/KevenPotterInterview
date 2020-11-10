@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>分布式概述</title>
+    <title>基础知识</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -65,11 +65,11 @@
                 <ul class="nav">
                     <li><a href="../../index.html" class=""><i class="lnr lnr-home"></i> <span>首页</span></a></li>
                     <li>
-                        <a id="distributed_page_button" href="#distributedPage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-cloud"></i> <span>分布式</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <a href="#distributedPage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-cloud"></i> <span>分布式</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="distributedPage" class="collapse ">
                             <ul class="nav">
-                                <li><a href="distributed_overview.html" class="active">分布式概述</a></li>
-                                <li><a href="zookeeper_overview.html" class="">ZooKeeper概述</a></li>
+                                <li><a href="../distributedPage/distributed_overview.html" class="">分布式概述</a></li>
+                                <li><a href="../distributedPage/zookeeper_overview.html" class="">ZooKeeper概述</a></li>
                             </ul>
                         </div>
                     </li>
@@ -86,11 +86,11 @@
                         </div>
                     </li>
                     <li>
-                        <a href="#mysqlPage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-laptop"></i> <span>数据库</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                        <div id="mysqlPage" class="collapse ">
+                        <a id="database_page_button" href="#databasePage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-laptop"></i> <span>数据库</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="databasePage" class="collapse ">
                             <ul class="nav">
-                                <li><a href="../mysqlPage/mysql-basic-knowledge.html" class="">基础知识</a></li>
-                                <li><a href="../mysqlPage/mysql-sub-database_sub-table.html" class="">分库分表</a></li>
+                                <li><a href="mysql-basic-knowledge.html" class="active">基础知识</a></li>
+                                <li><a href="mysql-sub-database_sub-table.html" class="">分库分表</a></li>
                             </ul>
                         </div>
                     </li>
@@ -104,33 +104,59 @@
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
-                <h3 class="page-title">分布式概述</h3>
+                <h3 class="page-title">基础知识</h3>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">分布式特性</h3>
+                                <h3 class="panel-title">SQL执行加载顺序</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="distributedFeature" style="height:400%;"></div>
+                                <div style="height:400%;">
+                                    <h4 class="blod">手写形式：</h4>
+                                    <ol>
+                                        <li><b>SELECT DISTINCT</b> &nbsp;&lt;select_list&gt;</li>
+                                        <li><b>FROM</b> &nbsp;&lt;left_table&gt; &nbsp; &lt;join_type&gt;</li>
+                                        <li><b>JOIN</b> &nbsp;&lt;right_table&gt;&nbsp; <b>ON</b> &nbsp;&lt;join_condition&gt;</li>
+                                        <li><b>WHERE</b> &nbsp;&lt;where_condition&gt;</li>
+                                        <li><b>GROUP BY</b> &nbsp;&lt;group_by_list&gt;</li>
+                                        <li><b>HAVING</b> &nbsp;&lt;having_condition&gt;</li>
+                                        <li><b>ORDER BY</b> &nbsp;&lt;order_by_condition&gt;</li>
+                                        <li><b>LIMIT</b> &nbsp;&lt;limit_number&gt;</li>
+                                    </ol>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">分布式环境问题</h3>
+                                <h3 class="panel-title">SQL执行加载顺序</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="distributedEnvironmentIssues" style="height:400%;"></div>
+                                <div style="height:400%;">
+                                    <h4 class="blod">机读形式：</h4>
+                                    <ol>
+                                        <li><b>FROM</b> &nbsp;&lt;left_table&gt;</li>
+                                        <li><b>ON</b> &nbsp;&lt;join_condition&gt;</li>
+                                        <li>&lt;join_type&gt;&nbsp; <b>JOIN</b> &nbsp;&lt;right_table&gt;</li>
+                                        <li><b>WHERE</b> &nbsp;&lt;where_condition&gt;</li>
+                                        <li><b>GROUP BY</b> &nbsp;&lt;group_by_list&gt;</li>
+                                        <li><b>HAVING</b> &nbsp;&lt;having_condition&gt;</li>
+                                        <li><b>SELECT</b></li>
+                                        <li><b>DISTINCT</b> &nbsp;&lt;select_list&gt;</li>
+                                        <li><b>ORDER BY</b> &nbsp;&lt;order_by_condition&gt;</li>
+                                        <li><b>LIMIT</b> &nbsp;&lt;limit_number&gt;</li>
+                                    </ol>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -221,7 +247,8 @@
     <div class="clearfix"></div>
     <footer>
         <div class="container-fluid">
-            <p class="copyright">Copyright &copy; https://github.com/KevenPotter/KevenPotterInterview <a href="https://github.com/KevenPotter/KevenPotterInterview" target="_blank" title="KevenPotter">KevenPotter</a> - Collect from <a href="https://github.com/KevenPotter" title="Github" target="_blank">KevenPotter主页</a></p>
+            <p class="copyright">Copyright &copy; https://github.com/KevenPotter/KevenPotterInterview <a href="https://github.com/KevenPotter/KevenPotterInterview" target="_blank" title="KevenPotter">KevenPotter</a> - Collect from <a href="https://github.com/KevenPotter" title="Github"
+                                                                                                                                                                                                                                          target="_blank">KevenPotter主页</a></p>
         </div>
     </footer>
 </div>
@@ -230,7 +257,7 @@
 <script type="text/javascript" src="../../assets/scripts/common-method.js"></script>
 <script type="text/javascript" src="../../assets/scripts/base.js"></script>
 <script type="text/javascript" src="../../assets/scripts/responseStatusCode.js"></script>
-<script type="text/javascript" src="../../assets/scripts/distributedJs/distributed_overview.js"></script>
+<script type="text/javascript" src="../../assets/scripts/mysql/mysql-basic-knowledge.js"></script>
 </body>
 
 </html>
