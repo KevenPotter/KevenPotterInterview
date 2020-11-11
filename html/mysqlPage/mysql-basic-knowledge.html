@@ -106,6 +106,116 @@
             <div class="container-fluid">
                 <h3 class="page-title">基础知识</h3>
                 <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">数据库的发展阶段</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="the_development_stage_of_the_database" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">数据库的种类</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="type_of_database" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">数据库的概念</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div style="height:400%;">
+                                    <h4 class="blod">数据库的概念：</h4>
+                                    <ul>
+                                        <li>对于数据库的概念，没有一个完全固定的定义，随着数据库历史的发展，定义的内容也有很大的差异，其中一种比较普遍的观点认为：</li>
+                                        <li>数据库（DataBase，DB）是一个长期存储在计算机内的、有组织的、有共享的、统一管理的数据集合。</li>
+                                        <li>它是一个按数据结构来存储和管理数据的计算机软件系统。</li>
+                                        <li>数据库包含两层含义：</li>
+                                        <ul>
+                                            <li>保管数据的“仓库”</li>
+                                            <li>数据管理的方法和技术</li>
+                                        </ul>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">数据库的概念</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div style="height:400%;">
+                                    <h4 class="blod">数据库表的概念：</h4>
+                                    <ul>
+                                        <li>一系列二维数组的集合，用来存储数据和操作数据的逻辑结构</li>
+                                        <li>由纵向的列和横向的行组成</li>
+                                        <li>行被称为记录，是组织数据的单位</li>
+                                        <li>列被称为字段，每一列表示记录的一个属性，有相应的描述信息，如数据类型、数据宽度等</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">数据库的特点</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="characteristics_of_the_database" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 id="database_systems_panel_title" class="panel-title">数据库系统</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="database_systems" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-4">
                         <div id="seven_JOIN_theories_INNER_JOIN_panel" class="panel">
                             <div class="panel-heading">
@@ -323,6 +433,48 @@
     </footer>
 </div>
 <!-- END WRAPPER -->
+
+<!-- 数据库系统_数据库系统图示 -->
+<div id="database_systems_diagram" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">数据库系统_数据库系统图示</h3>
+    </div>
+    <div class="panel-body">
+        <img style="max-width: 100%;max-height: 100%;" src="../../assets/img/mysql/database_systems_img.png" alt="数据库系统图示">
+    </div>
+</div>
+
+<!-- 数据库系统_数据库 -->
+<div id="database_systems_database" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">数据库系统_数据库</h3>
+    </div>
+    <div class="panel-body">
+        <p>数据库系统（Database System）提供了一个存储空间，用以存储各种数据，可以将数据库视为一个存储数据的容器。一个数据库可能包含许多文件，一个数据库系统中通常包含许多数据库。</p>
+    </div>
+</div>
+
+<!-- 数据库系统_数据库管理系统 -->
+<div id="database_systems_database_management_system" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">数据库系统_数据库管理系统</h3>
+    </div>
+    <div class="panel-body">
+        <p>数据库管理系统（Database Management System，DBMS）是用户创建、管理和维护数据库时所使用的软件，位于用户与操作系统之间，对数据库进行统一管理。DBMS能定义数据存储结构，提供数据的操作机制，维护数据库的安全性、完整性和可靠性。</p>
+    </div>
+</div>
+
+<!-- 数据库系统_数据库应用程序 -->
+<div id="database_systems_database_application" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">数据库系统_数据库应用程序</h3>
+    </div>
+    <div class="panel-body">
+        <p>数据库应用程序（DataBase Application）虽然已经有了DBMS，但是在很多情况下，DBMS无法满足对数据管理的要求。</p>
+        <p>数据库应用程序的使用可以满足对数据管理的更高要求，还可以使数据管理过程更加直观和友好。数据库应用程序负责与DBMS进行通信，访问和管理DBMS中存储的数据，允许用户插入、修改、删除DB中的数据。</p>
+    </div>
+</div>
+
 <!-- CUSTOM JAVASCRIPT -->
 <script type="text/javascript" src="../../assets/scripts/common-method.js"></script>
 <script type="text/javascript" src="../../assets/scripts/base.js"></script>
