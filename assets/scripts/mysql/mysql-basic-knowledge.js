@@ -13,6 +13,7 @@ $(document).ready(function () {
     dataTypesOfMySQLChart();
     dataTypesOfMySQLNumericTypeChart();
     dataTypesOfMySQLDateAndTimeTypeChart();
+    dataTypesOfMySQLTextStringTypeChart();
 });
 
 /**
@@ -681,7 +682,7 @@ function dataTypesOfMySQLNumericTypeChart() {
 }
 
 /**
- * MySQL的数据类型-日期与之间类型图表
+ * MySQL的数据类型-日期与时间类型图表
  */
 function dataTypesOfMySQLDateAndTimeTypeChart() {
     var dataTypesOfMySQLDateAndTimeTypeChart = $('#data_types_of_MySQL_date_and_time_type');
@@ -693,24 +694,117 @@ function dataTypesOfMySQLDateAndTimeTypeChart() {
                 layerCapture('data_types_of_MySQL_date_and_time_type_YEAR', 0, 60, 30);
                 break;
             case 'TIME':
-                layerCapture('data_types_of_MySQL_date_and_time_type_TIME', 0, 60, 30);
+                layerCapture('data_types_of_MySQL_date_and_time_type_TIME', 0, 60, 37);
                 break;
             case 'DATE':
-                layerCapture('data_types_of_MySQL_date_and_time_type_DATE', 0, 60, 30);
+                layerCapture('data_types_of_MySQL_date_and_time_type_DATE', 0, 60, 40);
                 break;
             case 'DATETIME':
-                layerCapture('data_types_of_MySQL_date_and_time_type_DATETIME', 0, 60, 30);
+                layerCapture('data_types_of_MySQL_date_and_time_type_DATETIME', 0, 60, 42);
                 break;
             case 'TIMESTAMP':
-                layerCapture('data_types_of_MySQL_date_and_time_type_TIMESTAMP', 0, 60, 30);
+                layerCapture('data_types_of_MySQL_date_and_time_type_TIMESTAMP', 0, 60, 37);
                 break;
         }
     });
     var option = null;
     option = {
         title: {
-            text: 'MySQL的数据类型-日期与之间类型',
+            text: 'MySQL的数据类型-日期与时间类型',
             subtext: '《MySQL8从入门到精通（视频教学版）》-P78',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b} : {c} ({d}%)'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        legend: {
+            bottom: 10,
+            left: 'center',
+            data: ['YEAR', 'TIME', 'DATE', 'DATETIME', 'TIMESTAMP'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '75%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: [
+                    {value: 1, name: 'YEAR'},
+                    {value: 1, name: 'TIME'},
+                    {value: 1, name: 'DATE'},
+                    {value: 1, name: 'DATETIME'},
+                    {value: 1, name: 'TIMESTAMP'}
+                ],
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 15
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
+}
+
+/**
+ * MySQL的数据类型-文本字符串类型图表
+ */
+function dataTypesOfMySQLTextStringTypeChart() {
+    var dataTypesOfMySQLTextStringTypeChart = $('#data_types_of_MySQL_text_string_type');
+    dataTypesOfMySQLTextStringTypeChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(dataTypesOfMySQLTextStringTypeChart[0], 'macarons');
+    myChart.on('click', function (params) {
+        switch (params.name) {
+            case 'YEAR':
+                layerCapture('data_types_of_MySQL_date_and_time_type_YEAR', 0, 60, 30);
+                break;
+            case 'TIME':
+                layerCapture('data_types_of_MySQL_date_and_time_type_TIME', 0, 60, 37);
+                break;
+            case 'DATE':
+                layerCapture('data_types_of_MySQL_date_and_time_type_DATE', 0, 60, 40);
+                break;
+            case 'DATETIME':
+                layerCapture('data_types_of_MySQL_date_and_time_type_DATETIME', 0, 60, 42);
+                break;
+            case 'TIMESTAMP':
+                layerCapture('data_types_of_MySQL_date_and_time_type_TIMESTAMP', 0, 60, 37);
+                break;
+        }
+    });
+    var option = null;
+    option = {
+        title: {
+            text: 'MySQL的数据类型-文本字符串类型',
+            subtext: '《MySQL8从入门到精通（视频教学版）》-P89',
             left: 'center'
         },
         tooltip: {
