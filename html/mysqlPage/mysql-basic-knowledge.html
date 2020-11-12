@@ -203,7 +203,7 @@
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 id="database_systems_panel_title" class="panel-title">数据库系统</h3>
+                                <h3 id="database_systems_panel_title" class="panel-title tinyHand">数据库系统</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
@@ -215,6 +215,96 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">SQL（Structured Query Language）语言</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="classification_of_SQL" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">MySQL的优势</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="advantages_of_MySQL" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">MySQL的数据类型</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="data_types_of_MySQL" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">MySQL的数据类型-数值类型</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="data_types_of_MySQL_numeric_type" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">MySQL的优势</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="data_types_of_MySQL_date_and_time_type" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">MySQL的数据类型</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="data_types_of_MySQL" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="row">
                     <div class="col-md-4">
                         <div id="seven_JOIN_theories_INNER_JOIN_panel" class="panel">
@@ -472,6 +562,261 @@
     <div class="panel-body">
         <p>数据库应用程序（DataBase Application）虽然已经有了DBMS，但是在很多情况下，DBMS无法满足对数据管理的要求。</p>
         <p>数据库应用程序的使用可以满足对数据管理的更高要求，还可以使数据管理过程更加直观和友好。数据库应用程序负责与DBMS进行通信，访问和管理DBMS中存储的数据，允许用户插入、修改、删除DB中的数据。</p>
+    </div>
+</div>
+
+<!-- MySQL的数据类型-数值类型-整数类型 -->
+<div id="data_types_of_MySQL_numeric_type_integer_type" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL的数据类型-数值类型-整数类型</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>类型名称</th>
+                <th>说明</th>
+                <th>存储需求</th>
+                <th>取值范围（有符号）</th>
+                <th>取值范围（无符号）</th>
+                <th>默认显示宽度</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>TINYINT</td>
+                <td>很小的整数</td>
+                <td><span class="label label-success">1字节</span></td>
+                <td>-128~127</td>
+                <td>0~255</td>
+                <td><span class="label label-warning">4</span></td>
+            </tr>
+            <tr>
+                <td>SMALLINT</td>
+                <td>小的整数</td>
+                <td><span class="label label-success">2字节</span></td>
+                <td>-32768~32767</td>
+                <td>0~65535</td>
+                <td><span class="label label-warning">6</span></td>
+            </tr>
+            <tr>
+                <td>MEDIUMINT</td>
+                <td>中等大小的整数</td>
+                <td><span class="label label-success">3字节</span></td>
+                <td>-8388608~8388607</td>
+                <td>0~16777215</td>
+                <td><span class="label label-warning">9</span></td>
+            </tr>
+            <tr>
+                <td>INT</td>
+                <td>普通大小的整数</td>
+                <td><span class="label label-success">4字节</span></td>
+                <td>-2147483648~2147483647</td>
+                <td>0~4294967295</td>
+                <td><span class="label label-warning">11</span></td>
+            </tr>
+            <tr>
+                <td>BIGINT</td>
+                <td>大整数</td>
+                <td><span class="label label-success">8字节</span></td>
+                <td>-9223372036854775808~9223372036854775807</td>
+                <td>0~18446744073709551615</td>
+                <td><span class="label label-warning">20</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL的数据类型-数值类型-浮点数类型和定点数类型 -->
+<div id="data_types_of_MySQL_numeric_type_floating_point_number_type_and_fixed_point_number_type" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL的数据类型-数值类型-浮点数类型和定点数类型</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>类型名称</th>
+                <th>说明</th>
+                <th>存储需求</th>
+                <th>取值范围（有符号）</th>
+                <th>取值范围（无符号）</th>
+                <th>默认精度</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>FLOAT</td>
+                <td>单精度浮点数</td>
+                <td><span class="label label-success">4字节</span></td>
+                <td>-3.402823466E+38~-1.175494351E-38</td>
+                <td>0和1.175494351E-38~3.402823466E+38</td>
+                <td><span class="label label-warning">实际的精度（由计算机硬件和操作系统决定）</span></td>
+            </tr>
+            <tr>
+                <td>DOUBLE</td>
+                <td>双精度浮点数</td>
+                <td><span class="label label-success">8字节</span></td>
+                <td>-1.7976931348623E+308~-2.2250738585072014E-308</td>
+                <td>0和2.2250738585072014E-308~1.7976931348623157E+308</td>
+                <td><span class="label label-warning">实际的精度（由计算机硬件和操作系统决定）</span></td>
+            </tr>
+            <tr>
+                <td>DECIMAL(M,D),DEC</td>
+                <td>压缩的“严格”定点数</td>
+                <td><span class="label label-success">M+2字节</span></td>
+                <td>M:1~65 D:0~30</td>
+                <td>M:1~65 D:0~30</td>
+                <td><span class="label label-warning">(10,0)</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL的数据类型-日期与之间类型-YEAR -->
+<div id="data_types_of_MySQL_date_and_time_type_YEAR" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL的数据类型-日期与之间类型-YEAR</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>类型名称</th>
+                <th>日期格式</th>
+                <th>存储需求</th>
+                <th>日期范围</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>YEAR</td>
+                <td>YYYY</td>
+                <td><span class="label label-success">1字节</span></td>
+                <td>1901~2155</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <h3 class="margin-left-10"><span class="panel-note"><i class="fa fa-anchor"></i>YEAR的格式</span></h3>
+            <ol>
+                <li>以4位字符串或者4位数字格式表示的YEAR，范围位‘1901’~‘2155’。输入格式为‘YYYY’或者YYYY。例如，输入‘2010’或2010，插入到数据库的值均为2010</li>
+                <li>以2位<span class="note">字符串</span>格式表示的YEAR，范围为‘00’到‘99’。‘00’~‘69’和‘70’~‘99’范围的值分别被转换为2000~2069和1970~1999范围的YEAR值。‘0’与‘00’的作用相同。插入超过取值范围的值将被转换为2000</li>
+                <li>以2位<span class="note">数字</span>表示的YEAR，范围为1~99。1~69和70~99范围的值分别被转换为2001~2069和1970~1999范围的YEAR值。<span class="note-italic">注意：</span>在这里0值将被转换为0000，而不是2000</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- MySQL的数据类型-日期与之间类型-TIME -->
+<div id="data_types_of_MySQL_date_and_time_type_TIME" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL的数据类型-日期与之间类型-TIME</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>类型名称</th>
+                <th>日期格式</th>
+                <th>存储需求</th>
+                <th>日期范围</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>TIME</td>
+                <td>HH:MM:SS</td>
+                <td><span class="label label-success">3字节</span></td>
+                <td>-838:59:59~838:59:59</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL的数据类型-日期与之间类型-DATE -->
+<div id="data_types_of_MySQL_date_and_time_type_DATE" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL的数据类型-日期与之间类型-DATE</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>类型名称</th>
+                <th>日期格式</th>
+                <th>存储需求</th>
+                <th>日期范围</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>DATE</td>
+                <td>YYYY-MM-DD</td>
+                <td><span class="label label-success">3字节</span></td>
+                <td>1000-01-01~9999-12-31</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL的数据类型-日期与之间类型-DATETIME -->
+<div id="data_types_of_MySQL_date_and_time_type_DATETIME" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL的数据类型-日期与之间类型-DATETIME</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>类型名称</th>
+                <th>日期格式</th>
+                <th>存储需求</th>
+                <th>日期范围</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>DATETIME</td>
+                <td>YYYY-MM-DD HH:MM:SS</td>
+                <td><span class="label label-success">8字节</span></td>
+                <td>1000-01-01 00:00:00~9999-12-31 23:59:59</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL的数据类型-日期与之间类型-TIMESTAMP -->
+<div id="data_types_of_MySQL_date_and_time_type_TIMESTAMP" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL的数据类型-日期与之间类型-TIMESTAMP</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>类型名称</th>
+                <th>日期格式</th>
+                <th>存储需求</th>
+                <th>日期范围</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>TIMESTAMP</td>
+                <td>YYYY-MM-DD HH:MM:SS</td>
+                <td><span class="label label-success">4字节</span></td>
+                <td>1970-01-01 00:00:01 UTC~2038-01-19 03:14:07 UTC</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

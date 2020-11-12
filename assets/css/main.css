@@ -1554,6 +1554,10 @@ ul.activity-list > li .timestamp {
     margin-bottom: 30px !important;
 }
 
+.margin-left-10 {
+    margin-left: 10px !important;
+}
+
 .padding-top-30 {
     padding-top: 30px !important;
 }
@@ -2508,21 +2512,30 @@ ul.activity-timeline > li:last-child:after {
     border: 1px solid #CCC;
 }
 
+/*红色字体*/
 .note {
     color: red;
 }
 
+/*红色斜体体*/
 .note-italic {
     color: red;
     font-style: italic;
 }
 
+/*粗体*/
 .blod {
     font-weight: bold;
 }
 
+/*顶部居中10%*/
 .center-10 {
     margin-top: 10%;
+}
+
+/*显示手状图标*/
+.tinyHand {
+    cursor: pointer
 }
 
 /*# sourceMappingURL=main.css.map */

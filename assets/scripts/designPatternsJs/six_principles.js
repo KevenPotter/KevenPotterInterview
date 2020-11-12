@@ -30,7 +30,7 @@ function overviewOfTheSixPrinciplesChart() {
                 layerTips('Interface Segregation Principle (ISP)', overviewOfTheSixPrinciplesChart);
                 break;
             case '迪米特法则':
-                layerTips('Law of Demeter (LoD)<br>Least Knowledge Principle (LKP)', overviewOfTheSixPrinciplesChart);
+                layerTips('Law of Demeter (LoD)<br/>Least Knowledge Principle (LKP)', overviewOfTheSixPrinciplesChart);
                 break;
             case '开闭原则':
                 layerTips('Open Close Principle (OCP)', overviewOfTheSixPrinciplesChart);
