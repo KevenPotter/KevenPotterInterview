@@ -148,13 +148,13 @@
                             </div>
                             <div class="panel-body">
                                 <div style="height:400%;">
-                                    <h4 class="blod">接口的类型：</h4>
+                                    <h4 class="bold">接口的类型：</h4>
                                     <ul>
                                         <li>实例接口：在Java中声明一个类，然后用new关键字产生一个实例，它是对一个类型的事物的描述，这是一种接口。比如你定义Person这个类，然后使用Person zhangSan = new Person()产生了一个实例，这个实例要遵从的标准就是Person这个类，Person类就是zhangSan的接口。疑惑？看不懂？不要紧，那是因为让Java语言浸染的时间太长了，只要知道从这个角度来看，Java中的类也是一种接口。</li>
                                         <li>类接口：Java中经常使用的interface关键字定义的接口。</li>
                                     </ul>
                                     <hr>
-                                    <h4 class="blod">隔离的定义：</h4>
+                                    <h4 class="bold">隔离的定义：</h4>
                                     <ul>
                                         <li>Clients should not be forced to depend upon interfaces that they don't use.（客户端不应该依赖它不需要的接口。）</li>
                                         <li>The dependency of one class to another one should depend on the smallest possible interface.（类间的依赖关系应该建立在最小的接口上。）</li>
@@ -200,18 +200,18 @@
         <h3 class="panel-title">单一职责原则</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod"><b>单一职责的解释：</b></h4>
+        <h4 class="bold"><b>单一职责的解释：</b></h4>
         <p>There should never be more than one reason for a class to change</p>
-        <h4 class="blod"><b>单一职责的遵守：</b></h4>
+        <h4 class="bold"><b>单一职责的遵守：</b></h4>
         <p>This is sometimes hard to see</p>
-        <h4 class="blod"><b>单一职责的好处：</b></h4>
+        <h4 class="bold"><b>单一职责的好处：</b></h4>
         <ul>
             <li>类的复杂性降低，实现什么职责都有清晰明确的定义；</li>
             <li>可读性提高，复杂性降低，那当然可读性提高了；</li>
             <li>可维护性提高，可读性提高，那当然更容易维护了；</li>
             <li>变更引起的风险降低，变更是必不可少的，如果接口的单一职责做得好,一个接口修改只对相应的实现类有影响，对其他的接口无影响，这对系统的扩展性、维护性大的都有非常大的帮助。</li>
         </ul>
-        <h4 class="blod">单一职责的坏处：</h4>
+        <h4 class="bold">单一职责的坏处：</h4>
         <ul>
             <li>生搬硬套单一职责原则会引起类的剧增，给维护带来非常多的麻烦；</li>
             <li>过分细分类的职责也会人为地增加系统的复杂性。</li>
@@ -228,21 +228,21 @@
         <h3 class="panel-title">里氏替换原则</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">里氏替换的定义一：</h4>
+        <h4 class="bold">里氏替换的定义一：</h4>
         <p>If for each object o1 of type S there is an object o2 of type T such that for all programs P defined in terms of T, the behavior of P is unchanged when o1 is substituted for o2 then S is a subtype of T.</p>
         <p>如果对每一个类型为S的对象o1，都有类型为T的对象o2，使得以T定义的所有程序P在所有的对象o1都代换成o2时，程序P的行为没有发生变化，那么类型S是类型T的子类型。</p>
-        <h4 class="blod">里氏替换的定义二：</h4>
+        <h4 class="bold">里氏替换的定义二：</h4>
         <p>Functions that use pointers or references to base classes must be able to use objects of derived classes without knowing it.</p>
         <p>所有引用基类的地方必须能透明地使用其子类的对象。</p>
-        <h4 class="blod">里氏替换的通俗理解：</h4>
+        <h4 class="bold">里氏替换的通俗理解：</h4>
         <p>只要父类能出现的地方子类就可以出现，而且替换位子类也不会产生任何错误或异常，使用者可能根本就不需要知道是父类还是子类。但是，反过来就不行了，有子类出现的地方，父类未必就能适应。</p>
-        <h4 class="blod">里氏替换的好处：</h4>
+        <h4 class="bold">里氏替换的好处：</h4>
         <ul>
             <li>增强程序的健壮性；</li>
             <li>版本升级时保持良好的兼容性；</li>
             <li>增加的子类可以继续运行。</li>
         </ul>
-        <h4 class="note blod">里氏替换的四层含义：</h4>
+        <h4 class="note bold">里氏替换的四层含义：</h4>
         <ul>
             <li>子类必须完全实现父类的方法；</li>
             <li>子类可以有自己的个性</li>
@@ -261,15 +261,15 @@
         <h3 class="panel-title">依赖倒置原则</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">依赖倒置的定义：</h4>
+        <h4 class="bold">依赖倒置的定义：</h4>
         <p>High level modules should not depend upon low level modules. Both should depend upon abstractions. Abstractions should not depend upon details. Details should depend upon abstractions.</p>
-        <h4 class="note blod">依赖倒置的三层含义：</h4>
+        <h4 class="note bold">依赖倒置的三层含义：</h4>
         <ul>
             <li>高层模块不应该依赖低层模块，两者都应该依赖其抽象；</li>
             <li>抽象不应该依赖细节；</li>
             <li>细节应该依赖抽象。</li>
         </ul>
-        <h4 class="blod">依赖倒置在Java语言中的表现：</h4>
+        <h4 class="bold">依赖倒置在Java语言中的表现：</h4>
         <ul>
             <li>模块间的依赖通过抽象发生，实现类之间不发生直接的依赖关系，其依赖关系是通过接口或抽象类产生的；</li>
             <li>接口或抽象类不依赖于实现类；</li>
@@ -277,22 +277,22 @@
         </ul>
         <p class="note-italic">精简的来说：</p>
         <p>面向接口编程——OOD（Object-Oriented Design，面向对象设计）</p>
-        <h4 class="blod">依赖倒置的好处：</h4>
+        <h4 class="bold">依赖倒置的好处：</h4>
         <ul>
             <li>可以减少类间的耦合性；</li>
             <li>可以提高系统的稳定性；</li>
             <li>可以降低并行开发引起的风险；</li>
             <li>可以提高代码的可读性和可维护性。</li>
         </ul>
-        <h4 class="blod">依赖的三种写法</h4>
+        <h4 class="bold">依赖的三种写法</h4>
         <ul>
             <li>1.构造函数传递依赖对象</li>
             <li>2.Setter方法传递依赖对象</li>
             <li>3.接口声明依赖对象</li>
         </ul>
-        <h4 class="blod">依赖倒置的本质：</h4>
+        <h4 class="bold">依赖倒置的本质：</h4>
         <p>其本质就是通过抽象（接口或抽象类）使各个类或模块的实现彼此独立，不互相影响，实现模块间的松耦合。</p>
-        <h4 class="blod">依赖倒置的实现规则：</h4>
+        <h4 class="bold">依赖倒置的实现规则：</h4>
         <ul>
             <li>每个类尽量都有接口或抽象类，或者抽象类和接口两者都具备；</li>
             <li>变量的表面类型尽量是接口或者是抽象类；</li>
@@ -311,7 +311,7 @@
         <h3 class="panel-title">接口隔离原则</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">保证接口的纯洁性：</h4>
+        <h4 class="bold">保证接口的纯洁性：</h4>
         <ul>
             <li>接口要尽量小；</li>
             <li>接口要高内聚；</li>
@@ -320,7 +320,7 @@
         </ul>
         <p class="note-italic"><b>注意</b></p>
         <p>根据接口隔离原则拆分接口时，首先必须满足<b>单一职责原则</b>。</p>
-        <h4 class="blod">原子的划分：</h4>
+        <h4 class="bold">原子的划分：</h4>
         <p>接口隔离原则是对接口的定义，同时也是对类的定义，接口和类尽量使用原子接口或原子类来组装。但是，这个原子该怎么划分是设计模式中的一大难题，在实践中可以根据以下几个规则来衡量：</p>
         <ul>
             <li>一个接口只服务于一个子模块或业务逻辑；</li>
@@ -337,10 +337,10 @@
         <h3 class="panel-title">迪米特法则</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">迪米特法则的定义：</h4>
+        <h4 class="bold">迪米特法则的定义：</h4>
         <p>一个对象应该对其他对象有最少的了解。通俗地讲，一个类应该对自己需要耦合或调用的类知道的最少。你（被耦合或调用的类）的内部是如何复杂都和我没关系，那是你的事情，我就知道你提供的这么多public方法，我就调用这么多，其他的我一概不关心</p>
         <p>Only talk to your immediate friends.（只与直接的朋友通信。）</p>
-        <h4 class="note blod">迪米特法则的四层含义：</h4>
+        <h4 class="note bold">迪米特法则的四层含义：</h4>
         <p>迪米特法则对类的低耦合提出了明确的要求</p>
         <ol>
             <li>只和朋友交流；</li>
@@ -351,7 +351,7 @@
             如果一个方法放在本类中，既不增加类间关系，也不对本类产生负面影响，就放置在本类中。
             <li>谨慎使用Serializable。</li>
         </ol>
-        <h4 class="note blod">迪米特法则的朋友类定义：</h4>
+        <h4 class="note bold">迪米特法则的朋友类定义：</h4>
         <p>出现在<b>成员变量</b>、<b>方法的输入输出参数中</b>的类成为成员朋友类，而出现在<b>方法体内部的类</b>不属于朋友类。</p>
         <p class="note-italic"><b>注意</b></p>
         <p>迪米特法则的核心观念就是类间解耦，弱耦合，只有弱耦合了以后，类的复用率才可以提高。其要求的结果就是产生了大量的中转或跳转类，导致系统的复杂性提高，同时也为维护带来了难度。读者在采用迪米特法则时需要反复权衡，既做到让结构清晰，又做到高内聚低耦合。</p>
@@ -364,17 +364,17 @@
         <h3 class="panel-title">开闭原则</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">开闭原则的定义：</h4>
+        <h4 class="bold">开闭原则的定义：</h4>
         <p>Software entities like classes, modules and functions should be open for extension but closed for modifications.</p>
         <p>一个软件实体如类、模块和函数应该对扩展开放，对修改关闭。</p>
-        <h4 class="note blod">软实体的含义：</h4>
+        <h4 class="note bold">软实体的含义：</h4>
         <ul>
             <li>项目或软件产品中按照一定的逻辑规则划分的模块；</li>
             <li>抽象和类；</li>
             <li>方法。</li>
         </ul>
         <p>开闭原则告诉我们应尽量通过扩展软件实体的行为来实现变化，而不是通过修改已有的代码来完成变化，它是为软件实体的未来事件而制定的对现行开发设计进行约束的一个原则。</p>
-        <h4 class="note blod">变化的三种类型：</h4>
+        <h4 class="note bold">变化的三种类型：</h4>
         <ol>
             <li>逻辑变化：</li>
             只变化一个逻辑，而不涉及其他模块，比如原有的一个算法是a*b+c，现在需要修改为a*b*c，可以通过修改原有类中的方法的方式来完成，前提条件是所有依赖或关联类都按照相同的逻辑处理。
@@ -392,7 +392,7 @@
         <h3 class="panel-title">单例模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">单例模式的定义：</h4>
+        <h4 class="bold">单例模式的定义：</h4>
         <p>Ensure a class only one instance, and provide a global point of access to it.</p>
         <p>确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例。</p>
     </div>
@@ -404,7 +404,7 @@
         <h3 class="panel-title">工厂方法模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">工厂方法模式的定义：</h4>
+        <h4 class="bold">工厂方法模式的定义：</h4>
         <p>Define an interface for creating an object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses.</p>
         <p>定义一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化延迟到其子类。</p>
     </div>
@@ -416,7 +416,7 @@
         <h3 class="panel-title">抽象工厂模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">抽象工厂模式的定义：</h4>
+        <h4 class="bold">抽象工厂模式的定义：</h4>
         <p>Provide an interface for creating families of related or dependent objects without specifying their concrete classes.</p>
         <p>为创建一组相关或相互依赖的对象提供一个接口，而且无需指定它们的具体类。</p>
     </div>
@@ -428,7 +428,7 @@
         <h3 class="panel-title">模板方法模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">模板方法模式的定义：</h4>
+        <h4 class="bold">模板方法模式的定义：</h4>
         <p>Define the skeleton of algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm's structure.</p>
         <p>定义一个操作中的算法的框架，而将一些步骤延迟到子类中。使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</p>
     </div>
@@ -440,7 +440,7 @@
         <h3 class="panel-title">建造者模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">建造者模式的定义：</h4>
+        <h4 class="bold">建造者模式的定义：</h4>
         <p>Separate the construction of a complex object from its representation so that the same construction process can create different representations.</p>
         <p>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</p>
     </div>
@@ -452,7 +452,7 @@
         <h3 class="panel-title">代理模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">代理模式的定义：</h4>
+        <h4 class="bold">代理模式的定义：</h4>
         <p>Provide a surrogate or placeholder for another object to control access to it.</p>
         <p>为其他对象提供一种代理以控制对这个对象的访问。</p>
     </div>
@@ -464,7 +464,7 @@
         <h3 class="panel-title">原型模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">原型模式的定义：</h4>
+        <h4 class="bold">原型模式的定义：</h4>
         <p>Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype.</p>
         <p>用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。</p>
     </div>
@@ -476,7 +476,7 @@
         <h3 class="panel-title">中介者模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">中介者模式的定义：</h4>
+        <h4 class="bold">中介者模式的定义：</h4>
         <p>Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it lets you vary their interaction independently.</p>
         <p>用一个中介对象封装一系列的对象交互，中介者使各对象不需要显式地相互作用，从而使其耦合松散，而且可以独立地改变它们之间的交互。</p>
     </div>
@@ -488,7 +488,7 @@
         <h3 class="panel-title">命令模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">命令模式的定义：</h4>
+        <h4 class="bold">命令模式的定义：</h4>
         <p>Encapsulate a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.</p>
         <p>将一个请求封装成一个对象，从而让你使用不同的请求把客户端参数化，对请求排队或者记录请求日志，可以提供命令的撤销和恢复功能。</p>
     </div>
@@ -500,7 +500,7 @@
         <h3 class="panel-title">责任链模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">责任链模式的定义：</h4>
+        <h4 class="bold">责任链模式的定义：</h4>
         <p>Avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request. Chain the receiving objects and pass the request along the chain until an object handles it.</p>
         <p>使多个对象都有机会处理请求，从而避免了请求的发送者和接受者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，直到有对象处理它为止。</p>
     </div>
@@ -512,7 +512,7 @@
         <h3 class="panel-title">装饰模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">装饰模式的定义：</h4>
+        <h4 class="bold">装饰模式的定义：</h4>
         <p>Attach additional responsibilities to an object dynamically keeping the same interface. Decorators provide a flexible alternative to subclassing for extending functionality.</p>
         <p>动态的给一个对象添加一些额外的职责。就增加功能来说，装饰模式相比生成子类更为灵活。</p>
     </div>
@@ -524,7 +524,7 @@
         <h3 class="panel-title">策略模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">策略模式的定义：</h4>
+        <h4 class="bold">策略模式的定义：</h4>
         <p>Define a family of algorithms, encapsulate each one, and make them interchangeable.</p>
         <p>定义一组算法，将每个算法都封装起来，并且使它们之间可以互换。</p>
     </div>
@@ -536,7 +536,7 @@
         <h3 class="panel-title">适配器模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">适配器模式的定义：</h4>
+        <h4 class="bold">适配器模式的定义：</h4>
         <p>Convert the interface of a class into another interface clients expect. Adapter lets classes work together that couldn't otherwise because of incompatible interfaces.</p>
         <p>将一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起工作。</p>
     </div>
@@ -548,7 +548,7 @@
         <h3 class="panel-title">迭代器模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">迭代器模式的定义：</h4>
+        <h4 class="bold">迭代器模式的定义：</h4>
         <p>Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation.</p>
         <p>它提供一种方法访问一个容器对象中各个元素，而又不需要暴露该对象的内部细节。</p>
     </div>
@@ -560,7 +560,7 @@
         <h3 class="panel-title">组合模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">组合模式的定义：</h4>
+        <h4 class="bold">组合模式的定义：</h4>
         <p>Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.</p>
         <p>将对象组合成树形结构以表示“部分-整体”的层次结构，使得用户对单个对象和组合对象的使用具有一致性。</p>
     </div>
@@ -572,7 +572,7 @@
         <h3 class="panel-title">观察者模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">观察者模式的定义：</h4>
+        <h4 class="bold">观察者模式的定义：</h4>
         <p>Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.</p>
         <p>定义对象间一种一对多的依赖关系，使得每当一个对象改变状态，则所有依赖于它的对象都会得到通知并被自动更新。</p>
     </div>
@@ -584,7 +584,7 @@
         <h3 class="panel-title">门面模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">门面模式的定义：</h4>
+        <h4 class="bold">门面模式的定义：</h4>
         <p>Provide a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.</p>
         <p>要求一个子系统的外部与其内部的通信必须通过一个统一的对象进行。门面模式提供一个高层次的接口，使得子系统更易于使用。</p>
     </div>
@@ -596,7 +596,7 @@
         <h3 class="panel-title">备忘录模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">备忘录模式的定义：</h4>
+        <h4 class="bold">备忘录模式的定义：</h4>
         <p>Without violating encapsulation, capture and externalize an object's internal state so that the object can be restored to this state later.</p>
         <p>在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样以后就可将该对象恢复到原先保存的状态。</p>
     </div>
@@ -608,7 +608,7 @@
         <h3 class="panel-title">访问者模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">访问者模式的定义：</h4>
+        <h4 class="bold">访问者模式的定义：</h4>
         <p>Represent an operation to b performed on the elements of an object structure. Visitor lets you define a new operation without changing the classes of the elements on which it operates.</p>
         <p>封装一些作用于某种数据结构中的各元素操作，它可以在不改变数据结构的前提下定义作用于这些元素的新的操作。</p>
     </div>
@@ -620,7 +620,7 @@
         <h3 class="panel-title">状态模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">状态模式的定义：</h4>
+        <h4 class="bold">状态模式的定义：</h4>
         <p>Allow an object to alter its behavior when its internal state changes. The object will appear to change its class.</p>
         <p>当一个对象内在状态改变时允许其改变行为，这个对象看起来像改变了其类。</p>
     </div>
@@ -632,7 +632,7 @@
         <h3 class="panel-title">解释器模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">解释器模式的定义：</h4>
+        <h4 class="bold">解释器模式的定义：</h4>
         <p>Given a language, define a representation for its grammar along with an interpreter that users the representation to interpret sentences in the language.</p>
         <p>给定一门语言，定义它的文法的一种表示，并定义一个解释器，该解释器使用该表示来解释语言中的句子。</p>
     </div>
@@ -644,7 +644,7 @@
         <h3 class="panel-title">享元模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">享元模式的定义：</h4>
+        <h4 class="bold">享元模式的定义：</h4>
         <p>Use sharing to support large numbers of fine-grained objects efficiently.</p>
         <p>使用共享对象可有效地支持大量的细粒度的对象。</p>
     </div>
@@ -656,7 +656,7 @@
         <h3 class="panel-title">桥梁模式</h3>
     </div>
     <div class="panel-body">
-        <h4 class="blod">桥梁模式的定义：</h4>
+        <h4 class="bold">桥梁模式的定义：</h4>
         <p>Decouple an abstraction from its implementation so that the two can vary independently.</p>
         <p>将抽象和实现解耦，使得两者可以独立地变化。</p>
     </div>

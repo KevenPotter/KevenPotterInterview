@@ -147,7 +147,7 @@
                             </div>
                             <div class="panel-body">
                                 <div style="height:400%;">
-                                    <h4 class="blod">数据库的概念：</h4>
+                                    <h4 class="bold">数据库的概念：</h4>
                                     <ul>
                                         <li>对于数据库的概念，没有一个完全固定的定义，随着数据库历史的发展，定义的内容也有很大的差异，其中一种比较普遍的观点认为：</li>
                                         <li>数据库（DataBase，DB）是一个长期存储在计算机内的、有组织的、有共享的、统一管理的数据集合。</li>
@@ -173,7 +173,7 @@
                             </div>
                             <div class="panel-body">
                                 <div style="height:400%;">
-                                    <h4 class="blod">数据库表的概念：</h4>
+                                    <h4 class="bold">数据库表的概念：</h4>
                                     <ul>
                                         <li>一系列二维数组的集合，用来存储数据和操作数据的逻辑结构</li>
                                         <li>由纵向的列和横向的行组成</li>
@@ -260,7 +260,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
                                 <h3 class="panel-title">MySQL的数据类型-数值类型</h3>
@@ -274,7 +274,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
                                 <h3 class="panel-title">MySQL的数据类型-日期与时间类型</h3>
@@ -288,23 +288,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">MySQL的数据类型-文本字符串类型</h3>
+                                <h3 class="panel-title">MySQL的数据类型-<span id="text_string_type_panel_title" class="tinyHand">文本字符串类型</span>与<span id="binary_string_type_panel_title" class="tinyHand">二进制字符串类型</span></h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="data_types_of_MySQL_text_string_type" style="height:400%;"></div>
+                                <div id="data_types_of_MySQL_string_type" style="height:400%;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
                 <div class="row">
                     <div class="col-md-4">
                         <div id="seven_JOIN_theories_INNER_JOIN_panel" class="panel">
@@ -465,7 +465,7 @@
                             </div>
                             <div class="panel-body">
                                 <div style="height:400%;">
-                                    <h4 class="blod">手写形式：</h4>
+                                    <h4 class="bold">手写形式：</h4>
                                     <ol>
                                         <li><b>SELECT DISTINCT</b> &nbsp;&lt;select_list&gt;</li>
                                         <li><b>FROM</b> &nbsp;&lt;left_table&gt; &nbsp; &lt;join_type&gt;</li>
@@ -491,7 +491,7 @@
                             </div>
                             <div class="panel-body">
                                 <div style="height:400%;">
-                                    <h4 class="blod">机读形式：</h4>
+                                    <h4 class="bold">机读形式：</h4>
                                     <ol>
                                         <li><b>FROM</b> &nbsp;&lt;left_table&gt;</li>
                                         <li><b>ON</b> &nbsp;&lt;join_condition&gt;</li>
@@ -888,6 +888,260 @@
                 <li>如果一个DATETIME或TIMESTAMP对象分配一个DATE值，那么结果值的时间部分将被设置为‘00:00:00’因为DATE值未包含时间信息。如果为一个DATE对象分配一个DATETIME或TIMESTAMP值，那么结果值的时间部分将被删除，因为DATE值未包含时间信息</li>
             </ol>
         </div>
+    </div>
+</div>
+
+<!-- MySQL的数据类型_文本字符串类型简介 -->
+<div id="text_string_type_introduction" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL的数据类型_文本字符串类型简介</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>类型名称</th>
+                <th>说明</th>
+                <th>存储需求</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>CHAR(M)</td>
+                <td>固定长度非二进制字符串</td>
+                <td>M字节，1≤M≤255</td>
+            </tr>
+            <tr>
+                <td>VARCHAR(M)</td>
+                <td>变长非二进制字符串</td>
+                <td>L+1字节，在此L≤M和1≤M≤255</td>
+            </tr>
+            <tr>
+                <td>TINYTEXT</td>
+                <td>非常小的非二进制字符串</td>
+                <td>L+1字节，在此L＜2^8</td>
+            </tr>
+            <tr>
+                <td>TEXT</td>
+                <td>小的非二进制字符串</td>
+                <td>L+2字节，在此L＜2^16</td>
+            </tr>
+            <tr>
+                <td>MEDIUMTEXT</td>
+                <td>中等大小的非二进制字符串</td>
+                <td>L+3字节，在此L＜2^24</td>
+            </tr>
+            <tr>
+                <td>LONGTEXT</td>
+                <td>大的非二进制字符串</td>
+                <td>L+4字节，在此L＜2^32</td>
+            </tr>
+            <tr>
+                <td>ENUM</td>
+                <td>枚举类型，只能有一个枚举字符串值</td>
+                <td>1或2字节，取决于枚举值的数目（最大值为65535）</td>
+            </tr>
+            <tr>
+                <td>SET</td>
+                <td>一个设置，字符串对象可以有零个或多个SET成员</td>
+                <td>1、2、3、4或8字节，取决于集合成员的数量（最多为64个成员）</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <h3 class="margin-left-10"><span class="panel-note"><i class="fa fa-anchor"></i>提示：</span></h3>
+            <ul>
+                <li>VARCHAR和TEXT类型与BLOB都是变长类型，其存储需求取决于列值的实际长度（在前面的表格中用L表示），而不是取决于类型的最大可能尺寸。例如，一个VARCHAR(10)列能保存最大长度为10个字符的字符串，实际的存储需要是字符串的长度L加上1字节（记录字符串的长度）。</li>
+                <li>对于字符“abcd”，L是4而存储要求是5字节。</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- MySQL的数据类型-文本字符串类型-CHAR-VARCHAR -->
+<div id="data_types_of_MySQL_text_string_type_CHAR_VARCHAR" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL的数据类型-文本字符串类型-CHAR-VARCHAR</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>插入值</th>
+                <th>CHAR(4)</th>
+                <th>存储需求</th>
+                <th>VARCHAR(4)</th>
+                <th>存储需求</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>‘’</td>
+                <td>
+                    <pre>‘    ’</pre>
+                </td>
+                <td><span class="label label-success">4字节</span></td>
+                <td>
+                    <pre>‘’</pre>
+                </td>
+                <td><span class="label label-success">1字节</span></td>
+            </tr>
+            <tr>
+                <td>‘ab’</td>
+                <td>
+                    <pre>‘ab  ’</pre>
+                </td>
+                <td><span class="label label-success">4字节</span></td>
+                <td>
+                    <pre>‘ab’</pre>
+                </td>
+                <td><span class="label label-success">3字节</span></td>
+            </tr>
+            <tr>
+                <td>‘abc’</td>
+                <td>
+                    <pre>‘abc ’</pre>
+                </td>
+                <td><span class="label label-success">4字节</span></td>
+                <td>
+                    <pre>‘abc’</pre>
+                </td>
+                <td><span class="label label-success">4字节</span></td>
+            </tr>
+            <tr>
+                <td>‘abcd’</td>
+                <td>
+                    <pre>‘abcd’</pre>
+                </td>
+                <td><span class="label label-success">4字节</span></td>
+                <td>
+                    <pre>‘abcd’</pre>
+                </td>
+                <td><span class="label label-success">5字节</span></td>
+            </tr>
+            <tr>
+                <td>‘abcdef’</td>
+                <td>
+                    <pre>‘abcd’</pre>
+                </td>
+                <td><span class="label label-success">4字节</span></td>
+                <td>
+                    <pre>‘abcd’</pre>
+                </td>
+                <td><span class="label label-success">5字节</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <h3 class="margin-left-10"><span class="panel-note"><i class="fa fa-anchor"></i>对比结果：</span></h3>
+            <ol>
+                <li>CHAR(4)定义了固定长度为4的列，不管存入的数据长度为多少，所占用的空间均为4个字节</li>
+                <li>VARCHAR(4)定义的列所占的字节数为实际长度加1</li>
+                <li>CHAR在保存尾部带有空格的字符串时，会将后面的空格删除；而VARCHAR则不会</li>
+                <li>在上述对比表格中的最后一行‘abcdef’，只有在使用“不严格”模式时，字符串才会被截断插入；如果MySQL运行在“严格”模式，超过列长度的值不会被保存，并且会出现错误信息“ERROR 1406(22001):Data too long for column”，即字符串长度超过指定长度，无法插入</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- MySQL的数据类型-文本字符串类型-TINYTEXT-TEXT-MEDIUMTEXT-LONGTEXT -->
+<div id="data_types_of_MySQL_text_string_type_TINYTEXT_TEXT_MEDIUMTEXT_LONGTEXT" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL的数据类型-文本字符串类型-TINYTEXT-TEXT-MEDIUMTEXT-LONGTEXT</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <h3 class="margin-left-10"><span class="panel-note"><i class="fa fa-anchor"></i>对比结果：</span></h3>
+        <ol>
+            <li>TEXT列保存非二进制字符串，如文章内容、评论等。当保存或查询TEXT列的值时，不删除尾部空格。</li>
+            <li>TINYTEXT最大长度为255(2^8-1)字符的TEXT列</li>
+            <li>TEXT最大长度为65535(2^16-1)字符的TEXT列</li>
+            <li>MEDIUMTEXT最大长度为16777215(2^24-1)字符的TEXT列</li>
+            <li>LONGTEXT最大长度为4294967295(2^32-1)或4GB字符的TEXT列</li>
+        </ol>
+    </div>
+</div>
+
+<!-- MySQL的数据类型-文本字符串类型-ENUM -->
+<div id="data_types_of_MySQL_text_string_type_ENUM" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL的数据类型-文本字符串类型-ENUM</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>值</th>
+                <th>索引</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>NULL</td>
+                <td><span class="label label-success">NULL</span></td>
+            </tr>
+            <tr>
+                <td>''</td>
+                <td><span class="label label-success">0</span></td>
+            </tr>
+            <tr>
+                <td>first</td>
+                <td><span class="label label-success">1</span></td>
+            </tr>
+            <tr>
+                <td>second</td>
+                <td><span class="label label-success">2</span></td>
+            </tr>
+            <tr>
+                <td>third</td>
+                <td><span class="label label-success">3</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <h3 class="margin-left-10"><span class="panel-note"><i class="fa fa-anchor"></i>ENUM简介：</span></h3>
+            <ul>
+                <li>
+                    ENUM是一个字符串对象，其值为表创建时在列规定中枚举的一列值。语法格式如下
+                    <code>字段名 ENUM('值1','值2',...,'值n')</code>
+                </li>
+                <li>其中，“字段名”指将要定义的字段，“值n”指枚举列表中的第n个值</li>
+                <li>ENUM类型的字段在取值时，只能在指定的枚举列表中取，而且一次只能取一个。创建的成员中有空格时，其尾部的空格将自动被删除</li>
+                <li>ENUM值在内部用<span class="note">整数</span>表示，并且每个枚举值均有一个索引值：列表值所允许的成员值从1开始编号，MySQL存储的就是这个索引编号。枚举最多可以有65535个元素</li>
+                <li>ENUM值依照列索引顺序排列，并且空字符串排在非空字符串前，NULL值排在其他所有的枚举值前</li>
+                <li>
+                    <span class="note-italic">注意：</span>ENUM列总有一个<span class="bold">默认值：</span>
+                    <ol>
+                        <li>如果将ENUM列声明为NULL，NULL值则为该列的一个有效值，并且默认值为NULL</li>
+                        <li>如果将ENUM列声明为NOT NULL，其默认值为允许的值列表的第一个元素</li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- MySQL的数据类型-文本字符串类型-SET -->
+<div id="data_types_of_MySQL_text_string_type_SET" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL的数据类型-文本字符串类型-SET</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <h3 class="margin-left-10"><span class="panel-note"><i class="fa fa-anchor"></i>SET简介：</span></h3>
+        <ul>
+            <li>
+                SET是一个字符串对象，可以有零或多个值。SET列最多可以有64个成员，其值为表创建时规定的一列值。指定包括多个SET成员的SET列值时，各成员之间用逗号(,)间隔开。语法格式如下
+                <code>字段名 SET('值1','值2',...,'值n')</code>
+            </li>
+            <li>与ENUM类型相同，SET值在内部用整数表示，列表中每一个值都有一个索引编号。当创建表时，SET成员值的尾部空格将自动被删除</li>
+            <li>与ENUM类型不同的是，ENUM类型的字段只能从定义的列值中选择一个值插入，而SET类型的列可从定义的列值中选择多个字符的联合</li>
+            <li><span class="note-italic">注意：</span>如果插入SET字段中列值有重复，则MySQL自动删除重复的值：插入SET字段的值的顺序并不重要，MySQL会在存入数据库时按照定义的顺序显示：如果插入了不正确的值，默认情况下，MySQL将忽视这些值，并给出警告</li>
+        </ul>
     </div>
 </div>
 

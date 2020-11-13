@@ -7,13 +7,14 @@ $(document).ready(function () {
     typeOfDatabaseChart();
     characteristicsOfTheDatabaseChart();
     databaseSystemsChart();
-    database_systems_panel_titleTips();
+    databaseSystemsPanelTitleTips();
     classificationOfSQLChart();
     advantagesOfMySQLChart();
     dataTypesOfMySQLChart();
     dataTypesOfMySQLNumericTypeChart();
     dataTypesOfMySQLDateAndTimeTypeChart();
-    dataTypesOfMySQLTextStringTypeChart();
+    dataTypesOfMySQLStringTypeChart();
+    textStringTypeTitleTips();
 });
 
 /**
@@ -775,41 +776,42 @@ function dataTypesOfMySQLDateAndTimeTypeChart() {
 }
 
 /**
- * MySQL的数据类型-文本字符串类型图表
+ * MySQL的数据类型-字符串类型图表
  */
-function dataTypesOfMySQLTextStringTypeChart() {
-    var dataTypesOfMySQLTextStringTypeChart = $('#data_types_of_MySQL_text_string_type');
-    dataTypesOfMySQLTextStringTypeChart.removeAttr("_echarts_instance_");
-    var myChart = echarts.init(dataTypesOfMySQLTextStringTypeChart[0], 'macarons');
+function dataTypesOfMySQLStringTypeChart() {
+    var dataTypesOfMySQLStringTypeChart = $('#data_types_of_MySQL_string_type');
+    dataTypesOfMySQLStringTypeChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(dataTypesOfMySQLStringTypeChart[0], 'macarons');
     myChart.on('click', function (params) {
         switch (params.name) {
-            case 'YEAR':
-                layerCapture('data_types_of_MySQL_date_and_time_type_YEAR', 0, 60, 30);
+            case 'CHAR(M)':
+            case 'VARCHAR(M)':
+                layerCapture('data_types_of_MySQL_text_string_type_CHAR_VARCHAR', 0, 60, 58);
                 break;
-            case 'TIME':
-                layerCapture('data_types_of_MySQL_date_and_time_type_TIME', 0, 60, 37);
+            case 'TINYTEXT':
+            case 'TEXT':
+            case 'MEDIUMTEXT':
+            case 'LONGTEXT':
+                layerCapture('data_types_of_MySQL_text_string_type_TINYTEXT_TEXT_MEDIUMTEXT_LONGTEXT', 0, 60, 24);
                 break;
-            case 'DATE':
-                layerCapture('data_types_of_MySQL_date_and_time_type_DATE', 0, 60, 40);
+            case 'ENUM':
+                layerCapture('data_types_of_MySQL_text_string_type_ENUM', 0, 60, 52);
                 break;
-            case 'DATETIME':
-                layerCapture('data_types_of_MySQL_date_and_time_type_DATETIME', 0, 60, 42);
-                break;
-            case 'TIMESTAMP':
-                layerCapture('data_types_of_MySQL_date_and_time_type_TIMESTAMP', 0, 60, 37);
+            case 'SET':
+                layerCapture('data_types_of_MySQL_text_string_type_SET', 0, 60, 26);
                 break;
         }
     });
     var option = null;
     option = {
         title: {
-            text: 'MySQL的数据类型-文本字符串类型',
+            text: 'MySQL的数据类型-字符串类型',
             subtext: '《MySQL8从入门到精通（视频教学版）》-P89',
             left: 'center'
         },
         tooltip: {
             trigger: 'item',
-            formatter: '{b} : {c} ({d}%)'
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
         toolbox: {
             show: true,
@@ -825,39 +827,44 @@ function dataTypesOfMySQLTextStringTypeChart() {
         legend: {
             bottom: 10,
             left: 'center',
-            data: ['YEAR', 'TIME', 'DATE', 'DATETIME', 'TIMESTAMP'],
+            data: ['CHAR(M)', 'VARCHAR(M)', 'TINYTEXT', 'TEXT', 'MEDIUMTEXT', 'LONGTEXT', 'ENUM', 'SET', 'BIT(M)', 'BINARY(M)', 'VARBINARY(M)', 'TINYBLOB(M)', 'BLOB', 'MEDIUMBLOB(M)', 'LONGBLOB(M)'],
             textStyle: {
                 fontSize: 15
             }
         },
         series: [
             {
+                name: '文本字符串类型',
                 type: 'pie',
-                radius: '75%',
-                center: ['50%', '50%'],
-                selectedMode: 'single',
+                radius: [30, 110],
+                center: ['25%', '50%'],
+                roseType: 'radius',
                 data: [
-                    {value: 1, name: 'YEAR'},
-                    {value: 1, name: 'TIME'},
-                    {value: 1, name: 'DATE'},
-                    {value: 1, name: 'DATETIME'},
-                    {value: 1, name: 'TIMESTAMP'}
-                ],
-                label: {
-                    normal: {
-                        show: true,
-                        textStyle: {
-                            fontSize: 15
-                        }
-                    }
-                },
-                emphasis: {
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
+                    {value: 1, name: 'CHAR(M)'},
+                    {value: 5, name: 'VARCHAR(M)'},
+                    {value: 3, name: 'TINYTEXT'},
+                    {value: 1, name: 'TEXT'},
+                    {value: 2, name: 'MEDIUMTEXT'},
+                    {value: 3, name: 'LONGTEXT'},
+                    {value: 4, name: 'ENUM'},
+                    {value: 2, name: 'SET'}
+                ]
+            },
+            {
+                name: '二进制字符串类型',
+                type: 'pie',
+                radius: [30, 110],
+                center: ['75%', '50%'],
+                roseType: 'area',
+                data: [
+                    {value: 5, name: 'BIT(M)'},
+                    {value: 2, name: 'BINARY(M)'},
+                    {value: 5, name: 'VARBINARY(M)'},
+                    {value: 2, name: 'TINYBLOB(M)'},
+                    {value: 6, name: 'BLOB'},
+                    {value: 3, name: 'MEDIUMBLOB(M)'},
+                    {value: 1, name: 'LONGBLOB(M)'}
+                ]
             }
         ]
     };
@@ -870,8 +877,17 @@ function dataTypesOfMySQLTextStringTypeChart() {
 /**
  * 数据库系统_数据库系统图示
  */
-function database_systems_panel_titleTips() {
+function databaseSystemsPanelTitleTips() {
     $('#database_systems_panel_title').on('click', function () {
         layerCapture('database_systems_diagram', 0, 30, 70);
+    });
+}
+
+/**
+ * MySQL的数据类型_文本字符串类型简介
+ */
+function textStringTypeTitleTips() {
+    $('#text_string_type_panel_title').on('click', function () {
+        layerCapture('text_string_type_introduction', 0, 42, 55);
     });
 }
