@@ -15,6 +15,7 @@ $(document).ready(function () {
     dataTypesOfMySQLDateAndTimeTypeChart();
     dataTypesOfMySQLStringTypeChart();
     textStringTypeTitleTips();
+    binaryStringTypeTitleTips();
 });
 
 /**
@@ -800,6 +801,19 @@ function dataTypesOfMySQLStringTypeChart() {
             case 'SET':
                 layerCapture('data_types_of_MySQL_text_string_type_SET', 0, 60, 26);
                 break;
+            case 'BIT(M)':
+                layerCapture('data_types_of_MySQL_binary_string_type_BIT', 0, 60, 21);
+                break;
+            case 'BINARY(M)':
+            case 'VARBINARY(M)':
+                layerCapture('data_types_of_MySQL_binary_string_type_BINARY_VARBINARY', 0, 60, 23);
+                break;
+            case 'TINYBLOB(M)':
+            case 'BLOB(M)':
+            case 'MEDIUMBLOB(M)':
+            case 'LONGBLOB(M)':
+                layerCapture('data_types_of_MySQL_binary_string_type_TINYBLOB_BLOB_MEDIUMBLOB_LONGBLOB', 0, 60, 39);
+                break;
         }
     });
     var option = null;
@@ -827,7 +841,7 @@ function dataTypesOfMySQLStringTypeChart() {
         legend: {
             bottom: 10,
             left: 'center',
-            data: ['CHAR(M)', 'VARCHAR(M)', 'TINYTEXT', 'TEXT', 'MEDIUMTEXT', 'LONGTEXT', 'ENUM', 'SET', 'BIT(M)', 'BINARY(M)', 'VARBINARY(M)', 'TINYBLOB(M)', 'BLOB', 'MEDIUMBLOB(M)', 'LONGBLOB(M)'],
+            data: ['CHAR(M)', 'VARCHAR(M)', 'TINYTEXT', 'TEXT', 'MEDIUMTEXT', 'LONGTEXT', 'ENUM', 'SET', 'BIT(M)', 'BINARY(M)', 'VARBINARY(M)', 'TINYBLOB(M)', 'BLOB(M)', 'MEDIUMBLOB(M)', 'LONGBLOB(M)'],
             textStyle: {
                 fontSize: 15
             }
@@ -861,7 +875,7 @@ function dataTypesOfMySQLStringTypeChart() {
                     {value: 2, name: 'BINARY(M)'},
                     {value: 5, name: 'VARBINARY(M)'},
                     {value: 2, name: 'TINYBLOB(M)'},
-                    {value: 6, name: 'BLOB'},
+                    {value: 6, name: 'BLOB(M)'},
                     {value: 3, name: 'MEDIUMBLOB(M)'},
                     {value: 1, name: 'LONGBLOB(M)'}
                 ]
@@ -889,5 +903,14 @@ function databaseSystemsPanelTitleTips() {
 function textStringTypeTitleTips() {
     $('#text_string_type_panel_title').on('click', function () {
         layerCapture('text_string_type_introduction', 0, 42, 55);
+    });
+}
+
+/**
+ * MySQL的数据类型_二进制字符串类型简介
+ */
+function binaryStringTypeTitleTips() {
+    $('#binary_string_type_panel_title').on('click', function () {
+        layerCapture('binary_string_type_introduction', 0, 42, 35);
     });
 }
