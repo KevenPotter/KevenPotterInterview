@@ -306,6 +306,62 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">存储引擎对于选择CHAR和VARCHAR的影响-《MySQL8从入门到精通（视频教学版）》-P97：</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div style="height:400%;">
+                                    <ul>
+                                        <li>对于MyISAM存储引擎：最好使用固定长度的数据列代替可变长度的数据列。这样可以使整个表静态化，从而使数据检索更快，用空间换时间</li>
+                                        <li>对于InnoDB存储引擎：使用可变长度的数据列，因为InnoDB数据表的存储格式不分固定长度和可变长度，因此使用CHAR不一定比使用VARCHAR更好，但由于VARCHAR是按照实际的长度存储的，比较节省空间，所以对磁盘I/O和数据存储总量比较好</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">ENUM和SET的选取-《MySQL8从入门到精通（视频教学版）》-P97：</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div style="height:400%;">
+                                    <ul>
+                                        <li>ENUM只能取单值，它的数据列表是一个枚举集合。它的合法取值列表最多允许有65535个成员。因此，在需要从多个值中选取一个时，可以使用ENUM。比如：性别字段适合定义为ENUM类型，每次只能从‘男’或‘女’中取一个值</li>
+                                        <li>SET可取多值。它的合法取值列表最多允许有64个成员。空字符串可是一个合法的SET值。在需要取多个值的时候，适合使用SET类型，比如要存储一个人的兴趣爱好，最好使用SET类型</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">MySQL运算符概述：</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="MySQL_operator_overview" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-4">
                         <div id="seven_JOIN_theories_INNER_JOIN_panel" class="panel">
                             <div class="panel-heading">
@@ -1272,8 +1328,302 @@
             <ul>
                 <li>BLOB是一个二进制大对象，用来存储可变数量的数据。BLOB类型分为4种：TINYBLOB、BLOB、MEDIUMBLOB、LONGBLOB</li>
                 <li>BLOB列存储的是二进制字符串（字节字符串），TEXT列存储的是非二进制字符串（字符字符串）。BLOB列没有字符集，并且排序和比较基于列值字节的数值；TEXT列有一个字符集，并且根据字符集对值进行排序和比较</li>
+                <li>BLOB主要存储图片、音频信息等，而TEXT只能存储纯文本文件</li>
             </ul>
         </div>
+    </div>
+</div>
+
+<!-- MySQL运算符-算术运算符 -->
+<div id="MySQL_operator_overview_arithmetic_operator" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL运算符-算术运算符</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>运算符</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>+</td>
+                <td>加法运算</td>
+            </tr>
+            <tr>
+                <td>-</td>
+                <td>减法运算</td>
+            </tr>
+            <tr>
+                <td>*</td>
+                <td>乘法运算</td>
+            </tr>
+            <tr>
+                <td>/</td>
+                <td>除法运算，返回商</td>
+            </tr>
+            <tr>
+                <td>%</td>
+                <td>求余运算，返回余数</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <h3 class="margin-left-10"><span class="panel-note"><i class="fa fa-anchor"></i>注意：</span></h3>
+            <ul>
+                <li>符合四则运算法则——先乘除后加减</li>
+                <li>MySQL对无法整除的除法求商结果保存到了小数点后四位</li>
+                <li>对0的除法运算或求余运算返回结果均为NULL</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- MySQL运算符-比较运算符 -->
+<div id="MySQL_operator_overview_comparison_operator" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL运算符-比较运算符</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>运算符</th>
+                <th>作用</th>
+                <th>解释</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>=</td>
+                <td>等于</td>
+                <td class="tinyHand" onclick="comparisonOperator1()">用来判断数字、字符串和表达式是否相等：如果相等，返回值为1；否则返回值为0</td>
+            </tr>
+            <tr>
+                <td>&lt;=&gt;</td>
+                <td>安全等于</td>
+                <td>与‘=’操作符唯一的区别就是可以用来判断NULL值。两者都为NULL时返回值为1；否则返回值为0</td>
+            </tr>
+            <tr>
+                <td>&lt;&gt;（!=）</td>
+                <td>不等于</td>
+                <td>用于判断数字、字符串和表达式不相等的判断：如果不相等，返回值为1；否则返回值为0。不能用于判断空值NULL</td>
+            </tr>
+            <tr>
+                <td>&lt;=</td>
+                <td>小于等于</td>
+                <td>用来判断左边的操作数是否小于等于右边的操作数；如果小于等于，返回值为1；否则返回值为0。不能用于判断空值NULL</td>
+            </tr>
+            <tr>
+                <td>&gt;=</td>
+                <td>大于等于</td>
+                <td>用来判断左边的操作数是否大于等于右边的操作数；如果大于等于，返回值为1；否则返回值为0。不能用于判断空值NULL</td>
+            </tr>
+            <tr>
+                <td>&lt;</td>
+                <td>小于</td>
+                <td>用来判断左边的操作数是否小于右边的操作数；如果小于，返回值为1；否则返回值为0。不能用于判断空值NULL</td>
+            </tr>
+            <tr>
+                <td>&gt;</td>
+                <td>大于</td>
+                <td>用来判断左边的操作数是否大于右边的操作数；如果大于，返回值为1；否则返回值为0。不能用于判断空值NULL</td>
+            </tr>
+            <tr>
+                <td>IS NULL（ISNULL()）</td>
+                <td>判断一个值是否为NULL</td>
+                <td>用来检验一个值是否为NULL：如果为NULL，返回值为1；否则返回值为0</td>
+            </tr>
+            <tr>
+                <td>IS NOT NULL</td>
+                <td>判断一个值是否不为NULL</td>
+                <td>用来检验一个值是否为非NULL：如果是非NULL，返回值为1；否则返回值为0</td>
+            </tr>
+            <tr>
+                <td>LEAST</td>
+                <td>在有两个或多个参数时，返回最小值</td>
+                <td>语法格式为<code>LEAST(值1、值2、......、值n)</code>。其中，“值n”表示参数列表中有n个值。假如任意一个自变量为NULL，则LEAST()的返回值为NULL</td>
+            </tr>
+            <tr>
+                <td>GREATEST</td>
+                <td>在有两个或多个参数时，返回最大值</td>
+                <td>语法格式为<code>GREATEST(值1、值2、......、值n)</code>。其中，“值n”表示参数列表中有n个值。假如任意一个自变量为NULL，则LEAST()的返回值为NULL</td>
+            </tr>
+            <tr>
+                <td>BETWEEN AND</td>
+                <td>判断一个值是否落在两个值之间</td>
+                <td>语法格式为<code>expr BETWEEN min AND max</code>。假如expr大于等于min且小于等于max，则BETWEEN的返回值为1，否则返回值为0</td>
+            </tr>
+            <tr>
+                <td>IN</td>
+                <td>判断一个值是IN列表中的任意一个值</td>
+                <td>用来判断操作数是否为IN列表中的其中一个值：如果是，返回值为1；否则返回值为0。在左侧表达式为NULL的情况下，或是表中找不到匹配项并且表中一个表达式为NULL的情况下，IN的返回值均为NULL</td>
+            </tr>
+            <tr>
+                <td>NOT IN</td>
+                <td>判断一个值不是IN列表中的任意一个值</td>
+                <td>用来判断操作数是否为IN列表中的其中一个值：如果不是，返回值为1；否则返回值为0。在左侧表达式为NULL的情况下，或是表中找不到匹配项并且表中一个表达式为NULL的情况下，NOT IN的返回值均为NULL</td>
+            </tr>
+            <tr>
+                <td>LIKE</td>
+                <td>通配符匹配</td>
+                <td>
+                    语法格式为<code>expr LIKE 匹配条件</code>。如果expr满足匹配条件，则返回值为1（TRUE）；如果不匹配，则返回值为0（FALSE）。expr或匹配条件中任何一个为NULL，则结果为NULL
+                    <ol>
+                        <li>‘%’，匹配任何数目的字符，甚至包括零字符</li>
+                        <li>‘_’，只能匹配一个字符</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>REGEXP</td>
+                <td>正则表达式匹配</td>
+                <td class="tinyHand" onclick="comparisonOperator2()">语法格式为<code>expr REGEXP 匹配条件</code>。如果expr满足匹配条件，则返回值为1（TRUE）；如果不匹配，则返回值为0（FALSE）。expr或匹配条件中任何一个为NULL，则结果为NULL</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL运算符-比较运算符-= -->
+<div id="comparison_operator_1" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL运算符-比较运算符-=</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <h3 class="margin-left-10"><span class="panel-note"><i class="fa fa-anchor"></i>注意：</span></h3>
+        <ol>
+            <li>若有一个或两个参数为NULL，则比较运算的结果为NULL</li>
+            <li>若同一个比较运算中的两个参数都是字符串，则按照字符串进行比较</li>
+            <li>若两个参数均为整数，则按照整数进行比较</li>
+            <li>若用字符串和数字进行相等判断，则MySQL可以自动将字符串转换为数字</li>
+        </ol>
+    </div>
+</div>
+
+<!-- MySQL运算符-比较运算符-REGEXP -->
+<div id="comparison_operator_2" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL运算符-比较运算符-REGEXP</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <h3 class="margin-left-10"><span class="panel-note"><i class="fa fa-anchor"></i>提示：</span></h3>
+        <p class="margin-left-10">REGEXP运算符在进行匹配时，常用的有下面几种通配符：</p>
+        <ol>
+            <li><code>‘^’</code>匹配以该字符后面的字符开头的字符串</li>
+            <li><code>‘$’</code>匹配以该字符后面的字符结尾的字符串</li>
+            <li><code>‘.’</code>匹配任何一个单字符</li>
+            <li><code>‘[...]’</code>匹配在方括号内的任何字符。例如，“[abc]”匹配“a”“b”或“c”。为了命名字符的范围，使用一个‘_’。“[a-z]”匹配任何字母，而“[0-9]”匹配任何数字</li>
+            <li><code>‘*’</code>匹配零个或多个在它前面的字符。例如，“x*”匹配任何数量的‘x’字符，“[0-9*]”匹配任何数量的数字，而“*”匹配任何数量的任何字符</li>
+        </ol>
+    </div>
+</div>
+
+<!-- MySQL运算符-逻辑运算符 -->
+<div id="MySQL_operator_overview_logical_operator" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL运算符-逻辑运算符</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>运算符</th>
+                <th>作用</th>
+                <th>解释</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>NOT或者!</td>
+                <td>逻辑非</td>
+                <td>表示当操作数为0时，所得值为1；当操作数为非零时，所得值为0；当操作数为NULL时，所得的返回值为NULL</td>
+            </tr>
+            <tr>
+                <td>AND或者&&</td>
+                <td>逻辑与</td>
+                <td>表示当所有操作数均为非零值并且不为NULL时，计算所得结果为1；当一个或多个操作数为0时，所得结果为0；其余情况返回值为NULL</td>
+            </tr>
+            <tr>
+                <td>OR或者||</td>
+                <td>逻辑或</td>
+                <td>
+                    表示当两个操作数
+                    <ol>
+                        <li>均为非NULL值且任意一个操作数为非零值时，结果为1，否则结果为0</li>
+                        <li>当有一个操作数为NULL，且另一个操作数为非零值时，则结果为1，否则结果为NULL</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>XOR</td>
+                <td>逻辑异或</td>
+                <td>
+                    表示
+                    <ol>
+                        <li>当任意一个操作数为NULL时，返回值为NULL</li>
+                        <li>对于非NULL的操作数，如果两个操作数都是非0值或者都是0值，则返回结果为0</li>
+                        <li>如果一个为0值、另一个为非0值，返回结果为1</li>
+                        <li>a XOR b的计算等同于(a AND(NOT b))或者((NOT a) AND b)</li>
+                    </ol>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL运算符-位运算符 -->
+<div id="MySQL_operator_overview_bit_operator" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL运算符-位运算符</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>运算符</th>
+                <th>作用</th>
+                <th>解释</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>|</td>
+                <td>位或</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>&</td>
+                <td>位与</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>^</td>
+                <td>位异或</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>&lt;&lt;</td>
+                <td>位左移</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>&gt;&gt;</td>
+                <td>位右移</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>~</td>
+                <td>位取反，反转所有比特</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

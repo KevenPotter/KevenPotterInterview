@@ -16,6 +16,7 @@ $(document).ready(function () {
     dataTypesOfMySQLStringTypeChart();
     textStringTypeTitleTips();
     binaryStringTypeTitleTips();
+    MySQLOperatorOverviewChart();
 });
 
 /**
@@ -812,7 +813,7 @@ function dataTypesOfMySQLStringTypeChart() {
             case 'BLOB(M)':
             case 'MEDIUMBLOB(M)':
             case 'LONGBLOB(M)':
-                layerCapture('data_types_of_MySQL_binary_string_type_TINYBLOB_BLOB_MEDIUMBLOB_LONGBLOB', 0, 60, 39);
+                layerCapture('data_types_of_MySQL_binary_string_type_TINYBLOB_BLOB_MEDIUMBLOB_LONGBLOB', 0, 60, 42);
                 break;
         }
     });
@@ -889,6 +890,111 @@ function dataTypesOfMySQLStringTypeChart() {
 }
 
 /**
+ * MySQL运算符概述图表
+ */
+function MySQLOperatorOverviewChart() {
+    var MySQLOperatorOverviewChart = $('#MySQL_operator_overview');
+    MySQLOperatorOverviewChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(MySQLOperatorOverviewChart[0], 'macarons');
+    myChart.on('mouseover', function (params) {
+        switch (params.name) {
+            case '算术运算符':
+                layerTips('算术运算符用于各类数值运算，包括加（+）、减（-）、乘（*）、除（/）、求余（或称模运算，%）', MySQLOperatorOverviewChart);
+                break;
+            case '比较运算符':
+                layerTips('比较运算符用于比较运算，包括大于（>）、小于（<）、等于（=）、大于等于（>=）、小于等于（<=）、不等于（!=），以及IN、BETWEEN AND、IS NULL、GREATEST、LEAST、LIKE、REGEXP等', MySQLOperatorOverviewChart);
+                break;
+            case '逻辑运算符':
+                layerTips('逻辑运算符的求值结果均为1（TRUE）、0（FALSE），这类运算符有逻辑非（NOT或者!）、逻辑与（AND或者&&）、逻辑或（OR或者||）、逻辑异或（XOR）', MySQLOperatorOverviewChart);
+                break;
+            case '位运算符':
+                layerTips('位运算符参与运算的操作数按二进制位进行运算，包括位与（&）、位或（|）、位非（~）、位异或（^）、左移（<<）、右移（>>）6种', MySQLOperatorOverviewChart);
+                break;
+        }
+    });
+    myChart.on('click', function (params) {
+        switch (params.name) {
+            case '算术运算符':
+                layerCapture('MySQL_operator_overview_arithmetic_operator', 0, 25, 43);
+                break;
+            case '比较运算符':
+                layerCapture('MySQL_operator_overview_comparison_operator', 0, 60, 83);
+                break;
+            case '逻辑运算符':
+                layerCapture('MySQL_operator_overview_logical_operator', 0, 60, 39);
+                break;
+            case '位运算符':
+                layerCapture('MySQL_operator_overview_bit_operator', 0, 60, 32);
+                break;
+        }
+    });
+    var option = null;
+    option = {
+        title: {
+            text: 'MySQL运算符概述',
+            subtext: '《MySQL8从入门到精通（视频教学版）》-P98',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b} : {c} ({d}%)'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        legend: {
+            bottom: 10,
+            left: 'center',
+            data: ['算术运算符', '比较运算符', '逻辑运算符', '位运算符'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '75%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: [
+                    {value: 1, name: '算术运算符'},
+                    {value: 1, name: '比较运算符'},
+                    {value: 1, name: '逻辑运算符'},
+                    {value: 1, name: '位运算符'}
+                ],
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 15
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
+}
+
+/**
  * 数据库系统_数据库系统图示
  */
 function databaseSystemsPanelTitleTips() {
@@ -913,4 +1019,18 @@ function binaryStringTypeTitleTips() {
     $('#binary_string_type_panel_title').on('click', function () {
         layerCapture('binary_string_type_introduction', 0, 42, 35);
     });
+}
+
+/**
+ * 比较运算符_=
+ */
+function comparisonOperator1() {
+    layerCapture('comparison_operator_1', 0, 25, 22);
+}
+
+/**
+ * 比较运算符_REGEXP
+ */
+function comparisonOperator2() {
+    layerCapture('comparison_operator_2', 0, 25, 30);
 }
