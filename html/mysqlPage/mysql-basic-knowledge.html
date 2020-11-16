@@ -349,7 +349,7 @@
                     <div class="col-md-12">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">MySQL运算符概述：</h3>
+                                <h3 class="panel-title">MySQL运算符概述（另附<span id="operator_precedence_panel_title" class="tinyHand">优先级</span>表格）：</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
@@ -357,6 +357,22 @@
                             </div>
                             <div class="panel-body">
                                 <div id="MySQL_operator_overview" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">MySQL函数：</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="MySQL_functions" style="height:400%;"></div>
                             </div>
                         </div>
                     </div>
@@ -1595,32 +1611,600 @@
             <tr>
                 <td>|</td>
                 <td>位或</td>
-                <td></td>
+                <td>将参与运算的几个数据按照对应的二进制数逐位进行逻辑<span class="note">或</span>运算。对应的二进制位有一个或两个为1则该位的运算结果为1，否则为0</td>
             </tr>
             <tr>
                 <td>&</td>
                 <td>位与</td>
-                <td></td>
+                <td>将参与运算的几个操作数按照对应的二进制数逐位进行逻辑<span class="note">与</span>运算。对应的二进制位都为1则该位的运算结果为1，否则为0</td>
             </tr>
             <tr>
                 <td>^</td>
                 <td>位异或</td>
-                <td></td>
+                <td>将参与运算的两个数据按照对应的二进制数逐位进行逻辑<span class="note">异或</span>运算。对应位的二进制数不同时，对应位的结果才为1.如果两个对应位数都为0或者都为1，则对应位的结果为0</td>
             </tr>
             <tr>
                 <td>&lt;&lt;</td>
                 <td>位左移</td>
-                <td></td>
+                <td>将指定的二进制值的所有位都<span class="note">左</span>移指定的位数。左移指定位数之后，左边高位的数值将被移除并丢弃，右边低位空出的位置用0补齐。语法格式为<code>expr &lt;&lt; n</code>。其中，n指定值expr要移位的位数</td>
             </tr>
             <tr>
                 <td>&gt;&gt;</td>
                 <td>位右移</td>
-                <td></td>
+                <td>将指定的二进制值的所有位都<span class="note">右</span>移指定的位数。右移指定位数之后，右边低位的数值将被移除并丢弃，左边高位空出的位置用0补齐。语法格式为<code>expr &gt;&gt; n</code>。其中，n指定值expr要移位的位数</td>
             </tr>
             <tr>
                 <td>~</td>
                 <td>位取反，反转所有比特</td>
-                <td></td>
+                <td>将参与运算的数据按照对应的二进制数逐位反转，既1取反后变为0、0取反后变为1</td>
+            </tr>
+            <tr>
+                <td>另：</td>
+                <td colspan="2"> MySQL经过位运算之后的数值是一个64位的无符号整数，1的二进制数值表示为最右边位为1、其他位均为0，取反操作之后，除了最低位为0外，其他位均变为1</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL运算符-运算符优先级 -->
+<div id="operator_precedence_introduction" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL运算符-运算符优先级</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>优先级</th>
+                <th>运算符</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>最低</td>
+                <td>=（赋值运算），:=</td>
+            </tr>
+            <tr>
+                <td rowspan="13"></td>
+                <td>||，OR</td>
+            </tr>
+            <tr>
+                <td>XOR</td>
+            </tr>
+            <tr>
+                <td>&&，AND</td>
+            </tr>
+            <tr>
+                <td>NOT</td>
+            </tr>
+            <tr>
+                <td>BETWEEN，CASE，WHEN，THEN，ELSE</td>
+            </tr>
+            <tr>
+                <td>=（比较运算），&lt;=&gt;，&gt;=，&gt;，&lt;=，&lt;，&lt;&gt;，!=，IS，LIKE，REGEXP，IN</td>
+            </tr>
+            <tr>
+                <td>|</td>
+            </tr>
+            <tr>
+                <td>&</td>
+            </tr>
+            <tr>
+                <td>&lt;&lt;，&gt;&gt;</td>
+            </tr>
+            <tr>
+                <td>-，+</td>
+            </tr>
+            <tr>
+                <td>*，/（DIV），%（MOD）</td>
+            </tr>
+            <tr>
+                <td>^</td>
+            </tr>
+            <tr>
+                <td>-（负号），~（位反转）</td>
+            </tr>
+            <tr>
+                <td>最高</td>
+                <td>!</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL函数-数学函数 -->
+<div id="MySQL_functions_mathematical_function" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL函数-数学函数</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>函数名</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>ABS(x)</td>
+                <td>返回x的绝对值</td>
+            </tr>
+            <tr>
+                <td>PI()</td>
+                <td>返回圆周率Π的值，返回结果保留7位有效数字</td>
+            </tr>
+            <tr>
+                <td>SQRT(x)</td>
+                <td>返回非负数x的二次方根，如果为负数则返回NULL</td>
+            </tr>
+            <tr>
+                <td>MOD(x,y)</td>
+                <td>返回x被y除后的余数，它对于带有小数部分的数值也起作用，它返回除法运算后的精确余数</td>
+            </tr>
+            <tr>
+                <td>CEIL(x)</td>
+                <td>返回不小于x的最小整数值，返回值转化为一个BIGINT</td>
+            </tr>
+            <tr>
+                <td>CEILING(x)</td>
+                <td>返回不小于x的最小整数值，返回值转化为一个BIGINT</td>
+            </tr>
+            <tr>
+                <td>FLOOR(x)</td>
+                <td>返回不大于x的最小整数值，返回值转化为一个BIGINT</td>
+            </tr>
+            <tr>
+                <td>RAND()</td>
+                <td>返回一个随即浮点值v，范围在0到1之间（0≤v≤1.0）。若已指定一个整数参数x，则它被用作种子值，用来产生重复序列</td>
+            </tr>
+            <tr>
+                <td>RAND(x)</td>
+                <td>返回一个已指定一个整数参数x作为种子值，用来产生重复序列的值</td>
+            </tr>
+            <tr>
+                <td>ROUND(x)</td>
+                <td>返回最接近于参数x的整数，对x值进行四舍五入，保留值得整数部分</td>
+            </tr>
+            <tr>
+                <td>ROUND(x,y)</td>
+                <td>返回最接近于参数x的整数，其值保留到小数点后面y位，若y为负值，则将保留x值到小数点左边y位。y为负数时，保留的小数点左边的相应位数直接保存为0，不进行四舍五入</td>
+            </tr>
+            <tr>
+                <td>TRUNCATE(x,y)</td>
+                <td>返回被舍去至小数点后y位的数字x。若y的值为0，则结果不带有小数点或不带有小数部分。若y设为负数，则截去（归零）x小数点左起第y位开始后面所有低位的值</td>
+            </tr>
+            <tr>
+                <td>SIGN(x)</td>
+                <td>返回参数的符号，x的值为负、零或正时返回结果依次为-1、0、1</td>
+            </tr>
+            <tr>
+                <td>POW(x,y)</td>
+                <td>返回x的y次乘方的结果值</td>
+            </tr>
+            <tr>
+                <td>POWER(x,y)</td>
+                <td>返回x的y次乘方的结果值</td>
+            </tr>
+            <tr>
+                <td>EXP(x)</td>
+                <td>返回e的x乘方后的值</td>
+            </tr>
+            <tr>
+                <td>LOG(x)</td>
+                <td>返回x的自然对数，x相对于基数e的对数。对数定义域不能为负数，否则返回结果为NULL</td>
+            </tr>
+            <tr>
+                <td>LOG10(x)</td>
+                <td>返回x的基数为10的对数。对数定义域不能为负数，否则返回结果为NULL</td>
+            </tr>
+            <tr>
+                <td>RADIANS(x)</td>
+                <td>将参数x由角度转化为弧度</td>
+            </tr>
+            <tr>
+                <td>DEGREES(x)</td>
+                <td>将参数x由弧度转化为角度</td>
+            </tr>
+            <tr>
+                <td>SIN(x)</td>
+                <td>返回x的正弦，其中x为弧度值</td>
+            </tr>
+            <tr>
+                <td>ASIN(x)</td>
+                <td>返回x的反正弦，即正弦为x的值。若x不在-1到1的范围之内，则返回NULL</td>
+            </tr>
+            <tr>
+                <td>COS(x)</td>
+                <td>返回x的余弦，其中x为弧度值</td>
+            </tr>
+            <tr>
+                <td>ACOS(x)</td>
+                <td>返回x的反余弦，即余弦为x的值。若x不在-1到1的范围之内，则返回NULL</td>
+            </tr>
+            <tr>
+                <td>TAN(x)</td>
+                <td>返回x的正切，其中x为弧度值</td>
+            </tr>
+            <tr>
+                <td>ATAN(x)</td>
+                <td>返回x的反正切，即正切为x的值</td>
+            </tr>
+            <tr>
+                <td>COT(x)</td>
+                <td>返回x的余切，其中x为弧度值</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL函数-字符串函数 -->
+<div id="MySQL_functions_string_function" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL函数-字符串函数</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>函数名</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>CHAR_LENGTH(str)</td>
+                <td>返回值为字符串str所包含的字符个数。一个多字节字符算作一个单字符</td>
+            </tr>
+            <tr>
+                <td>LENGTH(str)</td>
+                <td>返回值为字符串str的字节长度，使用utf8编码字符集时，一个汉字是3字节，一个数字或字母算1字节</td>
+            </tr>
+            <tr>
+                <td>CONCAT(s1,s2,...)</td>
+                <td>返回值为连接参数产生的字符串，或许有一个或多个参数。
+                    <ol>
+                        <li>如有任何一个参数为NULL，则返回值为NULL</li>
+                        <li>如果所有参数均为非二进制字符串，则结果为非二进制字符串</li>
+                        <li>如果自变量中含有任一二进制字符串，则结果为一个二进制字符串</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>CONCAT_WS(x,s1,s2,...)</td>
+                <td>CONCAT_WS代表CONCAT With Separator，是CONCAT(s1,s2,...)的特殊形式。第一个参数x是其他参数的分隔符，分隔符的位置放在要连接的两个字符串之间。分隔符可以是一个字符串，也可以是其他参数。如果分隔符为NULL，则结果为NULL。函数会忽略任何分隔符参数后的NULL值</td>
+            </tr>
+            <tr>
+                <td>INSERT(s1,x,len,s2)</td>
+                <td>返回字符串s1，其子字符串起始于x位置和被字符串s2取代的len字符。
+                    <ol>
+                        <li>如果x超过字符串长度，则返回值为原始字符串</li>
+                        <li>假如len的长度大于其他字符串的长度，则从位置x开始替换</li>
+                        <li>若任何一个参数为NULL，则返回值为NULL</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>LOWER(str)</td>
+                <td>将字符串str中的字母字符全部转换成小写字母</td>
+            </tr>
+            <tr>
+                <td>LCASE(str)</td>
+                <td>将字符串str中的字母字符全部转换成小写字母</td>
+            </tr>
+            <tr>
+                <td>UPPER(str)</td>
+                <td>将字符串str中的字母字符全部转换成大写字母</td>
+            </tr>
+            <tr>
+                <td>UCASE(str)</td>
+                <td>将字符串str中的字母字符全部转换成大写字母</td>
+            </tr>
+            <tr>
+                <td>LEFT(s,n)</td>
+                <td>返回字符串s开始的最左边n个字符</td>
+            </tr>
+            <tr>
+                <td>RIGHT(s,n)</td>
+                <td>返回字符串s开始的最右边n个字符</td>
+            </tr>
+            <tr>
+                <td>LPAD(s1,len,s2)</td>
+                <td>返回字符串s1，其左边由字符串s2填补到len字符长度。假如s1的长度大于len，则返回值被缩短至len字符</td>
+            </tr>
+            <tr>
+                <td>RPAD(s1,len,s2)</td>
+                <td>返回字符串s1，其右边由字符串s2填补到len字符长度。假如s1的长度大于len，则返回值被缩短至len字符</td>
+            </tr>
+            <tr>
+                <td>LTRIM(s)</td>
+                <td>删除字符串左边的空格</td>
+            </tr>
+            <tr>
+                <td>RTRIM(s)</td>
+                <td>删除字符串右边的空格</td>
+            </tr>
+            <tr>
+                <td>TRIM(s)</td>
+                <td>删除字符串两侧的空格</td>
+            </tr>
+            <tr>
+                <td>TRIM(s1 FROM s)</td>
+                <td>删除字符串s中两端所有的子字符串s1</td>
+            </tr>
+            <tr>
+                <td>REPEAT(s,n)</td>
+                <td>返回一个由重复的字符串s组成的字符串，字符串s的数目等于n。
+                    <ol>
+                        <li>若n≤0，则返回一个空字符串</li>
+                        <li>若s或n为NULL，则返回NULL</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>SPACE(n)</td>
+                <td>返回一个由n个空格组成的字符串</td>
+            </tr>
+            <tr>
+                <td>REPLACE(s,s1,s2)</td>
+                <td>使用字符串s2替代字符串s中所有的字符串s1</td>
+            </tr>
+            <tr>
+                <td>STRCMP(s1,s2)</td>
+                <td>比较字符串大小
+                    <ol>
+                        <li>若所有的字符串均相同，则返回0</li>
+                        <li>若根据当前分类次序，第一个参数小于第二个，则返回-1</li>
+                        <li>若根据当前分类次序，第一个参数大于第二个，则返回1</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>SUBSTRING(s,n,len)</td>
+                <td>从字符串s返回一个长度与len字符（len参数可不带）相同的子字符串，起始于位置n。也可能对n使用一个负值。假若这样，则子字符串的位置起始于字符串结尾的n字符，即倒数第n个字符，而不是字符串的开头位置。如果对len使用的是一个小于1的值，则结果始终为空字符串</td>
+            </tr>
+            <tr>
+                <td>MID(s,n,len)</td>
+                <td>从字符串s返回一个长度与len字符（len参数可不带）相同的子字符串，起始于位置n。也可能对n使用一个负值。假若这样，则子字符串的位置起始于字符串结尾的n字符，即倒数第n个字符，而不是字符串的开头位置。如果对len使用的是一个小于1的值，则结果始终为空字符串</td>
+            </tr>
+            <tr>
+                <td>LOCATE(str1,str)</td>
+                <td>返回字符串s1在字符串str中的开始位置</td>
+            </tr>
+            <tr>
+                <td>POSITION(str1 IN str)</td>
+                <td>返回字符串s1在字符串str中的开始位置</td>
+            </tr>
+            <tr>
+                <td>INSTR(str,str1)</td>
+                <td>返回字符串s1在字符串str中的开始位置</td>
+            </tr>
+            <tr>
+                <td>REVERSE(s)</td>
+                <td>将字符串s反转，返回的字符串顺序和s字符串顺序相反</td>
+            </tr>
+            <tr>
+                <td>REVERSE(s)</td>
+                <td>将字符串s反转，返回的字符串顺序和s字符串顺序相反</td>
+            </tr>
+            <tr>
+                <td>ELT(N,str1,str2,str2,...,strn)</td>
+                <td>
+                    <ol>
+                        <li>若N=1，则返回值为str1</li>
+                        <li>若N=2，则返回值为str2</li>
+                        <li>以此类推，若N小于1或大于参数的数目，则返回值为NULL</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>FIELD(s,s1,s2,...,sn)</td>
+                <td>返回字符串s在列表s1,s2,...,sn中第一次出现的位置，在找不到s的情况下，返回值为0。如果s为NULL，则返回值为0，原因是NULL不能同任何值进行同等比较</td>
+            </tr>
+            <tr>
+                <td>FIND_IN_SET(s1,s2)</td>
+                <td>返回字符串s1在字符串列表s2中出现的位置，字符串列表是一个由多个逗号‘,’分开的字符串组成的列表
+                    <ol>
+                        <li>如果s1不在s2或s2为空字符串，则返回值为0</li>
+                        <li>如果任意一个参数为NULL，则返回值为NULL</li>
+                    </ol>
+                    这个函数在第一个参数包含一个逗号‘,’时将无法正常运行
+                </td>
+            </tr>
+            <tr>
+                <td>MAKE_SET(x,s1,s2,...,sn)</td>
+                <td>
+                    按x的二进制数从s1,s2,...,sn中选取字符串<br/>
+                    例如5的二进制时0101，这个二进制从右往左的第1位和第3位是1，所以选取s1和s3。s1,s2,...,sn中的NULL值不会被添加到结果中
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL函数-日期和时间函数 -->
+<div id="MySQL_functions_date_and_time_function" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL函数-日期和时间函数</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>函数名</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>CHAR_LENGTH(str)</td>
+                <td>返回值为字符串str所包含的字符个数。一个多字节字符算作一个单字符</td>
+            </tr>
+            <tr>
+                <td>LENGTH(str)</td>
+                <td>返回值为字符串str的字节长度，使用utf8编码字符集时，一个汉字是3字节，一个数字或字母算1字节</td>
+            </tr>
+            <tr>
+                <td>CONCAT(s1,s2,...)</td>
+                <td>返回值为连接参数产生的字符串，或许有一个或多个参数。
+                    <ol>
+                        <li>如有任何一个参数为NULL，则返回值为NULL</li>
+                        <li>如果所有参数均为非二进制字符串，则结果为非二进制字符串</li>
+                        <li>如果自变量中含有任一二进制字符串，则结果为一个二进制字符串</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>CONCAT_WS(x,s1,s2,...)</td>
+                <td>CONCAT_WS代表CONCAT With Separator，是CONCAT(s1,s2,...)的特殊形式。第一个参数x是其他参数的分隔符，分隔符的位置放在要连接的两个字符串之间。分隔符可以是一个字符串，也可以是其他参数。如果分隔符为NULL，则结果为NULL。函数会忽略任何分隔符参数后的NULL值</td>
+            </tr>
+            <tr>
+                <td>INSERT(s1,x,len,s2)</td>
+                <td>返回字符串s1，其子字符串起始于x位置和被字符串s2取代的len字符。
+                    <ol>
+                        <li>如果x超过字符串长度，则返回值为原始字符串</li>
+                        <li>假如len的长度大于其他字符串的长度，则从位置x开始替换</li>
+                        <li>若任何一个参数为NULL，则返回值为NULL</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>LOWER(str)</td>
+                <td>将字符串str中的字母字符全部转换成小写字母</td>
+            </tr>
+            <tr>
+                <td>LCASE(str)</td>
+                <td>将字符串str中的字母字符全部转换成小写字母</td>
+            </tr>
+            <tr>
+                <td>UPPER(str)</td>
+                <td>将字符串str中的字母字符全部转换成大写字母</td>
+            </tr>
+            <tr>
+                <td>UCASE(str)</td>
+                <td>将字符串str中的字母字符全部转换成大写字母</td>
+            </tr>
+            <tr>
+                <td>LEFT(s,n)</td>
+                <td>返回字符串s开始的最左边n个字符</td>
+            </tr>
+            <tr>
+                <td>RIGHT(s,n)</td>
+                <td>返回字符串s开始的最右边n个字符</td>
+            </tr>
+            <tr>
+                <td>LPAD(s1,len,s2)</td>
+                <td>返回字符串s1，其左边由字符串s2填补到len字符长度。假如s1的长度大于len，则返回值被缩短至len字符</td>
+            </tr>
+            <tr>
+                <td>RPAD(s1,len,s2)</td>
+                <td>返回字符串s1，其右边由字符串s2填补到len字符长度。假如s1的长度大于len，则返回值被缩短至len字符</td>
+            </tr>
+            <tr>
+                <td>LTRIM(s)</td>
+                <td>删除字符串左边的空格</td>
+            </tr>
+            <tr>
+                <td>RTRIM(s)</td>
+                <td>删除字符串右边的空格</td>
+            </tr>
+            <tr>
+                <td>TRIM(s)</td>
+                <td>删除字符串两侧的空格</td>
+            </tr>
+            <tr>
+                <td>TRIM(s1 FROM s)</td>
+                <td>删除字符串s中两端所有的子字符串s1</td>
+            </tr>
+            <tr>
+                <td>REPEAT(s,n)</td>
+                <td>返回一个由重复的字符串s组成的字符串，字符串s的数目等于n。
+                    <ol>
+                        <li>若n≤0，则返回一个空字符串</li>
+                        <li>若s或n为NULL，则返回NULL</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>SPACE(n)</td>
+                <td>返回一个由n个空格组成的字符串</td>
+            </tr>
+            <tr>
+                <td>REPLACE(s,s1,s2)</td>
+                <td>使用字符串s2替代字符串s中所有的字符串s1</td>
+            </tr>
+            <tr>
+                <td>STRCMP(s1,s2)</td>
+                <td>比较字符串大小
+                    <ol>
+                        <li>若所有的字符串均相同，则返回0</li>
+                        <li>若根据当前分类次序，第一个参数小于第二个，则返回-1</li>
+                        <li>若根据当前分类次序，第一个参数大于第二个，则返回1</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>SUBSTRING(s,n,len)</td>
+                <td>从字符串s返回一个长度与len字符（len参数可不带）相同的子字符串，起始于位置n。也可能对n使用一个负值。假若这样，则子字符串的位置起始于字符串结尾的n字符，即倒数第n个字符，而不是字符串的开头位置。如果对len使用的是一个小于1的值，则结果始终为空字符串</td>
+            </tr>
+            <tr>
+                <td>MID(s,n,len)</td>
+                <td>从字符串s返回一个长度与len字符（len参数可不带）相同的子字符串，起始于位置n。也可能对n使用一个负值。假若这样，则子字符串的位置起始于字符串结尾的n字符，即倒数第n个字符，而不是字符串的开头位置。如果对len使用的是一个小于1的值，则结果始终为空字符串</td>
+            </tr>
+            <tr>
+                <td>LOCATE(str1,str)</td>
+                <td>返回字符串s1在字符串str中的开始位置</td>
+            </tr>
+            <tr>
+                <td>POSITION(str1 IN str)</td>
+                <td>返回字符串s1在字符串str中的开始位置</td>
+            </tr>
+            <tr>
+                <td>INSTR(str,str1)</td>
+                <td>返回字符串s1在字符串str中的开始位置</td>
+            </tr>
+            <tr>
+                <td>REVERSE(s)</td>
+                <td>将字符串s反转，返回的字符串顺序和s字符串顺序相反</td>
+            </tr>
+            <tr>
+                <td>REVERSE(s)</td>
+                <td>将字符串s反转，返回的字符串顺序和s字符串顺序相反</td>
+            </tr>
+            <tr>
+                <td>ELT(N,str1,str2,str2,...,strn)</td>
+                <td>
+                    <ol>
+                        <li>若N=1，则返回值为str1</li>
+                        <li>若N=2，则返回值为str2</li>
+                        <li>以此类推，若N小于1或大于参数的数目，则返回值为NULL</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>FIELD(s,s1,s2,...,sn)</td>
+                <td>返回字符串s在列表s1,s2,...,sn中第一次出现的位置，在找不到s的情况下，返回值为0。如果s为NULL，则返回值为0，原因是NULL不能同任何值进行同等比较</td>
+            </tr>
+            <tr>
+                <td>FIND_IN_SET(s1,s2)</td>
+                <td>返回字符串s1在字符串列表s2中出现的位置，字符串列表是一个由多个逗号‘,’分开的字符串组成的列表
+                    <ol>
+                        <li>如果s1不在s2或s2为空字符串，则返回值为0</li>
+                        <li>如果任意一个参数为NULL，则返回值为NULL</li>
+                    </ol>
+                    这个函数在第一个参数包含一个逗号‘,’时将无法正常运行
+                </td>
+            </tr>
+            <tr>
+                <td>MAKE_SET(x,s1,s2,...,sn)</td>
+                <td>
+                    按x的二进制数从s1,s2,...,sn中选取字符串<br/>
+                    例如5的二进制时0101，这个二进制从右往左的第1位和第3位是1，所以选取s1和s3。s1,s2,...,sn中的NULL值不会被添加到结果中
+                </td>
             </tr>
             </tbody>
         </table>

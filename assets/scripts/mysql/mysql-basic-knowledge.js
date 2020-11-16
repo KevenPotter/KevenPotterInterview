@@ -17,6 +17,8 @@ $(document).ready(function () {
     textStringTypeTitleTips();
     binaryStringTypeTitleTips();
     MySQLOperatorOverviewChart();
+    operatorPrecedenceTitleTips();
+    MySQLFunctionsCharts();
 });
 
 /**
@@ -924,7 +926,7 @@ function MySQLOperatorOverviewChart() {
                 layerCapture('MySQL_operator_overview_logical_operator', 0, 60, 39);
                 break;
             case '位运算符':
-                layerCapture('MySQL_operator_overview_bit_operator', 0, 60, 32);
+                layerCapture('MySQL_operator_overview_bit_operator', 0, 60, 43);
                 break;
         }
     });
@@ -995,6 +997,115 @@ function MySQLOperatorOverviewChart() {
 }
 
 /**
+ * MySQL函数图表
+ */
+function MySQLFunctionsCharts() {
+    var MySQLFunctionsCharts = $('#MySQL_functions');
+    MySQLFunctionsCharts.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(MySQLFunctionsCharts[0], 'macarons');
+    myChart.on('mouseover', function (params) {
+        switch (params.name) {
+            case '数学函数':
+                layerTips('数学函数主要用来处理数值数据，主要的数学函数有绝对值函数、三角函数（包括正弦函数、余弦函数、正切函数、余切函数等）、对数函数、随机数函数等。<br/>在有错误产生时，数学函数将会返回空值NULL', MySQLFunctionsCharts);
+                break;
+            case '字符串函数':
+                layerTips('字符串函数主要用来处理数据库中的字符串数据。MySQL中的字符串函数有计算字符串长度函数、字符串合并函数、字符串替换函数、字符串比较函数、查找指定字符串位置函数等', MySQLFunctionsCharts);
+                break;
+            case '日期和时间函数':
+                layerTips('逻辑运算符的求值结果均为1（TRUE）、0（FALSE），这类运算符有逻辑非（NOT或者!）、逻辑与（AND或者&&）、逻辑或（OR或者||）、逻辑异或（XOR）', MySQLFunctionsCharts);
+                break;
+            case '位运算符':
+                layerTips('位运算符参与运算的操作数按二进制位进行运算，包括位与（&）、位或（|）、位非（~）、位异或（^）、左移（<<）、右移（>>）6种', MySQLFunctionsCharts);
+                break;
+        }
+    });
+    myChart.on('click', function (params) {
+        switch (params.name) {
+            case '数学函数':
+                layerCapture('MySQL_functions_mathematical_function', 0, 30, 60);
+                break;
+            case '字符串函数':
+                layerCapture('MySQL_functions_string_function', 0, 30, 60);
+                break;
+            case '日期和时间函数':
+                layerCapture('MySQL_functions_date_and_time_function', 0, 30, 60);
+                break;
+            case '位运算符':
+                layerCapture('MySQL_operator_overview_bit_operator', 0, 60, 43);
+                break;
+        }
+    });
+    var option = null;
+    option = {
+        title: {
+            text: 'MySQL函数',
+            subtext: '《MySQL8从入门到精通（视频教学版）》-P117',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b} : {c} ({d}%)'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        legend: {
+            bottom: 10,
+            left: 'center',
+            data: ['数学函数', '字符串函数', '日期和时间函数', '条件判断函数', '系统信息函数', '加密函数', '其他函数', '窗口函数'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '75%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: [
+                    {value: 1, name: '数学函数'},
+                    {value: 1, name: '字符串函数'},
+                    {value: 1, name: '日期和时间函数'},
+                    {value: 1, name: '条件判断函数'},
+                    {value: 1, name: '系统信息函数'},
+                    {value: 1, name: '加密函数'},
+                    {value: 1, name: '其他函数'},
+                    {value: 1, name: '窗口函数'}
+                ],
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 15
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
+}
+
+/**
  * 数据库系统_数据库系统图示
  */
 function databaseSystemsPanelTitleTips() {
@@ -1033,4 +1144,13 @@ function comparisonOperator1() {
  */
 function comparisonOperator2() {
     layerCapture('comparison_operator_2', 0, 25, 30);
+}
+
+/**
+ * 运算符优先级
+ */
+function operatorPrecedenceTitleTips() {
+    $('#operator_precedence_panel_title').on('click', function () {
+        layerCapture('operator_precedence_introduction', 0, 42, 61);
+    });
 }
