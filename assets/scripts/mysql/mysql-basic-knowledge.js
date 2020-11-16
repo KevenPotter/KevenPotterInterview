@@ -1012,7 +1012,7 @@ function MySQLFunctionsCharts() {
                 layerTips('字符串函数主要用来处理数据库中的字符串数据。MySQL中的字符串函数有计算字符串长度函数、字符串合并函数、字符串替换函数、字符串比较函数、查找指定字符串位置函数等', MySQLFunctionsCharts);
                 break;
             case '日期和时间函数':
-                layerTips('逻辑运算符的求值结果均为1（TRUE）、0（FALSE），这类运算符有逻辑非（NOT或者!）、逻辑与（AND或者&&）、逻辑或（OR或者||）、逻辑异或（XOR）', MySQLFunctionsCharts);
+                layerTips('日期和时间函数主要用来处理日期和时间值，一般的日期函数除了使用DATE类型的参数外，也可以使用DATETIME或者TIMESTAMP类型的参数，但会忽略这些值的时间部分。<br/>相同的，以TIME类型值为参数的函数，可以接受TIMESTAMP类型的参数，但会忽略日期部分，许多日期函数可以同时接受数字和字符串类型的两种参数', MySQLFunctionsCharts);
                 break;
             case '位运算符':
                 layerTips('位运算符参与运算的操作数按二进制位进行运算，包括位与（&）、位或（|）、位非（~）、位异或（^）、左移（<<）、右移（>>）6种', MySQLFunctionsCharts);
@@ -1153,4 +1153,11 @@ function operatorPrecedenceTitleTips() {
     $('#operator_precedence_panel_title').on('click', function () {
         layerCapture('operator_precedence_introduction', 0, 42, 61);
     });
+}
+
+/**
+ * 比较运算符_=
+ */
+function systemIndependentVariable() {
+    layerCapture('date_and_time_function_system_independent_variable', 0, 30, 37);
 }

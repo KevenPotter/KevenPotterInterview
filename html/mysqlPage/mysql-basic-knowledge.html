@@ -2041,170 +2041,152 @@
             </thead>
             <tbody>
             <tr>
-                <td>CHAR_LENGTH(str)</td>
-                <td>返回值为字符串str所包含的字符个数。一个多字节字符算作一个单字符</td>
+                <td>CURDATE()</td>
+                <td>将当前日期按照‘YYYY-MM-DD’或YYYYMMDD格式的值返回，具体格式根据函数在字符串或是数字语境中而定</td>
             </tr>
             <tr>
-                <td>LENGTH(str)</td>
-                <td>返回值为字符串str的字节长度，使用utf8编码字符集时，一个汉字是3字节，一个数字或字母算1字节</td>
+                <td>CURRENT_DATE()</td>
+                <td>将当前日期按照‘YYYY-MM-DD’或YYYYMMDD格式的值返回，具体格式根据函数在字符串或是数字语境中而定</td>
             </tr>
             <tr>
-                <td>CONCAT(s1,s2,...)</td>
-                <td>返回值为连接参数产生的字符串，或许有一个或多个参数。
-                    <ol>
-                        <li>如有任何一个参数为NULL，则返回值为NULL</li>
-                        <li>如果所有参数均为非二进制字符串，则结果为非二进制字符串</li>
-                        <li>如果自变量中含有任一二进制字符串，则结果为一个二进制字符串</li>
-                    </ol>
-                </td>
+                <td>CURTIME()</td>
+                <td>将当前时间按照‘HH:MM:SS’或HHMMSS的格式返回，具体格式根据函数在字符串或是数字语境中而定</td>
             </tr>
             <tr>
-                <td>CONCAT_WS(x,s1,s2,...)</td>
-                <td>CONCAT_WS代表CONCAT With Separator，是CONCAT(s1,s2,...)的特殊形式。第一个参数x是其他参数的分隔符，分隔符的位置放在要连接的两个字符串之间。分隔符可以是一个字符串，也可以是其他参数。如果分隔符为NULL，则结果为NULL。函数会忽略任何分隔符参数后的NULL值</td>
+                <td>CURRENT_TIME()</td>
+                <td>将当前时间按照‘HH:MM:SS’或HHMMSS的格式返回，具体格式根据函数在字符串或是数字语境中而定</td>
             </tr>
             <tr>
-                <td>INSERT(s1,x,len,s2)</td>
-                <td>返回字符串s1，其子字符串起始于x位置和被字符串s2取代的len字符。
-                    <ol>
-                        <li>如果x超过字符串长度，则返回值为原始字符串</li>
-                        <li>假如len的长度大于其他字符串的长度，则从位置x开始替换</li>
-                        <li>若任何一个参数为NULL，则返回值为NULL</li>
-                    </ol>
-                </td>
+                <td>CURRENT_TIMESTAMP()</td>
+                <td>返回当前日期和时间值，格式为‘YYYY-MM-DD HH:MM:SS’或YYYYMMDDHHMMSS，具体格式根据函数在字符串或数字语境中而定</td>
             </tr>
             <tr>
-                <td>LOWER(str)</td>
-                <td>将字符串str中的字母字符全部转换成小写字母</td>
+                <td>LOCALTIME()</td>
+                <td>返回当前日期和时间值，格式为‘YYYY-MM-DD HH:MM:SS’或YYYYMMDDHHMMSS，具体格式根据函数在字符串或数字语境中而定</td>
             </tr>
             <tr>
-                <td>LCASE(str)</td>
-                <td>将字符串str中的字母字符全部转换成小写字母</td>
+                <td>NOW()</td>
+                <td>返回当前日期和时间值，格式为‘YYYY-MM-DD HH:MM:SS’或YYYYMMDDHHMMSS，具体格式根据函数在字符串或数字语境中而定</td>
             </tr>
             <tr>
-                <td>UPPER(str)</td>
-                <td>将字符串str中的字母字符全部转换成大写字母</td>
+                <td>SYSDATE()</td>
+                <td>返回当前日期和时间值，格式为‘YYYY-MM-DD HH:MM:SS’或YYYYMMDDHHMMSS，具体格式根据函数在字符串或数字语境中而定</td>
             </tr>
             <tr>
-                <td>UCASE(str)</td>
-                <td>将字符串str中的字母字符全部转换成大写字母</td>
-            </tr>
-            <tr>
-                <td>LEFT(s,n)</td>
-                <td>返回字符串s开始的最左边n个字符</td>
-            </tr>
-            <tr>
-                <td>RIGHT(s,n)</td>
-                <td>返回字符串s开始的最右边n个字符</td>
-            </tr>
-            <tr>
-                <td>LPAD(s1,len,s2)</td>
-                <td>返回字符串s1，其左边由字符串s2填补到len字符长度。假如s1的长度大于len，则返回值被缩短至len字符</td>
-            </tr>
-            <tr>
-                <td>RPAD(s1,len,s2)</td>
-                <td>返回字符串s1，其右边由字符串s2填补到len字符长度。假如s1的长度大于len，则返回值被缩短至len字符</td>
-            </tr>
-            <tr>
-                <td>LTRIM(s)</td>
-                <td>删除字符串左边的空格</td>
-            </tr>
-            <tr>
-                <td>RTRIM(s)</td>
-                <td>删除字符串右边的空格</td>
-            </tr>
-            <tr>
-                <td>TRIM(s)</td>
-                <td>删除字符串两侧的空格</td>
-            </tr>
-            <tr>
-                <td>TRIM(s1 FROM s)</td>
-                <td>删除字符串s中两端所有的子字符串s1</td>
-            </tr>
-            <tr>
-                <td>REPEAT(s,n)</td>
-                <td>返回一个由重复的字符串s组成的字符串，字符串s的数目等于n。
-                    <ol>
-                        <li>若n≤0，则返回一个空字符串</li>
-                        <li>若s或n为NULL，则返回NULL</li>
-                    </ol>
-                </td>
-            </tr>
-            <tr>
-                <td>SPACE(n)</td>
-                <td>返回一个由n个空格组成的字符串</td>
-            </tr>
-            <tr>
-                <td>REPLACE(s,s1,s2)</td>
-                <td>使用字符串s2替代字符串s中所有的字符串s1</td>
-            </tr>
-            <tr>
-                <td>STRCMP(s1,s2)</td>
-                <td>比较字符串大小
-                    <ol>
-                        <li>若所有的字符串均相同，则返回0</li>
-                        <li>若根据当前分类次序，第一个参数小于第二个，则返回-1</li>
-                        <li>若根据当前分类次序，第一个参数大于第二个，则返回1</li>
-                    </ol>
-                </td>
-            </tr>
-            <tr>
-                <td>SUBSTRING(s,n,len)</td>
-                <td>从字符串s返回一个长度与len字符（len参数可不带）相同的子字符串，起始于位置n。也可能对n使用一个负值。假若这样，则子字符串的位置起始于字符串结尾的n字符，即倒数第n个字符，而不是字符串的开头位置。如果对len使用的是一个小于1的值，则结果始终为空字符串</td>
-            </tr>
-            <tr>
-                <td>MID(s,n,len)</td>
-                <td>从字符串s返回一个长度与len字符（len参数可不带）相同的子字符串，起始于位置n。也可能对n使用一个负值。假若这样，则子字符串的位置起始于字符串结尾的n字符，即倒数第n个字符，而不是字符串的开头位置。如果对len使用的是一个小于1的值，则结果始终为空字符串</td>
-            </tr>
-            <tr>
-                <td>LOCATE(str1,str)</td>
-                <td>返回字符串s1在字符串str中的开始位置</td>
-            </tr>
-            <tr>
-                <td>POSITION(str1 IN str)</td>
-                <td>返回字符串s1在字符串str中的开始位置</td>
-            </tr>
-            <tr>
-                <td>INSTR(str,str1)</td>
-                <td>返回字符串s1在字符串str中的开始位置</td>
-            </tr>
-            <tr>
-                <td>REVERSE(s)</td>
-                <td>将字符串s反转，返回的字符串顺序和s字符串顺序相反</td>
-            </tr>
-            <tr>
-                <td>REVERSE(s)</td>
-                <td>将字符串s反转，返回的字符串顺序和s字符串顺序相反</td>
-            </tr>
-            <tr>
-                <td>ELT(N,str1,str2,str2,...,strn)</td>
+                <td>UNIX_TIMESTAMP(date)</td>
                 <td>
-                    <ol>
-                        <li>若N=1，则返回值为str1</li>
-                        <li>若N=2，则返回值为str2</li>
-                        <li>以此类推，若N小于1或大于参数的数目，则返回值为NULL</li>
-                    </ol>
+                    若无参数调用，则返回一个UNIX时间戳（‘1970-01-01 00:00:00’GMT之后的秒数）作为无符号整数。其中GMT（Greenwich mean time）格林尼治标准时间。<br/>
+                    若用date来调用UNIX_TIMESTAMP()，他会将参数值以‘1970-01-01 00:00:00’GMT后的秒数的形式返回。date也可以是一个DATE字符串、DATETIME字符串、TIMESTAMP或一个当地时间的YYMMDD或YYYYMMDD格式的数字
                 </td>
             </tr>
             <tr>
-                <td>FIELD(s,s1,s2,...,sn)</td>
-                <td>返回字符串s在列表s1,s2,...,sn中第一次出现的位置，在找不到s的情况下，返回值为0。如果s为NULL，则返回值为0，原因是NULL不能同任何值进行同等比较</td>
+                <td>FROM_UNIXTIME(date)</td>
+                <td>该函数把UNIX时间戳转换为普通格式的时间，与UNIX_TIMESTAMP(date)互为反函数</td>
             </tr>
             <tr>
-                <td>FIND_IN_SET(s1,s2)</td>
-                <td>返回字符串s1在字符串列表s2中出现的位置，字符串列表是一个由多个逗号‘,’分开的字符串组成的列表
-                    <ol>
-                        <li>如果s1不在s2或s2为空字符串，则返回值为0</li>
-                        <li>如果任意一个参数为NULL，则返回值为NULL</li>
-                    </ol>
-                    这个函数在第一个参数包含一个逗号‘,’时将无法正常运行
-                </td>
+                <td>UTC_DATE()</td>
+                <td>返回当前UTC（世界标准时间）日期值（当前时区的日期值），其格式为‘YYYY-MM-DD’或YYYYMMDD，具体格式取决于函数是否用在字符串或数字语境中</td>
             </tr>
             <tr>
-                <td>MAKE_SET(x,s1,s2,...,sn)</td>
-                <td>
-                    按x的二进制数从s1,s2,...,sn中选取字符串<br/>
-                    例如5的二进制时0101，这个二进制从右往左的第1位和第3位是1，所以选取s1和s3。s1,s2,...,sn中的NULL值不会被添加到结果中
-                </td>
+                <td>UTC_TIME()</td>
+                <td>返回当前UTC（世界标准时间）时间值（当前时区的时间值），其格式为‘HH:MM:SS’HHMMSS，具体格式取决于函数是否用在字符串或数字语境中</td>
+            </tr>
+            <tr>
+                <td>MONTH(date)</td>
+                <td>返回date对应的月份，范围值为1~12</td>
+            </tr>
+            <tr>
+                <td>MONTHNAME(date)</td>
+                <td>返回日期date对应月份的英文全名</td>
+            </tr>
+            <tr>
+                <td>DAYNAME(d)</td>
+                <td>返回d对应的工作日的英文名称，例如Sunday、Monday等</td>
+            </tr>
+            <tr>
+                <td>DAYOFWEEK(date)</td>
+                <td>返回d对应的一周中的索引（位置，1表示周日，2表示周一，...，7表示周六）</td>
+            </tr>
+            <tr>
+                <td>WEEKDAY(date)</td>
+                <td>返回d对应的工作日索引（位置，0表示周一，1表示周二，...，6表示周日）</td>
+            </tr>
+            <tr>
+                <td>WEEK(d)</td>
+                <td>计算日期d是一年中的第几周。WEEK()的双参数形式允许指定该星期是否起始于周日或周一，以及返回值的范围是否为0~53或1~53。若Mode参数被省略，则使用default_week_format<span id="" class="tinyHand note" onclick="systemIndependentVariable()">系统自变量</span>的值</td>
+            </tr>
+            <tr>
+                <td>WEEKOFYEAR(d)</td>
+                <td>计算某天位于一年中的第几周，范围是1~53，相当于WEEK(d,3)</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL函数-日期和时间函数-系统自变量 -->
+<div id="date_and_time_function_system_independent_variable" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL函数-日期和时间函数-系统自变量</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Mode</th>
+                <th>一周的第一天</th>
+                <th>范围</th>
+                <th>Week1为第一周</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>0</td>
+                <td>周日</td>
+                <td>0~53</td>
+                <td>本年度中有一个周日</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>周一</td>
+                <td>0~53</td>
+                <td>本年度中有3天以上</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>周日</td>
+                <td>1~53</td>
+                <td>本年度中有一个周日</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>周一</td>
+                <td>1~53</td>
+                <td>本年度中有3天以上</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>周日</td>
+                <td>0~53</td>
+                <td>本年度中有3天以上</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>周一</td>
+                <td>0~53</td>
+                <td>本年度中有一个周一</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>周日</td>
+                <td>1~53</td>
+                <td>本年度中有3天以上</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>周一</td>
+                <td>1~53</td>
+                <td>本年度中有一个周一</td>
             </tr>
             </tbody>
         </table>
