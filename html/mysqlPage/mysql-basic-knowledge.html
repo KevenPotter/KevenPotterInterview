@@ -2119,6 +2119,100 @@
                 <td>WEEKOFYEAR(d)</td>
                 <td>计算某天位于一年中的第几周，范围是1~53，相当于WEEK(d,3)</td>
             </tr>
+            <tr>
+                <td>DAYOFYEAR(d)</td>
+                <td>返回d是一年中的第几天，范围是1~366</td>
+            </tr>
+            <tr>
+                <td>DAYOFMONTH(d)</td>
+                <td>返回d是一个月中的第几天，范围是1~31</td>
+            </tr>
+            <tr>
+                <td>YEAR(date)</td>
+                <td>返回date对应的年份，范围是1970~2069（‘00~69’转换为‘2000-2069’，‘70~99’转换为‘1970~1999’）</td>
+            </tr>
+            <tr>
+                <td>QUARTER(date)</td>
+                <td>返回date对应的一年中的季度值，范围是1~4</td>
+            </tr>
+            <tr>
+                <td>MINUTE(time)</td>
+                <td>返回time对应的分钟数，范围是0~59</td>
+            </tr>
+            <tr>
+                <td>SECOND(time)</td>
+                <td>返回time对应的秒数，范围是0~59</td>
+            </tr>
+            <tr>
+                <td>EXTRACT(type FROM date)</td>
+                <td>
+                    该函数所使用的时间间隔类型说明符与DATE_ADD()或DATE_SUB()的相同，但它从日期中提取一部分，而不是执行日期运算
+                    <ol>
+                        <li>type值为YEAR时，只返回年值</li>
+                        <li>type值为YEAR_MONTH时，返回年与月份</li>
+                        <li>type值为DAY_MINUTE时，返回日、小时和分钟值</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>TIME_TO_SEC(time)</td>
+                <td>返回已转化为秒的time参数。转换公式为<code>小时*3600+分钟*60+秒</code></td>
+            </tr>
+            <tr>
+                <td>SEC_TO_TIME(seconds)</td>
+                <td>返回被转化为小时、分钟和秒数的seconds参数值，其格式为‘HH:MM:SS’或HHMMSS，具体格式根据该函数是否用在字符串或数字语境中而定</td>
+            </tr>
+            <tr>
+                <td>计算日期和时间的函数</td>
+                <td>
+                    <ol>
+                        <li>date是一个DATETIME或DATE值，用来指定起始时间。若date参数是一个DATE值，计算只会包括YEAR、MONTH和DAY部分（没有时间部分），其结果是一个DATE值；否则，结果将是一个DATETIME值</li>
+                        <li>expr是一个表达式，用来指定从起始日期添加或减去的时间间隔值。对于负值的时间间隔，expr可以以一个符号‘-’开头</li>
+                        <li>type为关键词，指示了表达式被解释的方式</li>
+                        <li>查看<span class="tinyHand note" onclick="theRelationshipBetweenTypeAndExprParameters()">type和expr参数关系图</span></li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>DATE_ADD(date,INTERVAL expr type)</td>
+                <td>执行日期的加运算（可以指定负值，负值代表相减，即返回以前的日期和时间）</td>
+            </tr>
+            <tr>
+                <td>ADDDATE(date,INTERVAL expr type)</td>
+                <td>执行日期的加运算</td>
+            </tr>
+            <tr>
+                <td>DATE_SUB(date,INTERVAL expr type)</td>
+                <td>执行日期的减运算（可以指定负值，负值代表相加，即返回以后的日期和时间）</td>
+            </tr>
+            <tr>
+                <td>SUBDATE(date,INTERVAL expr type)</td>
+                <td>执行日期的减运算</td>
+            </tr>
+            <tr>
+                <td>ADDTIME(date,expr)</td>
+                <td>将expr值添加到date，并返回修改后的值，date是一个日期或者日期时间表达式，而expr是一个时间表达式</td>
+            </tr>
+            <tr>
+                <td>SUBTIME(date,expr)</td>
+                <td>将date减去expr值，并返回修改后的值，date是一个日期或者日期时间表达式，而expr是一个时间表达式</td>
+            </tr>
+            <tr>
+                <td>DATEDIFF(date1,date2)</td>
+                <td>返回起始时间date1和结束时间date2之间的天数。date1和date2为日期或日期时间表达式。计算只用到这些值的日期部分</td>
+            </tr>
+            <tr>
+                <td>DATE_FORMAT(date,format)</td>
+                <td>根据<span class="tinyHand note" onclick="formatSpecifiedFormat()">format指定的格式</span>显示date值</td>
+            </tr>
+            <tr>
+                <td>TIME_FORMAT(time,format)</td>
+                <td>根据<span class="tinyHand note" onclick="formatSpecifiedFormat()">format指定的格式</span>要求显示时间time。表达式format指定了显示的格式。因为TIME_FORMAT(time,format)只处理时间，所以format只使用时间格式</td>
+            </tr>
+            <tr>
+                <td>GET_FORMAT(val_type,format_type)</td>
+                <td>返回日期时间字符串的显示格式，val_type表示日期数据类型，包括DATE、DATETIME和TIME；format_type表示格式化显示类型，包括EUR、INTERVAL、ISO、JIS、USA。查看<span class="tinyHand note" onclick="getFormatFormat()">GET_FORMAT根据两个值类型组合返回的字符串显示格式</span></td>
+            </tr>
             </tbody>
         </table>
     </div>
@@ -2187,6 +2281,492 @@
                 <td>周一</td>
                 <td>1~53</td>
                 <td>本年度中有一个周一</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL函数-日期和时间函数-type和expr参数关系图 -->
+<div id="date_and_time_function_the_relationship_between_type_and_expr_parameters" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL函数-日期和时间函数-type和expr参数关系图</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>type值</th>
+                <th>预期的expr格式</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>MICROSECOND</td>
+                <td>MICROSECONDS</td>
+            </tr>
+            <tr>
+                <td>SECOND</td>
+                <td>SECONDS</td>
+            </tr>
+            <tr>
+                <td>MINUTE</td>
+                <td>MINUTES</td>
+            </tr>
+            <tr>
+                <td>HOUR</td>
+                <td>HOURS</td>
+            </tr>
+            <tr>
+                <td>DAY</td>
+                <td>DYAS</td>
+            </tr>
+            <tr>
+                <td>WEEK</td>
+                <td>WEEKS</td>
+            </tr>
+            <tr>
+                <td>MONTH</td>
+                <td>MONTHS</td>
+            </tr>
+            <tr>
+                <td>QUARTER</td>
+                <td>QUARTERS</td>
+            </tr>
+            <tr>
+                <td>YEAR</td>
+                <td>YEARS</td>
+            </tr>
+            <tr>
+                <td>SECOND_MICROSECOND</td>
+                <td>'SECONDS.MICROSECONDS'</td>
+            </tr>
+            <tr>
+                <td>MINUTE_MICROSECOND</td>
+                <td>'MINUTES.MICROSECONDS'</td>
+            </tr>
+            <tr>
+                <td>MINUTE_SECOND</td>
+                <td>'MINUTES:SECONDS'</td>
+            </tr>
+            <tr>
+                <td>HOUR_MICROSECOND</td>
+                <td>'HOURS.MICROSECONDS'</td>
+            </tr>
+            <tr>
+                <td>HOUR_SECOND</td>
+                <td>'HOURS:MINUTES:SECONDS'</td>
+            </tr>
+            <tr>
+                <td>HOUR_MINUTE</td>
+                <td>'HOURS:MINUTES'</td>
+            </tr>
+            <tr>
+                <td>DAY_MICROSECOND</td>
+                <td>'DAYS.MICROSECONDS'</td>
+            </tr>
+            <tr>
+                <td>DAY_SECOND</td>
+                <td>'DAYS HOURS:MINUTES:SECONDS'</td>
+            </tr>
+            <tr>
+                <td>DAY_MINUTE</td>
+                <td>'DAYS HOURS:MINUTES'</td>
+            </tr>
+            <tr>
+                <td>DAY HOUR</td>
+                <td>'DAYS_HOURS'</td>
+            </tr>
+            <tr>
+                <td>YEAR_MONTH</td>
+                <td>'YEARS-MONTHS'</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL函数-日期和时间函数-format指定的格式 -->
+<div id="date_and_time_function_format_specified_format" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL函数-日期和时间函数-format指定的格式</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>说明符</th>
+                <th>说明</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>%a</td>
+                <td>工作日的缩写名称（Sun...Sat）</td>
+            </tr>
+            <tr>
+                <td>%b</td>
+                <td>月份的缩写名称（Jan...Dec）</td>
+            </tr>
+            <tr>
+                <td>%c</td>
+                <td>月份，数字形式（0...12）</td>
+            </tr>
+            <tr>
+                <td>%D</td>
+                <td>以英文后缀表示月中的几号（1st，2nd...）</td>
+            </tr>
+            <tr>
+                <td>%d</td>
+                <td>该月日期，数字形式（00...31）</td>
+            </tr>
+            <tr>
+                <td>%e</td>
+                <td>该月日期，数字形式（0...31）</td>
+            </tr>
+            <tr>
+                <td>%f</td>
+                <td>微秒（0000000...9999999）</td>
+            </tr>
+            <tr>
+                <td>%H</td>
+                <td>以2位数表示24小时（00...23）</td>
+            </tr>
+            <tr>
+                <td>%h，%I</td>
+                <td>以2位数表示12小时（01...12）</td>
+            </tr>
+            <tr>
+                <td>%i</td>
+                <td>分钟，数字形式（00...59）</td>
+            </tr>
+            <tr>
+                <td>%j</td>
+                <td>一年中的天数（001...366）</td>
+            </tr>
+            <tr>
+                <td>%k</td>
+                <td>以24（0...23）小时表示时间</td>
+            </tr>
+            <tr>
+                <td>%l</td>
+                <td>以12（1...12）小时表示时间</td>
+            </tr>
+            <tr>
+                <td>%M</td>
+                <td>月份名称（January...December）</td>
+            </tr>
+            <tr>
+                <td>%m</td>
+                <td>月份，数字形式（00...12）</td>
+            </tr>
+            <tr>
+                <td>%p</td>
+                <td>上午（AM）或下午（PM）</td>
+            </tr>
+            <tr>
+                <td>%r</td>
+                <td>时间，12小时制（小时hh:分钟mm:秒数ss 后加AM或PM）</td>
+            </tr>
+            <tr>
+                <td>%S，%s</td>
+                <td>以2位数形式表示秒（00...59）</td>
+            </tr>
+            <tr>
+                <td>%T</td>
+                <td>时间，24小时制（小时hh:分钟mm:秒数ss）</td>
+            </tr>
+            <tr>
+                <td>%U</td>
+                <td>周（00...53），其中周日为每周的第一天</td>
+            </tr>
+            <tr>
+                <td>%u</td>
+                <td>周（00...53），其中周一为每周的第一天</td>
+            </tr>
+            <tr>
+                <td>%V</td>
+                <td>周（01...53），其中周日为每周的第一天；和%X同时使用</td>
+            </tr>
+            <tr>
+                <td>%v</td>
+                <td>周（01...53），其中周一为每周的第一天；和%v同时使用</td>
+            </tr>
+            <tr>
+                <td>%W</td>
+                <td>工作日名称（周日...周六）</td>
+            </tr>
+            <tr>
+                <td>%w</td>
+                <td>一周中的每日（0=周日...6=周六）</td>
+            </tr>
+            <tr>
+                <td>%X</td>
+                <td>该周的年份，其中周日为每周的第一天；数字形式，4位数；和%V同时使用</td>
+            </tr>
+            <tr>
+                <td>%x</td>
+                <td>该周的年份，其中周一为每周的第一天；数字形式，4位数；和%v同时使用</td>
+            </tr>
+            <tr>
+                <td>%Y</td>
+                <td>4位数形式表示年份</td>
+            </tr>
+            <tr>
+                <td>%y</td>
+                <td>2位数形式表示年份</td>
+            </tr>
+            <tr>
+                <td>%%</td>
+                <td>标识符%</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL函数-日期和时间函数-GET_FORMAT根据两个值类型组合返回的字符串显示格式 -->
+<div id="date_and_time_function_get_format_format" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">GET_FORMAT根据两个值类型组合返回的字符串显示格式</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>值类型</th>
+                <th>格式化类型</th>
+                <th>显示格式字符串</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>DATE</td>
+                <td>EUR</td>
+                <td>%d.%m.%Y</td>
+            </tr>
+            <tr>
+                <td>DATE</td>
+                <td>INTERVAL</td>
+                <td>%Y%m%d</td>
+            </tr>
+            <tr>
+                <td>DATE</td>
+                <td>ISO</td>
+                <td>%Y-%m-%d</td>
+            </tr>
+            <tr>
+                <td>DATE</td>
+                <td>JIS</td>
+                <td>%Y-%m-%d</td>
+            </tr>
+            <tr>
+                <td>DATE</td>
+                <td>USA</td>
+                <td>%m.%d.%Y</td>
+            </tr>
+            <tr>
+                <td>TIME</td>
+                <td>EUR</td>
+                <td>%H.%i.%s</td>
+            </tr>
+            <tr>
+                <td>TIME</td>
+                <td>INTERVAL</td>
+                <td>%H%i%s</td>
+            </tr>
+            <tr>
+                <td>TIME</td>
+                <td>ISO</td>
+                <td>%H:%i:%s</td>
+            </tr>
+            <tr>
+                <td>TIME</td>
+                <td>JIS</td>
+                <td>%H.%i.%s</td>
+            </tr>
+            <tr>
+                <td>TIME</td>
+                <td>USA</td>
+                <td>%h.%i.%s %p</td>
+            </tr>
+            <tr>
+                <td>DATETIME</td>
+                <td>EUR</td>
+                <td>%Y-%m-%d %H.%i.%s</td>
+            </tr>
+            <tr>
+                <td>DATETIME</td>
+                <td>INTERVAL</td>
+                <td>%Y%m%d%H%i%s</td>
+            </tr>
+            <tr>
+                <td>DATETIME</td>
+                <td>ISO</td>
+                <td>%Y-%m-%d %H:%i:%s</td>
+            </tr>
+            <tr>
+                <td>DATETIME</td>
+                <td>JIS</td>
+                <td>%Y-%m-%d %H:%i:%s</td>
+            </tr>
+            <tr>
+                <td>DATETIME</td>
+                <td>USA</td>
+                <td>%Y-%m-%d %H.%i.%s</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL函数-条件判断函数 -->
+<div id="MySQL_functions_conditional_judgment_function" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL函数-条件判断函数</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>函数名</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>IF(expr,v1,v2)</td>
+                <td>如果表达式expr时TRUE（expr <> 0 and expr <> NULL），则返回v1；否则返回值为v2。IF(expr,v1,v2)的返回值为数字值或字符串值，具体情况视其所在语境而定。<span class="note">如果v1或v2中只有一个明确是NULL，则IF(expr,v1,v2)函数的结果类型为非NULL表达式的结果类型</span></td>
+            </tr>
+            <tr>
+                <td>IFNULL(v1,v2)</td>
+                <td>假如v1不为NULL，则IFNULL(v1,v2)的返回值为v1；否则其返回值为v2.IFNULL(v1,v2)的返回值为数字值或字符串值，具体情况视其所在语境而定</td>
+            </tr>
+            <tr>
+                <td>CASE</td>
+                <td>
+                    语法格式1为：<code>CASE expr WHEN v1 THEN r1 [WHEN v2 THEN r2]...[ELSE rn+1] END</code><br/>
+                    如果expr值等于某个vn，则返回对应位置THEN后面的结果；如果与所有值都不相等，则返回ELSE后面的rn+1<br/>
+                    语法格式2为：<code>CASE WHEN v1 THEN r1 [WHEN v2 THEN r2]...[ELSE rn+1] END</code><br/>
+                    某个vn值为TRUE时，返回对应位置THEN后面的结果；如果所有值都不为TRUE，则返回ELSE后的rn+1<br/>
+                    <span class="note">
+                        一个CASE表达式的默认返回值类型是任何返回值的相容集合类型，但具体情况视其所在语境而定。如果用在字符串语境中，则返回结果为字符串。如果用在数字语境中，则返回结果为十进制值、实数值或整数值
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL函数-系统信息函数 -->
+<div id="MySQL_functions_system_information_function" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL函数-系统信息函数</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>函数名</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>VERSION()</td>
+                <td>返回指示MySQL服务器版本的字符串。这个字符串使用utf8字符集</td>
+            </tr>
+            <tr>
+                <td>CONNECTION_ID()</td>
+                <td>返回MySQL服务器当前连接的次数，每个连接都有各自唯一的ID</td>
+            </tr>
+            <tr>
+                <td>PROCESSLIST</td>
+                <td>
+                    <code>SHOW PROCESSLIST</code>命令的输出结果显示了有哪些线程在运行，不仅可以查看当前所有的连接数，还可以查看当前的连接状态、帮助识别出有问题的查询语句等。<br/>
+                    如果是root账号，能看到所有用户的当前连接。如果是其他普通账号，则只能看到自己占用的连接。<code>SHOW PROCESSLIST</code>只列出前100条，如果想全部列出可使用<code>SHOW FULL PROCESSLIST</code>命令。<br/>
+                    查看<span class="tinyHand note" onclick="theMeaningAndPurposeOfPROCESSLIST()">各个列的含义和用途</span>
+                </td>
+            </tr>
+            <tr>
+                <td>DATABASE()</td>
+                <td>返回使用urf8字符集的默认（当前）数据库名</td>
+            </tr>
+            <tr>
+                <td>SCHEMA()</td>
+                <td>返回使用urf8字符集的默认（当前）数据库名</td>
+            </tr>
+            <tr>
+                <td>USER()</td>
+                <td>返回当前被MySQL服务器验证的用户名和主机名组合。与其相同的函数还有：CURRENT_USER、CURRENT_USER()、SYSTEM_USER()和SESSION_USER()。这个值符合确定当前登录用户存取权限的MySQL账户。一般情况下，这几个函数的返回值是相同的</td>
+            </tr>
+            <tr>
+                <td>CHARSET(str)</td>
+                <td>返回字符串str自变量的字符集</td>
+            </tr>
+            <tr>
+                <td>COLLATION(str)</td>
+                <td>返回字符串str的字符排列方式</td>
+            </tr>
+            <tr>
+                <td>LAST_INSERT_ID()</td>
+                <td>
+                    返回最后生成的AUTO_INCREMENT值<br/>
+                    <span class="note">注意：</span>当使用一条INSERT语句插入多行时，LAST_INSERT_ID()只返回插入的第一行数据时产生的值。之所以这样，是因为这使依靠其他服务器复制同样的INSERT语句变得简单。<br/>
+                    LAST_INSERT_ID()是与数据表无关的，如果向表a插入数据后再向表b插入数据，那么LAST_INSERT_ID()返回表b中的id值
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL函数-系统信息函数-PROCESSLIST各个列的含义和用途 -->
+<div id="MySQL_functions_system_information_function_processlist" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL函数-系统信息函数-PROCESSLIST各个列的含义和用途</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>列名</th>
+                <th>用途</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Id</td>
+                <td>用户登录MySQL时，系统分配的是“connection id”</td>
+            </tr>
+            <tr>
+                <td>User</td>
+                <td>显示当前用户。如果不是root，这个命令就只显示用户权限范围内的SQL语句</td>
+            </tr>
+            <tr>
+                <td>Host</td>
+                <td>显示这个语句是从哪个IP的哪个端口上发出的，可以用来追踪出现问题语句的用户</td>
+            </tr>
+            <tr>
+                <td>db</td>
+                <td>显示这个进程目前连接的是哪个数据库</td>
+            </tr>
+            <tr>
+                <td>Command</td>
+                <td>显示当前连接执行的命令，一般取值为休眠（Sleep）、查询（Query）、连接（Connect）</td>
+            </tr>
+            <tr>
+                <td>Time</td>
+                <td>显示这个状态持续的时间，单位是秒</td>
+            </tr>
+            <tr>
+                <td>State</td>
+                <td>显示使用当前连接的SQL语句的状态，很重要的列。后续会有所有状态的描述，State只是语句执行中的某一个状态。一个SQL语句，以查询为例，可能需要经过Copying to tmp table、Sorting result、Sending data等状态才可以完成</td>
+            </tr>
+            <tr>
+                <td>Info</td>
+                <td>显示这个SQL语句，是判断问题语句的一个重要依据</td>
             </tr>
             </tbody>
         </table>

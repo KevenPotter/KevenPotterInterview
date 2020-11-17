@@ -1014,8 +1014,20 @@ function MySQLFunctionsCharts() {
             case '日期和时间函数':
                 layerTips('日期和时间函数主要用来处理日期和时间值，一般的日期函数除了使用DATE类型的参数外，也可以使用DATETIME或者TIMESTAMP类型的参数，但会忽略这些值的时间部分。<br/>相同的，以TIME类型值为参数的函数，可以接受TIMESTAMP类型的参数，但会忽略日期部分，许多日期函数可以同时接受数字和字符串类型的两种参数', MySQLFunctionsCharts);
                 break;
-            case '位运算符':
-                layerTips('位运算符参与运算的操作数按二进制位进行运算，包括位与（&）、位或（|）、位非（~）、位异或（^）、左移（<<）、右移（>>）6种', MySQLFunctionsCharts);
+            case '条件判断函数':
+                layerTips('条件判断函数也称为控制流程函数，根据满足不同的条件，执行相应的流程。MySQL中进行条件判断的函数由IF、IFNULL和CASE', MySQLFunctionsCharts);
+                break;
+            case '系统信息函数':
+                layerTips('系统信息函数可以查看MySQL中的系统信息，这些信息有数据库的版本号、当前用户名和连接数、系统字符集、最后一个自动生成的ID值等', MySQLFunctionsCharts);
+                break;
+            case '加密函数':
+                layerTips('加密函数主要用来对数据进行加密和界面处理，以保证某些重要数据不被别人获取。这些函数在保证数据库安全时非常有用', MySQLFunctionsCharts);
+                break;
+            case '其他函数':
+                layerTips('这里是一些不能笼统地分为哪一类的函数，例如重复指定操作函数、改变字符集函数、IP地址与数字转换函数', MySQLFunctionsCharts);
+                break;
+            case '窗口函数':
+                layerTips('', MySQLFunctionsCharts);
                 break;
         }
     });
@@ -1030,8 +1042,20 @@ function MySQLFunctionsCharts() {
             case '日期和时间函数':
                 layerCapture('MySQL_functions_date_and_time_function', 0, 30, 60);
                 break;
-            case '位运算符':
-                layerCapture('MySQL_operator_overview_bit_operator', 0, 60, 43);
+            case '条件判断函数':
+                layerCapture('MySQL_functions_conditional_judgment_function', 0, 60, 34);
+                break;
+            case '系统信息函数':
+                layerCapture('MySQL_functions_system_information_function', 0, 60, 53);
+                break;
+            case '加密函数':
+                layerCapture('MySQL_functions_system_information_function', 0, 60, 53);
+                break;
+            case '其他函数':
+                layerCapture('MySQL_functions_system_information_function', 0, 60, 53);
+                break;
+            case '窗口函数':
+                layerCapture('MySQL_functions_system_information_function', 0, 60, 53);
                 break;
         }
     });
@@ -1160,4 +1184,32 @@ function operatorPrecedenceTitleTips() {
  */
 function systemIndependentVariable() {
     layerCapture('date_and_time_function_system_independent_variable', 0, 30, 37);
+}
+
+/**
+ * type和expr参数关系图
+ */
+function theRelationshipBetweenTypeAndExprParameters() {
+    layerCapture('date_and_time_function_the_relationship_between_type_and_expr_parameters', 0, 30, 50);
+}
+
+/**
+ * format指定的格式
+ */
+function formatSpecifiedFormat() {
+    layerCapture('date_and_time_function_format_specified_format', 0, 30, 50);
+}
+
+/**
+ * GET_FORMAT根据两个值类型组合返回的字符串显示格式
+ */
+function getFormatFormat() {
+    layerCapture('date_and_time_function_get_format_format', 0, 30, 50);
+}
+
+/**
+ * PROCESSLIST各个列的含义和用途
+ */
+function theMeaningAndPurposeOfPROCESSLIST() {
+    layerCapture('MySQL_functions_system_information_function_processlist', 0, 30, 44);
 }
