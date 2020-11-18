@@ -2773,6 +2773,205 @@
     </div>
 </div>
 
+<!-- MySQL函数-加密函数 -->
+<div id="MySQL_functions_system_encryption_function" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL函数-加密函数</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>函数名</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>MD5(str)</td>
+                <td>为字符串算出一个MD5 128比特校验和。该值以32位十六进制数字的二进制字符串形式返回，若参数为NULL，则会返回NULL</td>
+            </tr>
+            <tr>
+                <td>SHA(str)</td>
+                <td>从原明文密码str计算并返回加密后的密码字符串，当参数为NULL时，返回NULL。SHA加密算法比MD5更加安全</td>
+            </tr>
+            <tr>
+                <td>SHA2(str,hash_length)</td>
+                <td>使用hash_length作为长度，加密str。hash_length支持的值为224、256、384、512和0。其中，0等同于256</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL函数-其他函数 -->
+<div id="MySQL_functions_system_other_function" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL函数-其他函数</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>函数名</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>FORMAT(x,n)</td>
+                <td>将数字x格式化，并以四舍五入的方式保留小数点后n位，结果以字符串的形式返回。若n为0，则返回结果不含小数部分</td>
+            </tr>
+            <tr>
+                <td>CONV(N,from_base,to_base)</td>
+                <td>进行不同进制数间的转换。返回值为数值N的字符串表示，由from_base进制转化为to_base进制。如有任意一个参数为NULL，则返回值为NULL。自变量N被理解为一个整数，但是可以被指定为一个整数或字符串。最小基数为2，最大基数为36。查看<span class="tinyHand note" onclick="baseDescription()">进制说明</span></td>
+            </tr>
+            <tr>
+                <td>INET_ATON(expr)</td>
+                <td>给出一个作为字符串的网络地址的点地址表示，返回一个代表该地址数值的整数。地址可以是4或8bit地址</td>
+            </tr>
+            <tr>
+                <td>INET_NTOA(expr)</td>
+                <td>给定一个数字网络地址（4或8bit），返回作为字符串的该地址的点地址表示</td>
+            </tr>
+            <tr>
+                <td>GET_LOCK(str,timeout)</td>
+                <td>
+                    设法使用字符串str给定的名字得到一个锁，超时为timeout秒。
+                    <ol>
+                        <li>若成功得到锁，则返回1</li>
+                        <li>若操作超时，则返回0</li>
+                        <li>若发生错误，则返回NULL</li>
+                        <li>假如有一个用GET_LOCK(str,timeout)得到的锁，当执行RELEASE_LOCK(str)或连接断开（正常或非正常）时，这个锁就会解除</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>RELEASE_LOCK(str)</td>
+                <td>
+                    解开被GET_LOCK(str,timeout)获取的、用字符串str所命名的锁。
+                    <ol>
+                        <li>若锁被解开，则返回1</li>
+                        <li>若该线程尚未创建锁，则返回0（此时锁没有被解开）</li>
+                        <li>若命名的锁不存在，则返回NULL</li>
+                        <li>若该锁从未被GET_LOCK(str,timeout)的调用获取，或锁已经被提前解开，则该锁不存在</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>IS_FREE_LOCK(str)</td>
+                <td>
+                    检查名为str的锁是否可以使用（换言之，没有被封锁）。
+                    <ol>
+                        <li>若锁可以使用，则返回1（没有人在用这个锁）</li>
+                        <li>若这个锁正在被使用，则返回0</li>
+                        <li>出现错误，则返回NULL（诸如不正确的参数）</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>IS_USED_LOCK(str)</td>
+                <td>
+                    检查名为str的锁是否正在被使用（换言之，被封锁）。
+                    <ol>
+                        <li>若被封锁，则返回使用该锁的客户端的连接标识符（connection ID）</li>
+                        <li>否则，返回NULL</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>BENCHMARK(count,expr)</td>
+                <td>
+                    重复count次执行表达式expr。它可以用于计算MySQL处理表达式的速度。结果值通常为0（0只是表示处理过程很快，并不是没有花费时间）。另一个作用是它可以在MySQL客户端内部报告语句执行的时间。<br/>
+                    BENCHMARK报告的时间是客户端经过的时间，而不是在服务器端的CPU时间，每次执行后报告的时间并不一定是相同的
+                </td>
+            </tr>
+            <tr>
+                <td>CONVERT(...USING...)</td>
+                <td>带有USING的CONVERT()函数被用来在不同的字符集之间转化数据。例如：CONVERT('string' USING latin1)</td>
+            </tr>
+            <tr>
+                <td>CAST(x,AS type)</td>
+                <td>将一个类型的值转换为另一个类型的值，可转换的type有BINARY、CHAR(n)、DATE、TIME、DATETIME、DECIMAL、SIGNED、UNSIGNED</td>
+            </tr>
+            <tr>
+                <td>CONVERT(x,type)</td>
+                <td>将一个类型的值转换为另一个类型的值，可转换的type有BINARY、CHAR(n)、DATE、TIME、DATETIME、DECIMAL、SIGNED、UNSIGNED</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL函数-其他函数-进制说明 -->
+<div id="MySQL_functions_system_other_function_base_description" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL函数-其他函数-进制说明</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>进制</th>
+                <th>说明</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>二进制</td>
+                <td>采用0和1两个数字来表示的数。它以2为基数，逢二进一</td>
+            </tr>
+            <tr>
+                <td>八进制</td>
+                <td>采用0、1、2、3、4、5、6、7八个数字，逢八进一，以数字0开头</td>
+            </tr>
+            <tr>
+                <td>十进制</td>
+                <td>采用0~9，共10个数字表示，逢十进一</td>
+            </tr>
+            <tr>
+                <td>十六进制</td>
+                <td>由0~9、A~F组成，以数字0x开头。与十进制的对应关系是：0~9对应0~9，A~F对应10~15</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MySQL函数-窗口函数 -->
+<div id="MySQL_functions_system_window_function" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL函数-窗口函数</h3>
+    </div>
+    <div class="panel-body no-padding">
+        <h3 class="margin-left-10"><span class="panel-note"><i class="fa fa-anchor"></i>案例：</span></h3>
+        <pre>
+                CREATE TABLE branch(
+                    name    char(255) NOT NULL,
+                    brcount INT(11) NOT NULL
+                );
+
+                INSERT INTO branch (name,brcount)
+                VALUES ('branch1',5),
+                       ('branch2',10),
+                       ('branch3',8),
+                       ('branch4',20),
+                       ('branch5',9)</pre>
+        <p>对公司部门人数按从小到大进行排名，可以利用如下的窗口函数来实现：</p>
+        <pre>
+                SELECT * , rank() OVER w1 AS `rank` FROM branch window w1 AS (ORDER BY brcount);</pre>
+        <p>这里创建了名称为w1的窗口函数，规定对brcount字段进行排序，然后在SELECT子句中对窗口函数w1执行rank()方法，将结果输出为rank字段。</p>
+        <p class="note">需要注意，这里的window w1是可选的。</p>
+        <p>例如：</p>
+        <p>在每一行中加入员工的总数，可以这样操作：</p>
+        <pre>
+                SELECT * , SUM(brcount) over() as total_count FROM branch;</pre>
+        <p>可以一次性查询出每个部门的员工人数占总人数的百分比，查询方式如下：</p>
+        <pre>
+                SELECT * , (brcount)/(SUM(brcount) over()) AS rate FROM branch;</pre>
+    </div>
+</div>
+
 <!-- CUSTOM JAVASCRIPT -->
 <script type="text/javascript" src="../../assets/scripts/common-method.js"></script>
 <script type="text/javascript" src="../../assets/scripts/base.js"></script>

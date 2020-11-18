@@ -1027,7 +1027,7 @@ function MySQLFunctionsCharts() {
                 layerTips('这里是一些不能笼统地分为哪一类的函数，例如重复指定操作函数、改变字符集函数、IP地址与数字转换函数', MySQLFunctionsCharts);
                 break;
             case '窗口函数':
-                layerTips('', MySQLFunctionsCharts);
+                layerTips('在MySQL8.0版本之前，没有排名函数，所以当需要在查询当中实现排名时，必须手写@变量，比较麻烦。<br/>在MySQL8.0版本中，新增了一个窗口函数，用它可以实现很多新的查询方式。窗口函数类似于SUM()、COUNT()那样的集合函数，但它并不会将多行查询结果合并为一行，而是将结果放回多行当中。也就是说，窗口函数是不需要GROUP BY的', MySQLFunctionsCharts);
                 break;
         }
     });
@@ -1049,13 +1049,13 @@ function MySQLFunctionsCharts() {
                 layerCapture('MySQL_functions_system_information_function', 0, 60, 53);
                 break;
             case '加密函数':
-                layerCapture('MySQL_functions_system_information_function', 0, 60, 53);
+                layerCapture('MySQL_functions_system_encryption_function', 0, 60, 22);
                 break;
             case '其他函数':
-                layerCapture('MySQL_functions_system_information_function', 0, 60, 53);
+                layerCapture('MySQL_functions_system_other_function', 0, 60, 60);
                 break;
             case '窗口函数':
-                layerCapture('MySQL_functions_system_information_function', 0, 60, 53);
+                layerCapture('MySQL_functions_system_window_function', 0, 60, 53);
                 break;
         }
     });
@@ -1212,4 +1212,11 @@ function getFormatFormat() {
  */
 function theMeaningAndPurposeOfPROCESSLIST() {
     layerCapture('MySQL_functions_system_information_function_processlist', 0, 30, 44);
+}
+
+/**
+ * PROCESSLIST各个列的含义和用途
+ */
+function baseDescription() {
+    layerCapture('MySQL_functions_system_other_function_base_description', 0, 35, 25);
 }
