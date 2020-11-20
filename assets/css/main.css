@@ -2538,4 +2538,9 @@ ul.activity-timeline > li:last-child:after {
     cursor: pointer
 }
 
+/*首行缩进2字符*/
+.firstLineIndent {
+    text-indent: 2em;
+}
+
 /*# sourceMappingURL=main.css.map */
