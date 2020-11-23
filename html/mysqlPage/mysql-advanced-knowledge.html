@@ -18,12 +18,14 @@
     <script type="text/javascript" src="../../assets/vendor/laydate/laydate.js"></script>
     <script type="text/javascript" src="../../assets/scripts/klorofil-common.js"></script>
     <script type="text/javascript" src="../../assets/vendor/ui-choose/js/ui-choose.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/highlight/highlight.pack.js"></script>
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="../../assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../assets/vendor/bootstrap-select/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="../../assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../assets/vendor/linearicons/style.css">
     <link rel="stylesheet" href="../../assets/vendor/ui-choose/css/ui-choose.css">
+    <link rel="stylesheet" href="../../assets/vendor/highlight/styles/rainbow.css">
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="../../assets/css/main.css">
     <!-- CUSTOMIZE CSS -->
@@ -197,33 +199,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">创建索引</h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <p class="firstLineIndent">MySQL支持多种方法在单个或多个列上创建索引：</p>
-                                <ul>
-                                    <li>在创建表的定义语句<b>CREATE TABLE</b>中指定索引列</li>
-                                    <li>使用<b>ALTER TABLE</b>语句在存在的表上创建索引</li>
-                                    <li>使用<b>CREATE INDEX</b>语句在已存在的表上添加索引</li>
-                                </ul>
-                                <hr>
-                                <p class="firstLineIndent">其中，使用<b>CREATE TABLE</b>创建表时，除了可以定义</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-md-4">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="createIndexPanelTitleTips()">创建索引-CREATE TABLE时</h3>
+                                <h3 class="panel-title tinyHand" onclick="createIndexCreateTablePanelTitleTips()">创建索引-CREATE TABLE时</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
@@ -237,28 +216,126 @@
                     <div class="col-md-4">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="createIndexPanelTitleTips()">创建索引-ALTER TABLE时</h3>
+                                <h3 class="panel-title tinyHand" onclick="createIndexAlterTablePanelTitleTips()">创建索引-ALTER TABLE时</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="data_types_of_MySQL_date_and_time_type" style="height:400%;"></div>
+                                <div id="create_index_ALTER_TABLE" style="height:400%;"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="createIndexPanelTitleTips()">创建索引-CREATE INDEX时</h3>
+                                <h3 class="panel-title tinyHand" onclick="createIndexCreateIndexPanelTitleTips()">创建索引-CREATE INDEX时</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="data_types_of_MySQL_date_and_time_type" style="height:400%;"></div>
+                                <div id="create_index_CREATE_INDEX" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-scrolling">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">删除索引、降序索引与统计直方图</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <p class="firstLineIndent">MySQL中删除索引使用<code>ALTER TABLE</code>或者<code>DROP INDEX</code>语句，两者可实现相同的功能，<code>DROP INDEX</code>语句在内部被映射到一个<code>ALTER TABLE</code>语句中</p>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>使用ALTER TABLE删除索引</b></h4>
+                                <p class="firstLineIndent">ALTER TABLE删除索引的基本语法如下：</p>
+                                <p class="firstLineIndent"><code>ALTER TABLE table_name DROP INDEX index_name;</code></p>
+                                <p class="firstLineIndent"><span class="note">注意</span>：添加了<code>AUTO_INCREMENT</code>约束字段的唯一索引不能被删除。</p>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>使用DROP INDEX删除索引</b></h4>
+                                <p class="firstLineIndent">DROP INDEX删除索引的基本语法如下：</p>
+                                <p class="firstLineIndent"><code>DROP INDEX index_name ON table_name;</code></p>
+                                <p class="firstLineIndent"><span class="note">注意</span>：删除表中的列时，如果要删除的列为索引的组成部分，则该列也会从索引中删除。如果组成索引的所有列都被删除，则整个索引将被删除</p>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>降序索引</b></h4>
+                                <p class="firstLineIndent">降序索引的基本语法如下：</p>
+                                <p class="firstLineIndent"><code>CREATE INDEX index_name ON table_name(column_name DESC)</code></p>
+                                <p class="firstLineIndent"><span class="note">注意</span>：降序索引只是对查询中特定的排序顺序有效，如果使用不当，反而查询效率更低。</p>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>统计直方图</b></h4>
+                                <p class="firstLineIndent">利用直方图，用户可以对一张表的一列做数据分布的统计，特别是针对没有索引的字段。这可以帮助查询优化器找到更优的执行计划。</p>
+                                <p class="firstLineIndent">在数据库中，查询优化器负责将SQL转换为最有效的执行计划。有时候，查询优化器会找不到最优的执行计划，导致花费了更多不必要的时间。造成这种情况的主要原因是，查询优化器有时无法准确地知道以下几个问题的答案：</p>
+                                <ul>
+                                    <li>每个表有多少行？</li>
+                                    <li>每一列有多少不同的值？</li>
+                                    <li>每一列的数据分布情况如何？</li>
+                                </ul>
+                                <p class="firstLineIndent">因为没有统计数据，优化器会假设条件值是均匀分配的。如何才能使查询优化器知道数据的分布情况呢？一个解决方法就是在列上建立统计直方图。</p>
+                                <p class="firstLineIndent">直方图能近似获得一列的数据分布情况，从而让数据库知道它含有哪些数据。直方图有多种形式，MySQL支持力两种：<span class="note">等宽直方图（singleton）</span>和<span class="note">等高直方图（equi-height）</span>直方图的共同点是，它们都将数据分到了一系列的buckets中去。MySQL会自动将数据划到不同的buckets中，也会自动决定创建哪种类型的直方图。</p>
+                                <hr>
+                                <p class="firstLineIndent">创建直方图的语法格式如下：</p>
+                                <p class="firstLineIndent"><code>ANALYZE TABLE table_name [UPDATE HISTOGRAM ON col_name WITH N BUCKETS | DROP HISTOGRAM ON col_name]</code></p>
+                                <p class="firstLineIndent">
+                                    <code>BUCKETS</code>的默认值是100。统计直方图的信息存储在数据字典表”column_statistics“中，可以通过视图information_schema.COLUMN_STATISTICS访问。直方图以灵活的JSON格式存储。ANALYZE TABLE会基于表大小自动判断是否要进行取样操作。ANALYZE TABLE也会基于表中列的数据分布以及bucket的数量来决定是否要建立等宽直方图（singleton）还是等高直方图（equi-height）。
+                                </p>
+                                <hr>
+                                <p>创建用于测试的数据表production，语句如下：</p>
+                                <pre><code class="sql">mysql> CREATE TABLE production (id INT, tm TIME, count INT);</code></pre>
+                                <p>在数据表production的字段tm上创建直方图，执行语句如下：</p>
+                                <pre>
+                                    <code class="sql">
+mysql> ANALYZE TABLE production UPDATE HISTOGRAM ON tm WITH 60 BUCKETS;
++--------------------+-----------+----------+-----------------------------------------------+
+|        Table       |     Op    | Msg_type |                 Msg_text                      |
++--------------------+-----------+----------+-----------------------------------------------+
+|  myTest.production | histogram |  status  | Histogram statistics created for column 'tm'. |
++--------------------+-----------+----------+-----------------------------------------------+
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">BUCKETS的值必须指定，可以设置1到1024，默认值是100。设置BUCKETS值时，可以先设置低一些，如果没有满足需求，可以再往上增大。</p>
+                                <p class="firstLineIndent">对于不同的数据集合，BUCKETS的值取决于以下几个因素：</p>
+                                <ul>
+                                    <li>这列有多少不同的值</li>
+                                    <li>数据的分布情况</li>
+                                    <li>需要多高的准确性</li>
+                                </ul>
+                                <p>在数据表production的字段tm和字段count上创建直方图，执行语句如下：</p>
+                                <pre>
+                                    <code class="sql">
+mysql> ANALYZE TABLE production UPDATE HISTOGRAM ON tm,count WITH 60 BUCKETS;
++--------------------+-----------+----------+--------------------------------------------------+
+|        Table       |     Op    | Msg_type |                    Msg_text                      |
++--------------------+-----------+----------+--------------------------------------------------+
+|  myTest.production | histogram |  status  | Histogram statistics created for column 'count'. |
++--------------------+-----------+----------+--------------------------------------------------+
+|  myTest.production | histogram |  status  | Histogram statistics created for column 'tm'.    |
++--------------------+-----------+----------+--------------------------------------------------+
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">再次创建直方图时，<b>将会将上一个直方图重写</b>。</p>
+                                <hr>
+                                <p class="firstLineIndent">如果需要删除已经创建的直方图，用DROP HISTOGRAM就可以实现：</p>
+                                <pre>
+                                    <code class="sql">
+mysql> ANALYZE TABLE production DROP HISTOGRAM ON tm,count;
++--------------------+-----------+----------+--------------------------------------------------+
+|        Table       |     Op    | Msg_type |                    Msg_text                      |
++--------------------+-----------+----------+--------------------------------------------------+
+|  myTest.production | histogram |  status  | Histogram statistics removed for column 'count'. |
++--------------------+-----------+----------+--------------------------------------------------+
+|  myTest.production | histogram |  status  | Histogram statistics removed for column 'tm'.    |
++--------------------+-----------+----------+--------------------------------------------------+
+                                    </code>
+                                </pre>
+                                <p><span class="btn btn-success" onclick="histogramTips()">查看提示</span></p>
                             </div>
                         </div>
                     </div>
@@ -328,11 +405,206 @@
     </div>
 </div>
 
+<!-- 创建索引-CREATE TABLE时 -->
+<div id="create_index_create_table_panel_title_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">创建索引-CREATE TABLE时</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">使用CREATE TABLE创建表时，除了可以定义列的数据类型，还可以定义主键约束、外键约束或者唯一性约束，而不论创建哪一种约束，在定义约束的同时相当于在指定列上创建了一个索引。</p>
+        <p class="firstLineIndent">创建表时创建索引的基本语法如下：</p>
+        <p class="firstLineIndent"><code>CREATE TABLE table_name [col_name data_type] [UNIQUE|FULLTEXT|SPATIAL] [INDEX|KEY] [index_name] (col_name[length]) [ASC|DESC]</code></p>
+        <ul>
+            <li>UNIQUE、FULLTEXT、SPATIAL为可选参数，分别表示唯一索引、全文索引和空间索引</li>
+            <li>INDEX与KEY为同义词，两者作用相同，用来指定创建索引</li>
+            <li>col_name为需要创建索引的字段列，该列必须从数据表中定义的多个列中选择</li>
+            <li>index_name指定索引的名称，为可选参数，如果不指定，MySQL默认col_name为索引值</li>
+            <li>length为可选参数，表示索引的长度，<b>只有字符串类型的字段才能指定索引长度</b></li>
+            <li>ASC或DESC指定升序或者降序的索引值存储</li>
+        </ul>
+    </div>
+</div>
+
+<!-- 创建索引-CREATE TABLE时-创建普通索引 -->
+<div id="create_index_create_table_create_a_normal_index" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">创建索引-CREATE TABLE时-创建普通索引</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">最基本的索引类型，没有唯一性之类的限制，其作用只是加快对数据的访问速度</p>
+        <pre>
+            <code class="sql">
+CREATE TABLE t1 (
+    t_id                INT NOT NULL,
+    t_name              VARCHAR(255) NOT NULL,
+    year_publication    YEAR NOT NULL,
+    INDEX(year_publication)
+);
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 创建索引-CREATE TABLE时-创建唯一索引 -->
+<div id="create_index_create_table_create_a_unique_index" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">创建索引-CREATE TABLE时-创建唯一索引</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">创建唯一索引的主要原因是减少查询索引列操作的执行时间，尤其是对比较庞大的数据表。它与前面的普通索引类似，不同的就是：索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一</p>
+        <pre>
+            <code class="sql">
+CREATE TABLE t2 (
+    t_id                INT NOT NULL,
+    t_name              CHAR(30) NOT NULL,
+    UNIQUE INDEX        UniqIdx(t_id)
+);
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 创建索引-CREATE TABLE时-创建单列索引 -->
+<div id="create_index_create_table_create_a_single_column_index" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">创建索引-CREATE TABLE时-创建单列索引</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">单列索引是在数据表中的某一个字段上创建的索引，一个表中可以创建多个单列索引。下面的单列索引指定了索引长度为20</p>
+        <pre>
+            <code class="sql">
+CREATE TABLE t3 (
+    t_id                INT NOT NULL,
+    t_name              CHAR(50) NULL,
+    INDEX               SingleIdx(name(20))
+);
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 创建索引-CREATE TABLE时-创建组合索引 -->
+<div id="create_index_create_table_create_a_composite_index" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">创建索引-CREATE TABLE时-创建组合索引</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">组合索引是在多个字段上创建一个索引</p>
+        <pre>
+            <code class="sql">
+CREATE TABLE t4 (
+    t_id                INT(11) NOT NULL,
+    t_name              CHAR(30) NOT NULL,
+    t_age               INT(11) NOT NULL,
+    t_info              VARCHAR(255),
+    INDEX               MultiIdx(id,name,age)
+);
+            </code>
+        </pre>
+        <p class="firstLineIndent">组合索引可起几个索引的作用，但是使用时并不是随便查询哪个字段都可以使用索引，而是遵循“最左前缀”：利用索引中最左边的列集来匹配行，这样的列集称为<b>最左前缀</b>。</p>
+        <p class="firstLineIndent">例如，这里由t_id、t_name和t_age3个字段构成的索引，索引行中按t_id、t_name、t_age的顺序存放，索引可以搜索(t_id,t_name,t_age)、(t_id,t_name)或者t_id字段组合。如果列不构成索引最左面的前缀，那么MySQL不能使用局部索引，如(t_age)或者(t_name,t_age)组合则不能使用索引查询</p>
+    </div>
+</div>
+
+<!-- 创建索引-CREATE TABLE时-创建全文索引 -->
+<div id="create_index_create_table_create_a_full_text_index" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">创建索引-CREATE TABLE时-创建全文索引</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">FULLTEXT全文索引可以用于全文搜索。只有MyISAM存储引擎支持FULLTEXT索引，并且只为CHAR、VARCHAR和TEXT列创建索引。索引总是对整个列进行，不支持局部（前缀）索引</p>
+        <pre>
+            <code class="sql">
+CREATE TABLE t5 (
+    t_id                INT NOT NULL,
+    t_name              CHAR(30) NOT NULL,
+    t_age               INT NOT NULL,
+    t_info              VARCHAR(255),
+    FULLTEXT INDEX      FullTextIdx(info)
+) ENGINE=MyISAM;
+            </code>
+        </pre>
+        <p class="firstLineIndent">因为MySQL 8.0中默认存储引擎为InnoDB，在这里创建表时需要修改表的存储引擎为MyISAM，不然创建索引会出错。全文索引非常适合于大型数据集，对于小的数据集，它的用处比较小</p>
+    </div>
+</div>
+
+<!-- 创建索引-CREATE TABLE时-创建空间索引 -->
+<div id="create_index_create_table_create_a_spatial_index" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">创建索引-CREATE TABLE时-创建空间索引</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">空间索引必须在MyISAM类型的表中创建，且空间类型的字段必须为空</p>
+        <pre>
+            <code class="sql">
+CREATE TABLE t6 (
+    g GEOMETRY NOT NULL,
+    SPATIAL INDEX spatIdx(g)
+) ENGINE=MyISAM;
+            </code>
+        </pre>
+        <p class="firstLineIndent">注意创建时指定空间类型字段值的非空约束，并且表的存储引擎为MyISAM</p>
+    </div>
+</div>
+
+<!-- 创建索引-ALTER TABLE时 -->
+<div id="create_index_alter_table_panel_title_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">创建索引-ALTER TABLE时</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">在已经存在的表中创建索引，可以使用ALTER TABLE语句或者CREATE INDEX语句。</p>
+        <p class="firstLineIndent">修改表时创建索引的基本语法如下：</p>
+        <p class="firstLineIndent"><code>ALTER TABLE table_name ADD [UNIQUE|FULLTEXT|SPATIAL] [INDEX|KEY] [index_name] (col_name[length],...) [ASC|DESC]</code></p>
+        <ul>
+            <li>UNIQUE、FULLTEXT、SPATIAL为可选参数，分别表示唯一索引、全文索引和空间索引</li>
+            <li>INDEX与KEY为同义词，两者作用相同，用来指定创建索引</li>
+            <li>index_name指定索引的名称，为可选参数，如果不指定，MySQL默认col_name为索引值</li>
+            <li>col_name为需要创建索引的字段列，该列必须从数据表中定义的多个列中选择</li>
+            <li>length为可选参数，表示索引的长度，<b>只有字符串类型的字段才能指定索引长度</b></li>
+            <li>ASC或DESC指定升序或者降序的索引值存储</li>
+        </ul>
+    </div>
+</div>
+
+<!-- 创建索引-CREATE INDEX时 -->
+<div id="create_index_create_index_panel_title_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">创建索引-CREATE INDEX时</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">CREATE INDEX语句可以在已经存在的表上添加索引。在MySQL中，CREATE INDEX被映射到一个ALTER TABLE语句上。基本语法结构为：</p>
+        <p class="firstLineIndent"><code>CREATE [UNIQUE|FULLTEXT|SPATIAL] [INDEX|KEY] [index_name] ON table_name (col_name[length],...) [ASC|DESC]</code></p>
+        <ul>
+            <li>UNIQUE、FULLTEXT、SPATIAL为可选参数，分别表示唯一索引、全文索引和空间索引</li>
+            <li>INDEX与KEY为同义词，两者作用相同，用来指定创建索引</li>
+            <li>index_name指定索引的名称，为可选参数，如果不指定，MySQL默认col_name为索引值</li>
+            <li>col_name为需要创建索引的字段列，该列必须从数据表中定义的多个列中选择</li>
+            <li>length为可选参数，表示索引的长度，<b>只有字符串类型的字段才能指定索引长度</b></li>
+            <li>ASC或DESC指定升序或者降序的索引值存储</li>
+        </ul>
+    </div>
+</div>
+
+<!-- 统计直方图提示 -->
+<div id="histogram_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">统计直方图提示</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">直方图统计了表中某些字段的数据分布情况，为优化选择高效的执行计划提供参考。直方图与索引有着本质的区别：维护一个索引有代价，每一次的INSERT、UPDATE、DELETE都会需要更新索引，会对性能有一定的影响；而直方图一次创建永不更新，除非明确去更新它，所以不会影响INSERT、UPDATE、DELETE的性能。</p>
+        <p class="firstLineIndent">建立直方图的时候，MySQL服务器会将所有数据读到内存中，然后在内存中进行操作，包括排序。如果对一个很大的表建立直方图，可能会需要将几百兆的数据都读到内存中。为了规避这种风险MySQL会根据给定的<code>histogram_generation_max_mem_size</code>的值计算该将多少行数据读到内存中。</p>
+        <p class="firstLineIndent">设置<code>histogram_generation_max_mem_size</code>值得方法如下：</p>
+        <pre><code class="sql">SET histogram_generation_max_mem_size = 10000;</code></pre>
+    </div>
+</div>
+
 <!-- CUSTOM JAVASCRIPT -->
 <script type="text/javascript" src="../../assets/scripts/common-method.js"></script>
 <script type="text/javascript" src="../../assets/scripts/base.js"></script>
 <script type="text/javascript" src="../../assets/scripts/responseStatusCode.js"></script>
 <script type="text/javascript" src="../../assets/scripts/mysql/mysql-advanced-knowledge.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
 </body>
 
 </html>
