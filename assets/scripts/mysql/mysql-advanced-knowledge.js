@@ -3,6 +3,7 @@
  */
 $(document).ready(function () {
     $('#database_page_button').click();
+    $('#database_page_advanced_button').click();
     indexClassificationChart();
     createIndex_CREATE_TABLE_Chart();
     createIndex_ALTER_TABLE_Chart();

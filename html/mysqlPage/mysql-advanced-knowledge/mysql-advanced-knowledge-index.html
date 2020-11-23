@@ -2,41 +2,41 @@
 <html lang="en">
 
 <head>
-    <title>进阶知识</title>
+    <title>进阶知识-数据库索引</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- Javascript -->
-    <script type="text/javascript" src="../../assets/vendor/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="../../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../assets/vendor/bootstrap/js/bootstrap-paginator.js"></script>
-    <script type="text/javascript" src="../../assets/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
-    <script type="text/javascript" src="../../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-    <script type="text/javascript" src="../../assets/vendor/echarts/echarts.min.js"></script>
-    <script type="text/javascript" src="../../assets/vendor/echarts/theme/macarons.js"></script>
-    <script type="text/javascript" src="../../assets/vendor/layer/layer.js"></script>
-    <script type="text/javascript" src="../../assets/vendor/laydate/laydate.js"></script>
-    <script type="text/javascript" src="../../assets/scripts/klorofil-common.js"></script>
-    <script type="text/javascript" src="../../assets/vendor/ui-choose/js/ui-choose.js"></script>
-    <script type="text/javascript" src="../../assets/vendor/highlight/highlight.pack.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/bootstrap/js/bootstrap-paginator.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/echarts/theme/macarons.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/layer/layer.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/laydate/laydate.js"></script>
+    <script type="text/javascript" src="../../../assets/scripts/klorofil-common.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/ui-choose/js/ui-choose.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/highlight/highlight.pack.js"></script>
     <!-- VENDOR CSS -->
-    <link rel="stylesheet" href="../../assets/vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../assets/vendor/bootstrap-select/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="../../assets/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../assets/vendor/linearicons/style.css">
-    <link rel="stylesheet" href="../../assets/vendor/ui-choose/css/ui-choose.css">
-    <link rel="stylesheet" href="../../assets/vendor/highlight/styles/rainbow.css">
+    <link rel="stylesheet" href="../../../assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../assets/vendor/bootstrap-select/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="../../../assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../assets/vendor/linearicons/style.css">
+    <link rel="stylesheet" href="../../../assets/vendor/ui-choose/css/ui-choose.css">
+    <link rel="stylesheet" href="../../../assets/vendor/highlight/styles/rainbow.css">
     <!-- MAIN CSS -->
-    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../../assets/css/main.css">
     <!-- CUSTOMIZE CSS -->
-    <link rel="stylesheet" href="../../assets/css/roundButton.css">
+    <link rel="stylesheet" href="../../../assets/css/roundButton.css">
     <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-    <link rel="stylesheet" href="../../assets/css/demo.css">
+    <link rel="stylesheet" href="../../../assets/css/demo.css">
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
     <!-- ICONS -->
-    <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="../../assets/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../../../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../../../assets/img/favicon.png">
 </head>
 
 <body>
@@ -45,7 +45,7 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="brand">
-            <a href="../../index.html"><img src="../../assets/img/logo-KevenPotter.png" alt="KevenPotter Logo" class="img-responsive logo"></a>
+            <a href="../../../index.html"><img src="../../../assets/img/logo-KevenPotter.png" alt="KevenPotter Logo" class="img-responsive logo"></a>
         </div>
         <div class="container-fluid">
             <div class="navbar-btn">
@@ -65,13 +65,13 @@
         <div class="sidebar-scroll">
             <nav>
                 <ul class="nav">
-                    <li><a href="../../index.html" class=""><i class="lnr lnr-home"></i> <span>首页</span></a></li>
+                    <li><a href="../../../index.html" class=""><i class="lnr lnr-home"></i> <span>首页</span></a></li>
                     <li>
                         <a href="#distributedPage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-cloud"></i> <span>分布式</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="distributedPage" class="collapse ">
                             <ul class="nav">
-                                <li><a href="../distributedPage/distributed_overview.html" class="">分布式概述</a></li>
-                                <li><a href="../distributedPage/zookeeper_overview.html" class="">ZooKeeper概述</a></li>
+                                <li><a href="../../distributedPage/distributed_overview.html" class="">分布式概述</a></li>
+                                <li><a href="../../distributedPage/zookeeper_overview.html" class="">ZooKeeper概述</a></li>
                             </ul>
                         </div>
                     </li>
@@ -79,11 +79,11 @@
                         <a href="#designPatternsPage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-laptop"></i> <span>设计模式</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="designPatternsPage" class="collapse ">
                             <ul class="nav">
-                                <li><a href="../designPatternsPage/six_principles.html" class="">六大原则</a></li>
-                                <li><a href="../designPatternsPage/singleton_pattern.html" class="">单例模式</a></li>
-                                <li><a href="../designPatternsPage/factory_method_pattern.html" class="">工厂方法模式</a></li>
-                                <li><a href="../designPatternsPage/abstract_factory_pattern.html" class="">抽象工厂模式</a></li>
-                                <li><a href="../designPatternsPage/template_method_pattern.html" class="">模板方法模式</a></li>
+                                <li><a href="../../designPatternsPage/six_principles.html" class="">六大原则</a></li>
+                                <li><a href="../../designPatternsPage/singleton_pattern.html" class="">单例模式</a></li>
+                                <li><a href="../../designPatternsPage/factory_method_pattern.html" class="">工厂方法模式</a></li>
+                                <li><a href="../../designPatternsPage/abstract_factory_pattern.html" class="">抽象工厂模式</a></li>
+                                <li><a href="../../designPatternsPage/template_method_pattern.html" class="">模板方法模式</a></li>
                             </ul>
                         </div>
                     </li>
@@ -91,9 +91,16 @@
                         <a id="database_page_button" href="#databasePage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-database"></i> <span>数据库</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="databasePage" class="collapse ">
                             <ul class="nav">
-                                <li><a href="mysql-basic-knowledge.html" class="">基础知识</a></li>
-                                <li><a href="mysql-advanced-knowledge.html" class="active">进阶知识</a></li>
-                                <li><a href="mysql-sub-database_sub-table.html" class="">分库分表</a></li>
+                                <li><a href="../mysql-basic-knowledge.html" class="">基础知识</a></li>
+                                <li>
+                                    <a id="database_page_advanced_button" href="#advanced_knowledge" data-toggle="collapse" class="collapsed"><span>进阶知识</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                                    <div id="advanced_knowledge" class="collapse ">
+                                        <ul class="nav">
+                                            <li><a href="mysql-advanced-knowledge-index.html" class="active">索引</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="../mysql-sub-database_sub-table.html" class="">分库分表</a></li>
                             </ul>
                         </div>
                     </li>
@@ -107,7 +114,7 @@
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
-                <h3 class="page-title">基础知识</h3>
+                <h3 class="page-title">索引</h3>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel panel-scrolling">
@@ -600,10 +607,10 @@ CREATE TABLE t6 (
 </div>
 
 <!-- CUSTOM JAVASCRIPT -->
-<script type="text/javascript" src="../../assets/scripts/common-method.js"></script>
-<script type="text/javascript" src="../../assets/scripts/base.js"></script>
-<script type="text/javascript" src="../../assets/scripts/responseStatusCode.js"></script>
-<script type="text/javascript" src="../../assets/scripts/mysql/mysql-advanced-knowledge.js"></script>
+<script type="text/javascript" src="../../../assets/scripts/common-method.js"></script>
+<script type="text/javascript" src="../../../assets/scripts/base.js"></script>
+<script type="text/javascript" src="../../../assets/scripts/responseStatusCode.js"></script>
+<script type="text/javascript" src="../../../assets/scripts/mysql/mysql-advanced-knowledge.js"></script>
 <script>hljs.initHighlightingOnLoad()</script>
 </body>
 
