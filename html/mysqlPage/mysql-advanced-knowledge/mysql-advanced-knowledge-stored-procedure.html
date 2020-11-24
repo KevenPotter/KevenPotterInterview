@@ -91,7 +91,7 @@
                         <a id="database_page_button" href="#databasePage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-database"></i> <span>数据库</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="databasePage" class="collapse ">
                             <ul class="nav">
-                                <li><a href="../mysql-basic-knowledge.html" class=""></i>基础知识</a></li>
+                                <li><a href="../mysql-basic-knowledge.html" class="">基础知识</a></li>
                                 <li>
                                     <a id="database_page_advanced_button" href="#advanced_knowledge" data-toggle="collapse" class="collapsed"><span>进阶知识</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                                     <div id="advanced_knowledge" class="collapse ">
@@ -115,235 +115,410 @@
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
-                <h3 class="page-title">存储过程</h3>
+                <h3 id="stored_procedure_page_title_tips" class="page-title">存储过程</h3>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel panel-scrolling">
                             <div class="panel-heading">
-                                <h3 class="panel-title">索引简介</h3>
+                                <h3 class="panel-title tinyHand" onclick="createStoredProcedureAndFunctionPanelTitleTips()">创建存储过程</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <h4><i class="fa fa-anchor"></i><b>简介</b></h4>
-                                <p class="firstLineIndent"><b>索引</b>用于快速找出在某个列中有一特定值的行。不使用索引，MySQL必须从第1条记录开始读完整个表，直到找出相关的行。表越大，查询数据所花费的时间越多。如果表中查询的列有一个索引，MySQL能快速到达某个位置去搜寻数据文件，而不必查看所有数据。</p>
-                                <p class="firstLineIndent"><b>索引</b>是对数据库表中一列或多列的值进行排序的一种结构，其本质是帮助MySQL高效获取数据的<span class="note">数据结构</span>。也可以理解为<b>“排好序的快速查找数据结构”</b>。它可以提高数据库中特定数据的查询速度。</p>
+                                <h4><i class="fa fa-anchor"></i><b>创建存储过程，需要使用CREATE PROCEDURE语句，基本语法格式如下：</b></h4>
+                                <code>CREATE PROCEDURE sp_name([proc_parameter]) [characteristics ...] routine_body</code>
                                 <hr>
-                                <h4><i class="fa fa-anchor"></i><b>含义</b></h4>
-                                <p class="firstLineIndent"><b>索引</b>是一个单独的、存储在磁盘上的数据库结构，包含着对数据表里所以记录的引用指针。使用索引可以快速找出在某个或多个列中有一特定值的行，所有MySQL列类型都可以被索引，对相关列使用索引是提高查询操作速度的最佳途径。</p>
-                                <p class="firstLineIndent"><i>例如：数据库中有2万条记录，现在要执行一个查询“SELECT * FROM table WHERE num = 10000”，如果没有索引，就必须遍历整个表，直到num等于10000的这一行被找到为止；如果在num列上创建索引，MySQL不需要任何扫描，直接在索引里面找10000，就可以得知这一行的位置。可见，索引的建立可以提高数据库的查询速度。</i></p>
-                                <p class="firstLineIndent">索引是在存储引擎中实现的，因此，每种存储引擎的索引都不一定完全相同，并且每种存储引擎也不一定支持所有索引类型。根据存储引擎定义每个表的最大索引数和最大索引长度。<b>所有存储引擎支持每个表至少16个索引，总索引长度至少为256字节</b>。大多数存储引擎有更高的限制。</p>
-                                <p class="firstLineIndent">MySQL中索引的存储类型有两种，即<code>BTREE</code>和<code>HASH</code>，具体和表的存储引擎相关：<code>MyISAM</code>和<code>InnoDB</code>存储引擎只支持<code>BTREE</code>索引；<code>MEMORY</code>/<code>HEAP</code>存储引擎可以支持<code>BTREE</code>和<code>HASH</code>索引。</p>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>关键字</th>
+                                        <th>作用</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>CREATE PROCEDURE</td>
+                                        <td>为用来创建存储过程的关键字</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sp_name</td>
+                                        <td>为存储过程的名称</td>
+                                    </tr>
+                                    <tr>
+                                        <td>proc_parameter</td>
+                                        <td class="tinyHand" onclick="createProcedureProcParameterTips()">为指定存储过程的参数列表 <i class="fa fa-hand-pointer-o"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>characteristics</td>
+                                        <td class="tinyHand" onclick="createProcedureAndFunctionCharacteristicsTips()">指定存储过程的特性 <i class="fa fa-hand-pointer-o"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>routine_body</td>
+                                        <td>是SQL代码内容，可以用BEGIN...END来表示SQL代码的开始和结束</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例1：</b></h4>
+                                <pre>
+                                    <code class="sql">
+    CREATE PROCEDURE AvgFruitPrice()
+    BEGIN
+    SELECT AVG(f_price) AS avgPrice
+    FROM fruits;
+    END;
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">上述代码中，此存储过程名为AvgFruitPrice，使用CREATE PROCEDURE AvgFruitPrice()语句定义。此存储过程没有参数，但是后面的()仍然需要。BEGIN和END语句用来限定存储过程体，过程本身仅是一个简单的SELECT语句</p>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例2：</b></h4>
+                                <pre>
+                                    <code class="sql">
+    mysql> DELIMITER //
+    mysql> CREATE PROCEDURE Proc()
+    mysql> BEGIN
+    mysql> SELECT * FROM fruits;
+    mysql> END; //
+    Query OK, 0 rows affected (0.00 sec)
+    mysql> DELIMITER ;
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">这行代码创建了一个查看fruits表的存储过程，每次调用这个存储过程的时候都会执行SELECT语句查看表的内容</p>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例3：</b></h4>
+                                <pre>
+                                    <code class="sql">
+    mysql> DELIMITER //
+    mysql> CREATE PROCEDURE CountProc(OUT param1 INT)
+    mysql> BEGIN
+    mysql> SELECT COUNT(*) INTO param1 FROM fruits;
+    mysql> END; //
+    Query OK, 0 rows affected (0.00 sec)
+    mysql> DELIMITER ;
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">上述代码的作用是创建一个获取fruits表记录条数的存储过程，名称是CountProc，COUNT(*)计算后把结果放入参数param1中</p>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>DELIMITER：</b></h4>
+                                <p class="firstLineIndent">“DELIMITER //”语句的作用是将MySQL的结束符设置为//，因为MySQL默认的语句结束符号为封号‘;’。为了避免与存储过程中SQL语句结束符相冲突，需要使用DELIMITER改变存储过程的结束符，并以“END //”结束存储过程。存储过程定义完毕之后再使用“DELIMITER ;”恢复默认结束符。DELIMITER也可以指定其他符号作为结束符。</p>
+                                <p class="firstLineIndent"><b>当使用DELIMITER命令时，应该避免使用反斜杠（‘/’）字符，因为反斜线是MySQL的转义字符。</b></p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="panel panel-scrolling">
                             <div class="panel-heading">
-                                <h3 class="panel-title">索引的优点</h3>
+                                <h3 class="panel-title tinyHand" onclick="createStoredProcedureAndFunctionPanelTitleTips()">创建存储函数</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <h4><i class="fa fa-anchor"></i><b>优点</b></h4>
-                                <ol>
-                                    <li>通过创建唯一索引，可以保证数据库表中每一行数据的唯一性</li>
-                                    <li>可以大大加快数据的查询速度，这也是创建索引的主要原因</li>
-                                    <li>在实现数据的参考完整性方面，可以加速表和表之间的连接</li>
-                                    <li>在使用分组和排序子句进行数据查询时，也可以显著减少查询中分组和排序的时间</li>
-                                </ol>
+                                <h4><i class="fa fa-anchor"></i><b>创建存储过程，需要使用CREATE FUNCTION语句，基本语法格式如下：</b></h4>
+                                <code>CREATE FUNCTION func_name ([func_parameter]) RETURNS TYPE [characteristic ...] routine_body</code>
                                 <hr>
-                                <h4><i class="fa fa-anchor"></i><b>缺点</b></h4>
-                                <ol>
-                                    <li>创建索引和维护索引要耗费时间，并且随着数据量的增加所耗费的时间也会增加</li>
-                                    <li>索引需要占磁盘空间，除了数据表占数据空间之外，每一个索引还要占一定的物理空间，如果有大量的索引，索引文件可能比数据文件更快达到最大文件尺寸</li>
-                                    <li>当对表中的数据进行<b>INSERT</b>、<b>UPDATE</b>、<b>DELETE</b>的时候，索引也要动态地维护，这样就降低了数据的维护速度</li>
-                                </ol>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>关键字</th>
+                                        <th>作用</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>CREATE FUNCTION</td>
+                                        <td>为用来创建存储函数的关键字</td>
+                                    </tr>
+                                    <tr>
+                                        <td>func_name</td>
+                                        <td>为存储函数的名称</td>
+                                    </tr>
+                                    <tr>
+                                        <td>func_parameter</td>
+                                        <td class="tinyHand" onclick="createFunctionFuncParameterTips()">为指定存储函数的参数列表 <i class="fa fa-hand-pointer-o"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>RETURNS TYPE</td>
+                                        <td>表示函数返回数据的类型</td>
+                                    </tr>
+                                    <tr>
+                                        <td>characteristics</td>
+                                        <td class="tinyHand" onclick="createProcedureAndFunctionCharacteristicsTips()">指定存储函数的特性 <i class="fa fa-hand-pointer-o"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>routine_body</td>
+                                        <td>是SQL代码内容，可以用BEGIN...END来表示SQL代码的开始和结束</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例1：</b></h4>
+                                <pre>
+                                    <code class="sql">
+    mysql> DELIMITER //
+    mysql> CREATE FUNCTION NameByZip()
+    mysql> RETURNS CHAR(50)
+    mysql> RETURN (SELECT s_name FROM suppliers WHERE s_call = '48075');
+    mysql> //
+    Query OK, 0 rows affected (0.12 sec)
+    mysql> DELIMITER ;
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">如果在存储函数中的RETURN语句返回一个类型不同于函数的RETURNS子句中指定类型的值，返回值将被强制为恰当的类型。比如，如果一个函数返回一个ENUM或SET值，但是RETURN语句返回一个整数，对于SET成员集相应的ENUM成员，从函数返回的值是字符串。</p>
+                                <p class="firstLineIndent"><span class="note">提示</span>：指定参数为IN、OUT或INOUT只对PROCEDURE是合法的（FUNCTION中总是默认为IN参数）。RETURNS子句只能对FUNCTION做指定，对函数而言这是强制的。它用来指定函数的返回类型，而且函数体必须包含一个RETURN value语句。</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="panel">
+                        <div class="panel panel-scrolling">
                             <div class="panel-heading">
-                                <h3 class="panel-title">索引的分类</h3>
+                                <h3 class="panel-title">变量的使用</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="index_classification" style="height:400%;"></div>
+                                <p class="firstLineIndent"><b>变量</b>可以在子程序中声明并使用，这些变量的作用范围是在<span class="note">BEGIN...END</span>程序中</p>
+                                <h4><i class="fa fa-anchor"></i><b>定义变量：</b></h4>
+                                <code>DECLARE var_name [,var_name]... DATA_TYPE [DEFAULT value];</code>
+                                <hr>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>关键字</th>
+                                        <th>作用</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>var_name</td>
+                                        <td>为局部变量的名称</td>
+                                    </tr>
+                                    <tr>
+                                        <td>DEFAULT value</td>
+                                        <td>给变量提供一个默认值。值除了可以被声明为一个常数外，还可以被指定为一个表达式。如果没有DEFAULT子句，初始值为NULL</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            定义名称为myParam的变量，类型为INT类型，默认值为100：<code>DECLARE myParam INT DEFAULT 100;</code>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>变量赋值：</b></h4>
+                                <code class="tinyHand" onclick="variableAssignmentSetTips()">SET var_name = expr [,var_name = expr] ...; </code><i class="fa fa-hand-pointer-o"></i>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例1：</b></h4>
+                                <p class="firstLineIndent">声明3个变量，分别为var1、var2和var3，数据类型为INT，使用SET为变量赋值，代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    DECLARE var1, var2, var3 INT;
+    SET var1 = 10, var2 = 20;
+    SET var3 = var1 + var2;
+                                    </code>
+                                </pre>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>SELECT...INTO语法：</b></h4>
+                                <p class="firstLineIndent">在MySQL中，还可以通过SELECT...INTO为一个或多个变量赋值。SELECT语法把选定的列直接存储到对应位置的变量。语法如下：</p>
+                                <code>SELECT col_name[,...] INTO var_name[,...] table_expr;</code>
+                                <hr>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>关键字</th>
+                                        <th>作用</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>col_name</td>
+                                        <td>表示字段名称</td>
+                                    </tr>
+                                    <tr>
+                                        <td>var_name</td>
+                                        <td>表示定义的变量名称</td>
+                                    </tr>
+                                    <tr>
+                                        <td>table_expr</td>
+                                        <td>表示查询条件表达式，包括表名称和WHERE子句</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例1：</b></h4>
+                                <p class="firstLineIndent">声明3个变量，分别为var1、var2和var3，数据类型为INT，使用SET为变量赋值，代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    -- 声明变量fruitName和fruitPrice，通过SELECT...INTO语句查询指定记录并为变量赋值：
+    DECLARE fruitName CHAR(50);
+    DECLARE fruitPrice DECIMAL(8,2);
+    SELECT f_name,f_price INTO fruitName,fruitPrice
+    FROM fruits WHERE f_id = 'a1';
+                                    </code>
+                                </pre>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="panel panel-scrolling">
                             <div class="panel-heading">
-                                <h3 class="panel-title">索引的设计原则</h3>
+                                <h3 class="panel-title tinyHand" onclick="defineConditionsAndProcessingProceduresTips()">定义条件和处理程序 <i class="fa fa-hand-pointer-o"></i></h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <h4><i class="fa fa-anchor"></i><b>设计原则</b></h4>
-                                <p class="firstLineIndent">索引设计不合理或者缺少索引都会对数据库和应用程序的性能造成障碍。高效的索引对于获得良好的性能非常重要。设计索引时，应该考虑以下准则：</p>
-                                <ol>
-                                    <li>索引并非越多越好，一个表中如有大量的索引，不仅占用磁盘空间，还会影响<b>INSERT</b>、<b>UPDATE</b>、<b>DELETE</b>等语句的性能，因为在表中的数据更改时，索引也会进行调整和更新</li>
-                                    <li>避免对经常更新的表进行过多的索引，并且索引中的列要尽可能少。应该经常用于查询的字段创建索引，但要避免添加不必要的字段</li>
-                                    <li>数据量小的表最好不要使用索引，由于数据较少，查询花费的时间可能比遍历索引的时间还要短，索引可能不会产生优化效果</li>
-                                    <li>在条件表达式中经常用到的不同值较多的列上建立索引，在不同值很少的列上不要建立索引。如果建立索引不但不会提高查询效率，反而会严重降低数据更新速度</li>
-                                    <li>当唯一性是某种数据本身的特征时，指定唯一索引。使用唯一索引能确保定义的列的数据完整性，以提高查询速度</li>
-                                    <li>在频繁进行排序或分组（即进行<code>GROUP BY</code>或<code>ORDER BY</code>操作）的列上建立索引，如果待排序的列有多个，可以在这些列上建立组合索引</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="createIndexCreateTablePanelTitleTips()">创建索引-CREATE TABLE时</h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="create_index_CREATE_TABLE" style="height:400%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="createIndexAlterTablePanelTitleTips()">创建索引-ALTER TABLE时</h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="create_index_ALTER_TABLE" style="height:400%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="createIndexCreateIndexPanelTitleTips()">创建索引-CREATE INDEX时</h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="create_index_CREATE_INDEX" style="height:400%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-scrolling">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">删除索引、降序索引与统计直方图</h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <p class="firstLineIndent">MySQL中删除索引使用<code>ALTER TABLE</code>或者<code>DROP INDEX</code>语句，两者可实现相同的功能，<code>DROP INDEX</code>语句在内部被映射到一个<code>ALTER TABLE</code>语句中</p>
+                                <h4><i class="fa fa-anchor"></i><b>定义条件</b></h4>
+                                <p class="firstLineIndent">定义条件使用DECLARE语句，语法格式如下：</p>
+                                <code>DECLARE condition_name CONDITION FOR [CONDITION_TYPE]</code>
                                 <hr>
-                                <h4><i class="fa fa-anchor"></i><b>使用ALTER TABLE删除索引</b></h4>
-                                <p class="firstLineIndent">ALTER TABLE删除索引的基本语法如下：</p>
-                                <p class="firstLineIndent"><code>ALTER TABLE table_name DROP INDEX index_name;</code></p>
-                                <p class="firstLineIndent"><span class="note">注意</span>：添加了<code>AUTO_INCREMENT</code>约束字段的唯一索引不能被删除。</p>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>关键字</th>
+                                        <th>作用</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>condition_name</td>
+                                        <td>表示条件的名称</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CONDITION_TYPE</td>
+                                        <td class="tinyHand" onclick="defineConditionsConditionTypeTips()">表示条件的类型 <i class="fa fa-hand-pointer-o"></i></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <p class="firstLineIndent">上述语句指定需要特殊处理的条件。它将一个名字和指定的错误条件关联起来。这个名字可以随后被用在定义处理程序的<span class="bold note">DECLARE HANDLER</span>语句中。</p>
                                 <hr>
-                                <h4><i class="fa fa-anchor"></i><b>使用DROP INDEX删除索引</b></h4>
-                                <p class="firstLineIndent">DROP INDEX删除索引的基本语法如下：</p>
-                                <p class="firstLineIndent"><code>DROP INDEX index_name ON table_name;</code></p>
-                                <p class="firstLineIndent"><span class="note">注意</span>：删除表中的列时，如果要删除的列为索引的组成部分，则该列也会从索引中删除。如果组成索引的所有列都被删除，则整个索引将被删除</p>
-                                <hr>
-                                <h4><i class="fa fa-anchor"></i><b>降序索引</b></h4>
-                                <p class="firstLineIndent">降序索引的基本语法如下：</p>
-                                <p class="firstLineIndent"><code>CREATE INDEX index_name ON table_name(column_name DESC)</code></p>
-                                <p class="firstLineIndent"><span class="note">注意</span>：降序索引只是对查询中特定的排序顺序有效，如果使用不当，反而查询效率更低。</p>
-                                <hr>
-                                <h4><i class="fa fa-anchor"></i><b>统计直方图</b></h4>
-                                <p class="firstLineIndent">利用直方图，用户可以对一张表的一列做数据分布的统计，特别是针对没有索引的字段。这可以帮助查询优化器找到更优的执行计划。</p>
-                                <p class="firstLineIndent">在数据库中，查询优化器负责将SQL转换为最有效的执行计划。有时候，查询优化器会找不到最优的执行计划，导致花费了更多不必要的时间。造成这种情况的主要原因是，查询优化器有时无法准确地知道以下几个问题的答案：</p>
-                                <ul>
-                                    <li>每个表有多少行？</li>
-                                    <li>每一列有多少不同的值？</li>
-                                    <li>每一列的数据分布情况如何？</li>
-                                </ul>
-                                <p class="firstLineIndent">因为没有统计数据，优化器会假设条件值是均匀分配的。如何才能使查询优化器知道数据的分布情况呢？一个解决方法就是在列上建立统计直方图。</p>
-                                <p class="firstLineIndent">直方图能近似获得一列的数据分布情况，从而让数据库知道它含有哪些数据。直方图有多种形式，MySQL支持力两种：<span class="note">等宽直方图（singleton）</span>和<span class="note">等高直方图（equi-height）</span>直方图的共同点是，它们都将数据分到了一系列的buckets中去。MySQL会自动将数据划到不同的buckets中，也会自动决定创建哪种类型的直方图。</p>
-                                <hr>
-                                <p class="firstLineIndent">创建直方图的语法格式如下：</p>
-                                <p class="firstLineIndent"><code>ANALYZE TABLE table_name [UPDATE HISTOGRAM ON col_name WITH N BUCKETS | DROP HISTOGRAM ON col_name]</code></p>
-                                <p class="firstLineIndent">
-                                    <code>BUCKETS</code>的默认值是100。统计直方图的信息存储在数据字典表”column_statistics“中，可以通过视图information_schema.COLUMN_STATISTICS访问。直方图以灵活的JSON格式存储。ANALYZE TABLE会基于表大小自动判断是否要进行取样操作。ANALYZE TABLE也会基于表中列的数据分布以及bucket的数量来决定是否要建立等宽直方图（singleton）还是等高直方图（equi-height）。
-                                </p>
-                                <hr>
-                                <p>创建用于测试的数据表production，语句如下：</p>
-                                <pre><code class="sql">mysql> CREATE TABLE production (id INT, tm TIME, count INT);</code></pre>
-                                <p>在数据表production的字段tm上创建直方图，执行语句如下：</p>
+                                <h4><i class="fa fa-anchor"></i><b>示例1：</b></h4>
+                                <p class="firstLineIndent">定义"ERROR 1148(42000)"错误，名称为command_not_allowed：</p>
                                 <pre>
                                     <code class="sql">
-mysql> ANALYZE TABLE production UPDATE HISTOGRAM ON tm WITH 60 BUCKETS;
-+--------------------+-----------+----------+-----------------------------------------------+
-|        Table       |     Op    | Msg_type |                 Msg_text                      |
-+--------------------+-----------+----------+-----------------------------------------------+
-|  myTest.production | histogram |  status  | Histogram statistics created for column 'tm'. |
-+--------------------+-----------+----------+-----------------------------------------------+
+    -- 方法一：使用sqlstate_value
+    DECLARE command_not_allowed CONDITION FOR SQLSTATE '42000';
+    -- 方法二：使用mysql_error_code
+    DECLARE command_not_allowed CONDITION FOR 1148;
                                     </code>
                                 </pre>
-                                <p class="firstLineIndent">BUCKETS的值必须指定，可以设置1到1024，默认值是100。设置BUCKETS值时，可以先设置低一些，如果没有满足需求，可以再往上增大。</p>
-                                <p class="firstLineIndent">对于不同的数据集合，BUCKETS的值取决于以下几个因素：</p>
-                                <ul>
-                                    <li>这列有多少不同的值</li>
-                                    <li>数据的分布情况</li>
-                                    <li>需要多高的准确性</li>
-                                </ul>
-                                <p>在数据表production的字段tm和字段count上创建直方图，执行语句如下：</p>
-                                <pre>
-                                    <code class="sql">
-mysql> ANALYZE TABLE production UPDATE HISTOGRAM ON tm,count WITH 60 BUCKETS;
-+--------------------+-----------+----------+--------------------------------------------------+
-|        Table       |     Op    | Msg_type |                    Msg_text                      |
-+--------------------+-----------+----------+--------------------------------------------------+
-|  myTest.production | histogram |  status  | Histogram statistics created for column 'count'. |
-+--------------------+-----------+----------+--------------------------------------------------+
-|  myTest.production | histogram |  status  | Histogram statistics created for column 'tm'.    |
-+--------------------+-----------+----------+--------------------------------------------------+
-                                    </code>
-                                </pre>
-                                <p class="firstLineIndent">再次创建直方图时，<b>将会将上一个直方图重写</b>。</p>
                                 <hr>
-                                <p class="firstLineIndent">如果需要删除已经创建的直方图，用DROP HISTOGRAM就可以实现：</p>
+                                <h4><i class="fa fa-anchor"></i><b>定义处理程序</b></h4>
+                                <p class="firstLineIndent">定义处理程序时，使用DECLARE语句的语法如下：</p>
+                                <code>DECLARE handler_type HANDLER FOR condition_value[,...] sp_statement;</code>
+                                <hr>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>关键字</th>
+                                        <th>作用</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>handler_type</td>
+                                        <td class="tinyHand" onclick="defineHandlerHandlerTypeTips()">为错误处理方式 <i class="fa fa-hand-pointer-o"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>condition_value</td>
+                                        <td class="tinyHand" onclick="defineHandlerConditionValueTips()">表示错误类型 <i class="fa fa-hand-pointer-o"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>sp_statement</td>
+                                        <td>为程序语句段，表示在遇到定义的错误时需要执行的存储过程或函数</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例1：</b></h4>
+                                <p class="firstLineIndent">定义处理程序的几种方式，代码如下：</p>
                                 <pre>
                                     <code class="sql">
-mysql> ANALYZE TABLE production DROP HISTOGRAM ON tm,count;
-+--------------------+-----------+----------+--------------------------------------------------+
-|        Table       |     Op    | Msg_type |                    Msg_text                      |
-+--------------------+-----------+----------+--------------------------------------------------+
-|  myTest.production | histogram |  status  | Histogram statistics removed for column 'count'. |
-+--------------------+-----------+----------+--------------------------------------------------+
-|  myTest.production | histogram |  status  | Histogram statistics removed for column 'tm'.    |
-+--------------------+-----------+----------+--------------------------------------------------+
+    -- 方法一：捕获sqlstate_value
+    DECLARE CONTINUE HANDLER FOR SQLSTATE '42S02' SET @info='NO_SUCH_TABLE';
+
+    -- 方法二：捕获mysql_error_code
+    DECLARE CONTINUE HANDLER FOR 1146 SET @info='NO_SUCH_TABLE';
+
+    -- 方法三：先定义条件，然后调用
+    DECLARE no_such_table CONDITION FOR 1146;
+    DECLARE CONTINUE HANDLER FOR no_such_table SET @info='NO_SUCH_TABLE'
+
+    -- 方法四：使用SQLWARNING
+    DECLARE EXIT HANDLER FOR SQLWARNING SET @info='ERROR'
+
+    -- 方法五：使用NOT FOUND
+    DECLARE EXIT HANDLER FOR NOT FOUND SET @info='NO_SUCH_TABLE';
+
+    -- 方法六：使用SQLEXCEPTION
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION SET @info='ERROR';
                                     </code>
                                 </pre>
-                                <p><span class="btn btn-success" onclick="histogramTips()">查看提示</span></p>
+                                <table class="table table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <td>第一种方法是捕获sqlstate_value值。如果遇到sqlstate_value值为“42S02”，执行CONTINUE操作，并且输出“NO_SUCH_TABLE”信息</td>
+                                    </tr>
+                                    <tr>
+                                        <td>第二种方法是捕获mysql_error_code值。如果遇到mysql_error_code值为1146，执行CONTINUE操作，并且输出“NO_SUCH_TABLE”信息</td>
+                                    </tr>
+                                    <tr>
+                                        <td>第三种方法是先定义条件，再调用条件。这里先定义no_such_table条件，遇到1146错误就执行CONTINUE操作</td>
+                                    </tr>
+                                    <tr>
+                                        <td>第四种方法是使用SQLWARNING。SQLWARNING捕获所有以01开头的sqlstate_value值，然后执行EXIT操作，并且输出“ERROR”信息</td>
+                                    </tr>
+                                    <tr>
+                                        <td>第五种方法是使用NOT FOUND。NOT FOUND捕获所有以02开头的sqlstate_value值，然后执行EXIT操作，并且输出“NO_SUCH_TABLE”信息</td>
+                                    </tr>
+                                    <tr>
+                                        <td>第六种方法是使用SQLEXCEPTION。SQLEXCEPTION捕获所有没有被SQLWARNING或NOT FOUND捕获的sqlstate_value值，然后执行EXIT操作，并且输出“ERROR”信息</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例2：</b></h4>
+                                <p class="firstLineIndent">定义条件和处理程序，代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> CREATE TABLE text_db.t (s1 int,primary key(s1));
+    Query OK, 0 rows affected (0.00 sec)
+
+    mysql> DELIMITER //
+    mysql> CREATE PROCEDURE handlerDemo()
+        -> BEGIN
+        -> DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SET @x2 = 1;
+        -> SET @x = 1;
+        -> INSERT INTO test_db.t VALUES(1);
+        -> SET @x = 2;
+        -> INSERT INTO test_db.t VALUES(1);
+        -> SET @x = 3;
+        -> END;
+        -> //
+    Query OK, 0 rows affected (0.00 sec)
+
+    mysql> DELIMITER ;
+    mysql> CALL handlerDemo();
+    Query OK, 0 rows affected (0.00 sec)
+
+    mysql> SELECT @x;
+    +-----+
+    | @x  |
+    +-----+
+    |  3  |
+    +-----+
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent"><b>@x</b>是一个用户变量，执行结果@x等于3，这表明MySQL被执行到程序的末尾。如果<code>DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SET @x2 = 1;</code>这一行不存在，第二个INSERT因PRIMARY KEY强制而失败之后，MySQL可能已经采取默认（EXIT）路径，并且SELECT @x 可能已经返回2。</p>
+                                <p class="firstLineIndent"><b>@var_name</b>表示用户变量，使用SET语句为其赋值，用户变量与连接有关，一个客户端定义的变量不能被其他客户端看到或使用。当客户端退出时，该客户端连接的所有变量将自动释放。</p>
                             </div>
                         </div>
                     </div>
@@ -363,247 +538,279 @@ mysql> ANALYZE TABLE production DROP HISTOGRAM ON tm,count;
 </div>
 <!-- END WRAPPER -->
 
-<!-- 索引的分类-普通索引和唯一索引 -->
-<div id="index_classification_ordinary_index_and_unique_index" class="panel" style="display: none">
+<!-- 创建存储过程和函数的提示 -->
+<div id="create_stored_procedure_and_function_panel_title_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">索引的分类-普通索引和唯一索引</h3>
+        <h3 class="panel-title">创建存储过程和函数</h3>
     </div>
     <div class="panel-body">
-        <ul>
-            <li><span class="note">普通索引</span>是MySQL中的基本索引类型，允许在定义索引的列中插入重复值和空值</li>
-            <li><span class="note">唯一索引</span>要求索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一。<b>主键索引是一种特殊的唯一索引，不允许有空值</b></li>
-        </ul>
+        <p class="firstLineIndent">
+            存储程序可以分为<span class="note">存储过程</span>和<span class="note">存储函数</span>。在MySQL中，创建存储过程和函数使用的语句分别是<code>CREATE PROCEDURE</code>和<code>CREATE FUNCTION</code>。使用<code>CALL</code>语句来调用存储过程，只能用输出变量返回值。存储函数可以从语句外调用（引用函数名），也能返回标量值。存储过程也可以调用其他存储过程。
+        </p>
     </div>
 </div>
 
-<!-- 索引的分类-单列索引和组合索引 -->
-<div id="index_classification_single_column_index_and_composite_index" class="panel" style="display: none">
+<!-- 创建存储过程-proc_parameter提示 -->
+<div id="create_procedure_proc_parameter_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">索引的分类-单列索引和组合索引</h3>
+        <h3 class="panel-title">proc_parameter形式</h3>
     </div>
     <div class="panel-body">
-        <ul>
-            <li><span class="note">单列索引</span>即一个索引只包含单个列，一个表可以有多个单列索引</li>
-            <li><span class="note">组合索引</span>是指在表的多个字段组合上创建的索引，只有在查询条件中使用了这些字段的左边字段是，索引才会被使用。<b>使用组合索引时遵循<span class="note">最左前缀</span>集合</b></li>
-        </ul>
+        <code>[ IN | OUT | INOUT ] param_name TYPE</code>
+        <hr>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>[ IN | OUT | INOUT ]</td>
+                <td>分别表示输入参数、输出参数、输入输出参数</td>
+            </tr>
+            <tr>
+                <td>param_name</td>
+                <td>参数名称</td>
+            </tr>
+            <tr>
+                <td>TYPE</td>
+                <td>参数类型，该类型可以是MySQL数据库中的任意类型</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
-<!-- 索引的分类-全文索引 -->
-<div id="index_classification_full_text_index" class="panel" style="display: none">
+<!-- 创建存储过程-characteristics提示 -->
+<div id="create_procedure_and_function_characteristics_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">索引的分类-全文索引</h3>
+        <h3 class="panel-title">characteristics形式</h3>
     </div>
     <div class="panel-body">
-        <ul>
-            <li><span class="note">全文索引</span>为FULLTEXT，在定义索引的列上支持值的全文查找，允许在这些索引列中插入重复值和空值。全文索引可以在<code>CHAR</code>、<code>VARCHAR</code>、或者<code>TEXT</code>类型的列上创建。<b>MySQL中只有MyISAM存储引擎支持全文索引。</b></li>
-        </ul>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>特性</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>LANGUAGE SQL</td>
+                <td>说明routine_body部分是由SQL语句组成的，当前系统支持的语言为SQL。SQL是LANGUAGE特性的唯一值</td>
+            </tr>
+            <tr>
+                <td>[NOT] DETERMINISTIC</td>
+                <td>
+                    指明存储过程执行的结果是否正确。
+                    <ul>
+                        <li>DETERMINISTIC表示结果是确定的。每次执行存储过程时，相同的输入会得到相同的输出</li>
+                        <li>NOT DETERMINISTIC表示结果是不确定的，相同的输入可能得到不同的输出</li>
+                    </ul>
+                    如果没有指定任意一个值，默认为NOT DETERMINISTIC
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;<br/>
+                    {CONTAINS SQL}<br/>
+                    {NO SQL}<br/>
+                    {READS SQL DATA}<br/>
+                    {MODIFIES SQL DATA}
+                </td>
+                <td>
+                    指明子程序使用SQL语句的限制。默认情况下，系统会指定为CONTAINS SQL
+                    <ul>
+                        <li>CONTAINS SQL：表明子程序包含SQL语句，但是不包含读写数据的语句</li>
+                        <li>NO SQL：表明子程序不包含SQL语句</li>
+                        <li>READS SQL DATA：表明子程序包含读数据的语句</li>
+                        <li>MODIFIES SQL DATA：表明子程序包含写数据的语句</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;<br/>
+                    SQL SECURITY {DEFINER}<br/>
+                    SQL SECURITY {INVOKER}
+                </td>
+                <td>
+                    指明谁有权限来执行。默认情况下，系统指定为DEFINER
+                    <ul>
+                        <li>DEFINER表示只有定义者才能执行</li>
+                        <li>INVOKER表示拥有权限的调用者可以执行</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>COMMENT 'string'</td>
+                <td>注释信息，可以用来描述存储过程或函数</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
-<!-- 索引的分类-空间索引 -->
-<div id="index_classification_spatial_index" class="panel" style="display: none">
+<!-- 创建存储函数-func_parameter提示 -->
+<div id="create_function_func_parameter_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">索引的分类-空间索引</h3>
+        <h3 class="panel-title">func_parameter形式</h3>
     </div>
     <div class="panel-body">
-        <ul>
-            <li><span class="note">空间索引</span>是对空间数据类型的字段建立的索引，MySQL中的空间数据类型有4种，分别是<code>GEOMETRY</code>、<code>POINT</code>、<code>LINESTRING</code>和<code>POLYGON</code>。MySQL使用<code>SPATIAL</code>关键字进行扩展，使得能够用创建正规索引类似的语法创建空间索引。<b>创建空间索引的列，必须将其声明为NOT NULL，空间索引只能在存储引擎为MyISAM的表中创建。</b></li>
-        </ul>
+        <code>[ IN | OUT | INOUT ] param_name TYPE</code>
+        <hr>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>[ IN | OUT | INOUT ]</td>
+                <td>分别表示输入参数、输出参数、输入输出参数</td>
+            </tr>
+            <tr>
+                <td>param_name</td>
+                <td>参数名称</td>
+            </tr>
+            <tr>
+                <td>TYPE</td>
+                <td>参数类型，该类型可以是MySQL数据库中的任意类型</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
-<!-- 创建索引-CREATE TABLE时 -->
-<div id="create_index_create_table_panel_title_tips" class="panel" style="display: none">
+<!-- 变量赋值提示 -->
+<div id="variable_assignment_set_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE TABLE时</h3>
+        <h3 class="panel-title">SET语句</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">使用CREATE TABLE创建表时，除了可以定义列的数据类型，还可以定义主键约束、外键约束或者唯一性约束，而不论创建哪一种约束，在定义约束的同时相当于在指定列上创建了一个索引。</p>
-        <p class="firstLineIndent">创建表时创建索引的基本语法如下：</p>
-        <p class="firstLineIndent"><code>CREATE TABLE table_name [col_name data_type] [UNIQUE|FULLTEXT|SPATIAL] [INDEX|KEY] [index_name] (col_name[length]) [ASC|DESC]</code></p>
-        <ul>
-            <li>UNIQUE、FULLTEXT、SPATIAL为可选参数，分别表示唯一索引、全文索引和空间索引</li>
-            <li>INDEX与KEY为同义词，两者作用相同，用来指定创建索引</li>
-            <li>col_name为需要创建索引的字段列，该列必须从数据表中定义的多个列中选择</li>
-            <li>index_name指定索引的名称，为可选参数，如果不指定，MySQL默认col_name为索引值</li>
-            <li>length为可选参数，表示索引的长度，<b>只有字符串类型的字段才能指定索引长度</b></li>
-            <li>ASC或DESC指定升序或者降序的索引值存储</li>
-        </ul>
+        <p class="firstLineIndent">在存储程序中的SET语句是一般SET语句的扩展版本。被参考变量可能是<b>子程序内声明的变量</b>，或者是<b>全局服务器变量</b>，如系统变量或者用户变量。</p>
+        <p class="firstLineIndent">在存储程序中的SET语句作为预先存在的SET语法的一部分来实现，允许<code>SET a=x,b=y,...</code>这样的扩展语法。其中，不同的变量类型（局域变量和全局变量）可以被混合起来。这也允许把局部变量和一些只对系统变量有意义的选项合并起来。</p>
     </div>
 </div>
 
-<!-- 创建索引-CREATE TABLE时-创建普通索引 -->
-<div id="create_index_create_table_create_a_normal_index" class="panel" style="display: none">
+<!-- 定义条件和处理程序提示 -->
+<div id="define_conditions_and_processing_procedures_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE TABLE时-创建普通索引</h3>
+        <h3 class="panel-title">定义条件和处理程序</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">最基本的索引类型，没有唯一性之类的限制，其作用只是加快对数据的访问速度</p>
-        <pre>
-            <code class="sql">
-CREATE TABLE t1 (
-    t_id                INT NOT NULL,
-    t_name              VARCHAR(255) NOT NULL,
-    year_publication    YEAR NOT NULL,
-    INDEX(year_publication)
-);
-            </code>
-        </pre>
+        <p class="firstLineIndent"><span class="note">特定条件需要特定处理</span>。这些条件可以联系到错误以及子程序中的一般流程控制。</p>
+        <p class="firstLineIndent"><span class="note">定义条件</span>是事先定义程序执行过程中遇到的问题。</p>
+        <p class="firstLineIndent"><span class="note">处理程序</span>定义了在遇到这些问题时应当采取的处理方式，并且保证存储过程或函数在遇到警告或错误时能继续执行。</p>
+        <p class="firstLineIndent">这样可以增强存储程序处理问题的能力，避免程序异常停止运行。</p>
     </div>
 </div>
 
-<!-- 创建索引-CREATE TABLE时-创建唯一索引 -->
-<div id="create_index_create_table_create_a_unique_index" class="panel" style="display: none">
+<!-- 定义条件-condition_type提示 -->
+<div id="define_conditions_condition_type_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE TABLE时-创建唯一索引</h3>
+        <h3 class="panel-title">condition_type</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">创建唯一索引的主要原因是减少查询索引列操作的执行时间，尤其是对比较庞大的数据表。它与前面的普通索引类似，不同的就是：索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一</p>
-        <pre>
-            <code class="sql">
-CREATE TABLE t2 (
-    t_id                INT NOT NULL,
-    t_name              CHAR(30) NOT NULL,
-    UNIQUE INDEX        UniqIdx(t_id)
-);
-            </code>
-        </pre>
+        <p class="firstLineIndent">sqlstate_value和mysql_error_code都可以表示MySQL的错误：</p>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>SQLSTATE [VALUE] sqlstate_value</td>
+                <td>为长度为5的字符串类型错误代码。<i>例如ERROR 1142(42000)中的42000</i></td>
+            </tr>
+            <tr>
+                <td>mysql_error_code</td>
+                <td>为数值类型错误代码。<i>例如ERROR 1142(42000)中的1142</i></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
-<!-- 创建索引-CREATE TABLE时-创建单列索引 -->
-<div id="create_index_create_table_create_a_single_column_index" class="panel" style="display: none">
+<!-- 定义处理程序-handler_type提示 -->
+<div id="define_handler_handler_type_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE TABLE时-创建单列索引</h3>
+        <h3 class="panel-title">handler_type</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">单列索引是在数据表中的某一个字段上创建的索引，一个表中可以创建多个单列索引。下面的单列索引指定了索引长度为20</p>
-        <pre>
-            <code class="sql">
-CREATE TABLE t3 (
-    t_id                INT NOT NULL,
-    t_name              CHAR(50) NULL,
-    INDEX               SingleIdx(name(20))
-);
-            </code>
-        </pre>
+        <p class="firstLineIndent">sqlstate_value和mysql_error_code都可以表示MySQL的错误：</p>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>CONTINUE</td>
+                <td>表示遇到错误不处理，继续执行</td>
+            </tr>
+            <tr>
+                <td>EXIT</td>
+                <td>表示遇到错误马上退出</td>
+            </tr>
+            <tr>
+                <td>UNDO</td>
+                <td>表示遇到错误后撤回之前的操作，<span class="note">MySQL中暂时不支持这样的操作</span></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
-<!-- 创建索引-CREATE TABLE时-创建组合索引 -->
-<div id="create_index_create_table_create_a_composite_index" class="panel" style="display: none">
+<!-- 定义处理程序-condition_value提示 -->
+<div id="define_handler_condition_value_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE TABLE时-创建组合索引</h3>
+        <h3 class="panel-title">condition_value</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">组合索引是在多个字段上创建一个索引</p>
-        <pre>
-            <code class="sql">
-CREATE TABLE t4 (
-    t_id                INT(11) NOT NULL,
-    t_name              CHAR(30) NOT NULL,
-    t_age               INT(11) NOT NULL,
-    t_info              VARCHAR(255),
-    INDEX               MultiIdx(id,name,age)
-);
-            </code>
-        </pre>
-        <p class="firstLineIndent">组合索引可起几个索引的作用，但是使用时并不是随便查询哪个字段都可以使用索引，而是遵循“最左前缀”：利用索引中最左边的列集来匹配行，这样的列集称为<b>最左前缀</b>。</p>
-        <p class="firstLineIndent">例如，这里由t_id、t_name和t_age3个字段构成的索引，索引行中按t_id、t_name、t_age的顺序存放，索引可以搜索(t_id,t_name,t_age)、(t_id,t_name)或者t_id字段组合。如果列不构成索引最左面的前缀，那么MySQL不能使用局部索引，如(t_age)或者(t_name,t_age)组合则不能使用索引查询</p>
-    </div>
-</div>
-
-<!-- 创建索引-CREATE TABLE时-创建全文索引 -->
-<div id="create_index_create_table_create_a_full_text_index" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE TABLE时-创建全文索引</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">FULLTEXT全文索引可以用于全文搜索。只有MyISAM存储引擎支持FULLTEXT索引，并且只为CHAR、VARCHAR和TEXT列创建索引。索引总是对整个列进行，不支持局部（前缀）索引</p>
-        <pre>
-            <code class="sql">
-CREATE TABLE t5 (
-    t_id                INT NOT NULL,
-    t_name              CHAR(30) NOT NULL,
-    t_age               INT NOT NULL,
-    t_info              VARCHAR(255),
-    FULLTEXT INDEX      FullTextIdx(info)
-) ENGINE=MyISAM;
-            </code>
-        </pre>
-        <p class="firstLineIndent">因为MySQL 8.0中默认存储引擎为InnoDB，在这里创建表时需要修改表的存储引擎为MyISAM，不然创建索引会出错。全文索引非常适合于大型数据集，对于小的数据集，它的用处比较小</p>
-    </div>
-</div>
-
-<!-- 创建索引-CREATE TABLE时-创建空间索引 -->
-<div id="create_index_create_table_create_a_spatial_index" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE TABLE时-创建空间索引</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">空间索引必须在MyISAM类型的表中创建，且空间类型的字段必须为空</p>
-        <pre>
-            <code class="sql">
-CREATE TABLE t6 (
-    g GEOMETRY NOT NULL,
-    SPATIAL INDEX spatIdx(g)
-) ENGINE=MyISAM;
-            </code>
-        </pre>
-        <p class="firstLineIndent">注意创建时指定空间类型字段值的非空约束，并且表的存储引擎为MyISAM</p>
-    </div>
-</div>
-
-<!-- 创建索引-ALTER TABLE时 -->
-<div id="create_index_alter_table_panel_title_tips" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">创建索引-ALTER TABLE时</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">在已经存在的表中创建索引，可以使用ALTER TABLE语句或者CREATE INDEX语句。</p>
-        <p class="firstLineIndent">修改表时创建索引的基本语法如下：</p>
-        <p class="firstLineIndent"><code>ALTER TABLE table_name ADD [UNIQUE|FULLTEXT|SPATIAL] [INDEX|KEY] [index_name] (col_name[length],...) [ASC|DESC]</code></p>
-        <ul>
-            <li>UNIQUE、FULLTEXT、SPATIAL为可选参数，分别表示唯一索引、全文索引和空间索引</li>
-            <li>INDEX与KEY为同义词，两者作用相同，用来指定创建索引</li>
-            <li>index_name指定索引的名称，为可选参数，如果不指定，MySQL默认col_name为索引值</li>
-            <li>col_name为需要创建索引的字段列，该列必须从数据表中定义的多个列中选择</li>
-            <li>length为可选参数，表示索引的长度，<b>只有字符串类型的字段才能指定索引长度</b></li>
-            <li>ASC或DESC指定升序或者降序的索引值存储</li>
-        </ul>
-    </div>
-</div>
-
-<!-- 创建索引-CREATE INDEX时 -->
-<div id="create_index_create_index_panel_title_tips" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE INDEX时</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">CREATE INDEX语句可以在已经存在的表上添加索引。在MySQL中，CREATE INDEX被映射到一个ALTER TABLE语句上。基本语法结构为：</p>
-        <p class="firstLineIndent"><code>CREATE [UNIQUE|FULLTEXT|SPATIAL] [INDEX|KEY] [index_name] ON table_name (col_name[length],...) [ASC|DESC]</code></p>
-        <ul>
-            <li>UNIQUE、FULLTEXT、SPATIAL为可选参数，分别表示唯一索引、全文索引和空间索引</li>
-            <li>INDEX与KEY为同义词，两者作用相同，用来指定创建索引</li>
-            <li>index_name指定索引的名称，为可选参数，如果不指定，MySQL默认col_name为索引值</li>
-            <li>col_name为需要创建索引的字段列，该列必须从数据表中定义的多个列中选择</li>
-            <li>length为可选参数，表示索引的长度，<b>只有字符串类型的字段才能指定索引长度</b></li>
-            <li>ASC或DESC指定升序或者降序的索引值存储</li>
-        </ul>
-    </div>
-</div>
-
-<!-- 统计直方图提示 -->
-<div id="histogram_tips" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">统计直方图提示</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">直方图统计了表中某些字段的数据分布情况，为优化选择高效的执行计划提供参考。直方图与索引有着本质的区别：维护一个索引有代价，每一次的INSERT、UPDATE、DELETE都会需要更新索引，会对性能有一定的影响；而直方图一次创建永不更新，除非明确去更新它，所以不会影响INSERT、UPDATE、DELETE的性能。</p>
-        <p class="firstLineIndent">建立直方图的时候，MySQL服务器会将所有数据读到内存中，然后在内存中进行操作，包括排序。如果对一个很大的表建立直方图，可能会需要将几百兆的数据都读到内存中。为了规避这种风险MySQL会根据给定的<code>histogram_generation_max_mem_size</code>的值计算该将多少行数据读到内存中。</p>
-        <p class="firstLineIndent">设置<code>histogram_generation_max_mem_size</code>值得方法如下：</p>
-        <pre><code class="sql">SET histogram_generation_max_mem_size = 10000;</code></pre>
+        <p class="firstLineIndent">sqlstate_value和mysql_error_code都可以表示MySQL的错误：</p>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>SQLSTATE [VALUE] sqlstate_value</td>
+                <td>包含5个字符的字符串错误值</td>
+            </tr>
+            <tr>
+                <td>condition_name</td>
+                <td>表示DECLARE CONDITION定义的错误条件名称</td>
+            </tr>
+            <tr>
+                <td>SQLWARNING</td>
+                <td>匹配所有以01开头的SQLSTATE错误代码</td>
+            </tr>
+            <tr>
+                <td>NOT FOUND</td>
+                <td>匹配所有以02开头的SQLSTATE错误代码</td>
+            </tr>
+            <tr>
+                <td>SQLEXCEPTION</td>
+                <td>匹配所有没有被SQLWARNING或NOT FOUND捕获的SQLSTATE错误代码</td>
+            </tr>
+            <tr>
+                <td>mysql_error_code</td>
+                <td>匹配数值类型错误代码</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
