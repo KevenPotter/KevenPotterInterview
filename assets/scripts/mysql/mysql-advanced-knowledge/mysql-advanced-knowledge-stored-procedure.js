@@ -5,6 +5,7 @@ $(document).ready(function () {
     $('#database_page_button').click();
     $('#database_page_advanced_button').click();
     storedProcedurePageTitleTips();
+    useOfProcessControlChart();
 });
 
 /**
@@ -91,5 +92,106 @@ function useOfTheCursorTips() {
  * 流程控制的使用提示
  */
 function useOfProcessControlTips() {
-    layerCapture('use_of_process_control_tips', 0, 30, 25);
+    layerCapture('use_of_process_control_tips', 0, 30, 17);
+}
+
+/**
+ * 流程控制的使用图表
+ */
+function useOfProcessControlChart() {
+    var useOfProcessControlChart = $('#use_of_process_control');
+    useOfProcessControlChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(useOfProcessControlChart[0], 'macarons');
+    myChart.on('click', function (params) {
+        switch (params.name) {
+            case 'IF语句':
+                layerCapture('use_of_process_control_if', 0, 40, 51);
+                break;
+            case 'CASE语句':
+                layerCapture('use_of_process_control_case', 0, 40, 49);
+                break;
+            case 'LOOP语句':
+                layerCapture('index_classification_full_text_index', 0, 40, 49);
+                break;
+            case 'LEAVE语句':
+                layerCapture('index_classification_spatial_index', 0, 40, 49);
+                break;
+            case 'ITERATE语句':
+                layerCapture('index_classification_spatial_index', 0, 40, 49);
+                break;
+            case 'REPEAT语句':
+                layerCapture('index_classification_spatial_index', 0, 40, 49);
+                break;
+            case 'WHILE语句':
+                layerCapture('index_classification_spatial_index', 0, 40, 49);
+                break;
+        }
+    });
+    var option = null;
+    option = {
+        title: {
+            text: '流程控制的使用',
+            subtext: '《MySQL8从入门到精通（视频教学版）》-P287',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b} : {c} ({d}%)'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        legend: {
+            bottom: 10,
+            left: 'center',
+            data: ['IF语句', 'CASE语句', 'LOOP语句', 'LEAVE语句', 'ITERATE语句', 'REPEAT语句', 'WHILE语句'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '75%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: [
+                    {value: 1, name: 'IF语句'},
+                    {value: 1, name: 'CASE语句'},
+                    {value: 1, name: 'LOOP语句'},
+                    {value: 1, name: 'LEAVE语句'},
+                    {value: 1, name: 'ITERATE语句'},
+                    {value: 1, name: 'REPEAT语句'},
+                    {value: 1, name: 'WHILE语句'}
+                ],
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 15
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
 }

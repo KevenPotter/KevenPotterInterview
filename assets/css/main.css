@@ -2543,4 +2543,9 @@ ul.activity-timeline > li:last-child:after {
     text-indent: 2em;
 }
 
+/*Tab缩进4字符*/
+.tabIndentation {
+    text-indent: 4em;
+}
+
 /*# sourceMappingURL=main.css.map */

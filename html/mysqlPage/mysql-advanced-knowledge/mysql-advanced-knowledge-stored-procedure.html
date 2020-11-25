@@ -635,149 +635,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <h4><i class="fa fa-anchor"></i><b>定义条件</b></h4>
-                                <p class="firstLineIndent">定义条件使用DECLARE语句，语法格式如下：</p>
-                                <code>DECLARE condition_name CONDITION FOR [CONDITION_TYPE]</code>
-                                <hr>
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>关键字</th>
-                                        <th>作用</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>condition_name</td>
-                                        <td>表示条件的名称</td>
-                                    </tr>
-                                    <tr>
-                                        <td>CONDITION_TYPE</td>
-                                        <td class="tinyHand" onclick="defineConditionsConditionTypeTips()">表示条件的类型 <i class="fa fa-hand-pointer-o"></i></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <p class="firstLineIndent">上述语句指定需要特殊处理的条件。它将一个名字和指定的错误条件关联起来。这个名字可以随后被用在定义处理程序的<span class="bold note">DECLARE HANDLER</span>语句中。</p>
-                                <hr>
-                                <h4><i class="fa fa-anchor"></i><b>示例1：</b></h4>
-                                <p class="firstLineIndent">定义"ERROR 1148(42000)"错误，名称为command_not_allowed：</p>
-                                <pre>
-                                    <code class="sql">
-    -- 方法一：使用sqlstate_value
-    DECLARE command_not_allowed CONDITION FOR SQLSTATE '42000';
-    -- 方法二：使用mysql_error_code
-    DECLARE command_not_allowed CONDITION FOR 1148;
-                                    </code>
-                                </pre>
-                                <hr>
-                                <h4><i class="fa fa-anchor"></i><b>定义处理程序</b></h4>
-                                <p class="firstLineIndent">定义处理程序时，使用DECLARE语句的语法如下：</p>
-                                <code>DECLARE handler_type HANDLER FOR condition_value[,...] sp_statement;</code>
-                                <hr>
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>关键字</th>
-                                        <th>作用</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>handler_type</td>
-                                        <td class="tinyHand" onclick="defineHandlerHandlerTypeTips()">为错误处理方式 <i class="fa fa-hand-pointer-o"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td>condition_value</td>
-                                        <td class="tinyHand" onclick="defineHandlerConditionValueTips()">表示错误类型 <i class="fa fa-hand-pointer-o"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td>sp_statement</td>
-                                        <td>为程序语句段，表示在遇到定义的错误时需要执行的存储过程或函数</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <hr>
-                                <h4><i class="fa fa-anchor"></i><b>示例1：</b></h4>
-                                <p class="firstLineIndent">定义处理程序的几种方式，代码如下：</p>
-                                <pre>
-                                    <code class="sql">
-    -- 方法一：捕获sqlstate_value
-    DECLARE CONTINUE HANDLER FOR SQLSTATE '42S02' SET @info='NO_SUCH_TABLE';
-
-    -- 方法二：捕获mysql_error_code
-    DECLARE CONTINUE HANDLER FOR 1146 SET @info='NO_SUCH_TABLE';
-
-    -- 方法三：先定义条件，然后调用
-    DECLARE no_such_table CONDITION FOR 1146;
-    DECLARE CONTINUE HANDLER FOR no_such_table SET @info='NO_SUCH_TABLE'
-
-    -- 方法四：使用SQLWARNING
-    DECLARE EXIT HANDLER FOR SQLWARNING SET @info='ERROR'
-
-    -- 方法五：使用NOT FOUND
-    DECLARE EXIT HANDLER FOR NOT FOUND SET @info='NO_SUCH_TABLE';
-
-    -- 方法六：使用SQLEXCEPTION
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION SET @info='ERROR';
-                                    </code>
-                                </pre>
-                                <table class="table table-hover">
-                                    <tbody>
-                                    <tr>
-                                        <td>第一种方法是捕获sqlstate_value值。如果遇到sqlstate_value值为“42S02”，执行CONTINUE操作，并且输出“NO_SUCH_TABLE”信息</td>
-                                    </tr>
-                                    <tr>
-                                        <td>第二种方法是捕获mysql_error_code值。如果遇到mysql_error_code值为1146，执行CONTINUE操作，并且输出“NO_SUCH_TABLE”信息</td>
-                                    </tr>
-                                    <tr>
-                                        <td>第三种方法是先定义条件，再调用条件。这里先定义no_such_table条件，遇到1146错误就执行CONTINUE操作</td>
-                                    </tr>
-                                    <tr>
-                                        <td>第四种方法是使用SQLWARNING。SQLWARNING捕获所有以01开头的sqlstate_value值，然后执行EXIT操作，并且输出“ERROR”信息</td>
-                                    </tr>
-                                    <tr>
-                                        <td>第五种方法是使用NOT FOUND。NOT FOUND捕获所有以02开头的sqlstate_value值，然后执行EXIT操作，并且输出“NO_SUCH_TABLE”信息</td>
-                                    </tr>
-                                    <tr>
-                                        <td>第六种方法是使用SQLEXCEPTION。SQLEXCEPTION捕获所有没有被SQLWARNING或NOT FOUND捕获的sqlstate_value值，然后执行EXIT操作，并且输出“ERROR”信息</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <hr>
-                                <h4><i class="fa fa-anchor"></i><b>示例2：</b></h4>
-                                <p class="firstLineIndent">定义条件和处理程序，代码如下：</p>
-                                <pre>
-                                    <code class="sql">
-    mysql> CREATE TABLE text_db.t (s1 int,primary key(s1));
-    Query OK, 0 rows affected (0.00 sec)
-
-    mysql> DELIMITER //
-    mysql> CREATE PROCEDURE handlerDemo()
-        -> BEGIN
-        -> DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SET @x2 = 1;
-        -> SET @x = 1;
-        -> INSERT INTO test_db.t VALUES(1);
-        -> SET @x = 2;
-        -> INSERT INTO test_db.t VALUES(1);
-        -> SET @x = 3;
-        -> END;
-        -> //
-    Query OK, 0 rows affected (0.00 sec)
-
-    mysql> DELIMITER ;
-    mysql> CALL handlerDemo();
-    Query OK, 0 rows affected (0.00 sec)
-
-    mysql> SELECT @x;
-    +-----+
-    | @x  |
-    +-----+
-    |  3  |
-    +-----+
-                                    </code>
-                                </pre>
-                                <p class="firstLineIndent"><b>@x</b>是一个用户变量，执行结果@x等于3，这表明MySQL被执行到程序的末尾。如果<code>DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SET @x2 = 1;</code>这一行不存在，第二个INSERT因PRIMARY KEY强制而失败之后，MySQL可能已经采取默认（EXIT）路径，并且SELECT @x 可能已经返回2。</p>
-                                <p class="firstLineIndent"><b>@var_name</b>表示用户变量，使用SET语句为其赋值，用户变量与连接有关，一个客户端定义的变量不能被其他客户端看到或使用。当客户端退出时，该客户端连接的所有变量将自动释放。</p>
+                                <div id="use_of_process_control" style="height:400%;"></div>
                             </div>
                         </div>
                     </div>
@@ -1091,7 +949,116 @@
     </div>
     <div class="panel-body">
         <p class="firstLineIndent">流程控制语句用来根据条件控制语句的执行。MySQL中用来构造控制流程的语句有IF语句、CASE语句、LOOP语句、LEAVE语句、ITERATE语句、REPEAT语句和WHILE语句。</p>
-        <p class="firstLineIndent"><span class="bold note">光标必须在声明处理程序之前被声明，并且变量和条件还必须在声明光标或处理程序之前被声明。</span></p>
+        <p class="firstLineIndent">每个流程可能包含一个单独语句，或者是使用BEGIN...END构造的复合语句，构造可以被嵌套。</p>
+    </div>
+</div>
+
+<!-- 流程控制的使用-IF语句 -->
+<div id="use_of_process_control_if" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">IF语句</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">IF语句包含多个条件判断，根据判断的结果为<b>TRUE</b>或<b>FALSE</b>执行相应的语句，语法格式如下：</p>
+        <p class="firstLineIndent"><code>IF expr_condition THEN statement_list</code></p>
+        <p class="tabIndentation"><code>[ELSEIF expr_condition THEN statement_list] ...</code></p>
+        <p class="tabIndentation"><code>[ELSE statement_list]</code></p>
+        <p class="firstLineIndent"><code>END IF</code></p>
+        <p class="firstLineIndent">IF实现了一个基本的条件构造。如果expr_condition求值为真（TRUE），相应的SQL语句列表被执行；如果没有expr_condition匹配，则ELSE子句里的语句列表被执行。statement_list可以包括一个或多个语句。</p>
+        <hr>
+        <h4><i class="fa fa-anchor"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">IF语句的示例，代码如下：</p>
+        <pre>
+            <code class="sql">
+    IF val IS null
+        THEN SELECT 'val is NULL';
+        ELSE SELECT 'val is not NULL';
+    END IF;
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 流程控制的使用-CASE语句 -->
+<div id="use_of_process_control_case" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">CASE语句</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">CASE语句是另一个进行条件判断的语句，有两种格式。</p>
+        <p class="firstLineIndent">第一种格式如下</p>
+        <p class="firstLineIndent"><code>CASE case_expr</code></p>
+        <p class="tabIndentation"><code>WHEN when_value THEN statement_list</code></p>
+        <p class="tabIndentation"><code>[WHEN when_value THEN statement_list] ...</code></p>
+        <p class="tabIndentation"><code>[ELSE statement_list]</code></p>
+        <p class="firstLineIndent"><code>END CASE</code></p>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>case_expr</td>
+                <td>表示条件判断的表达式，决定了哪一个<code>WHEN</code>子句会被执行</td>
+            </tr>
+            <tr>
+                <td>when_value</td>
+                <td>表示表达式可能的值，如果某个<code>when_value</code>表达式与<code>case_expr</code>表达式结果相同，则执行对应<code>THEN</code>关键字后的<code>statement_list</code>中的语句</td>
+            </tr>
+            <tr>
+                <td>statement_list</td>
+                <td>表示不同<code>when_value</code>值的执行语句</td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <h4><i class="fa fa-anchor"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用CASE流程控制语句的第一种形式，判断val值等于1、等于2，或者两者都不等，代码如下：</p>
+        <pre>
+            <code class="sql">
+    CASE val
+        WHEN 1 THEN SELECT 'val is 1';
+        WHEN 2 THEN SELECT 'val is 2';
+        ELSE SELECT 'val is not 1 or 2';
+    END CASE;
+            </code>
+        </pre>
+        <hr>
+        <p class="firstLineIndent">第二种格式如下</p>
+        <p class="firstLineIndent"><code>CASE</code></p>
+        <p class="tabIndentation"><code>WHEN expr_condition THEN statement_list</code></p>
+        <p class="tabIndentation"><code>[WHEN expr_condition THEN statement_list] ...</code></p>
+        <p class="tabIndentation"><code>[ELSE statement_list]</code></p>
+        <p class="firstLineIndent"><code>END CASE</code></p>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>expr_condition</td>
+                <td>表示条件判断的表达式，决定了哪一个<code>WHEN</code>子句会被执行</td>
+            </tr>
+            <tr>
+                <td>when_value</td>
+                <td>表示表达式可能的值，如果某个<code>when_value</code>表达式与<code>case_expr</code>表达式结果相同，则执行对应<code>THEN</code>关键字后的<code>statement_list</code>中的语句</td>
+            </tr>
+            <tr>
+                <td>statement_list</td>
+                <td>表示不同<code>when_value</code>值的执行语句</td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <h4><i class="fa fa-anchor"></i><b>示例：</b></h4>
     </div>
 </div>
 
