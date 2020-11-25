@@ -79,3 +79,17 @@ function defineHandlerHandlerTypeTips() {
 function defineHandlerConditionValueTips() {
     layerCapture('define_handler_condition_value_tips', 0, 30, 41);
 }
+
+/**
+ * 光标的使用提示
+ */
+function useOfTheCursorTips() {
+    layerCapture('use_of_the_cursor_tips', 0, 30, 25);
+}
+
+/**
+ * 流程控制的使用提示
+ */
+function useOfProcessControlTips() {
+    layerCapture('use_of_process_control_tips', 0, 30, 25);
+}

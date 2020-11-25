@@ -118,9 +118,9 @@
                 <h3 id="stored_procedure_page_title_tips" class="page-title">存储过程</h3>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="panel panel-scrolling">
+                        <div class="panel panel-scrolling panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="createStoredProcedureAndFunctionPanelTitleTips()">创建存储过程</h3>
+                                <h3 class="panel-title tinyHand" onclick="createStoredProcedureAndFunctionPanelTitleTips()">创建存储过程 <i class="fa fa-hand-pointer-o"></i></h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
@@ -208,9 +208,9 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="panel panel-scrolling">
+                        <div class="panel panel-scrolling panel-warning">
                             <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="createStoredProcedureAndFunctionPanelTitleTips()">创建存储函数</h3>
+                                <h3 class="panel-title tinyHand" onclick="createStoredProcedureAndFunctionPanelTitleTips()">创建存储函数 <i class="fa fa-hand-pointer-o"></i></h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
@@ -275,7 +275,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="panel panel-scrolling">
+                        <div class="panel panel-scrolling panel-info">
                             <div class="panel-heading">
                                 <h3 class="panel-title">变量的使用</h3>
                                 <div class="right">
@@ -367,9 +367,268 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="panel panel-scrolling">
+                        <div class="panel panel-scrolling panel-danger">
                             <div class="panel-heading">
                                 <h3 class="panel-title tinyHand" onclick="defineConditionsAndProcessingProceduresTips()">定义条件和处理程序 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <h4><i class="fa fa-anchor"></i><b>定义条件</b></h4>
+                                <p class="firstLineIndent">定义条件使用DECLARE语句，语法格式如下：</p>
+                                <code>DECLARE condition_name CONDITION FOR [CONDITION_TYPE]</code>
+                                <hr>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>关键字</th>
+                                        <th>作用</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>condition_name</td>
+                                        <td>表示条件的名称</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CONDITION_TYPE</td>
+                                        <td class="tinyHand" onclick="defineConditionsConditionTypeTips()">表示条件的类型 <i class="fa fa-hand-pointer-o"></i></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <p class="firstLineIndent">上述语句指定需要特殊处理的条件。它将一个名字和指定的错误条件关联起来。这个名字可以随后被用在定义处理程序的<span class="bold note">DECLARE HANDLER</span>语句中。</p>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例1：</b></h4>
+                                <p class="firstLineIndent">定义"ERROR 1148(42000)"错误，名称为command_not_allowed：</p>
+                                <pre>
+                                    <code class="sql">
+    -- 方法一：使用sqlstate_value
+    DECLARE command_not_allowed CONDITION FOR SQLSTATE '42000';
+    -- 方法二：使用mysql_error_code
+    DECLARE command_not_allowed CONDITION FOR 1148;
+                                    </code>
+                                </pre>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>定义处理程序</b></h4>
+                                <p class="firstLineIndent">定义处理程序时，使用DECLARE语句的语法如下：</p>
+                                <code>DECLARE handler_type HANDLER FOR condition_value[,...] sp_statement;</code>
+                                <hr>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>关键字</th>
+                                        <th>作用</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>handler_type</td>
+                                        <td class="tinyHand" onclick="defineHandlerHandlerTypeTips()">为错误处理方式 <i class="fa fa-hand-pointer-o"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>condition_value</td>
+                                        <td class="tinyHand" onclick="defineHandlerConditionValueTips()">表示错误类型 <i class="fa fa-hand-pointer-o"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>sp_statement</td>
+                                        <td>为程序语句段，表示在遇到定义的错误时需要执行的存储过程或函数</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例1：</b></h4>
+                                <p class="firstLineIndent">定义处理程序的几种方式，代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    -- 方法一：捕获sqlstate_value
+    DECLARE CONTINUE HANDLER FOR SQLSTATE '42S02' SET @info='NO_SUCH_TABLE';
+
+    -- 方法二：捕获mysql_error_code
+    DECLARE CONTINUE HANDLER FOR 1146 SET @info='NO_SUCH_TABLE';
+
+    -- 方法三：先定义条件，然后调用
+    DECLARE no_such_table CONDITION FOR 1146;
+    DECLARE CONTINUE HANDLER FOR no_such_table SET @info='NO_SUCH_TABLE'
+
+    -- 方法四：使用SQLWARNING
+    DECLARE EXIT HANDLER FOR SQLWARNING SET @info='ERROR'
+
+    -- 方法五：使用NOT FOUND
+    DECLARE EXIT HANDLER FOR NOT FOUND SET @info='NO_SUCH_TABLE';
+
+    -- 方法六：使用SQLEXCEPTION
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION SET @info='ERROR';
+                                    </code>
+                                </pre>
+                                <table class="table table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <td>第一种方法是捕获sqlstate_value值。如果遇到sqlstate_value值为“42S02”，执行CONTINUE操作，并且输出“NO_SUCH_TABLE”信息</td>
+                                    </tr>
+                                    <tr>
+                                        <td>第二种方法是捕获mysql_error_code值。如果遇到mysql_error_code值为1146，执行CONTINUE操作，并且输出“NO_SUCH_TABLE”信息</td>
+                                    </tr>
+                                    <tr>
+                                        <td>第三种方法是先定义条件，再调用条件。这里先定义no_such_table条件，遇到1146错误就执行CONTINUE操作</td>
+                                    </tr>
+                                    <tr>
+                                        <td>第四种方法是使用SQLWARNING。SQLWARNING捕获所有以01开头的sqlstate_value值，然后执行EXIT操作，并且输出“ERROR”信息</td>
+                                    </tr>
+                                    <tr>
+                                        <td>第五种方法是使用NOT FOUND。NOT FOUND捕获所有以02开头的sqlstate_value值，然后执行EXIT操作，并且输出“NO_SUCH_TABLE”信息</td>
+                                    </tr>
+                                    <tr>
+                                        <td>第六种方法是使用SQLEXCEPTION。SQLEXCEPTION捕获所有没有被SQLWARNING或NOT FOUND捕获的sqlstate_value值，然后执行EXIT操作，并且输出“ERROR”信息</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例2：</b></h4>
+                                <p class="firstLineIndent">定义条件和处理程序，代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> CREATE TABLE text_db.t (s1 int,primary key(s1));
+    Query OK, 0 rows affected (0.00 sec)
+
+    mysql> DELIMITER //
+    mysql> CREATE PROCEDURE handlerDemo()
+        -> BEGIN
+        -> DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SET @x2 = 1;
+        -> SET @x = 1;
+        -> INSERT INTO test_db.t VALUES(1);
+        -> SET @x = 2;
+        -> INSERT INTO test_db.t VALUES(1);
+        -> SET @x = 3;
+        -> END;
+        -> //
+    Query OK, 0 rows affected (0.00 sec)
+
+    mysql> DELIMITER ;
+    mysql> CALL handlerDemo();
+    Query OK, 0 rows affected (0.00 sec)
+
+    mysql> SELECT @x;
+    +-----+
+    | @x  |
+    +-----+
+    |  3  |
+    +-----+
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent"><b>@x</b>是一个用户变量，执行结果@x等于3，这表明MySQL被执行到程序的末尾。如果<code>DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SET @x2 = 1;</code>这一行不存在，第二个INSERT因PRIMARY KEY强制而失败之后，MySQL可能已经采取默认（EXIT）路径，并且SELECT @x 可能已经返回2。</p>
+                                <p class="firstLineIndent"><b>@var_name</b>表示用户变量，使用SET语句为其赋值，用户变量与连接有关，一个客户端定义的变量不能被其他客户端看到或使用。当客户端退出时，该客户端连接的所有变量将自动释放。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-scrolling panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title tinyHand" onclick="useOfTheCursorTips()">光标的使用 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <h4><i class="fa fa-anchor"></i><b>声明光标：</b></h4>
+                                <p class="firstLineIndent">在MySQL中，使用DECLARE关键字来声明光标，其语法的基本形式如下：</p>
+                                <code>DECLARE cursor_name CURSOR FOR select_statement;</code>
+                                <hr>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>关键字</th>
+                                        <th>作用</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>cursor_name</td>
+                                        <td>表示光标的名称</td>
+                                    </tr>
+                                    <tr>
+                                        <td>select_statement</td>
+                                        <td>表示SELECT语句的内容，返回一个用于创建光标的结果集</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例1：</b></h4>
+                                <p class="firstLineIndent">声明名称为cursor_fruit的光标，代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    DECLARE cursor_fruit CURSOR FOR SELECT f_name, f_price FROM fruits;
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">在上面的示例中，光标的名称为cursor_fruit，SELECT语句部分从fruits表中查询出f_name和f_price字段的值。</p>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>打开光标：</b></h4>
+                                <p class="firstLineIndent">打开光标的语法如下：</p>
+                                <code>OPEN cursor_name;</code>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例1：</b></h4>
+                                <p class="firstLineIndent">打开名称为cursor_fruit的光标，代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    OPEN cursor_fruit;
+                                    </code>
+                                </pre>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>使用光标：</b></h4>
+                                <p class="firstLineIndent">使用光标的语法如下：</p>
+                                <code>FETCH cursor_name INTO var_name [,var_name] ...;</code>
+                                <hr>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>关键字</th>
+                                        <th>作用</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>cursor_name</td>
+                                        <td>表示光标的名称</td>
+                                    </tr>
+                                    <tr>
+                                        <td>var_name</td>
+                                        <td>表示将光标中的SELECT语句查询出来的信息存入该参数中，var_name必须在声明光标之前就定义好。</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例1：</b></h4>
+                                <p class="firstLineIndent">使用名称为cursor_fruit的光标将查询出来的数据存入fruit_name和fruit_price这两个变量中，代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    FETCH cursor_fruit INTO fruit_name, fruit_price;
+                                    </code>
+                                </pre>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>关闭光标：</b></h4>
+                                <p class="firstLineIndent">关闭光标的语法如下：</p>
+                                <code>CLOSE cursor_name;</code>
+                                <p class="firstLineIndent">这个语句关闭先前打开的光标，如果未被明确地关闭，光标在它被声明的复合语句的末尾关闭。</p>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>示例1：</b></h4>
+                                <p class="firstLineIndent">关闭名称为cursor_fruit的光标，代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    CLOSE cursor_fruit;
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent"><span class="bold note">注意：MySQL中光标只能在存储过程和函数中使用。</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title tinyHand" onclick="useOfProcessControlTips()">流程控制的使用 <i class="fa fa-hand-pointer-o"></i></h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
@@ -811,6 +1070,28 @@
             </tr>
             </tbody>
         </table>
+    </div>
+</div>
+
+<!-- 光标的使用提示 -->
+<div id="use_of_the_cursor_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">光标的使用</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">查询语句可能返回多条记录，如果数据量非常大，需要在存储过程和存储函数中使用光标来逐条读取查询结果集中的记录。应用程序可以根据需要滚动或浏览其中的数据。</p>
+        <p class="firstLineIndent"><span class="bold note">光标必须在声明处理程序之前被声明，并且变量和条件还必须在声明光标或处理程序之前被声明。</span></p>
+    </div>
+</div>
+
+<!-- 流程控制的使用提示 -->
+<div id="use_of_process_control_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">流程控制的使用</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">查询语句可能返回多条记录，如果数据量非常大，需要在存储过程和存储函数中使用光标来逐条读取查询结果集中的记录。应用程序可以根据需要滚动或浏览其中的数据。</p>
+        <p class="firstLineIndent"><span class="bold note">光标必须在声明处理程序之前被声明，并且变量和条件还必须在声明光标或处理程序之前被声明。</span></p>
     </div>
 </div>
 
