@@ -220,7 +220,7 @@ function viewStoredProceduresAndFunctionsChart() {
                 layerCapture('view_stored_procedures_and_functions_show_create', 0, 40, 69);
                 break;
             case 'information_schema':
-                layerCapture('view_stored_procedures_and_functions_information_schema', 0, 40, 64);
+                layerCapture('view_stored_procedures_and_functions_information_schema', 0, 40, 70);
                 break;
         }
     });
@@ -287,4 +287,11 @@ function viewStoredProceduresAndFunctionsChart() {
         myChart.setOption(option, true);
     }
     resize(myChart);
+}
+
+/**
+ * 修改存储过程或函数-characteristics提示
+ */
+function modifyAStoredProcedureOrFunctionCharacteristicsTips() {
+    layerCapture('modify_a_stored_procedure_or_function_characteristics_tips', 0, 30, 22);
 }

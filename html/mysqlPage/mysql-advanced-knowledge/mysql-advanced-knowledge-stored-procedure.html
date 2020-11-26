@@ -756,6 +756,122 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-scrolling panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">修改存储过程和函数</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <p class="firstLineIndent">使用<code>ALTER</code>语句可以修改存储过程或存储函数的特性。语法如下：</p>
+                                <p class="firstLineIndent"><code>ALTER {PROCEDURE | FUNCTION} sp_name [characteristic ...]</code></p>
+                                <hr>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>关键字</th>
+                                        <th>作用</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>sp_name</td>
+                                        <td>表示存储过程或存储函数的名称</td>
+                                    </tr>
+                                    <tr>
+                                        <td>characteristic</td>
+                                        <td class="tinyHand" onclick="modifyAStoredProcedureOrFunctionCharacteristicsTips()">指定存储函数的特性 <i class="fa fa-hand-pointer-o"></i></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <p class="firstLineIndent"></p>
+                                <hr>
+                                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                                <p class="firstLineIndent">定义名为CountProc1的存储过程，然后调用这个存储过程。代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> use test_db;
+    mysql> DELIMITER //
+    mysql> CREATE PROCEDURE CountProc1 (IN sid INT,OUT num INT)
+        -> BEGIN
+        -> SELECT COUNT(*) INTO num FROM fruits WHERE s_id = sid;
+        -> END //
+    Query OK, 0 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> DELIMITER ;
+    mysql>
+    mysql>
+    mysql> CALL CountProc1(101,@num);
+    Query OK, 1 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SELECT @num;
+    +-------+
+    | @num  |
+    +-------+
+    |   3   |
+    +-------+
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">该存储过程返回了指定s_id=101的水果商提供的水果种类，返回值存储在num变量中，使用SELECT查看，返回结果为3。</p>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>调用存储函数：</b></h4>
+                                <p class="firstLineIndent">在MySQL中，存储函数的使用方法与MySQL内部函数的使用方法是一样的。换言之，用户自己定义的存储函数与MySQL内部函数是一个性质的。区别在于，存储函数是用户自己定义的，而内部函数是MySQL的开发者定义的。</p>
+                                <hr>
+                                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                                <p class="firstLineIndent">定义存储函数CountProc2，然后调用这个存储函数。代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> DELIMITER //
+    mysql> CREATE FUNCTION CountProc2 (sid INT)
+        -> RETURNS INT
+        -> BEGIN
+        -> RETURN (SELECT COUNT(*) FROM fruits WHERE s_id = sid);
+        -> END; //
+    Query OK, 0 rows affected (0.00 sec)
+    mysql> DELIMITER ;
+    mysql>
+    mysql>
+    mysql> SELECT CountProc2(101);
+    mysql> SELECT @num;
+    +------------------+
+    | CountProc2(101)  |
+    +------------------+
+    |         3        |
+    +------------------+
+    Query OK, 1 rows in set (0.00 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">可以看到，该例与上一个例子中返回的结果相同。虽然存储函数和存储过程的定义稍有不同，但可以实现相同的功能。</p>
+                                <p class="firstLineIndent"><span class="bold note">注意</span>：如果在创建存储函数中报错<code>“you *might* want to usre the less safe log_bin_trust_function_creators variable”</code>，需要执行以下代码：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> SET GLOBAL log_bin_trust_function_creators = 1;
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">删除存储过程和函数</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="view_stored_procedures_and_functions" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- END MAIN CONTENT -->
@@ -1504,9 +1620,8 @@
         <h3 class="panel-title">information_schema</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">SHOW CREATE语句可以查看<b>存储过程</b>和<b>存储函数</b>的状态，其基本语法结构如下：</p>
-        <p class="firstLineIndent"><code>SHOW CREATE {PROCEDURE | FUNCTION} sp_name</code></p>
-        <p class="firstLineIndent">这个语句是一个MySQL的扩展。类似于<code>SHOW CREATE TABLE</code>，它返回一个可用来重新创建已命名子程序的确切字符串。</p>
+        <p class="firstLineIndent">MySQL中存储过程和存储函数的信息存储在information_schema数据库下的<code>Routines</code>表中。可以通过查询该表的记录来查询存储过程和函数的信息。其基本语法形式如下：</p>
+        <p class="firstLineIndent"><code>SELECT * FROM information_schema.Routines WHERE ROUTINE_NAME = 'sp_name';</code></p>
         <hr>
         <table class="table table-bordered">
             <thead>
@@ -1517,34 +1632,131 @@
             </thead>
             <tbody>
             <tr>
-                <td>{PROCEDURE | FUNCTION}</td>
-                <td>分别表示查看存储过程和存储函数</td>
+                <td>ROUTINE_NAME</td>
+                <td>这个字段中存储的是存储过程和存储函数的名称</td>
             </tr>
             <tr>
                 <td>sp_name</td>
-                <td>表示匹配存储过程或存储函数的名称</td>
+                <td>表示存储过程或存储函数的名称</td>
             </tr>
             </tbody>
         </table>
         <hr>
         <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-        <p class="firstLineIndent">SHOW CREATE语句示例，代码如下：</p>
+        <p class="firstLineIndent">从Routines表中查询名称为CountProc2的存储函数的信息，代码如下：</p>
         <pre>
             <code class="sql">
-    mysql> SHOW CREATE FUNCTION test_db.CountProc2 \G
-    **************** 1.row ***************************
-                Function: CountProc2
-                sql_mode: STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION
-    Create Function:
-    CREATE DEFINER=`root`@`localhost` FUNCTION `CountProc2`(sid INT) RETURNS int(11)
-    BEGIN
+    mysql> SELECT * FROM information_schema.Routines
+        -> WHERE ROUTINE_NAME = 'CountProc2' AND ROUTINE_TYPE = 'FUNCTION' \G
+    ***************************** 1.row ***************************
+               SPECIFIC_NAME: CountProc2
+             ROUTINE_CATALOG: def
+              ROUTINE_SCHEMA: test_db
+                ROUTINE_NAME: CountProc2
+                ROUTINE_TYPE: FUNCTION
+                   DATA_TYPE: int
+    CHARACTER_MAXIMUM_LENGTH: NULL
+      CHARACTER_OCTET_LENGTH: NULL
+           NUMERIC_PRECISION: 10
+               NUMERIC_SCALE: 0
+          DATETIME_PRECISION: NULL
+          CHARACTER_SET_NAME: NULL
+              COLLATION_NAME: NULL
+              DTD_IDENTIFIER: int(11)
+                ROUTINE_BODY: SQL
+          ROUTINE_DEFINITION: BEGIN
     RETURN (SELECT COUNT(*) FROM fruits WHERE s_id = sid);
     END
-    character_set_client: gbk
-    collation_connection: gbk_chinese_ci
-      Database Collation: utf8mb4_0900_ai_ci
+               EXTERNAL_NAME: NULL
+           EXTERNAL_LANGUAGE: SQL
+             PARAMETER_STYLE: SQL
+            IS_DETERMINISTIC: NO
+             SQL_DATA_ACCESS: CONTAINS SQL
+                    SQL_PATH: NULL
+               SECURITY_TYPE: DEFINER
+                     CREATED: 2020-11-26 13:44:36
+                LAST_ALTERED: 2020-11-26 13:44:36
+                    SQL_MODE: STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION
+             ROUTINE_COMMENT:
+                     DEFINER: root@localhost
+        CHARACTER_SET_CLIENT: gbk
+        COLLATION_CONNECTION: gbk_chinese_ci
+          DATABASE_COLLATION: utf8mb4_0900_ai_ci
             </code>
         </pre>
+        <p class="firstLineIndent">在<code>information_schema</code>数据库下的<code>Routines</code>表中，存储所有存储过程和存储函数的定义。</p>
+        <p class="firstLineIndent">使用SELECT语句查询Routines表中的存储过程和存储函数的定义时，一定要使用<code>ROUTINE_NAME</code>字段指定存储过程或存储函数的名称。否则，将查询出所有的存储过程或存储函数的定义。</p>
+        <p class="firstLineIndent">如果有存储过程和存储函数名称相同，就需要同时指定<code>ROUTINE_TYPE</code>字段表明查询的是哪种类型的存储程序。</p>
+    </div>
+</div>
+
+<!-- 修改存储过程或函数-characteristics提示 -->
+<div id="modify_a_stored_procedure_or_function_characteristics_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">characteristics形式</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>特性</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>LANGUAGE SQL</td>
+                <td>说明routine_body部分是由SQL语句组成的，当前系统支持的语言为SQL。SQL是LANGUAGE特性的唯一值</td>
+            </tr>
+            <tr>
+                <td>[NOT] DETERMINISTIC</td>
+                <td>
+                    指明存储过程执行的结果是否正确。
+                    <ul>
+                        <li>DETERMINISTIC表示结果是确定的。每次执行存储过程时，相同的输入会得到相同的输出</li>
+                        <li>NOT DETERMINISTIC表示结果是不确定的，相同的输入可能得到不同的输出</li>
+                    </ul>
+                    如果没有指定任意一个值，默认为NOT DETERMINISTIC
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;<br/>
+                    {CONTAINS SQL}<br/>
+                    {NO SQL}<br/>
+                    {READS SQL DATA}<br/>
+                    {MODIFIES SQL DATA}
+                </td>
+                <td>
+                    指明子程序使用SQL语句的限制。默认情况下，系统会指定为CONTAINS SQL
+                    <ul>
+                        <li>CONTAINS SQL：表明子程序包含SQL语句，但是不包含读写数据的语句</li>
+                        <li>NO SQL：表明子程序不包含SQL语句</li>
+                        <li>READS SQL DATA：表明子程序包含读数据的语句</li>
+                        <li>MODIFIES SQL DATA：表明子程序包含写数据的语句</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;<br/>
+                    SQL SECURITY {DEFINER}<br/>
+                    SQL SECURITY {INVOKER}
+                </td>
+                <td>
+                    指明谁有权限来执行。默认情况下，系统指定为DEFINER
+                    <ul>
+                        <li>DEFINER表示只有定义者才能执行</li>
+                        <li>INVOKER表示拥有权限的调用者可以执行</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>COMMENT 'string'</td>
+                <td>注释信息，可以用来描述存储过程或函数</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
