@@ -7,17 +7,13 @@ $(document).ready(function () {
     typeOfDatabaseChart();
     characteristicsOfTheDatabaseChart();
     databaseSystemsChart();
-    databaseSystemsPanelTitleTips();
     classificationOfSQLChart();
     advantagesOfMySQLChart();
     dataTypesOfMySQLChart();
     dataTypesOfMySQLNumericTypeChart();
     dataTypesOfMySQLDateAndTimeTypeChart();
     dataTypesOfMySQLStringTypeChart();
-    textStringTypeTitleTips();
-    binaryStringTypeTitleTips();
     MySQLOperatorOverviewChart();
-    operatorPrecedenceTitleTips();
     MySQLFunctionsCharts();
 });
 
@@ -1133,27 +1129,21 @@ function MySQLFunctionsCharts() {
  * 数据库系统_数据库系统图示
  */
 function databaseSystemsPanelTitleTips() {
-    $('#database_systems_panel_title').on('click', function () {
-        layerCapture('database_systems_diagram', 0, 30, 70);
-    });
+    layerCapture('database_systems_diagram', 0, 30, 70);
 }
 
 /**
  * MySQL的数据类型_文本字符串类型简介
  */
 function textStringTypeTitleTips() {
-    $('#text_string_type_panel_title').on('click', function () {
-        layerCapture('text_string_type_introduction', 0, 42, 55);
-    });
+    layerCapture('text_string_type_introduction', 0, 42, 55);
 }
 
 /**
  * MySQL的数据类型_二进制字符串类型简介
  */
 function binaryStringTypeTitleTips() {
-    $('#binary_string_type_panel_title').on('click', function () {
-        layerCapture('binary_string_type_introduction', 0, 42, 35);
-    });
+    layerCapture('binary_string_type_introduction', 0, 42, 35);
 }
 
 /**
@@ -1174,9 +1164,7 @@ function comparisonOperator2() {
  * 运算符优先级
  */
 function operatorPrecedenceTitleTips() {
-    $('#operator_precedence_panel_title').on('click', function () {
-        layerCapture('operator_precedence_introduction', 0, 42, 61);
-    });
+    layerCapture('operator_precedence_introduction', 0, 42, 61);
 }
 
 /**

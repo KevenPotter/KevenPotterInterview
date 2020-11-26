@@ -212,7 +212,7 @@
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 id="database_systems_panel_title" class="panel-title tinyHand">数据库系统</h3>
+                                <h3 id="database_systems_panel_title" class="panel-title tinyHand" onclick="databaseSystemsPanelTitleTips()">数据库系统 <i class="fa fa-hand-pointer-o"></i></h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
@@ -235,7 +235,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="classification_of_SQL" style="height:400%;"></div>
+                                <div id="classification_of_SQL" style="height:500%;"></div>
                             </div>
                         </div>
                     </div>
@@ -249,7 +249,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="advantages_of_MySQL" style="height:400%;"></div>
+                                <div id="advantages_of_MySQL" style="height:500%;"></div>
                             </div>
                         </div>
                     </div>
@@ -263,7 +263,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="data_types_of_MySQL" style="height:400%;"></div>
+                                <div id="data_types_of_MySQL" style="height:500%;"></div>
                             </div>
                         </div>
                     </div>
@@ -302,7 +302,12 @@
                     <div class="col-md-12">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">MySQL的数据类型-<span id="text_string_type_panel_title" class="tinyHand">文本字符串类型</span>与<span id="binary_string_type_panel_title" class="tinyHand">二进制字符串类型</span></h3>
+                                <h3 class="panel-title">
+                                    MySQL的数据类型-
+                                    <span id="text_string_type_panel_title" class="tinyHand" onclick="textStringTypeTitleTips()">文本字符串类型 <i class="fa fa-hand-pointer-o"></i></span>
+                                    与
+                                    <span id="binary_string_type_panel_title" class="tinyHand" onclick="binaryStringTypeTitleTips()">二进制字符串类型 <i class="fa fa-hand-pointer-o"></i></span>
+                                </h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
@@ -358,7 +363,7 @@
                     <div class="col-md-12">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">MySQL运算符概述（另附<span id="operator_precedence_panel_title" class="tinyHand">优先级</span>表格）：</h3>
+                                <h3 class="panel-title">MySQL运算符概述（另附<span id="operator_precedence_panel_title" class="tinyHand" onclick="operatorPrecedenceTitleTips()">优先级表格<i class="fa fa-hand-pointer-o"></i></span>）：</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
@@ -1426,7 +1431,7 @@
             <tr>
                 <td>=</td>
                 <td>等于</td>
-                <td class="tinyHand" onclick="comparisonOperator1()">用来判断数字、字符串和表达式是否相等：如果相等，返回值为1；否则返回值为0</td>
+                <td class="tinyHand" onclick="comparisonOperator1()">用来判断数字、字符串和表达式是否相等：如果相等，返回值为1；否则返回值为0 <i class="fa fa-hand-pointer-o"></i></td>
             </tr>
             <tr>
                 <td>&lt;=&gt;</td>
@@ -1507,7 +1512,7 @@
             <tr>
                 <td>REGEXP</td>
                 <td>正则表达式匹配</td>
-                <td class="tinyHand" onclick="comparisonOperator2()">语法格式为<code>expr REGEXP 匹配条件</code>。如果expr满足匹配条件，则返回值为1（TRUE）；如果不匹配，则返回值为0（FALSE）。expr或匹配条件中任何一个为NULL，则结果为NULL</td>
+                <td class="tinyHand" onclick="comparisonOperator2()">语法格式为<code>expr REGEXP 匹配条件</code> <i class="fa fa-hand-pointer-o"></i>。如果expr满足匹配条件，则返回值为1（TRUE）；如果不匹配，则返回值为0（FALSE）。expr或匹配条件中任何一个为NULL，则结果为NULL</td>
             </tr>
             </tbody>
         </table>
@@ -2122,7 +2127,7 @@
             </tr>
             <tr>
                 <td>WEEK(d)</td>
-                <td>计算日期d是一年中的第几周。WEEK()的双参数形式允许指定该星期是否起始于周日或周一，以及返回值的范围是否为0~53或1~53。若Mode参数被省略，则使用default_week_format<span id="" class="tinyHand note" onclick="systemIndependentVariable()">系统自变量</span>的值</td>
+                <td>计算日期d是一年中的第几周。WEEK()的双参数形式允许指定该星期是否起始于周日或周一，以及返回值的范围是否为0~53或1~53。若Mode参数被省略，则使用default_week_format<span id="" class="tinyHand note" onclick="systemIndependentVariable()">系统自变量 <i class="fa fa-hand-pointer-o"></i></span>的值</td>
             </tr>
             <tr>
                 <td>WEEKOFYEAR(d)</td>
@@ -2178,7 +2183,7 @@
                         <li>date是一个DATETIME或DATE值，用来指定起始时间。若date参数是一个DATE值，计算只会包括YEAR、MONTH和DAY部分（没有时间部分），其结果是一个DATE值；否则，结果将是一个DATETIME值</li>
                         <li>expr是一个表达式，用来指定从起始日期添加或减去的时间间隔值。对于负值的时间间隔，expr可以以一个符号‘-’开头</li>
                         <li>type为关键词，指示了表达式被解释的方式</li>
-                        <li>查看<span class="tinyHand note" onclick="theRelationshipBetweenTypeAndExprParameters()">type和expr参数关系图</span></li>
+                        <li>查看<span class="tinyHand note" onclick="theRelationshipBetweenTypeAndExprParameters()">type和expr参数关系图 <i class="fa fa-hand-pointer-o"></i></span></li>
                     </ol>
                 </td>
             </tr>
@@ -2212,15 +2217,15 @@
             </tr>
             <tr>
                 <td>DATE_FORMAT(date,format)</td>
-                <td>根据<span class="tinyHand note" onclick="formatSpecifiedFormat()">format指定的格式</span>显示date值</td>
+                <td>根据<span class="tinyHand note" onclick="formatSpecifiedFormat()">format指定的格式 <i class="fa fa-hand-pointer-o"></i></span>显示date值</td>
             </tr>
             <tr>
                 <td>TIME_FORMAT(time,format)</td>
-                <td>根据<span class="tinyHand note" onclick="formatSpecifiedFormat()">format指定的格式</span>要求显示时间time。表达式format指定了显示的格式。因为TIME_FORMAT(time,format)只处理时间，所以format只使用时间格式</td>
+                <td>根据<span class="tinyHand note" onclick="formatSpecifiedFormat()">format指定的格式 <i class="fa fa-hand-pointer-o"></i></span>要求显示时间time。表达式format指定了显示的格式。因为TIME_FORMAT(time,format)只处理时间，所以format只使用时间格式</td>
             </tr>
             <tr>
                 <td>GET_FORMAT(val_type,format_type)</td>
-                <td>返回日期时间字符串的显示格式，val_type表示日期数据类型，包括DATE、DATETIME和TIME；format_type表示格式化显示类型，包括EUR、INTERVAL、ISO、JIS、USA。查看<span class="tinyHand note" onclick="getFormatFormat()">GET_FORMAT根据两个值类型组合返回的字符串显示格式</span></td>
+                <td>返回日期时间字符串的显示格式，val_type表示日期数据类型，包括DATE、DATETIME和TIME；format_type表示格式化显示类型，包括EUR、INTERVAL、ISO、JIS、USA。查看<span class="tinyHand note" onclick="getFormatFormat()">GET_FORMAT根据两个值类型组合返回的字符串显示格式 <i class="fa fa-hand-pointer-o"></i></span></td>
             </tr>
             </tbody>
         </table>
@@ -2695,7 +2700,7 @@
                 <td>
                     <code>SHOW PROCESSLIST</code>命令的输出结果显示了有哪些线程在运行，不仅可以查看当前所有的连接数，还可以查看当前的连接状态、帮助识别出有问题的查询语句等。<br/>
                     如果是root账号，能看到所有用户的当前连接。如果是其他普通账号，则只能看到自己占用的连接。<code>SHOW PROCESSLIST</code>只列出前100条，如果想全部列出可使用<code>SHOW FULL PROCESSLIST</code>命令。<br/>
-                    查看<span class="tinyHand note" onclick="theMeaningAndPurposeOfPROCESSLIST()">各个列的含义和用途</span>
+                    查看<span class="tinyHand note" onclick="theMeaningAndPurposeOfPROCESSLIST()">各个列的含义和用途 <i class="fa fa-hand-pointer-o"></i></span>
                 </td>
             </tr>
             <tr>
@@ -2833,7 +2838,7 @@
             </tr>
             <tr>
                 <td>CONV(N,from_base,to_base)</td>
-                <td>进行不同进制数间的转换。返回值为数值N的字符串表示，由from_base进制转化为to_base进制。如有任意一个参数为NULL，则返回值为NULL。自变量N被理解为一个整数，但是可以被指定为一个整数或字符串。最小基数为2，最大基数为36。查看<span class="tinyHand note" onclick="baseDescription()">进制说明</span></td>
+                <td>进行不同进制数间的转换。返回值为数值N的字符串表示，由from_base进制转化为to_base进制。如有任意一个参数为NULL，则返回值为NULL。自变量N被理解为一个整数，但是可以被指定为一个整数或字符串。最小基数为2，最大基数为36。查看<span class="tinyHand note" onclick="baseDescription()">进制说明 <i class="fa fa-hand-pointer-o"></i></span></td>
             </tr>
             <tr>
                 <td>INET_ATON(expr)</td>

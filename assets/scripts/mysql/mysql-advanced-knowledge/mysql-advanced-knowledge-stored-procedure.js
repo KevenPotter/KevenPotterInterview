@@ -6,6 +6,7 @@ $(document).ready(function () {
     $('#database_page_advanced_button').click();
     storedProcedurePageTitleTips();
     useOfProcessControlChart();
+    viewStoredProceduresAndFunctionsChart();
 });
 
 /**
@@ -85,14 +86,14 @@ function defineHandlerConditionValueTips() {
  * 光标的使用提示
  */
 function useOfTheCursorTips() {
-    layerCapture('use_of_the_cursor_tips', 0, 30, 25);
+    layerCapture('use_of_the_cursor_tips', 0, 30, 19);
 }
 
 /**
  * 流程控制的使用提示
  */
 function useOfProcessControlTips() {
-    layerCapture('use_of_process_control_tips', 0, 30, 17);
+    layerCapture('use_of_process_control_tips', 0, 30, 18);
 }
 
 /**
@@ -105,25 +106,25 @@ function useOfProcessControlChart() {
     myChart.on('click', function (params) {
         switch (params.name) {
             case 'IF语句':
-                layerCapture('use_of_process_control_if', 0, 40, 51);
+                layerCapture('use_of_process_control_if', 0, 40, 53);
                 break;
             case 'CASE语句':
-                layerCapture('use_of_process_control_case', 0, 40, 49);
+                layerCapture('use_of_process_control_case', 0, 40, 50);
                 break;
             case 'LOOP语句':
-                layerCapture('index_classification_full_text_index', 0, 40, 49);
+                layerCapture('use_of_process_control_loop', 0, 40, 64);
                 break;
             case 'LEAVE语句':
-                layerCapture('index_classification_spatial_index', 0, 40, 49);
+                layerCapture('use_of_process_control_leave', 0, 40, 51);
                 break;
             case 'ITERATE语句':
-                layerCapture('index_classification_spatial_index', 0, 40, 49);
+                layerCapture('use_of_process_control_iterate', 0, 40, 56);
                 break;
             case 'REPEAT语句':
-                layerCapture('index_classification_spatial_index', 0, 40, 49);
+                layerCapture('use_of_process_control_repeat', 0, 40, 62);
                 break;
             case 'WHILE语句':
-                layerCapture('index_classification_spatial_index', 0, 40, 49);
+                layerCapture('use_of_process_control_while', 0, 40, 63);
                 break;
         }
     });
@@ -171,6 +172,98 @@ function useOfProcessControlChart() {
                     {value: 1, name: 'ITERATE语句'},
                     {value: 1, name: 'REPEAT语句'},
                     {value: 1, name: 'WHILE语句'}
+                ],
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 15
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
+}
+
+/**
+ * 调用存储过程和函数提示
+ */
+function callStoredProceduresAndFunctionsTips() {
+    layerCapture('call_stored_procedures_and_functions_tips', 0, 30, 22);
+}
+
+/**
+ * 查看存储过程和函数图表
+ */
+function viewStoredProceduresAndFunctionsChart() {
+    var viewStoredProceduresAndFunctionsChart = $('#view_stored_procedures_and_functions');
+    viewStoredProceduresAndFunctionsChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(viewStoredProceduresAndFunctionsChart[0], 'macarons');
+    myChart.on('click', function (params) {
+        switch (params.name) {
+            case 'SHOW STATUS':
+                layerCapture('view_stored_procedures_and_functions_show_status', 0, 40, 72);
+                break;
+            case 'SHOW CREATE':
+                layerCapture('view_stored_procedures_and_functions_show_create', 0, 40, 69);
+                break;
+            case 'information_schema':
+                layerCapture('view_stored_procedures_and_functions_information_schema', 0, 40, 64);
+                break;
+        }
+    });
+    var option = null;
+    option = {
+        title: {
+            text: '查看存储过程和函数',
+            subtext: '《MySQL8从入门到精通（视频教学版）》-P293',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b} : {c} ({d}%)'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        legend: {
+            bottom: 10,
+            left: 'center',
+            data: ['SHOW STATUS', 'SHOW CREATE', 'information_schema'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '75%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: [
+                    {value: 1, name: 'SHOW STATUS'},
+                    {value: 1, name: 'SHOW CREATE'},
+                    {value: 1, name: 'information_schema'}
                 ],
                 label: {
                     normal: {
