@@ -758,7 +758,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="panel panel-scrolling panel-default">
+                        <div class="panel panel-scrolling panel-info">
                             <div class="panel-heading">
                                 <h3 class="panel-title">修改存储过程和函数</h3>
                                 <div class="right">
@@ -788,86 +788,152 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                <p class="firstLineIndent"></p>
+                                <p class="firstLineIndent">修改存储过程使用<code>ALTER PROCEDURE</code>语句，修改存储函数使用<code>ALTER FUNCTION</code>语句。但是，这两个语句的结构是一样的，语句中的所有参数也是一样的。而且，它们与创建存储过程或存储函数的语句中的参数也是基本一样的。</p>
                                 <hr>
-                                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                                <p class="firstLineIndent">定义名为CountProc1的存储过程，然后调用这个存储过程。代码如下：</p>
+                                <h4><i class="fa fa-female"></i><b>示例1：</b></h4>
+                                <p class="firstLineIndent">修改存储过程CountProc的定义。将读写权限改为MODIFIES SQL DATA，并指明调用者可以执行。代码如下：</p>
                                 <pre>
                                     <code class="sql">
-    mysql> use test_db;
-    mysql> DELIMITER //
-    mysql> CREATE PROCEDURE CountProc1 (IN sid INT,OUT num INT)
-        -> BEGIN
-        -> SELECT COUNT(*) INTO num FROM fruits WHERE s_id = sid;
-        -> END //
+    mysql> ALTER PROCEDURE CountProc
+        -> MODIFIES SQL DATA
+        -> SQL SECURITY INVOKER;
     Query OK, 0 rows affected (0.00 sec)
     mysql>
     mysql>
-    mysql> DELIMITER ;
-    mysql>
-    mysql>
-    mysql> CALL CountProc1(101,@num);
-    Query OK, 1 rows affected (0.00 sec)
-    mysql>
-    mysql>
-    mysql> SELECT @num;
-    +-------+
-    | @num  |
-    +-------+
-    |   3   |
-    +-------+
+    mysql> SELECT SPECIFIC_NAME,SQL_DATA_ACCESS,SECURITY_TYPE
+        -> FROM information_schema.Routines
+        -> WHERE ROUTINE_NAME = 'CountProc' AND ROUTINE_TYPE = 'PROCEDURE';
+    +---------------+-----------------------+-----------------+
+    | SPECIFIC_NAME |    SQL_DATA_ACCESS    |  SECURITY_TYPE  |
+    +---------------+-----------------------+-----------------+
+    |   CountProc   |    MODIFIES SQL DATA  |     INVOKER     |
+    +---------------+-----------------------+-----------------+
                                     </code>
                                 </pre>
-                                <p class="firstLineIndent">该存储过程返回了指定s_id=101的水果商提供的水果种类，返回值存储在num变量中，使用SELECT查看，返回结果为3。</p>
                                 <hr>
-                                <h4><i class="fa fa-anchor"></i><b>调用存储函数：</b></h4>
-                                <p class="firstLineIndent">在MySQL中，存储函数的使用方法与MySQL内部函数的使用方法是一样的。换言之，用户自己定义的存储函数与MySQL内部函数是一个性质的。区别在于，存储函数是用户自己定义的，而内部函数是MySQL的开发者定义的。</p>
-                                <hr>
-                                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                                <p class="firstLineIndent">定义存储函数CountProc2，然后调用这个存储函数。代码如下：</p>
+                                <h4><i class="fa fa-female"></i><b>示例2：</b></h4>
+                                <p class="firstLineIndent">修改存储函数CountProc的定义。将读写权限改为READS SQL DATA，并加上注释信息“FIND NAME”。代码如下：</p>
                                 <pre>
                                     <code class="sql">
-    mysql> DELIMITER //
-    mysql> CREATE FUNCTION CountProc2 (sid INT)
-        -> RETURNS INT
-        -> BEGIN
-        -> RETURN (SELECT COUNT(*) FROM fruits WHERE s_id = sid);
-        -> END; //
+    mysql> ALTER FUNCTION CountProc
+        -> READS SQL DATA
+        -> COMMENT 'FIND NAME';
     Query OK, 0 rows affected (0.00 sec)
-    mysql> DELIMITER ;
     mysql>
     mysql>
-    mysql> SELECT CountProc2(101);
-    mysql> SELECT @num;
-    +------------------+
-    | CountProc2(101)  |
-    +------------------+
-    |         3        |
-    +------------------+
-    Query OK, 1 rows in set (0.00 sec)
-                                    </code>
-                                </pre>
-                                <p class="firstLineIndent">可以看到，该例与上一个例子中返回的结果相同。虽然存储函数和存储过程的定义稍有不同，但可以实现相同的功能。</p>
-                                <p class="firstLineIndent"><span class="bold note">注意</span>：如果在创建存储函数中报错<code>“you *might* want to usre the less safe log_bin_trust_function_creators variable”</code>，需要执行以下代码：</p>
-                                <pre>
-                                    <code class="sql">
-    mysql> SET GLOBAL log_bin_trust_function_creators = 1;
+    mysql> SELECT SPECIFIC_NAME,SQL_DATA_ACCESS,ROUTINE_COMMENT
+        -> FROM information_schema.Routines
+        -> WHERE ROUTINE_NAME = 'CountProc' AND ROUTINE_TYPE = 'FUNCTION';
+    +---------------+---------------------+-------------------+
+    | SPECIFIC_NAME |    SQL_DATA_ACCESS  |  ROUTINE_COMMENT  |
+    +---------------+---------------------+-------------------+
+    |   CountProc   |    READS SQL DATA   |     FIND NAME     |
+    +---------------+---------------------+-------------------+
                                     </code>
                                 </pre>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="panel panel-warning">
+                        <div class="panel panel-scrolling panel-danger">
                             <div class="panel-heading">
-                                <h3 class="panel-title">删除存储过程和函数</h3>
+                                <h3 class="panel-title">删除存储过程和函数（后续带有MySQL8.0新特性——全局变量的持久化）</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="view_stored_procedures_and_functions" style="height:400%;"></div>
+                                <h4><i class="fa fa-anchor"></i><b>删除存储过程和函数：</b></h4>
+                                <p class="firstLineIndent">使用<code>DROP</code>语句可以删除存储过程或存储函数。这个语句被用来移除一个存储过程或存储函数。语法如下：</p>
+                                <p class="firstLineIndent"><code>DROP {PROCEDURE | FUNCTION} [IF EXISTS] sp_name</code></p>
+                                <hr>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>关键字</th>
+                                        <th>作用</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>sp_name</td>
+                                        <td>为要移除的存储过程或存储函数的名称</td>
+                                    </tr>
+                                    <tr>
+                                        <td>IF EXISTS</td>
+                                        <td>是一个MySQL的扩展。如果程序或函数不存储，它可以防止发生错误，产生一个用<code>SHOW WARNINGS</code>查看的警告</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                                <p class="firstLineIndent">删除存储过程和存储函数。代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> DROP PROCEDURE CountProc;
+    Query OK, 0 rows affected (0.00 sec)
+    mysql> DROP FUNCTION CountProc;
+    Query OK, 0 rows affected (0.00 sec)
+                                    </code>
+                                </pre>
+                                <hr>
+                                <h4><i class="fa fa-female"></i><b>示例2：</b></h4>
+                                <p class="firstLineIndent">修改存储函数CountProc的定义。将读写权限改为READS SQL DATA，并加上注释信息“FIND NAME”。代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> ALTER FUNCTION CountProc
+        -> READS SQL DATA
+        -> COMMENT 'FIND NAME';
+    Query OK, 0 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SELECT SPECIFIC_NAME,SQL_DATA_ACCESS,ROUTINE_COMMENT
+        -> FROM information_schema.Routines
+        -> WHERE ROUTINE_NAME = 'CountProc' AND ROUTINE_TYPE = 'FUNCTION';
+    +---------------+---------------------+-------------------+
+    | SPECIFIC_NAME |    SQL_DATA_ACCESS  |  ROUTINE_COMMENT  |
+    +---------------+---------------------+-------------------+
+    |   CountProc   |    READS SQL DATA   |     FIND NAME     |
+    +---------------+---------------------+-------------------+
+                                    </code>
+                                </pre>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>全局变量的持久化：</b></h4>
+                                <p class="firstLineIndent">在MySQL数据库中，全局变量可以通过<code>SET GLOBAL</code>语句来设置。例如，设置服务器语句超时的限制，可以通过设置系统变量<code>max_execution_time</code>来实现：</p>
+                                <p class="firstLineIndent"><code>SET GLOBAL max_execution_time = 2000;</code></p>
+                                <p class="firstLineIndent">使用<code>SET GLOBAL</code>语句设置的变量值只会临时生效。<span class="note">数据库重启后，服务器又会从MySQL配置文件中读取变量的默认值。</span></p>
+                                <p class="firstLineIndent">MySQL8.0版本新增了<code>SET PERSIST</code>命令。例如，设置服务器的最大连接数1000：</p>
+                                <p class="firstLineIndent"><code>SET PERSIST max_connections = 1000;</code></p>
+                                <p class="firstLineIndent">MySQL会将该命令的配置保存到数据目录下的mysqld-auto.cnf文件中，下次启动时会读取该文件，用其中的配置来覆盖默认的配置文件。</p>
+                                <hr>
+                                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                                <p class="firstLineIndent">查看并修改全局变量max_connections的值。在代码<code>SET PERSIST max_connections = 1000;</code>之后需要重启MySQL服务器，再次查询max_connections的值。代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> SHOW variables LIKE '%max_connections%';
+    +--------------------------+---------+
+    |        Variable_name     |  Value  |
+    +--------------------------+---------+
+    |       max_connections    |   151   |
+    +--------------------------+---------+
+    |   mysqlx_max_connections |   100   |
+    +--------------------------+---------+
+    mysql>
+    mysql> SET PERSIST max_connections = 1000;
+    Query OK, 0 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SHOW variables LIKE '%max_connections%';
+    +--------------------------+----------+
+    |        Variable_name     |  Value   |
+    +--------------------------+----------+
+    |       max_connections    |   1000   |
+    +--------------------------+----------+
+    |   mysqlx_max_connections |   100    |
+    +--------------------------+----------+
+                                    </code>
+                                </pre>
                             </div>
                         </div>
                     </div>
@@ -1705,55 +1771,36 @@
             </thead>
             <tbody>
             <tr>
-                <td>LANGUAGE SQL</td>
-                <td>说明routine_body部分是由SQL语句组成的，当前系统支持的语言为SQL。SQL是LANGUAGE特性的唯一值</td>
+                <td>CONTAINS SQL</td>
+                <td>表示子程序包含SQL语句，但不包含读或写数据的语句</td>
             </tr>
             <tr>
-                <td>[NOT] DETERMINISTIC</td>
-                <td>
-                    指明存储过程执行的结果是否正确。
-                    <ul>
-                        <li>DETERMINISTIC表示结果是确定的。每次执行存储过程时，相同的输入会得到相同的输出</li>
-                        <li>NOT DETERMINISTIC表示结果是不确定的，相同的输入可能得到不同的输出</li>
-                    </ul>
-                    如果没有指定任意一个值，默认为NOT DETERMINISTIC
-                </td>
+                <td>NO SQL</td>
+                <td>表示子程序中不包含SQL语句</td>
             </tr>
             <tr>
-                <td>
-                    &nbsp;<br/>
-                    {CONTAINS SQL}<br/>
-                    {NO SQL}<br/>
-                    {READS SQL DATA}<br/>
-                    {MODIFIES SQL DATA}
-                </td>
-                <td>
-                    指明子程序使用SQL语句的限制。默认情况下，系统会指定为CONTAINS SQL
-                    <ul>
-                        <li>CONTAINS SQL：表明子程序包含SQL语句，但是不包含读写数据的语句</li>
-                        <li>NO SQL：表明子程序不包含SQL语句</li>
-                        <li>READS SQL DATA：表明子程序包含读数据的语句</li>
-                        <li>MODIFIES SQL DATA：表明子程序包含写数据的语句</li>
-                    </ul>
-                </td>
+                <td>READS SQL DATA</td>
+                <td>表示子程序中包含读数据的语句</td>
             </tr>
             <tr>
-                <td>
-                    &nbsp;<br/>
-                    SQL SECURITY {DEFINER}<br/>
-                    SQL SECURITY {INVOKER}
-                </td>
-                <td>
-                    指明谁有权限来执行。默认情况下，系统指定为DEFINER
-                    <ul>
-                        <li>DEFINER表示只有定义者才能执行</li>
-                        <li>INVOKER表示拥有权限的调用者可以执行</li>
-                    </ul>
-                </td>
+                <td>MODIFIES SQL DATA</td>
+                <td>表示子程序中包含写数据的语句</td>
+            </tr>
+            <tr>
+                <td>SQL SECURITY {DEFINER | INVOKER}</td>
+                <td>指明谁有权限来执行</td>
+            </tr>
+            <tr>
+                <td>DEFINER</td>
+                <td>表示只有定义者自己才能够执行</td>
+            </tr>
+            <tr>
+                <td>INVOKER</td>
+                <td>表示调用者可以执行</td>
             </tr>
             <tr>
                 <td>COMMENT 'string'</td>
-                <td>注释信息，可以用来描述存储过程或函数</td>
+                <td>表示注释信息</td>
             </tr>
             </tbody>
         </table>

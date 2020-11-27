@@ -293,5 +293,5 @@ function viewStoredProceduresAndFunctionsChart() {
  * 修改存储过程或函数-characteristics提示
  */
 function modifyAStoredProcedureOrFunctionCharacteristicsTips() {
-    layerCapture('modify_a_stored_procedure_or_function_characteristics_tips', 0, 30, 22);
+    layerCapture('modify_a_stored_procedure_or_function_characteristics_tips', 0, 30, 41);
 }
