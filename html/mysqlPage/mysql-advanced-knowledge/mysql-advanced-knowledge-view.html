@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>进阶知识-索引</title>
+    <title>进阶知识-视图</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -96,8 +96,8 @@
                                     <a id="database_page_advanced_button" href="#advanced_knowledge" data-toggle="collapse" class="collapsed"><span>进阶知识</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                                     <div id="advanced_knowledge" class="collapse ">
                                         <ul class="nav">
-                                            <li><a href="mysql-advanced-knowledge-index.html" class="active"><i class="lnr"></i>索引</a></li>
-                                            <li><a href="mysql-advanced-knowledge-view.html" class=""><i class="lnr"></i>视图</a></li>
+                                            <li><a href="mysql-advanced-knowledge-index.html" class=""><i class="lnr"></i>索引</a></li>
+                                            <li><a href="mysql-advanced-knowledge-view.html" class="active"><i class="lnr"></i>视图</a></li>
                                             <li><a href="mysql-advanced-knowledge-stored-procedure.html" class=""><i class="lnr"></i>存储过程</a></li>
                                         </ul>
                                     </div>
@@ -116,27 +116,19 @@
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
-                <h3 class="page-title">索引</h3>
+                <h3 class="page-title">视图</h3>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="panel panel-scrolling">
+                        <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">索引简介</h3>
+                                <h3 class="panel-title tinyHand" onclick="introductionToViewsTips()">视图简介 <i class="fa fa-hand-pointer-o"></i></h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <h4><i class="fa fa-anchor"></i><b>简介</b></h4>
-                                <p class="firstLineIndent"><b>索引</b>用于快速找出在某个列中有一特定值的行。不使用索引，MySQL必须从第1条记录开始读完整个表，直到找出相关的行。表越大，查询数据所花费的时间越多。如果表中查询的列有一个索引，MySQL能快速到达某个位置去搜寻数据文件，而不必查看所有数据。</p>
-                                <p class="firstLineIndent"><b>索引</b>是对数据库表中一列或多列的值进行排序的一种结构，其本质是帮助MySQL高效获取数据的<span class="note">数据结构</span>。也可以理解为<b>“排好序的快速查找数据结构”</b>。它可以提高数据库中特定数据的查询速度。</p>
-                                <hr>
-                                <h4><i class="fa fa-anchor"></i><b>含义</b></h4>
-                                <p class="firstLineIndent"><b>索引</b>是一个单独的、存储在磁盘上的数据库结构，包含着对数据表里所以记录的引用指针。使用索引可以快速找出在某个或多个列中有一特定值的行，所有MySQL列类型都可以被索引，对相关列使用索引是提高查询操作速度的最佳途径。</p>
-                                <p class="firstLineIndent"><i>例如：数据库中有2万条记录，现在要执行一个查询“SELECT * FROM table WHERE num = 10000”，如果没有索引，就必须遍历整个表，直到num等于10000的这一行被找到为止；如果在num列上创建索引，MySQL不需要任何扫描，直接在索引里面找10000，就可以得知这一行的位置。可见，索引的建立可以提高数据库的查询速度。</i></p>
-                                <p class="firstLineIndent">索引是在存储引擎中实现的，因此，每种存储引擎的索引都不一定完全相同，并且每种存储引擎也不一定支持所有索引类型。根据存储引擎定义每个表的最大索引数和最大索引长度。<b>所有存储引擎支持每个表至少16个索引，总索引长度至少为256字节</b>。大多数存储引擎有更高的限制。</p>
-                                <p class="firstLineIndent">MySQL中索引的存储类型有两种，即<code>BTREE</code>和<code>HASH</code>，具体和表的存储引擎相关：<code>MyISAM</code>和<code>InnoDB</code>存储引擎只支持<code>BTREE</code>索引；<code>MEMORY</code>/<code>HEAP</code>存储引擎可以支持<code>BTREE</code>和<code>HASH</code>索引。</p>
+                                <div id="the_role_of_views" style="height:500%;"></div>
                             </div>
                         </div>
                     </div>
@@ -218,7 +210,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="create_index_CREATE_TABLE" style="height:500%;"></div>
+                                <div id="create_index_CREATE_TABLE1" style="height:500%;"></div>
                             </div>
                         </div>
                     </div>
@@ -364,29 +356,47 @@ mysql> ANALYZE TABLE production DROP HISTOGRAM ON tm,count;
 </div>
 <!-- END WRAPPER -->
 
-<!-- 索引的分类-普通索引和唯一索引 -->
-<div id="index_classification_ordinary_index_and_unique_index" class="panel" style="display: none">
+<!-- 视图简介提示 -->
+<div id="introduction_to_views_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">索引的分类-普通索引和唯一索引</h3>
+        <h3 class="panel-title">视图简介</h3>
     </div>
     <div class="panel-body">
-        <ul>
-            <li><span class="note">普通索引</span>是MySQL中的基本索引类型，允许在定义索引的列中插入重复值和空值</li>
-            <li><span class="note">唯一索引</span>要求索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一。<b>主键索引是一种特殊的唯一索引，不允许有空值</b></li>
-        </ul>
+        <p class="firstLineIndent">数据库中的<b>视图</b>是一个虚拟表。同真实的表一样，视图包含一系列带有名称的<b>行</b>和<b>列</b>数据。行和列数据来自由定义视图查询所引用的表，并且在引用视图时<span class="note">动态生成</span>。它本身是从一个或者多个表中导出的，视图的行为与表非常相似，但视图是一个虚拟表。</p>
+        <p class="firstLineIndent">在视图中用户可以使用SELECT语句查询数据，以及使用INSERT、UPDATE和DELETE修改记录。从MySQL 5.0开始可以使用视图，视图可以使用户操作方便，而且可以保障数据库系统的安全。与此同时，视图还可以从已经存在的视图的基础上定义。</p>
+        <p class="firstLineIndent">视图一经定义便存储在数据库中，与其相对应的数据并没有像表那样在数据库中再存储一份，通过视图看到的数据只是存放在基本表中的数据。对视图的操作与对表的操作一样，可以对其进行<b>查询</b>、<b>修改</b>和<b>删除</b>。当对通过视图看到的数据进行修改时，相应的基本表的数据也要发生变化；同时，若基本表的数据发生变化，则这种变化也可以自动反映到视图中。</p>
     </div>
 </div>
 
-<!-- 索引的分类-单列索引和组合索引 -->
-<div id="index_classification_single_column_index_and_composite_index" class="panel" style="display: none">
+<!-- 视图的作用-安全性 -->
+<div id="the_role_of_views_safety" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">索引的分类-单列索引和组合索引</h3>
+        <h3 class="panel-title">安全性</h3>
     </div>
     <div class="panel-body">
-        <ul>
-            <li><span class="note">单列索引</span>即一个索引只包含单个列，一个表可以有多个单列索引</li>
-            <li><span class="note">组合索引</span>是指在表的多个字段组合上创建的索引，只有在查询条件中使用了这些字段的左边字段是，索引才会被使用。<b>使用组合索引时遵循<span class="note">最左前缀</span>集合</b></li>
-        </ul>
+        <p class="firstLineIndent">通过视图用户只能查询和修改他们所能见到的数据。数据库中的其他数据既看不见也取不到。数据库授权命令可以使每个用户对数据库的检索限制到特定的数据库对象上，但不能授权到数据库特定行和特定的列上。通过视图，用户可以被限制在数据的不同子集上：</p>
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <td>使用权限可被限制在基表的行的子集上</td>
+            </tr>
+            <tr>
+                <td>使用权限可被限制在基表的列的子集上</td>
+            </tr>
+            <tr>
+                <td>使用权限可被限制在基表的行和列的子集上</td>
+            </tr>
+            <tr>
+                <td>使用权限可被限制在多个基表的连接所限定的行上</td>
+            </tr>
+            <tr>
+                <td>使用权限可被限制在基表中的数据的统计汇总上</td>
+            </tr>
+            <tr>
+                <td>使用权限可被限制在另一视图的一个子集上，或是一些视图和基表合并后的子集上</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -612,7 +622,7 @@ CREATE TABLE t6 (
 <script type="text/javascript" src="../../../assets/scripts/common-method.js"></script>
 <script type="text/javascript" src="../../../assets/scripts/base.js"></script>
 <script type="text/javascript" src="../../../assets/scripts/responseStatusCode.js"></script>
-<script type="text/javascript" src="../../../assets/scripts/mysql/mysql-advanced-knowledge/mysql-advanced-knowledge-index.js"></script>
+<script type="text/javascript" src="../../../assets/scripts/mysql/mysql-advanced-knowledge/mysql-advanced-knowledge-view.js"></script>
 <script>hljs.initHighlightingOnLoad()</script>
 </body>
 
