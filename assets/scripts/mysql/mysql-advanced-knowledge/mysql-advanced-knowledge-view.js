@@ -5,9 +5,8 @@ $(document).ready(function () {
     $('#database_page_button').click();
     $('#database_page_advanced_button').click();
     theRoleOfViewsChart();
-    createIndex_CREATE_TABLE_Chart();
-    createIndex_ALTER_TABLE_Chart();
-    createIndex_CREATE_INDEX_Chart();
+    viewViewsChart();
+    modifyViewChart();
 });
 
 /**
@@ -35,7 +34,11 @@ function theRoleOfViewsChart() {
         }
     });
     myChart.on('click', function (params) {
-        layerCapture('the_role_of_views_safety', 0, 32, 38);
+        switch (params.name) {
+            case '安全性':
+                layerCapture('the_role_of_views_safety', 0, 32, 38);
+                break;
+        }
     });
     var option = null;
     option = {
@@ -103,39 +106,61 @@ function theRoleOfViewsChart() {
 }
 
 /**
- * 创建索引-CREATE TABLE时图表
+ * 创建视图提示
  */
-function createIndex_CREATE_TABLE_Chart() {
-    var createIndex_CREATE_TABLE_Chart = $('#create_index_CREATE_TABLE');
-    createIndex_CREATE_TABLE_Chart.removeAttr("_echarts_instance_");
-    var myChart = echarts.init(createIndex_CREATE_TABLE_Chart[0], 'macarons');
+function createViewTips() {
+    layerTips('视图包含了SELECT查询的结果，因此视图的创建基于SELECT语句和已存在的数据表。视图可以建立在一张表上，也可以建立在多张表上。', $('#create_view_panel_title_tips'));
+}
+
+/**
+ * CREATE VIEW ALGORITHM算法提示
+ */
+function createViewAlgorithmTips() {
+    layerCapture('algorithm_tips', 0, 30, 41);
+}
+
+/**
+ * CREATE VIEW CASCADED | LOCAL提示
+ */
+function createViewCascadedLocalTips() {
+    layerCapture('create_view_cascaded_local_tips', 0, 30, 41);
+}
+
+/**
+ * 查看视图提示
+ */
+function viewViewsTips() {
+    layerCapture('view_views_tips', 0, 35, 20);
+}
+
+/**
+ * 查看视图图表
+ */
+function viewViewsChart() {
+    var viewViewsChart = $('#view_view');
+    viewViewsChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(viewViewsChart[0], 'macarons');
     myChart.on('click', function (params) {
         switch (params.name) {
-            case '创建普通索引':
-                layerCapture('create_index_create_table_create_a_normal_index', 0, 30, 33);
+            case 'DESCRIBE':
+                layerCapture('view_views_describe', 0, 40, 45);
                 break;
-            case '创建唯一索引':
-                layerCapture('create_index_create_table_create_a_unique_index', 0, 30, 36);
+            case 'SHOW TABLE STATUS':
+                layerCapture('view_views_show_table_status', 0, 40, 66);
                 break;
-            case '创建单列索引':
-                layerCapture('create_index_create_table_create_a_single_column_index', 0, 30, 34);
+            case 'SHOW CREATE VIEW':
+                layerCapture('view_views_show_create_view', 0, 40, 48);
                 break;
-            case '创建组合索引':
-                layerCapture('create_index_create_table_create_a_composite_index', 0, 30, 46);
-                break;
-            case '创建全文索引':
-                layerCapture('create_index_create_table_create_a_full_text_index', 0, 30, 41);
-                break;
-            case '创建空间索引':
-                layerCapture('create_index_create_table_create_a_spatial_index', 0, 30, 33);
+            case 'information_schema.views':
+                layerCapture('view_views_information_schema_views', 0, 40, 57);
                 break;
         }
     });
     var option = null;
     option = {
         title: {
-            text: 'MySQL的数据类型',
-            subtext: '《MySQL8从入门到精通（视频教学版）》-P256',
+            text: '视图的作用',
+            subtext: '《MySQL8从入门到精通（视频教学版）》-P308',
             left: 'center'
         },
         tooltip: {
@@ -156,7 +181,7 @@ function createIndex_CREATE_TABLE_Chart() {
         legend: {
             bottom: 10,
             left: 'center',
-            data: ['创建普通索引', '创建唯一索引', '创建单列索引', '创建组合索引', '创建全文索引', '创建空间索引'],
+            data: ['DESCRIBE', 'SHOW TABLE STATUS', 'SHOW CREATE VIEW', 'information_schema.views'],
             textStyle: {
                 fontSize: 15
             }
@@ -168,12 +193,10 @@ function createIndex_CREATE_TABLE_Chart() {
                 center: ['50%', '50%'],
                 selectedMode: 'single',
                 data: [
-                    {value: 1, name: '创建普通索引'},
-                    {value: 1, name: '创建唯一索引'},
-                    {value: 1, name: '创建单列索引'},
-                    {value: 1, name: '创建组合索引'},
-                    {value: 1, name: '创建全文索引'},
-                    {value: 1, name: '创建空间索引'}
+                    {value: 1, name: 'DESCRIBE'},
+                    {value: 1, name: 'SHOW TABLE STATUS'},
+                    {value: 1, name: 'SHOW CREATE VIEW'},
+                    {value: 1, name: 'information_schema.views'}
                 ],
                 label: {
                     normal: {
@@ -200,39 +223,34 @@ function createIndex_CREATE_TABLE_Chart() {
 }
 
 /**
- * 创建索引-ALTER TABLE时图表
+ * 修改视图提示
  */
-function createIndex_ALTER_TABLE_Chart() {
-    var createIndex_ALTER_TABLE_Chart = $('#create_index_ALTER_TABLE');
-    createIndex_ALTER_TABLE_Chart.removeAttr("_echarts_instance_");
-    var myChart = echarts.init(createIndex_ALTER_TABLE_Chart[0], 'macarons');
-    myChart.on('mouseover', function (params) {
+function modifyViewTips() {
+    layerCapture('modify_view_tips', 0, 35, 16);
+}
+
+/**
+ * 修改视图图表
+ */
+function modifyViewChart() {
+    var modifyViewChart = $('#modify_view');
+    modifyViewChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(modifyViewChart[0], 'macarons');
+    myChart.on('click', function (params) {
         switch (params.name) {
-            case '创建普通索引':
-                layerTips('普通：ALTER TABLE t1 ADD INDEX nameIdx(t_name(30));', createIndex_ALTER_TABLE_Chart);
+            case 'CREATE OR REPLACE VIEW':
+                layerCapture('modify_view_create_or_replace_view', 0, 40, 79);
                 break;
-            case '创建唯一索引':
-                layerTips('唯一：ALTER TABLE t2 ADD UNIQUE INDEX UniqIdIdx(t_id);', createIndex_ALTER_TABLE_Chart);
-                break;
-            case '创建单列索引':
-                layerTips('单列：ALTER TABLE t3 ADD INDEX tNameIdx(t_name(50));', createIndex_ALTER_TABLE_Chart);
-                break;
-            case '创建组合索引':
-                layerTips('组合：ALTER TABLE t4 ADD INDEX tIdNameAgeIdx(id,name(30),age);', createIndex_ALTER_TABLE_Chart);
-                break;
-            case '创建全文索引':
-                layerTips('全文：ALTER TABLE t5 ADD FULLTEXT INDEX infoFTIdx(info);', createIndex_ALTER_TABLE_Chart);
-                break;
-            case '创建空间索引':
-                layerTips('空间：ALTER TABLE t6 ADD SPATIAL INDEX spatIdx(g);', createIndex_ALTER_TABLE_Chart);
+            case 'ALTER':
+                layerCapture('modify_view_alter', 0, 40, 38);
                 break;
         }
     });
     var option = null;
     option = {
         title: {
-            text: 'MySQL的数据类型',
-            subtext: '《MySQL8从入门到精通（视频教学版）》-P261',
+            text: '视图的作用',
+            subtext: '《MySQL8从入门到精通（视频教学版）》-P312',
             left: 'center'
         },
         tooltip: {
@@ -253,7 +271,7 @@ function createIndex_ALTER_TABLE_Chart() {
         legend: {
             bottom: 10,
             left: 'center',
-            data: ['创建普通索引', '创建唯一索引', '创建单列索引', '创建组合索引', '创建全文索引', '创建空间索引'],
+            data: ['CREATE OR REPLACE VIEW', 'ALTER'],
             textStyle: {
                 fontSize: 15
             }
@@ -265,12 +283,8 @@ function createIndex_ALTER_TABLE_Chart() {
                 center: ['50%', '50%'],
                 selectedMode: 'single',
                 data: [
-                    {value: 1, name: '创建普通索引'},
-                    {value: 1, name: '创建唯一索引'},
-                    {value: 1, name: '创建单列索引'},
-                    {value: 1, name: '创建组合索引'},
-                    {value: 1, name: '创建全文索引'},
-                    {value: 1, name: '创建空间索引'}
+                    {value: 1, name: 'CREATE OR REPLACE VIEW'},
+                    {value: 1, name: 'ALTER'}
                 ],
                 label: {
                     normal: {
@@ -294,129 +308,4 @@ function createIndex_ALTER_TABLE_Chart() {
         myChart.setOption(option, true);
     }
     resize(myChart);
-}
-
-/**
- * 创建索引-CREATE INDEX时图表
- */
-function createIndex_CREATE_INDEX_Chart() {
-    var createIndex_CREATE_INDEX_Chart = $('#create_index_CREATE_INDEX');
-    createIndex_CREATE_INDEX_Chart.removeAttr("_echarts_instance_");
-    var myChart = echarts.init(createIndex_CREATE_INDEX_Chart[0], 'macarons');
-    myChart.on('mouseover', function (params) {
-        switch (params.name) {
-            case '创建普通索引':
-                layerTips('普通：CREATE INDEX idx ON t1(t_id);', createIndex_CREATE_INDEX_Chart);
-                break;
-            case '创建唯一索引':
-                layerTips('唯一：CREATE UNIQUE INDEX UniqIdIdx ON t2(t_id);', createIndex_CREATE_INDEX_Chart);
-                break;
-            case '创建单列索引':
-                layerTips('单列：CREATE INDEX tNameIdx ON t3(t_name(50));', createIndex_CREATE_INDEX_Chart);
-                break;
-            case '创建组合索引':
-                layerTips('组合：CREATE INDEX tIdNameAgeIdx ON t4(id,name(30),age);', createIndex_CREATE_INDEX_Chart);
-                break;
-            case '创建全文索引':
-                layerTips('全文：CREATE FULLTEXT INDEX infoFTIdx ON t5(info);', createIndex_CREATE_INDEX_Chart);
-                break;
-            case '创建空间索引':
-                layerTips('空间：CREATE SPATIAL INDEX spatIdx ON t6(g);', createIndex_CREATE_INDEX_Chart);
-                break;
-        }
-    });
-    var option = null;
-    option = {
-        title: {
-            text: 'MySQL的数据类型',
-            subtext: '《MySQL8从入门到精通（视频教学版）》-P266',
-            left: 'center'
-        },
-        tooltip: {
-            trigger: 'item',
-            formatter: '{b} : {c} ({d}%)'
-        },
-        toolbox: {
-            show: true,
-            feature: {
-                restore: {
-                    show: true
-                },
-                saveAsImage: {
-                    pixelRatio: 2
-                }
-            }
-        },
-        legend: {
-            bottom: 10,
-            left: 'center',
-            data: ['创建普通索引', '创建唯一索引', '创建单列索引', '创建组合索引', '创建全文索引', '创建空间索引'],
-            textStyle: {
-                fontSize: 15
-            }
-        },
-        series: [
-            {
-                type: 'pie',
-                radius: '75%',
-                center: ['50%', '50%'],
-                selectedMode: 'single',
-                data: [
-                    {value: 1, name: '创建普通索引'},
-                    {value: 1, name: '创建唯一索引'},
-                    {value: 1, name: '创建单列索引'},
-                    {value: 1, name: '创建组合索引'},
-                    {value: 1, name: '创建全文索引'},
-                    {value: 1, name: '创建空间索引'}
-                ],
-                label: {
-                    normal: {
-                        show: true,
-                        textStyle: {
-                            fontSize: 15
-                        }
-                    }
-                },
-                emphasis: {
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
-            }
-        ]
-    };
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
-    }
-    resize(myChart);
-}
-
-/**
- * 创建索引-CREATE TABLE时提示
- */
-function createIndexCreateTablePanelTitleTips() {
-    layerCapture('create_index_create_table_panel_title_tips', 0, 35, 34);
-}
-
-/**
- * 创建索引-ALTER TABLE时提示
- */
-function createIndexAlterTablePanelTitleTips() {
-    layerCapture('create_index_alter_table_panel_title_tips', 0, 35, 32);
-}
-
-/**
- * 创建索引-CREATE INDEX时提示
- */
-function createIndexCreateIndexPanelTitleTips() {
-    layerCapture('create_index_create_index_panel_title_tips', 0, 35, 31);
-}
-
-/**
- * 统计直方图提示
- */
-function histogramTips() {
-    layerCapture('histogram_tips', 0, 35, 31);
 }

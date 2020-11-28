@@ -128,215 +128,176 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="the_role_of_views" style="height:500%;"></div>
+                                <div id="the_role_of_views" style="height:400%;"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="panel panel-scrolling">
                             <div class="panel-heading">
-                                <h3 class="panel-title">索引的优点</h3>
+                                <h3 id="create_view_panel_title_tips" class="panel-title" onmouseover="createViewTips()">创建视图</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <h4><i class="fa fa-anchor"></i><b>优点</b></h4>
-                                <ol>
-                                    <li>通过创建唯一索引，可以保证数据库表中每一行数据的唯一性</li>
-                                    <li>可以大大加快数据的查询速度，这也是创建索引的主要原因</li>
-                                    <li>在实现数据的参考完整性方面，可以加速表和表之间的连接</li>
-                                    <li>在使用分组和排序子句进行数据查询时，也可以显著减少查询中分组和排序的时间</li>
-                                </ol>
+                                <h4><i class="fa fa-anchor"></i><b>创建视图的语法形式</b></h4>
+                                <p class="firstLineIndent">创建视图使用CREATE VIEW语句，基本语法格式如下：</p>
+                                <p class="firstLineIndent"><code>CREATE [OR REPLACE] [ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}]</code></p>
+                                <p class="firstLineIndent"><code>VIEW view_name [(column_list)]</code></p>
+                                <p class="firstLineIndent"><code>AS select_statement</code></p>
+                                <p class="firstLineIndent"><code>[WITH [CASCADED | LOCAL] CHECK OPTION]</code></p>
                                 <hr>
-                                <h4><i class="fa fa-anchor"></i><b>缺点</b></h4>
-                                <ol>
-                                    <li>创建索引和维护索引要耗费时间，并且随着数据量的增加所耗费的时间也会增加</li>
-                                    <li>索引需要占磁盘空间，除了数据表占数据空间之外，每一个索引还要占一定的物理空间，如果有大量的索引，索引文件可能比数据文件更快达到最大文件尺寸</li>
-                                    <li>当对表中的数据进行<b>INSERT</b>、<b>UPDATE</b>、<b>DELETE</b>的时候，索引也要动态地维护，这样就降低了数据的维护速度</li>
-                                </ol>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>关键字</th>
+                                        <th>作用</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>CREATE | REPLACE</td>
+                                        <td>表示<span class="note">创建</span>新视图 | 表示<span class="note">替换</span>已经创建的视图</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ALGORITHM</td>
+                                        <td class="tinyHand" onclick="createViewAlgorithmTips()">表示视图选择的算法 <i class="fa fa-hand-pointer-o"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>view_name</td>
+                                        <td>为视图的名称</td>
+                                    </tr>
+                                    <tr>
+                                        <td>column_list</td>
+                                        <td>为属性列</td>
+                                    </tr>
+                                    <tr>
+                                        <td>select_statement</td>
+                                        <td>表示SELECT语句</td>
+                                    </tr>
+                                    <tr>
+                                        <td>WITH [CASCADED | LOCAL] CHECK OPTION</td>
+                                        <td class="tinyHand" onclick="createViewCascadedLocalTips()">表示视图在更新时保证在视图的权限范围之内 <i class="fa fa-hand-pointer-o"></i></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <p class="firstLineIndent">该语句要求具有针对视图的CREATE VIEW权限，以及针对由SELECT语句选择的每一列上的某些权限。对于在SELECT语句中其他地方使用的列，必须具有SELECT权限。如果还有OR REPLACE子句，必须在视图上具有DROP权限。</p>
+                                <p class="firstLineIndent">视图属于数据库。在默认情况下，将在当前数据库创建新视图。要想在给定数据库中明确创建视图，创建时应将名称指定为db_name.view_name。</p>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>在单表上创建视图</b></h4>
+                                <p class="firstLineIndent">MySQL可以在单表上创建视图。</p>
+                                <hr>
+                                <h4><i class="fa fa-female"></i><b>示例1：</b></h4>
+                                <pre>
+                                    <code class="sql">
+    mysql> CREATE TABLE t (quantity INT,price INT);
+    mysql> INSERT INTO t VALUES(3,50)
+    mysql> CREATE VIEW view_t AS SELECT quantity,price,quantity*price FROM t;
+    mysql> SELECT * FROM view_t;
+    +----------+-------------+------------------+
+    | quantity |    price    |  quantity*price  |
+    +----------+--------------------------------+
+    |     3    |      50     |        150       |
+    +----------+-------------+------------------+
+                                    </code>
+                                </pre>
+                                <hr>
+                                <h4><i class="fa fa-female"></i><b>示例2：</b></h4>
+                                <pre>
+                                    <code class="sql">
+    mysql> CREATE VIEW view_t2(qty,price,total) AS SELECT quantity,price,quantity*price FROM t;
+    mysql> SELECT * FROM view_t2;
+    +-----+---------+---------+
+    | qty |  price  |  total  |
+    +-----+---------+---------+
+    |  3  |   50    |   150   |
+    +-----+-------------------+
+                                    </code>
+                                </pre>
+                                <hr>
+                                <h4><i class="fa fa-anchor"></i><b>在多表上创建视图</b></h4>
+                                <p class="firstLineIndent">MySQL也可以在两个或者两个以上的表上创建视图，可以使用CREATE VIEW语句实现</p>
+                                <hr>
+                                <h4><i class="fa fa-female"></i><b>示例1：</b></h4>
+                                <p class="firstLineIndent">在表student和表stu_info上创建视图str_glass，代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> INSERT INTO student VALUES(1,'wanglin1'),(2,'gaoli'),(3,'zhanghai');
+    mysql> INSERT INTO stu_info VALUES(1,'wuban','henan'),(2,'liuban','hebei'),(3,'qiban','shandong');
+        ->
+        ->
+    mysql> CREATE VIEW stu_glass (id,name,glass) AS
+        -> SELECT student.s_id,student.name,stu_info.glass FROM student,stu_info
+        -> WHERE student.s_id = stu_info.s_id;
+    +----+------------+---------+
+    | id |    name    |  glass  |
+    +----+------------+---------+
+    |  1 |  wanglin1  |  wuban  |
+    |  2 |   gaoli    |  liuban |
+    |  3 |  zhanghai  |  qiban  |
+    +----+------------+---------+
+                                    </code>
+                                </pre>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">索引的分类</h3>
+                                <h3 class="panel-title tinyHand" onclick="viewViewsTips()">查看视图 <i class="fa fa-hand-pointer-o"></i></h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="index_classification" style="height:400%;"></div>
+                                <div id="view_view" style="height:400%;"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title tinyHand" onclick="modifyViewTips()">修改视图 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="modify_view" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title tinyHand" onclick="updateViewsTips()">更新视图 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="update_views" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="panel panel-scrolling">
                             <div class="panel-heading">
-                                <h3 class="panel-title">索引的设计原则</h3>
+                                <h3 class="panel-title tinyHand" onclick="deleteViewsTips()">删除视图 <i class="fa fa-hand-pointer-o"></i></h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <h4><i class="fa fa-anchor"></i><b>设计原则</b></h4>
-                                <p class="firstLineIndent">索引设计不合理或者缺少索引都会对数据库和应用程序的性能造成障碍。高效的索引对于获得良好的性能非常重要。设计索引时，应该考虑以下准则：</p>
-                                <ol>
-                                    <li>索引并非越多越好，一个表中如有大量的索引，不仅占用磁盘空间，还会影响<b>INSERT</b>、<b>UPDATE</b>、<b>DELETE</b>等语句的性能，因为在表中的数据更改时，索引也会进行调整和更新</li>
-                                    <li>避免对经常更新的表进行过多的索引，并且索引中的列要尽可能少。应该经常用于查询的字段创建索引，但要避免添加不必要的字段</li>
-                                    <li>数据量小的表最好不要使用索引，由于数据较少，查询花费的时间可能比遍历索引的时间还要短，索引可能不会产生优化效果</li>
-                                    <li>在条件表达式中经常用到的不同值较多的列上建立索引，在不同值很少的列上不要建立索引。如果建立索引不但不会提高查询效率，反而会严重降低数据更新速度</li>
-                                    <li>当唯一性是某种数据本身的特征时，指定唯一索引。使用唯一索引能确保定义的列的数据完整性，以提高查询速度</li>
-                                    <li>在频繁进行排序或分组（即进行<code>GROUP BY</code>或<code>ORDER BY</code>操作）的列上建立索引，如果待排序的列有多个，可以在这些列上建立组合索引</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="createIndexCreateTablePanelTitleTips()">创建索引-CREATE TABLE时 <i class="fa fa-hand-pointer-o"></i></h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="create_index_CREATE_TABLE1" style="height:500%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="createIndexAlterTablePanelTitleTips()">创建索引-ALTER TABLE时 <i class="fa fa-hand-pointer-o"></i></h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="create_index_ALTER_TABLE" style="height:500%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="createIndexCreateIndexPanelTitleTips()">创建索引-CREATE INDEX时 <i class="fa fa-hand-pointer-o"></i></h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="create_index_CREATE_INDEX" style="height:500%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-scrolling">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">删除索引、降序索引与统计直方图</h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <p class="firstLineIndent">MySQL中删除索引使用<code>ALTER TABLE</code>或者<code>DROP INDEX</code>语句，两者可实现相同的功能，<code>DROP INDEX</code>语句在内部被映射到一个<code>ALTER TABLE</code>语句中</p>
-                                <hr>
-                                <h4><i class="fa fa-anchor"></i><b>使用ALTER TABLE删除索引</b></h4>
-                                <p class="firstLineIndent">ALTER TABLE删除索引的基本语法如下：</p>
-                                <p class="firstLineIndent"><code>ALTER TABLE table_name DROP INDEX index_name;</code></p>
-                                <p class="firstLineIndent"><span class="note">注意</span>：添加了<code>AUTO_INCREMENT</code>约束字段的唯一索引不能被删除。</p>
-                                <hr>
-                                <h4><i class="fa fa-anchor"></i><b>使用DROP INDEX删除索引</b></h4>
-                                <p class="firstLineIndent">DROP INDEX删除索引的基本语法如下：</p>
-                                <p class="firstLineIndent"><code>DROP INDEX index_name ON table_name;</code></p>
-                                <p class="firstLineIndent"><span class="note">注意</span>：删除表中的列时，如果要删除的列为索引的组成部分，则该列也会从索引中删除。如果组成索引的所有列都被删除，则整个索引将被删除</p>
-                                <hr>
-                                <h4><i class="fa fa-anchor"></i><b>降序索引</b></h4>
-                                <p class="firstLineIndent">降序索引的基本语法如下：</p>
-                                <p class="firstLineIndent"><code>CREATE INDEX index_name ON table_name(column_name DESC)</code></p>
-                                <p class="firstLineIndent"><span class="note">注意</span>：降序索引只是对查询中特定的排序顺序有效，如果使用不当，反而查询效率更低。</p>
-                                <hr>
-                                <h4><i class="fa fa-anchor"></i><b>统计直方图</b></h4>
-                                <p class="firstLineIndent">利用直方图，用户可以对一张表的一列做数据分布的统计，特别是针对没有索引的字段。这可以帮助查询优化器找到更优的执行计划。</p>
-                                <p class="firstLineIndent">在数据库中，查询优化器负责将SQL转换为最有效的执行计划。有时候，查询优化器会找不到最优的执行计划，导致花费了更多不必要的时间。造成这种情况的主要原因是，查询优化器有时无法准确地知道以下几个问题的答案：</p>
-                                <ul>
-                                    <li>每个表有多少行？</li>
-                                    <li>每一列有多少不同的值？</li>
-                                    <li>每一列的数据分布情况如何？</li>
-                                </ul>
-                                <p class="firstLineIndent">因为没有统计数据，优化器会假设条件值是均匀分配的。如何才能使查询优化器知道数据的分布情况呢？一个解决方法就是在列上建立统计直方图。</p>
-                                <p class="firstLineIndent">直方图能近似获得一列的数据分布情况，从而让数据库知道它含有哪些数据。直方图有多种形式，MySQL支持力两种：<span class="note">等宽直方图（singleton）</span>和<span class="note">等高直方图（equi-height）</span>直方图的共同点是，它们都将数据分到了一系列的buckets中去。MySQL会自动将数据划到不同的buckets中，也会自动决定创建哪种类型的直方图。</p>
-                                <hr>
-                                <p class="firstLineIndent">创建直方图的语法格式如下：</p>
-                                <p class="firstLineIndent"><code>ANALYZE TABLE table_name [UPDATE HISTOGRAM ON col_name WITH N BUCKETS | DROP HISTOGRAM ON col_name]</code></p>
-                                <p class="firstLineIndent">
-                                    <code>BUCKETS</code>的默认值是100。统计直方图的信息存储在数据字典表”column_statistics“中，可以通过视图information_schema.COLUMN_STATISTICS访问。直方图以灵活的JSON格式存储。ANALYZE TABLE会基于表大小自动判断是否要进行取样操作。ANALYZE TABLE也会基于表中列的数据分布以及bucket的数量来决定是否要建立等宽直方图（singleton）还是等高直方图（equi-height）。
-                                </p>
-                                <hr>
-                                <p>创建用于测试的数据表production，语句如下：</p>
-                                <pre><code class="sql">mysql> CREATE TABLE production (id INT, tm TIME, count INT);</code></pre>
-                                <p>在数据表production的字段tm上创建直方图，执行语句如下：</p>
-                                <pre>
-                                    <code class="sql">
-mysql> ANALYZE TABLE production UPDATE HISTOGRAM ON tm WITH 60 BUCKETS;
-+--------------------+-----------+----------+-----------------------------------------------+
-|        Table       |     Op    | Msg_type |                 Msg_text                      |
-+--------------------+-----------+----------+-----------------------------------------------+
-|  myTest.production | histogram |  status  | Histogram statistics created for column 'tm'. |
-+--------------------+-----------+----------+-----------------------------------------------+
-                                    </code>
-                                </pre>
-                                <p class="firstLineIndent">BUCKETS的值必须指定，可以设置1到1024，默认值是100。设置BUCKETS值时，可以先设置低一些，如果没有满足需求，可以再往上增大。</p>
-                                <p class="firstLineIndent">对于不同的数据集合，BUCKETS的值取决于以下几个因素：</p>
-                                <ul>
-                                    <li>这列有多少不同的值</li>
-                                    <li>数据的分布情况</li>
-                                    <li>需要多高的准确性</li>
-                                </ul>
-                                <p>在数据表production的字段tm和字段count上创建直方图，执行语句如下：</p>
-                                <pre>
-                                    <code class="sql">
-mysql> ANALYZE TABLE production UPDATE HISTOGRAM ON tm,count WITH 60 BUCKETS;
-+--------------------+-----------+----------+--------------------------------------------------+
-|        Table       |     Op    | Msg_type |                    Msg_text                      |
-+--------------------+-----------+----------+--------------------------------------------------+
-|  myTest.production | histogram |  status  | Histogram statistics created for column 'count'. |
-+--------------------+-----------+----------+--------------------------------------------------+
-|  myTest.production | histogram |  status  | Histogram statistics created for column 'tm'.    |
-+--------------------+-----------+----------+--------------------------------------------------+
-                                    </code>
-                                </pre>
-                                <p class="firstLineIndent">再次创建直方图时，<b>将会将上一个直方图重写</b>。</p>
-                                <hr>
-                                <p class="firstLineIndent">如果需要删除已经创建的直方图，用DROP HISTOGRAM就可以实现：</p>
-                                <pre>
-                                    <code class="sql">
-mysql> ANALYZE TABLE production DROP HISTOGRAM ON tm,count;
-+--------------------+-----------+----------+--------------------------------------------------+
-|        Table       |     Op    | Msg_type |                    Msg_text                      |
-+--------------------+-----------+----------+--------------------------------------------------+
-|  myTest.production | histogram |  status  | Histogram statistics removed for column 'count'. |
-+--------------------+-----------+----------+--------------------------------------------------+
-|  myTest.production | histogram |  status  | Histogram statistics removed for column 'tm'.    |
-+--------------------+-----------+----------+--------------------------------------------------+
-                                    </code>
-                                </pre>
-                                <p class="bold note tinyHand" onclick="histogramTips()">查看提示 <i class="fa fa-hand-pointer-o"></i></p>
+                                <div id="delete_views" style="height:400%;"></div>
                             </div>
                         </div>
                     </div>
@@ -400,221 +361,303 @@ mysql> ANALYZE TABLE production DROP HISTOGRAM ON tm,count;
     </div>
 </div>
 
-<!-- 索引的分类-全文索引 -->
-<div id="index_classification_full_text_index" class="panel" style="display: none">
+<!-- CREATE VIEW ALGORITHM算法提示 -->
+<div id="create_view_algorithm_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">索引的分类-全文索引</h3>
+        <h3 class="panel-title">ALGORITHM取值</h3>
     </div>
     <div class="panel-body">
-        <ul>
-            <li><span class="note">全文索引</span>为FULLTEXT，在定义索引的列上支持值的全文查找，允许在这些索引列中插入重复值和空值。全文索引可以在<code>CHAR</code>、<code>VARCHAR</code>、或者<code>TEXT</code>类型的列上创建。<b>MySQL中只有MyISAM存储引擎支持全文索引。</b></li>
-        </ul>
+        <p class="firstLineIndent">通过视图用户只能查询和修改他们所能见到的数据。数据库中的其他数据既看不见也取不到。数据库授权命令可以使每个用户对数据库的检索限制到特定的数据库对象上，但不能授权到数据库特定行和特定的列上。通过视图，用户可以被限制在数据的不同子集上：</p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>关键字</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>UNDEFINED</td>
+                <td>表示MySQL将自动选择算法</td>
+            </tr>
+            <tr>
+                <td>MERGE</td>
+                <td>表示将使用的视图语句与视图定义合并起来，使得视图定义的某一部分取代语句对应的部分</td>
+            </tr>
+            <tr>
+                <td>TEMPTABLE</td>
+                <td>表示将视图的结果存入临时表，然后用临时表来执行语句</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
-<!-- 索引的分类-空间索引 -->
-<div id="index_classification_spatial_index" class="panel" style="display: none">
+<!-- CREATE VIEW CASCADED | LOCAL提示 -->
+<div id="create_view_cascaded_local_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">索引的分类-空间索引</h3>
+        <h3 class="panel-title">CASCADED | LOCAL取值</h3>
     </div>
     <div class="panel-body">
-        <ul>
-            <li><span class="note">空间索引</span>是对空间数据类型的字段建立的索引，MySQL中的空间数据类型有4种，分别是<code>GEOMETRY</code>、<code>POINT</code>、<code>LINESTRING</code>和<code>POLYGON</code>。MySQL使用<code>SPATIAL</code>关键字进行扩展，使得能够用创建正规索引类似的语法创建空间索引。<b>创建空间索引的列，必须将其声明为NOT NULL，空间索引只能在存储引擎为MyISAM的表中创建。</b></li>
-        </ul>
+        <p class="firstLineIndent">通过视图用户只能查询和修改他们所能见到的数据。数据库中的其他数据既看不见也取不到。数据库授权命令可以使每个用户对数据库的检索限制到特定的数据库对象上，但不能授权到数据库特定行和特定的列上。通过视图，用户可以被限制在数据的不同子集上：</p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>关键字</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>CASCADED</td>
+                <td>为默认值，表示更新视图时要满足所有相关视图和表的条件</td>
+            </tr>
+            <tr>
+                <td>LOCAL</td>
+                <td>表示更新视图时满足该视图本身定义的条件即可</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
-<!-- 创建索引-CREATE TABLE时 -->
-<div id="create_index_create_table_panel_title_tips" class="panel" style="display: none">
+<!-- 查看视图提示 -->
+<div id="view_views_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE TABLE时</h3>
+        <h3 class="panel-title">查看视图</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">使用CREATE TABLE创建表时，除了可以定义列的数据类型，还可以定义主键约束、外键约束或者唯一性约束，而不论创建哪一种约束，在定义约束的同时相当于在指定列上创建了一个索引。</p>
-        <p class="firstLineIndent">创建表时创建索引的基本语法如下：</p>
-        <p class="firstLineIndent"><code>CREATE TABLE table_name [col_name data_type] [UNIQUE|FULLTEXT|SPATIAL] [INDEX|KEY] [index_name] (col_name[length]) [ASC|DESC]</code></p>
-        <ul>
-            <li>UNIQUE、FULLTEXT、SPATIAL为可选参数，分别表示唯一索引、全文索引和空间索引</li>
-            <li>INDEX与KEY为同义词，两者作用相同，用来指定创建索引</li>
-            <li>col_name为需要创建索引的字段列，该列必须从数据表中定义的多个列中选择</li>
-            <li>index_name指定索引的名称，为可选参数，如果不指定，MySQL默认col_name为索引值</li>
-            <li>length为可选参数，表示索引的长度，<b>只有字符串类型的字段才能指定索引长度</b></li>
-            <li>ASC或DESC指定升序或者降序的索引值存储</li>
-        </ul>
+        <p class="firstLineIndent">查看视图是查看数据库中已存在的视图的定义。查看视图必须要有<code>SHOW VIEW</code>的权限，MySQL数据库下<code>user</code>表中保存着这个信息。</p>
+        <p class="firstLineIndent">查看视图的方法包括<code>DESCRIBE</code>、<code>SHOW TABLE STATUS</code>和<code>SHOW CREATE VIEW</code>。</p>
+        <p class="firstLineIndent"><code>DESCRIBE</code>一般情况下都简写成<code>DESC</code>，输入这个命令的执行结果和输入<code>DESCRIBE</code>的执行结果是一样的。</p>
     </div>
 </div>
 
-<!-- 创建索引-CREATE TABLE时-创建普通索引 -->
-<div id="create_index_create_table_create_a_normal_index" class="panel" style="display: none">
+<!-- 查看视图-DESCRIBE -->
+<div id="view_views_describe" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE TABLE时-创建普通索引</h3>
+        <h3 class="panel-title">DESCRIBE</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">最基本的索引类型，没有唯一性之类的限制，其作用只是加快对数据的访问速度</p>
+        <p class="firstLineIndent">DESCRIBE可以用来查看视图，具体的语法如下：</p>
+        <p class="firstLineIndent"><code>DESCRIBE 视图名;</code></p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">通过DESCRIBE语句查看视图view_t的定义，代码如下：</p>
         <pre>
             <code class="sql">
-CREATE TABLE t1 (
-    t_id                INT NOT NULL,
-    t_name              VARCHAR(255) NOT NULL,
-    year_publication    YEAR NOT NULL,
-    INDEX(year_publication)
-);
+    mysql> DESCRIBE view_t;
+    +-----------------+--------------+------+-----+-----------+-------+
+    |      Field      |    Type      | Null | Key |  Default  | Extra |
+    +-----------------+--------------+------+-----+-----------+-------+
+    |    quantity     |  int(11)     | YES  |     |    NULL   |       |
+    |      price      |  int(11)     | YES  |     |    NULL   |       |
+    |  quantity*price |  bigint(21)  | YES  |     |    NULL   |       |
+    +-----------------+--------------+------+-----+-----------+-------+
             </code>
         </pre>
     </div>
 </div>
 
-<!-- 创建索引-CREATE TABLE时-创建唯一索引 -->
-<div id="create_index_create_table_create_a_unique_index" class="panel" style="display: none">
+<!-- 查看视图-SHOW TABLE STATUS -->
+<div id="view_views_show_table_status" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE TABLE时-创建唯一索引</h3>
+        <h3 class="panel-title">SHOW TABLE STATUS</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">创建唯一索引的主要原因是减少查询索引列操作的执行时间，尤其是对比较庞大的数据表。它与前面的普通索引类似，不同的就是：索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一</p>
+        <p class="firstLineIndent">查看视图的信息可以通过<code>SHOW TABLE STATUS</code>的方法完成，具体的语法如下：</p>
+        <p class="firstLineIndent"><code>SHOW TABLE STATUS LIKE '视图名';</code></p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用SHOW TABLE STATUS语句查看视图view_t的定义，代码如下：</p>
         <pre>
             <code class="sql">
-CREATE TABLE t2 (
-    t_id                INT NOT NULL,
-    t_name              CHAR(30) NOT NULL,
-    UNIQUE INDEX        UniqIdx(t_id)
-);
+    mysql> SHOW TABLE STATUS LIKE 'view_t' \G;
+    ***************************** 1.row ***************************
+                        NAME: view_t
+                      Engine: NULL
+                     Version: NULL
+                  Row_format: NULL
+                        Rows: 0
+              Avg_row_length: 0
+                 Data_length: 0
+             Max_data_length: 0
+                Index_length: 0
+                   Data_free: 0
+              Auto_increment: NULL
+                 Create_time: 2020-11-28 11:22:43
+                 Update_time: NULL
+                 Check_time: NULL
+                  Collation: NULL
+                   Checksum: NULL
+             Create_options: NULL
+                    Comment: VIEW
+    1 row in set (0.01 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">执行结果显示，表的说明Comment的值为VIEW，说明该表为视图，其他的信息为NULL，说明这是一个<b>虚表</b>。</p>
+    </div>
+</div>
+
+<!-- 查看视图-SHOW CREATE VIEW -->
+<div id="view_views_show_create_view" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">SHOW CREATE VIEW</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">查看视图的信息可以通过<code>SHOW CREATE VIEW</code>的方法完成，具体的语法如下：</p>
+        <p class="firstLineIndent"><code>SHOW CREATE VIEW 视图名;</code></p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用SHOW CREATE VIEW语句查看视图view_t的定义，代码如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SHOW CREATE VIEW view_t \G;
+    ***************************** 1.row ***************************
+                        View: view_t
+                 Create View: CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost`
+                 SQL SECURITY DEFINER VIEW `view_t` AS select `t`.`quantity` AS `quantity`,
+                 `t`.`price` AS `price`,(`t`.`quantity`*`t`.`price`) AS `quantity*price`
+                 from `t`
+        character_set_client: gbk
+        collation_connection: gbk_chinese_ci
+    1 row in set (0.00 sec)
             </code>
         </pre>
     </div>
 </div>
 
-<!-- 创建索引-CREATE TABLE时-创建单列索引 -->
-<div id="create_index_create_table_create_a_single_column_index" class="panel" style="display: none">
+<!-- 查看视图-information_schema.views -->
+<div id="view_views_information_schema_views" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE TABLE时-创建单列索引</h3>
+        <h3 class="panel-title">information_schema.views</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">单列索引是在数据表中的某一个字段上创建的索引，一个表中可以创建多个单列索引。下面的单列索引指定了索引长度为20</p>
+        <p class="firstLineIndent">在MySQL中，information_schema数据库下的views表中存储了所有视图的定义。通过对views表的查询，可以查看数据库中所有视图的详细信息，查询语句如下：</p>
+        <p class="firstLineIndent"><code>SELECT * FROM information_schema.views;</code></p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">在views表中查看视图的详细定义，代码如下：</p>
         <pre>
             <code class="sql">
-CREATE TABLE t3 (
-    t_id                INT NOT NULL,
-    t_name              CHAR(50) NULL,
-    INDEX               SingleIdx(name(20))
-);
+    mysql> SELECT * FROM information_schema.views WHERE TABLE_NAME LIKE 'view_t%'; \G;
+    ***************************** 1.row ***************************
+                TABLE_CATALOG: def
+                 TABLE_SCHEMA: chapter11db
+                   TABLE_NAME: view_t
+              VIEW_DEFINITION: select `chapter11db`.`t`.`quantity` AS `quantity`,
+              `chapter11db`.`t`.`price` AS `price`,(`chapter11db`.`t`.`quantity`*`chapter11db`.`t`.`price`) AS `quantity*price`
+              from `chapter11db`.`t`
+                 CHECK_OPTION: NONE
+                 IS_UPDATABLE: YES
+                      DEFINER: root@localhost
+                SECURITY_TYPE: DEFINER
+         CHARACTER_SET_CLIENT: gbk
+         COLLATION_CONNECTION: gbk_chinese_ci
+    1 row in set (0.01 sec)
             </code>
         </pre>
     </div>
 </div>
 
-<!-- 创建索引-CREATE TABLE时-创建组合索引 -->
-<div id="create_index_create_table_create_a_composite_index" class="panel" style="display: none">
+<!-- 修改视图提示 -->
+<div id="modify_view_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE TABLE时-创建组合索引</h3>
+        <h3 class="panel-title">修改视图</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">组合索引是在多个字段上创建一个索引</p>
+        <p class="firstLineIndent">修改视图是指修改数据库中存在的视图，当基本表的某些字段发生变化的时候，可以通过修改视图来保持与表的一致性。</p>
+        <p class="firstLineIndent">MySQL通过<code>CREATE OR REPLACE VIEW</code>语句和<code>ALTER</code>语句来修改视图。</p>
+    </div>
+</div>
+
+<!-- 修改视图-CREATE OR REPLACE VIEW -->
+<div id="modify_view_create_or_replace_view" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">CREATE OR REPLACE VIEW</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">在MySQL中修改视图，可使用<code>CREATE OR REPLACE VIEW</code>语句，具体的语法如下：</p>
+        <p class="firstLineIndent"><code>CREATE [OR REPLACE] [ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}]</code></p>
+        <p class="firstLineIndent"><code>VIEW view_name [(column_list)]</code></p>
+        <p class="firstLineIndent"><code>AS select_statement</code></p>
+        <p class="firstLineIndent"><code>[WITH [CASCADED | LOCAL] CHECK OPTION]</code></p>
+        <p class="firstLineIndent">可以看到，修改视图的语句和创建视图的语句是完全一样的。当视图已经存在，修改语句对视图进行修改；当视图不存在时，创建视图。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">修改视图view_t，代码如下：</p>
         <pre>
             <code class="sql">
-CREATE TABLE t4 (
-    t_id                INT(11) NOT NULL,
-    t_name              CHAR(30) NOT NULL,
-    t_age               INT(11) NOT NULL,
-    t_info              VARCHAR(255),
-    INDEX               MultiIdx(id,name,age)
-);
+    mysql> DESC view_t;
+    +-----------------+--------------+------+-----+-----------+-------+
+    |      Field      |    Type      | Null | Key |  Default  | Extra |
+    +-----------------+--------------+------+-----+-----------+-------+
+    |    quantity     |  int(11)     | YES  |     |    NULL   |       |
+    |      price      |  int(11)     | YES  |     |    NULL   |       |
+    |  quantity*price |  bigint(21)  | YES  |     |    NULL   |       |
+    +-----------------+--------------+------+-----+-----------+-------+
+    3 rows in set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> CREATE OR REPLACE VIEW view_t AS SELECT * FROM t;
+    Query OK, 0 rows affected (0.05 sec)
+    mysql>
+    mysql>
+    mysql> DESC view_t;
+    +-----------------+--------------+------+-----+-----------+-------+
+    |      Field      |    Type      | Null | Key |  Default  | Extra |
+    +-----------------+--------------+------+-----+-----------+-------+
+    |    quantity     |  int(11)     | YES  |     |    NULL   |       |
+    |      price      |  int(11)     | YES  |     |    NULL   |       |
+    +-----------------+--------------+------+-----+-----------+-------+
+    2 rows in set (0.00 sec)
             </code>
         </pre>
-        <p class="firstLineIndent">组合索引可起几个索引的作用，但是使用时并不是随便查询哪个字段都可以使用索引，而是遵循“最左前缀”：利用索引中最左边的列集来匹配行，这样的列集称为<b>最左前缀</b>。</p>
-        <p class="firstLineIndent">例如，这里由t_id、t_name和t_age3个字段构成的索引，索引行中按t_id、t_name、t_age的顺序存放，索引可以搜索(t_id,t_name,t_age)、(t_id,t_name)或者t_id字段组合。如果列不构成索引最左面的前缀，那么MySQL不能使用局部索引，如(t_age)或者(t_name,t_age)组合则不能使用索引查询</p>
+        <p class="firstLineIndent">从执行结果来看，相比原来的视图view_t，新的视图少了1个字段。</p>
     </div>
 </div>
 
-<!-- 创建索引-CREATE TABLE时-创建全文索引 -->
-<div id="create_index_create_table_create_a_full_text_index" class="panel" style="display: none">
+<!-- 修改视图-ALTER -->
+<div id="modify_view_alter" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE TABLE时-创建全文索引</h3>
+        <h3 class="panel-title">ALTER</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">FULLTEXT全文索引可以用于全文搜索。只有MyISAM存储引擎支持FULLTEXT索引，并且只为CHAR、VARCHAR和TEXT列创建索引。索引总是对整个列进行，不支持局部（前缀）索引</p>
+        <p class="firstLineIndent"><code>ALTER</code>语句是MySQL提供的另一种修改视图的方法，语法如下：</p>
+        <p class="firstLineIndent"><code>ALTER [ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}]</code></p>
+        <p class="firstLineIndent"><code>VIEW view_name [(column_list)]</code></p>
+        <p class="firstLineIndent"><code>AS select_statement</code></p>
+        <p class="firstLineIndent"><code>[WITH [CASCADED | LOCAL] CHECK OPTION]</code></p>
+        <p class="firstLineIndent">这个语法的关键字和前面视图的关键字是一样的。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用ALTER语句修改视图view_t，代码如下：</p>
         <pre>
             <code class="sql">
-CREATE TABLE t5 (
-    t_id                INT NOT NULL,
-    t_name              CHAR(30) NOT NULL,
-    t_age               INT NOT NULL,
-    t_info              VARCHAR(255),
-    FULLTEXT INDEX      FullTextIdx(info)
-) ENGINE=MyISAM;
+    mysql> DESC view_t;
+    +-----------------+--------------+------+-----+-----------+-------+
+    |      Field      |    Type      | Null | Key |  Default  | Extra |
+    +-----------------+--------------+------+-----+-----------+-------+
+    |    quantity     |  int(11)     | YES  |     |    NULL   |       |
+    |      price      |  int(11)     | YES  |     |    NULL   |       |
+    +-----------------+--------------+------+-----+-----------+-------+
+    2 rows in set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> ALTER VIEW view_t AS SELECT quantity FROM t;
+    Query OK, 0 rows affected (0.05 sec)
+    mysql>
+    mysql>
+    mysql> DESC view_t;
+    +-----------------+--------------+------+-----+-----------+-------+
+    |      Field      |    Type      | Null | Key |  Default  | Extra |
+    +-----------------+--------------+------+-----+-----------+-------+
+    |    quantity     |  int(11)     | YES  |     |    NULL   |       |
+    +-----------------+--------------+------+-----+-----------+-------+
+    1 rows in set (0.00 sec)
             </code>
         </pre>
-        <p class="firstLineIndent">因为MySQL 8.0中默认存储引擎为InnoDB，在这里创建表时需要修改表的存储引擎为MyISAM，不然创建索引会出错。全文索引非常适合于大型数据集，对于小的数据集，它的用处比较小</p>
-    </div>
-</div>
-
-<!-- 创建索引-CREATE TABLE时-创建空间索引 -->
-<div id="create_index_create_table_create_a_spatial_index" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE TABLE时-创建空间索引</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">空间索引必须在MyISAM类型的表中创建，且空间类型的字段必须为空</p>
-        <pre>
-            <code class="sql">
-CREATE TABLE t6 (
-    g GEOMETRY NOT NULL,
-    SPATIAL INDEX spatIdx(g)
-) ENGINE=MyISAM;
-            </code>
-        </pre>
-        <p class="firstLineIndent">注意创建时指定空间类型字段值的非空约束，并且表的存储引擎为MyISAM</p>
-    </div>
-</div>
-
-<!-- 创建索引-ALTER TABLE时 -->
-<div id="create_index_alter_table_panel_title_tips" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">创建索引-ALTER TABLE时</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">在已经存在的表中创建索引，可以使用ALTER TABLE语句或者CREATE INDEX语句。</p>
-        <p class="firstLineIndent">修改表时创建索引的基本语法如下：</p>
-        <p class="firstLineIndent"><code>ALTER TABLE table_name ADD [UNIQUE|FULLTEXT|SPATIAL] [INDEX|KEY] [index_name] (col_name[length],...) [ASC|DESC]</code></p>
-        <ul>
-            <li>UNIQUE、FULLTEXT、SPATIAL为可选参数，分别表示唯一索引、全文索引和空间索引</li>
-            <li>INDEX与KEY为同义词，两者作用相同，用来指定创建索引</li>
-            <li>index_name指定索引的名称，为可选参数，如果不指定，MySQL默认col_name为索引值</li>
-            <li>col_name为需要创建索引的字段列，该列必须从数据表中定义的多个列中选择</li>
-            <li>length为可选参数，表示索引的长度，<b>只有字符串类型的字段才能指定索引长度</b></li>
-            <li>ASC或DESC指定升序或者降序的索引值存储</li>
-        </ul>
-    </div>
-</div>
-
-<!-- 创建索引-CREATE INDEX时 -->
-<div id="create_index_create_index_panel_title_tips" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">创建索引-CREATE INDEX时</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">CREATE INDEX语句可以在已经存在的表上添加索引。在MySQL中，CREATE INDEX被映射到一个ALTER TABLE语句上。基本语法结构为：</p>
-        <p class="firstLineIndent"><code>CREATE [UNIQUE|FULLTEXT|SPATIAL] [INDEX|KEY] [index_name] ON table_name (col_name[length],...) [ASC|DESC]</code></p>
-        <ul>
-            <li>UNIQUE、FULLTEXT、SPATIAL为可选参数，分别表示唯一索引、全文索引和空间索引</li>
-            <li>INDEX与KEY为同义词，两者作用相同，用来指定创建索引</li>
-            <li>index_name指定索引的名称，为可选参数，如果不指定，MySQL默认col_name为索引值</li>
-            <li>col_name为需要创建索引的字段列，该列必须从数据表中定义的多个列中选择</li>
-            <li>length为可选参数，表示索引的长度，<b>只有字符串类型的字段才能指定索引长度</b></li>
-            <li>ASC或DESC指定升序或者降序的索引值存储</li>
-        </ul>
-    </div>
-</div>
-
-<!-- 统计直方图提示 -->
-<div id="histogram_tips" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">统计直方图提示</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">直方图统计了表中某些字段的数据分布情况，为优化选择高效的执行计划提供参考。直方图与索引有着本质的区别：维护一个索引有代价，每一次的INSERT、UPDATE、DELETE都会需要更新索引，会对性能有一定的影响；而直方图一次创建永不更新，除非明确去更新它，所以不会影响INSERT、UPDATE、DELETE的性能。</p>
-        <p class="firstLineIndent">建立直方图的时候，MySQL服务器会将所有数据读到内存中，然后在内存中进行操作，包括排序。如果对一个很大的表建立直方图，可能会需要将几百兆的数据都读到内存中。为了规避这种风险MySQL会根据给定的<code>histogram_generation_max_mem_size</code>的值计算该将多少行数据读到内存中。</p>
-        <p class="firstLineIndent">设置<code>histogram_generation_max_mem_size</code>值得方法如下：</p>
-        <pre><code class="sql">SET histogram_generation_max_mem_size = 10000;</code></pre>
+        <p class="firstLineIndent">通过ALTER语句同样可以达到修改视图view_t的目的，从上面的执行过程来看，视图view_t只剩下一个quantity字段，修改成功。</p>
     </div>
 </div>
 
