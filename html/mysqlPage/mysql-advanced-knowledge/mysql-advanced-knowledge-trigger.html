@@ -149,49 +149,36 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="panel">
+                    <div class="col-md-6">
+                        <div class="panel panel-scrolling">
                             <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="viewViewsTips()">查看视图 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <h3 class="panel-title">触发器的作用</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="view_view" style="height:400%;"></div>
+                                <p class="firstLineIndent">触发程序是与表有关的命名数据库对象，当表上出现特定事件时，将激活该对象。在某些触发程序的用法中，可用于检查插入到表中的值，或对更新涉及的值进行计算。</p>
+                                <p class="firstLineIndent">触发程序与表相关，当对表执行INSERT、DELETE或UPDATE语句时，将激活触发程序。可以将触发程序设置为在执行语句之前或之后激活。例如，可以在从表中删除每一行之前或在更新每一行之后激活触发程序。</p>
+                                <hr>
+                                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                                <p class="firstLineIndent">创建一个在account表插入记录之后更新myEvent数据表的触发器，代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> DROP VIEW IF EXISTS stu_glass;
+    Query OK, 0 rows affected (0.05 sec)
+    mysql>
+    mysql>
+    mysql> SHOW CREATE VIEW stu_glass;
+    ERROR 1146 (42S02): Table 'test_db.stu_glass' doesn't exist
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">可以看到，stu_glass视图已经不存在，删除成功。</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="modifyViewTips()">修改视图 <i class="fa fa-hand-pointer-o"></i></h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="modify_view" style="height:400%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="updateViewTips()">更新视图 <i class="fa fa-hand-pointer-o"></i></h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="update_view" style="height:400%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <div class="panel panel-scrolling">
                             <div class="panel-heading">
                                 <h3 class="panel-title">删除视图</h3>
@@ -600,19 +587,28 @@
             <code class="sql">
     mysql> SELECT * FORM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_NAME = 'trigger_update' \G;
     ***************************** 1.row ***************************
-    TRIGGER_CATALOG: def
-    TRIGGER_SCHEMA: test_db
-    TRIGGER_NAME: trigger_update
-    EVENT
-
-
-
-
-
-
-
-
-
+                    TRIGGER_CATALOG: def
+                     TRIGGER_SCHEMA: test_db
+                       TRIGGER_NAME: trigger_update
+                 EVENT_MANIPULATION: UPDATE
+               EVENT_OBJECT_CATALOG: def
+                EVENT_OBJECT_SCHEMA: test_db
+                 EVENT_OBJECT_TABLE: account
+                       ACTION_ORDER: 1
+                   ACTION_CONDITION: NULL
+                   ACTION_STATEMENT: INSERT INTO myEvent VALUES(1,'after update')
+                 ACTION_ORIENTATION: ROW
+                      ACTION_TIMING: AFTER
+         ACTION_REFERENCE_OLD_TABLE: NULL
+         ACTION_REFERENCE_NEW_TABLE: NULL
+           ACTION_REFERENCE_OLD_ROW: OLD
+           ACTION_REFERENCE_NEW_ROW: NEW
+                            CREATED: 2020-11-30 13:22:23
+                           SQL_MODE: STRICT_TRANS_TABLE,NO_ENGINE_SUBSTITUTION
+                            DEFINER: root@localhost
+               CHARACTER_SET_CLIENT: gbk
+               COLLATION_CONNECTION: gbk_chinese_ci
+                 DATABASE COLLATION: utf8mb4_0900_ai_ci
     1 row in set (0.03 sec)
             </code>
         </pre>
@@ -626,24 +622,28 @@
             </thead>
             <tbody>
             <tr>
-                <td>Trigger</td>
+                <td>TRIGGER_SCHEMA</td>
+                <td>表示触发器所在的数据库</td>
+            </tr>
+            <tr>
+                <td>TRIGGER_NAME</td>
                 <td>表示触发器的名称</td>
             </tr>
             <tr>
-                <td>Event</td>
-                <td>表示激活触发器的事件</td>
+                <td>EVENT_OBJECT_TABLE</td>
+                <td>表示在哪个数据表上触发</td>
             </tr>
             <tr>
-                <td>Table</td>
-                <td>表示激活触发器的操作对象表</td>
+                <td>ACTION_STATEMENT</td>
+                <td>表示触发器触发的时候执行的具体操作</td>
             </tr>
             <tr>
-                <td>Timing</td>
-                <td>表示触发器触发的时间</td>
+                <td>ACTION_ORIENTATION</td>
+                <td>ROW表示在每条记录上都触发</td>
             </tr>
             <tr>
-                <td>Statement</td>
-                <td>表示触发器执行的操作</td>
+                <td>ACTION_TIMING</td>
+                <td>表示触发的时刻</td>
             </tr>
             </tbody>
         </table>
