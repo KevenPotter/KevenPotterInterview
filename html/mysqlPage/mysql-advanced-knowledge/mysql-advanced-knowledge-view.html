@@ -99,6 +99,7 @@
                                             <li><a href="mysql-advanced-knowledge-index.html" class=""><i class="lnr"></i>索引</a></li>
                                             <li><a href="mysql-advanced-knowledge-view.html" class="active"><i class="lnr"></i>视图</a></li>
                                             <li><a href="mysql-advanced-knowledge-stored-procedure.html" class=""><i class="lnr"></i>存储过程</a></li>
+                                            <li><a href="mysql-advanced-knowledge-trigger.html" class=""><i class="lnr"></i>触发器</a></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -276,28 +277,46 @@
                     <div class="col-md-3">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="updateViewsTips()">更新视图 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <h3 class="panel-title tinyHand" onclick="updateViewTips()">更新视图 <i class="fa fa-hand-pointer-o"></i></h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="update_views" style="height:400%;"></div>
+                                <div id="update_view" style="height:400%;"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="panel panel-scrolling">
                             <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="deleteViewsTips()">删除视图 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <h3 class="panel-title">删除视图</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="delete_views" style="height:400%;"></div>
+                                <p class="firstLineIndent">当视图不再需要时，可以将其删除。删除一个或多个视图可以使用<code>DROP VIEW</code>语句，语法如下：</p>
+                                <p class="firstLineIndent"><code>DROP VIEW [IF EXISTS]</code></p>
+                                <p class="tabIndentation"><code>view_name [,view_name] ...</code></p>
+                                <p class="tabIndentation"><code>[RESTRICT | CASCADE]</code></p>
+                                <p class="firstLineIndent">其中，view_name是要删除的视图名称，可以添加多个需要删除的视图名称，各个名称之间使用逗号分隔开。<span class="note">删除视图必须拥有DROP权限</span>。</p>
+                                <hr>
+                                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                                <p class="firstLineIndent">删除stu_glass视图，代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> DROP VIEW IF EXISTS stu_glass;
+    Query OK, 0 rows affected (0.05 sec)
+    mysql>
+    mysql>
+    mysql> SHOW CREATE VIEW stu_glass;
+    ERROR 1146 (42S02): Table 'test_db.stu_glass' doesn't exist
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">可以看到，stu_glass视图已经不存在，删除成功。</p>
                             </div>
                         </div>
                     </div>
@@ -658,6 +677,189 @@
             </code>
         </pre>
         <p class="firstLineIndent">通过ALTER语句同样可以达到修改视图view_t的目的，从上面的执行过程来看，视图view_t只剩下一个quantity字段，修改成功。</p>
+    </div>
+</div>
+
+<!-- 更新视图提示 -->
+<div id="update_view_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">更新视图</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">更新视图是指通过视图来插入、更新、删除表中的数据，因为视图是一个虚拟表，其中没有数据。通过视图更新的时候都是转到基本表上进行更新的，如果对视图增加或删除记录，实际上是对基本表增加或者删除记录。</p>
+        <p class="firstLineIndent"><span class="note">当视图中包含有如下内容时，视图的更新操作将不能被执行：</span></p>
+        <ol>
+            <li>视图中不包含基表中被定义为非空的列</li>
+            <li>在定义视图的SELECT语句后的字段列表中使用了数学表达式</li>
+            <li>在定义视图的SELECT语句后的字段列表中使用了聚合函数</li>
+            <li>在定义视图的SELECT语句中使用了<code>DISTINCT</code>、<code>UNION</code>、<code>TOP</code>、<code>GROUP BY</code>或<code>HAVING</code>子句</li>
+        </ol>
+    </div>
+</div>
+
+<!-- 更新视图-UPDATE -->
+<div id="update_view_update" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">UPDATE</h3>
+    </div>
+    <div class="panel-body">
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用UPDATE语句更新视图view_t，代码如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FROM view_t;
+    +-----------+
+    |  quantity |
+    +-----------+
+    |     3     |
+    +-----------+
+    1 rows in set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SELECT * FROM t;
+    +-----------+--------+
+    |  quantity |  price |
+    +-----------+--------+
+    |     3     |   50   |
+    +-----------+--------+
+    1 rows in set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> UPDATE view_t SET quantity = 5;
+    Query OK, 1 rows affected (0.00 sec)
+    Rows matched: 1 Changed: 1 Warnings: 0
+    mysql>
+    mysql>
+    mysql> SELECT * FROM t;
+    +-----------+--------+
+    |  quantity |  price |
+    +-----------+--------+
+    |     5     |   50   |
+    +-----------+--------+
+    1 rows in set (0.02 sec)
+    mysql>
+    mysql>
+    mysql> SELECT * FROM view_t;
+    +-----------+
+    |  quantity |
+    +-----------+
+    |     5     |
+    +-----------+
+    1 rows in set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SELECT * FROM view_t2;
+    +-----------+--------+-------+
+    |  quantity |  price | total |
+    +-----------+--------+-------+
+    |     5     |   50   |  250  |
+    +-----------+--------+-------+
+    1 rows in set (0.00 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">对视图view_t更新后，基本表t的内容也更新了，同样当对基本表t更新后，另外一个视图view_t2中的内容也会更新。</p>
+    </div>
+</div>
+
+<!-- 更新视图-INSERT -->
+<div id="update_view_insert" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">INSERT</h3>
+    </div>
+    <div class="panel-body">
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用INSERT语句在基本表t中插入一条记录，代码如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FROM view_t;
+    +-----------+
+    |  quantity |
+    +-----------+
+    |     5     |
+    +-----------+
+    1 rows in set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SELECT * FROM t;
+    +-----------+--------+
+    |  quantity |  price |
+    +-----------+--------+
+    |     5     |   50   |
+    +-----------+--------+
+    1 rows in set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> INSERT INTO t VALUES(3,5);
+    Query OK, 1 rows affected (0.03 sec)
+    mysql>
+    mysql>
+    mysql> SELECT * FROM t;
+    +-----------+--------+
+    |  quantity |  price |
+    +-----------+--------+
+    |     5     |   50   |
+    |     3     |   5    |
+    +-----------+--------+
+    2 rows in set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SELECT * FROM view_t2;
+    +-----------+--------+-------+
+    |  quantity |  price | total |
+    +-----------+--------+-------+
+    |     5     |   50   |  250  |
+    |     3     |   5    |  15   |
+    +-----------+--------+-------+
+    2 rows in set (0.00 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">向表t中插入一条记录，通过SELECT查看表t和视图view_t2，可以看到其中的内容也跟着更新，视图更新的不仅仅是数量和单价，总价也会更新。</p>
+    </div>
+</div>
+
+<!-- 更新视图-DELETE -->
+<div id="update_view_delete" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">DELETE</h3>
+    </div>
+    <div class="panel-body">
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用DELETE语句删除视图view_t2中的一条记录，代码如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FROM t;
+    +-----------+--------+
+    |  quantity |  price |
+    +-----------+--------+
+    |     5     |   50   |
+    |     3     |   5    |
+    +-----------+--------+
+    2 rows in set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> DELETE FROM view_t2 WHERE price = 5;
+    Query OK, 1 rows affected (0.03 sec)
+    mysql>
+    mysql>
+    mysql> SELECT * FROM view_t2;
+    +-----------+--------+-------+
+    |  quantity |  price | total |
+    +-----------+--------+-------+
+    |     5     |   50   |  250  |
+    +-----------+--------+-------+
+    1 rows in set (0.01 sec)
+    mysql>
+    mysql>
+    mysql> SELECT * FROM t;
+    +-----------+--------+
+    |  quantity |  price |
+    +-----------+--------+
+    |     5     |   50   |
+    +-----------+--------+
+    1 rows in set (0.02 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">在视图view_t2中删除price=5的记录，视图中的删除操作最终是通过删除基本表中相关的记录实现的，查看删除操作之后的表t和视图view_t2，可以看到通过视图删除其所依赖的基本表中的数据。</p>
     </div>
 </div>
 

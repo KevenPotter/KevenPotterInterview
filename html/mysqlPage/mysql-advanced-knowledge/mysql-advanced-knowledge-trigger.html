@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>进阶知识-触发器</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- Javascript -->
+    <script type="text/javascript" src="../../../assets/vendor/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/bootstrap/js/bootstrap-paginator.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/echarts/theme/macarons.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/layer/layer.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/laydate/laydate.js"></script>
+    <script type="text/javascript" src="../../../assets/scripts/klorofil-common.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/ui-choose/js/ui-choose.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/highlight/highlight.pack.js"></script>
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="../../../assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../assets/vendor/bootstrap-select/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="../../../assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../assets/vendor/linearicons/style.css">
+    <link rel="stylesheet" href="../../../assets/vendor/ui-choose/css/ui-choose.css">
+    <link rel="stylesheet" href="../../../assets/vendor/highlight/styles/rainbow.css">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="../../../assets/css/main.css">
+    <!-- CUSTOMIZE CSS -->
+    <link rel="stylesheet" href="../../../assets/css/roundButton.css">
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" href="../../../assets/css/demo.css">
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" href="../../../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../../../assets/img/favicon.png">
+</head>
+
+<body>
+<!-- WRAPPER -->
+<div id="wrapper">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="brand">
+            <a href="../../../index.html"><img src="../../../assets/img/logo-KevenPotter.png" alt="KevenPotter Logo" class="img-responsive logo"></a>
+        </div>
+        <div class="container-fluid">
+            <div class="navbar-btn">
+                <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+            </div>
+            <form class="navbar-form navbar-left">
+                <div class="input-group">
+                    <input type="text" value="" class="form-control" placeholder="搜索内容...">
+                    <span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+                </div>
+            </form>
+        </div>
+    </nav>
+    <!-- END NAVBAR -->
+    <!-- LEFT SIDEBAR -->
+    <div id="sidebar-nav" class="sidebar">
+        <div class="sidebar-scroll">
+            <nav>
+                <ul class="nav">
+                    <li><a href="../../../index.html" class=""><i class="lnr lnr-home"></i> <span>首页</span></a></li>
+                    <li>
+                        <a href="#distributedPage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-cloud"></i> <span>分布式</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="distributedPage" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="../../distributedPage/distributed_overview.html" class="">分布式概述</a></li>
+                                <li><a href="../../distributedPage/zookeeper_overview.html" class="">ZooKeeper概述</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#designPatternsPage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-laptop"></i> <span>设计模式</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="designPatternsPage" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="../../designPatternsPage/six_principles.html" class="">六大原则</a></li>
+                                <li><a href="../../designPatternsPage/singleton_pattern.html" class="">单例模式</a></li>
+                                <li><a href="../../designPatternsPage/factory_method_pattern.html" class="">工厂方法模式</a></li>
+                                <li><a href="../../designPatternsPage/abstract_factory_pattern.html" class="">抽象工厂模式</a></li>
+                                <li><a href="../../designPatternsPage/template_method_pattern.html" class="">模板方法模式</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a id="database_page_button" href="#databasePage" data-toggle="collapse" class="collapsed"><i class="lnr lnr-database"></i> <span>数据库</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="databasePage" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="../mysql-basic-knowledge.html" class="">基础知识</a></li>
+                                <li>
+                                    <a id="database_page_advanced_button" href="#advanced_knowledge" data-toggle="collapse" class="collapsed"><span>进阶知识</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                                    <div id="advanced_knowledge" class="collapse ">
+                                        <ul class="nav">
+                                            <li><a href="mysql-advanced-knowledge-index.html" class=""><i class="lnr"></i>索引</a></li>
+                                            <li><a href="mysql-advanced-knowledge-view.html" class=""><i class="lnr"></i>视图</a></li>
+                                            <li><a href="mysql-advanced-knowledge-stored-procedure.html" class=""><i class="lnr"></i>存储过程</a></li>
+                                            <li><a href="mysql-advanced-knowledge-trigger.html" class="active"><i class="lnr"></i>触发器</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="../mysql-sub-database_sub-table.html" class="">分库分表</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- END LEFT SIDEBAR -->
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <h3 id="trigger_page_title" class="page-title" onmouseover="introductionToTriggersTips()">触发器</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title tinyHand" onclick="createTriggerTips()">创建触发器 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="create_trigger" style="height:500%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title tinyHand" onclick="viewTriggerTips()">查看触发器 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="view_trigger" style="height:500%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title tinyHand" onclick="viewViewsTips()">查看视图 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="view_view" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title tinyHand" onclick="modifyViewTips()">修改视图 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="modify_view" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title tinyHand" onclick="updateViewTips()">更新视图 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="update_view" style="height:400%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-scrolling">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">删除视图</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <p class="firstLineIndent">当视图不再需要时，可以将其删除。删除一个或多个视图可以使用<code>DROP VIEW</code>语句，语法如下：</p>
+                                <p class="firstLineIndent"><code>DROP VIEW [IF EXISTS]</code></p>
+                                <p class="tabIndentation"><code>view_name [,view_name] ...</code></p>
+                                <p class="tabIndentation"><code>[RESTRICT | CASCADE]</code></p>
+                                <p class="firstLineIndent">其中，view_name是要删除的视图名称，可以添加多个需要删除的视图名称，各个名称之间使用逗号分隔开。<span class="note">删除视图必须拥有DROP权限</span>。</p>
+                                <hr>
+                                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                                <p class="firstLineIndent">删除stu_glass视图，代码如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> DROP VIEW IF EXISTS stu_glass;
+    Query OK, 0 rows affected (0.05 sec)
+    mysql>
+    mysql>
+    mysql> SHOW CREATE VIEW stu_glass;
+    ERROR 1146 (42S02): Table 'test_db.stu_glass' doesn't exist
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">可以看到，stu_glass视图已经不存在，删除成功。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END MAIN CONTENT -->
+    </div>
+    <!-- END MAIN -->
+    <div class="clearfix"></div>
+    <footer>
+        <div class="container-fluid">
+            <p class="copyright">Copyright &copy; https://github.com/KevenPotter/KevenPotterInterview <a href="https://github.com/KevenPotter/KevenPotterInterview" target="_blank" title="KevenPotter">KevenPotter</a> - Collect from <a href="https://github.com/KevenPotter" title="Github"
+                                                                                                                                                                                                                                          target="_blank">KevenPotter主页</a></p>
+        </div>
+    </footer>
+</div>
+<!-- END WRAPPER -->
+
+<!-- 创建触发器提示 -->
+<div id="create_trigger_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">创建触发器</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">触发器(trigger)是一个特殊的存储过程，不同的是，执行存储过程要使用<code>CALL</code>语句来调用，而触发器的执行不需要使用CALL语句来调用，也不需要手工启动，只要当一个预定义的事件发生的时候，就会被MySQL自动调用。</p>
+        <p class="firstLineIndent">触发器可以查询其他表，而且可以包含复杂的SQL语句。它们主要用于满足复杂的业务规则或要求。例如，可以根据客户当前的账户状态控制是否允许插入新订单。</p>
+    </div>
+</div>
+
+<!-- 创建触发器-创建只有一个执行语句的触发器 -->
+<div id="create_trigger_an_execution_statement" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">创建只有一个执行语句的触发器</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">创建一个触发器的语法如下：</p>
+        <p class="firstLineIndent"><code>CREATE TRIGGER trigger_name trigger_time trigger_event</code></p>
+        <p class="firstLineIndent"><code>ON tb1_name FOR EACH ROW trigger_stmt</code></p>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>关键字</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>trigger_name</td>
+                <td>表示触发器名称，用户自行指定</td>
+            </tr>
+            <tr>
+                <td>trigger_time</td>
+                <td>表示触发时机，可以指定为before或after</td>
+            </tr>
+            <tr>
+                <td>trigger_event</td>
+                <td>表示触发事件，包括INSERT、UPDATE和DELETE</td>
+            </tr>
+            <tr>
+                <td>tb1_name</td>
+                <td>表示建立触发器的表名，即在哪张表上建立触发器</td>
+            </tr>
+            <tr>
+                <td>trigger_stmt</td>
+                <td>是触发器执行语句</td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">创建一个单执行语句的触发器，代码如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> CREATE TABLE account (acct_num INT,amount DECIMAL(10,2));
+    Query OK, 0 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> CREATE TRIGGER ins_sum BEFORE INSERT ON account
+        -> FOR EACH ROW SET @sum = @sum + NEW.amount;
+    Query OK, 0 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SET @sum = 0;
+    mysql> INSERT INTO account VALUES(1,1.00),(2,2.00);
+    Query OK, 2 rows affected (0.01 sec)
+    Records: 2 Duplicates: 0 Warnings: 0
+    mysql>
+    mysql>
+    mysql> SELECT @sum;
+    +-------+
+    | @sum  |
+    +-------+
+    |  3.00 |
+    +-------+
+    1 rows in set (0.00 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">首先，创建一个account表，在向表account插入数据之前，计算所有新插入的account表的amount值之和，触发器的名称为ins_sum，条件是在向表插入数据之前触发。</p>
+    </div>
+</div>
+
+<!-- 创建触发器-创建有多个执行语句的触发器 -->
+<div id="create_trigger_multiple_execution_statements" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">创建有多个执行语句的触发器</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">创建多个执行语句的触发器的语法如下：</p>
+        <p class="firstLineIndent"><code>CREATE TRIGGER trigger_name trigger_time trigger_event</code></p>
+        <p class="tabIndentation"><code>ON tb1_name FOR EACH ROW</code></p>
+        <p class="tabIndentation"><code>BEGIN</code></p>
+        <p class="tabIndentation"><code>语句执行列表</code></p>
+        <p class="tabIndentation"><code>END</code></p>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>关键字</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>trigger_name</td>
+                <td>表示触发器名称，用户自行指定</td>
+            </tr>
+            <tr>
+                <td>trigger_time</td>
+                <td>表示触发时机，可以指定为before或after</td>
+            </tr>
+            <tr>
+                <td>trigger_event</td>
+                <td>表示触发事件，包括INSERT、UPDATE和DELETE</td>
+            </tr>
+            <tr>
+                <td>tb1_name</td>
+                <td>表示建立触发器的表名，即在哪张表上建立触发器</td>
+            </tr>
+            <tr>
+                <td>BEGIN...END</td>
+                <td>触发器可以使用BEGIN和END作为开始和结束，中间包含多条语句</td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">创建一个包含多个执行语句的触发器，代码如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> CREATE TABLE test1(a1 INT);
+    Query OK, 0 rows affected (0.00 sec)
+    mysql> CREATE TABLE test2(a2 INT);
+    Query OK, 0 rows affected (0.00 sec)
+    mysql> CREATE TABLE test3(a3 INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
+    Query OK, 0 rows affected (0.00 sec)
+    mysql> CREATE TABLE test4(
+        -> a4 INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        -> b4 INT DEFAULT 0
+        -> );
+    mysql>
+    mysql>
+    mysql> DELIMITER //
+    mysql> CREATE TRIGGER testRef BEFORE INSERT ON test1
+        -> FOR EACH ROW BEGIN
+        -> INSERT INTO test2 SET a2 = NEW.a1;
+        -> DELETE FROM test3 WHERE a3 = NEW.a1;
+        -> UPDATE test4 SET b4 = b4 + 1 WHERE a4 = NEW.a1;
+    mysql> END //
+    mysql>
+    mysql> DELIMITER ;
+    mysql>
+    mysql> INSERT INTO test3(a3) VALUES
+        -> (1),(1),(2),(3),(7),(5),(4),(6),(9),(10);
+    mysql>
+    mysql>
+    mysql> INSERT INTO test4(a4) VALUES
+        -> (0),(0),(0),(0),(0),(0),(0),(0),(0),(0);
+    mysql>
+    mysql>
+    mysql> INSERT INTO test1 VALUES
+        -> (1),(3),(1),(7),(1),(8),(4),(4);
+    Query OK, 8 rows affected (0.01 sec)
+    Records: 8 Duplicates: 0 Warnings: 0
+    mysql>
+    mysql>
+    mysql> SELECT * FROM test1;
+    +-----+
+    |  a1 |
+    +-----+
+    |  1  |
+    |  3  |
+    |  1  |
+    |  7  |
+    |  1  |
+    |  8  |
+    |  4  |
+    |  4  |
+    +-----+
+    Query OK, 8 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SELECT * FROM test2;
+    +-----+
+    |  a2 |
+    +-----+
+    |  1  |
+    |  3  |
+    |  1  |
+    |  7  |
+    |  1  |
+    |  8  |
+    |  4  |
+    |  4  |
+    +-----+
+    Query OK, 8 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SELECT * FROM test3;
+    +-----+
+    |  a3 |
+    +-----+
+    |  2  |
+    |  5  |
+    |  6  |
+    |  9  |
+    |  10 |
+    +-----+
+    Query OK, 5 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SELECT * FROM test4;
+    +-----+------+
+    |  a4 |  b4  |
+    +-----+------+
+    |  1  |  3   |
+    |  2  |  0   |
+    |  3  |  1   |
+    |  4  |  2   |
+    |  5  |  0   |
+    |  6  |  0   |
+    |  7  |  1   |
+    |  8  |  1   |
+    |  9  |  0   |
+    |  10 |  0   |
+    +-----+------+
+    Query OK, 10 rows affected (0.00 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">执行结果显示，在向表test1插入记录的时候，test2、test3、test4都发生了变化。从这个例子看INSERT触发了触发器，向test2中插入了test1中的值，删除了test3中相同的内容，同时更新了test4中的b4，即与插入的值相同的个数。</p>
+    </div>
+</div>
+
+<!-- 查看触发器提示 -->
+<div id="view_trigger_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">查看触发器</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">查看触发器是指查看数据库中已存在的触发器的定义、状态和语法信息等。可以通过命令来查看已经创建的触发器。查看触发器有两种方法，分别是<code>SHOW TRIGGERS</code>和在<code>triggers表</code>中查看触发器信息。</p>
+    </div>
+</div>
+
+<!-- 查看触发器-SHOW TRIGGERS -->
+<div id="view_trigger_show_triggers" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">SHOW TRIGGERS</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">通过<code>SHOW TRIGGERS</code>查看触发器的语句如下：</p>
+        <p class="firstLineIndent"><code>SHOW TRIGGERS;</code></p>
+        <p class="firstLineIndent"><code>SHOW TRIGGERS</code>语句查看特定触发器的信息，在触发器较少的情况下，使用该语句会很方便。如果要查看特定触发器的信息，可以直接从information_schema数据库中的triggers表中查找。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">通过SHOW TRIGGERS命令查看一个触发器，代码如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> CREATE TABLE myEvent(id INT(11) DEFAULT NULL,evt_name CHAR(20) DEFAULT NULL);
+    Query OK, 0 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> CREATE TRIGGER trigger_update AFTER UPDATE ON account
+        -> FOR EACH ROW BEGIN INSERT INTO myEvent VALUES (1,'after update');
+    Query OK, 0 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SHOW TRIGGERS;
+    ***************************** 1.row ***************************
+                        Trigger: ins_sum
+                          Event: INSERT
+                          Table: account
+                      Statement: Set @sum = @sum + NEW.amount
+                         Timing: BEFORE
+                        Created: 2020-11-30 12:45:18
+                       sql_mode: STRICT_TRANS_TABLE,NO_ENGINE_SUBSTITUTION
+                        Definer: root@localhost
+           character_set_client: gbk
+           collation_connection: gbk_chinese_ci
+             Database Collation: utf8mb4_0900_ai_ci
+    ***************************** 2.row ***************************
+                        Trigger: trigger_update
+                          Event: UPDATE
+                          Table: account
+                      Statement: INSERT INTO myEvent VALUES (1,'after update')
+                         Timing: AFTER
+                        Created: 2020-11-30 13:22:23
+                       sql_mode: STRICT_TRANS_TABLE,NO_ENGINE_SUBSTITUTION
+                        Definer: root@localhost
+           character_set_client: gbk
+           collation_connection: gbk_chinese_ci
+             Database Collation: utf8mb4_0900_ai_ci
+    ***************************** 3.row ***************************
+                        Trigger: testRef
+                          Event: INSERT
+                          Table: test1
+                      Statement: BEGIN
+                                 INSERT INTO test2 SET a2 = NEW.a1
+                                 DELETE FROM test3 WHERE a3 = NEW.a1
+                                 UPDATE test4 SET b4 = b4 + 1 WHERE a4 = NEW.a1
+                                 END
+                         Timing: BEFORE
+                        Created: 2020-11-30 14:15:56
+                       sql_mode: STRICT_TRANS_TABLE,NO_ENGINE_SUBSTITUTION
+                        Definer: root@localhost
+           character_set_client: gbk
+           collation_connection: gbk_chinese_ci
+             Database Collation: utf8mb4_0900_ai_ci
+    3 row in set (0.00 sec)
+            </code>
+        </pre>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>关键字</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Trigger</td>
+                <td>表示触发器的名称</td>
+            </tr>
+            <tr>
+                <td>Event</td>
+                <td>表示激活触发器的事件</td>
+            </tr>
+            <tr>
+                <td>Table</td>
+                <td>表示激活触发器的操作对象表</td>
+            </tr>
+            <tr>
+                <td>Timing</td>
+                <td>表示触发器触发的时间</td>
+            </tr>
+            <tr>
+                <td>Statement</td>
+                <td>表示触发器执行的操作</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 查看触发器-information_schema.triggers -->
+<div id="view_trigger_information_schema_triggers" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">information_schema.triggers</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">在MySQL中，所有触发器的定义都存在INFORMATION_SCHEMA数据库的TRIGGERS表格中，可以通过查询命令SELECT查看，具体的语法如下：</p>
+        <p class="firstLineIndent"><code>SELECT * FROM INFORMATION_SCHEMA.TRIGGERS WHERE condition;</code></p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">通过SELECT命令查看一个触发器，代码如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FORM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_NAME = 'trigger_update' \G;
+    ***************************** 1.row ***************************
+    TRIGGER_CATALOG: def
+    TRIGGER_SCHEMA: test_db
+    TRIGGER_NAME: trigger_update
+    EVENT
+
+
+
+
+
+
+
+
+
+    1 row in set (0.03 sec)
+            </code>
+        </pre>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>关键字</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Trigger</td>
+                <td>表示触发器的名称</td>
+            </tr>
+            <tr>
+                <td>Event</td>
+                <td>表示激活触发器的事件</td>
+            </tr>
+            <tr>
+                <td>Table</td>
+                <td>表示激活触发器的操作对象表</td>
+            </tr>
+            <tr>
+                <td>Timing</td>
+                <td>表示触发器触发的时间</td>
+            </tr>
+            <tr>
+                <td>Statement</td>
+                <td>表示触发器执行的操作</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- CUSTOM JAVASCRIPT -->
+<script type="text/javascript" src="../../../assets/scripts/common-method.js"></script>
+<script type="text/javascript" src="../../../assets/scripts/base.js"></script>
+<script type="text/javascript" src="../../../assets/scripts/responseStatusCode.js"></script>
+<script type="text/javascript" src="../../../assets/scripts/mysql/mysql-advanced-knowledge/mysql-advanced-knowledge-trigger.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+
+</html>

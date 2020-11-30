@@ -7,6 +7,7 @@ $(document).ready(function () {
     theRoleOfViewsChart();
     viewViewsChart();
     modifyViewChart();
+    updateViewsChart();
 });
 
 /**
@@ -159,7 +160,7 @@ function viewViewsChart() {
     var option = null;
     option = {
         title: {
-            text: '视图的作用',
+            text: '查看视图',
             subtext: '《MySQL8从入门到精通（视频教学版）》-P308',
             left: 'center'
         },
@@ -242,14 +243,14 @@ function modifyViewChart() {
                 layerCapture('modify_view_create_or_replace_view', 0, 40, 79);
                 break;
             case 'ALTER':
-                layerCapture('modify_view_alter', 0, 40, 38);
+                layerCapture('modify_view_alter', 0, 40, 76);
                 break;
         }
     });
     var option = null;
     option = {
         title: {
-            text: '视图的作用',
+            text: '修改视图',
             subtext: '《MySQL8从入门到精通（视频教学版）》-P312',
             left: 'center'
         },
@@ -285,6 +286,98 @@ function modifyViewChart() {
                 data: [
                     {value: 1, name: 'CREATE OR REPLACE VIEW'},
                     {value: 1, name: 'ALTER'}
+                ],
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 15
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
+}
+
+/**
+ * 更新视图提示
+ */
+function updateViewTips() {
+    layerCapture('update_view_tips', 0, 35, 25);
+}
+
+/**
+ * 更新视图图表
+ */
+function updateViewsChart() {
+    var updateViewsChart = $('#update_view');
+    updateViewsChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(updateViewsChart[0], 'macarons');
+    myChart.on('click', function (params) {
+        switch (params.name) {
+            case 'UPDATE':
+                layerCapture('update_view_update', 0, 40, 60);
+                break;
+            case 'INSERT':
+                layerCapture('update_view_insert', 0, 40, 60);
+                break;
+            case 'DELETE':
+                layerCapture('update_view_delete', 0, 40, 60);
+                break;
+        }
+    });
+    var option = null;
+    option = {
+        title: {
+            text: '更新视图',
+            subtext: '《MySQL8从入门到精通（视频教学版）》-P314',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b} : {c} ({d}%)'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        legend: {
+            bottom: 10,
+            left: 'center',
+            data: ['UPDATE', 'INSERT', 'DELETE'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '75%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: [
+                    {value: 1, name: 'UPDATE'},
+                    {value: 1, name: 'INSERT'},
+                    {value: 1, name: 'DELETE'}
                 ],
                 label: {
                     normal: {
