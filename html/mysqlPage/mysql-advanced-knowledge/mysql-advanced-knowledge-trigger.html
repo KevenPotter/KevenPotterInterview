@@ -166,47 +166,71 @@
                                 <p class="firstLineIndent">创建一个在account表插入记录之后更新myEvent数据表的触发器，代码如下：</p>
                                 <pre>
                                     <code class="sql">
-    mysql> DROP VIEW IF EXISTS stu_glass;
-    Query OK, 0 rows affected (0.05 sec)
+    mysql> CREATE TRIGGER tri_insert AFTER INSERT ON account
+        -> FOR EACH ROW INSERT INTO myEvent VALUES (2,'after insert');
+    Query OK, 0 rows affected (0.06 sec)
     mysql>
     mysql>
-    mysql> SHOW CREATE VIEW stu_glass;
-    ERROR 1146 (42S02): Table 'test_db.stu_glass' doesn't exist
+    mysql> INSERT INTO account VALUES (1,1.00),(2,2.00);
+    Query OK, 2 rows affected (0.02 sec)
+    Records: 2 Duplicates: 0 Warning: 0
+    mysql>
+    mysql>
+    mysql> SELECT * FROM myEvent;
+    +-----+--------------+
+    | id  |   evt_name   |
+    +-----+--------------+
+    |  2  | after insert |
+    |  2  | after insert |
+    +-----+--------------+
+    2 rows in set (0.00 sec)
                                     </code>
                                 </pre>
-                                <p class="firstLineIndent">可以看到，stu_glass视图已经不存在，删除成功。</p>
+                                <p class="firstLineIndent">从执行的结果来看，创建了一个名称为tri_insert的触发器，在向account插入记录之后进行触发，执行的操作是向表myEvent插入一条记录。</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="panel panel-scrolling">
                             <div class="panel-heading">
-                                <h3 class="panel-title">删除视图</h3>
+                                <h3 class="panel-title">删除触发器</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <p class="firstLineIndent">当视图不再需要时，可以将其删除。删除一个或多个视图可以使用<code>DROP VIEW</code>语句，语法如下：</p>
-                                <p class="firstLineIndent"><code>DROP VIEW [IF EXISTS]</code></p>
-                                <p class="tabIndentation"><code>view_name [,view_name] ...</code></p>
-                                <p class="tabIndentation"><code>[RESTRICT | CASCADE]</code></p>
-                                <p class="firstLineIndent">其中，view_name是要删除的视图名称，可以添加多个需要删除的视图名称，各个名称之间使用逗号分隔开。<span class="note">删除视图必须拥有DROP权限</span>。</p>
+                                <p class="firstLineIndent">使用<code>DROP TRIGGER</code>语句可以删除MySQL中已经定义的触发器，删除触发器语句的基本语法格式如下：</p>
+                                <p class="firstLineIndent"><code>DROP TRIGGER [schema_name.]trigger_name</code></p>
+                                <hr>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>关键字</th>
+                                        <th>作用</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>schema_name</td>
+                                        <td>表示数据库名称，是可选参数。如果省略，将从当前数据库中舍弃触发程序</td>
+                                    </tr>
+                                    <tr>
+                                        <td>trigger_name</td>
+                                        <td>是要删除的触发器的名称</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                                 <hr>
                                 <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                                <p class="firstLineIndent">删除stu_glass视图，代码如下：</p>
+                                <p class="firstLineIndent">删除一个触发器，代码如下：</p>
                                 <pre>
                                     <code class="sql">
-    mysql> DROP VIEW IF EXISTS stu_glass;
-    Query OK, 0 rows affected (0.05 sec)
-    mysql>
-    mysql>
-    mysql> SHOW CREATE VIEW stu_glass;
-    ERROR 1146 (42S02): Table 'test_db.stu_glass' doesn't exist
+    mysql> DROP TRIGGER test_db.ins_sum
+    Query OK, 0 rows affected (0.00 sec)
                                     </code>
                                 </pre>
-                                <p class="firstLineIndent">可以看到，stu_glass视图已经不存在，删除成功。</p>
+                                <p class="firstLineIndent">触发器ins_sum删除成功。</p>
                             </div>
                         </div>
                     </div>
