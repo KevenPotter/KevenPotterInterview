@@ -447,7 +447,9 @@
         <h3 class="panel-title">权限列</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent"></p>
+        <p class="firstLineIndent">权限列的字段决定了用户的权限，描述了在全局范围内允许对数据和数据库进行的操作。包括<b>查询权限</b>、<b>修改权限</b>等普通权限，还包括了<b>关闭服务器</b>、<b>超级权限</b>和<b>加载用户</b>等高级权限。普通权限用于操作数据库；高级权限用于数据库管理。</p>
+        <p class="firstLineIndent">user表中对应的权限是针对所有用户数据库的。这些字段值的类型为<span class="note">ENUM</span>，可以取的值只能为<b>Y</b>和<b>N</b>，Y表示该用户有对应的权限；N表示用户没有对应的权限。</p>
+        <p class="firstLineIndent">查看user表的结构可以看到，这些字段的默认值都是N。如果要修改权限，可以使用<code>GRANT</code>语句或<code>UPDATE</code>语句更改user表的这些字段来修改用户对应的权限。</p>
     </div>
 </div>
 
@@ -457,7 +459,8 @@
         <h3 class="panel-title">安全列</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent"></p>
+        <p class="firstLineIndent">安全列只有6个字段，其中两个是ssl相关的，两个是x509相关的，另外两个是授权插件相关的。ssl用于加密；x509标准可用于标识用户；Plugin字段标识可以用于验证用户身份的插件，如果该字段为空，服务器使用内建授权验证机制验证用户身份。</p>
+        <p class="firstLineIndent">我们可以通过<code>SHOW VARIABLES LIKE 'have_openssl;'</code>语句来查询服务器是否支持ssl功能。</p>
     </div>
 </div>
 
@@ -467,7 +470,34 @@
         <h3 class="panel-title">资源控制列</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent"></p>
+        <p class="firstLineIndent">资源控制列的字段用来限制用户使用的资源，包含4个字段，分别为</p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>字段名</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>max_questions</td>
+                <td>用户每小时允许执行的查询操作次数</td>
+            </tr>
+            <tr>
+                <td>max_updates</td>
+                <td>用户每小时允许执行的更新操作次数</td>
+            </tr>
+            <tr>
+                <td>max_connections</td>
+                <td>用户每小时允许执行的连接操作次数</td>
+            </tr>
+            <tr>
+                <td>max_user_connections</td>
+                <td>用户允许同时建立的连接次数</td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="firstLineIndent">一个小时内用户查询或者连接数量超过资源控制限制，用户将被锁定，知道下一个小时，才可以在此执行对应的操作。可以使用<code>GRANT</code>语句更新这些字段的值。</p>
     </div>
 </div>
 
@@ -477,7 +507,154 @@
         <h3 class="panel-title">db表</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">MySQL服务器通过权限表来控制用户对数据库的访问，权限表存放在MySQL数据库中，由<b>MySQL_install_db</b>脚本初始化。存储账户权限信息的表主要有<code>user</code>、<code>db</code>、<code>host</code>、<code>tables_priv</code>、<code>columns_priv</code>和<code>procs_priv</code>。</p>
+        <p class="firstLineIndent">db表是MySQL数据库中非常重要的权限表。db表中存储了用户对某个数据库的操作权限，决定用户能从哪个主机存取哪个数据库。db表比较常用。也可分为
+            <span class="bold tinyHand" onclick="permissionsTableDBUserColumnTips()">用户列 <i class="fa fa-hand-pointer-o" style="display: inline"></i></span>和
+            <span class="bold tinyHand" onclick="permissionsTableDBPermissionColumnTips()">权限列 <i class="fa fa-hand-pointer-o" style="display: inline"></i></span>。
+        </p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>字段名</th>
+                <th>数据类型</th>
+                <th>默认值</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Host</td>
+                <td><span class="label label-success">CHAR(60)</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Db</td>
+                <td><span class="label label-success">CHAR(64)</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>User</td>
+                <td><span class="label label-success">CHAR(32)</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Select_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Insert_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Update_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Delete_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Create_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Drop_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Grant_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>References_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Index_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Alter_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Create_tmp_table_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Lock_tables_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Create_view_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Show_view_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Create_routine_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Alter_routine_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Execute_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Event_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            <tr>
+                <td>Trigger_priv</td>
+                <td><span class="label label-success">ENUM('N','Y')</span></td>
+                <td>N</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 权限表-db-用户列提示 -->
+<div id="permissions_table_db_user_column_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">用户列</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">db表用户列有3个字段，分别是<b>Host</b>、<b>User</b>、<b>Db</b>，标识从某个主机连接某个用户对某个数据库的操作权限，这3个字段的组合构成了db表的主键。host表不存储用户名称，用户列只有2个字段，分别是<b>Host</b>和<b>Db</b>，表示从某个主机连接的用户对某个数据库的操作权限，其主键包括<b>Host</b>和<b>Db</b>两个字段。host很少用到，一般情况下db表就可以满足权限控制需求了。</p>
+    </div>
+</div>
+
+<!-- 权限表-db-权限列提示 -->
+<div id="permissions_table_db_permission_column_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">权限列</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">db表中<b>create_routine_priv</b>和<b>alter_routine_priv</b>这两个字段表明用户是否有创建和修改存储过程的权限。</p>
+        <p class="firstLineIndent">user表中的权限是针对所有数据库的，如果希望用户只对某个数据库有操作权限，那么需要将user表中对应的权限设置为N，然后在Db表中设置对应数据库的操作权限。</p>
+        <p class="firstLineIndent">例如，有一个名称为ZhangTing的用户分别从名称为large.domain.com和small.domain.com的两个主机连接到数据库，并需要操作books数据库。这时，可以将用户名称ZhangTing添加到db表中，而db表中的host字段值为空，然后将两个主机地址分别作为两条记录的host字段添加到host表中，并将两个表的数据库字段设置为相同的值books。</p>
+        <p class="firstLineIndent">当有用户连接到MySQL服务器时，db表中没有用户登录的主机名称，则MySQL会从host表中查找相匹配的值，并根据查询的结果决定用户的操作是否被允许。</p>
     </div>
 </div>
 
@@ -487,7 +664,9 @@
         <h3 class="panel-title">host表</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">MySQL服务器通过权限表来控制用户对数据库的访问，权限表存放在MySQL数据库中，由<b>MySQL_install_db</b>脚本初始化。存储账户权限信息的表主要有<code>user</code>、<code>db</code>、<code>host</code>、<code>tables_priv</code>、<code>columns_priv</code>和<code>procs_priv</code>。</p>
+        <p class="firstLineIndent">host表不存储用户名称，用户列只有2个字段，分别是<b>Host</b>和<b>Db</b>，表示从某个主机连接的用户对某个数据库的操作权限，其主键包括<b>Host</b>和<b>Db</b>两个字段。host很少用到，一般情况下db表就可以满足权限控制需求了。</p>
+        <p class="firstLineIndent">例如，有一个名称为ZhangTing的用户分别从名称为large.domain.com和small.domain.com的两个主机连接到数据库，并需要操作books数据库。这时，可以将用户名称ZhangTing添加到db表中，而db表中的host字段值为空，然后将两个主机地址分别作为两条记录的host字段添加到host表中，并将两个表的数据库字段设置为相同的值books。</p>
+        <p class="firstLineIndent">当有用户连接到MySQL服务器时，db表中没有用户登录的主机名称，则MySQL会从host表中查找相匹配的值，并根据查询的结果决定用户的操作是否被允许。</p>
     </div>
 </div>
 

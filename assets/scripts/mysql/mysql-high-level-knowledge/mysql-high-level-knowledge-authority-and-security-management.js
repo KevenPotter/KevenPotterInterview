@@ -37,7 +37,7 @@ function permissionsTableChart() {
                 layerCapture('permissions_table_db', 0, 40, 70);
                 break;
             case 'host':
-                layerCapture('permissions_table_host', 0, 40, 70);
+                layerCapture('permissions_table_host', 0, 40, 26);
                 break;
             case 'tables_priv':
                 layerCapture('permissions_table_tables_priv', 0, 40, 70);
@@ -129,19 +129,33 @@ function permissionsTableUserUserColumnTips() {
  * 权限表-user-权限列提示
  */
 function permissionsTableUserPermissionColumnTips() {
-    layerCapture('permissions_table_user_permission_column_tips', 0, 35, 15);
+    layerCapture('permissions_table_user_permission_column_tips', 0, 35, 26);
 }
 
 /**
  * 权限表-user-安全列提示
  */
 function permissionsTableUserSafeColumnTips() {
-    layerCapture('permissions_table_user_safe_column_tips', 0, 35, 15);
+    layerCapture('permissions_table_user_safe_column_tips', 0, 35, 20);
 }
 
 /**
  * 权限表-user-资源控制列提示
  */
 function permissionsTableUserResourceControlColumnTips() {
-    layerCapture('permissions_table_user_resource_control_column_tips', 0, 35, 15);
+    layerCapture('permissions_table_user_resource_control_column_tips', 0, 35, 35);
+}
+
+/**
+ * 权限表-db-用户列提示
+ */
+function permissionsTableDBUserColumnTips() {
+    layerCapture('permissions_table_db_user_column_tips', 0, 35, 19);
+}
+
+/**
+ * 权限表-db-权限列提示
+ */
+function permissionsTableDBPermissionColumnTips() {
+    layerCapture('permissions_table_db_permission_column_tips', 0, 35, 28);
 }
