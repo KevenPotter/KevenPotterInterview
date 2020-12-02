@@ -144,14 +144,14 @@
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="viewTriggerTips()">查看触发器 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <h3 class="panel-title">账户管理</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="view_trigger" style="height:500%;"></div>
+                                <div id="account_management" style="height:500%;"></div>
                             </div>
                         </div>
                     </div>
@@ -676,7 +676,71 @@
         <h3 class="panel-title">tables_priv表</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">MySQL服务器通过权限表来控制用户对数据库的访问，权限表存放在MySQL数据库中，由<b>MySQL_install_db</b>脚本初始化。存储账户权限信息的表主要有<code>user</code>、<code>db</code>、<code>host</code>、<code>tables_priv</code>、<code>columns_priv</code>和<code>procs_priv</code>。</p>
+        <p class="firstLineIndent">tables_priv表用来对表设置操作权限。</p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>字段名</th>
+                <th>数据类型</th>
+                <th>默认值</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Host</td>
+                <td><span class="label label-success">CHAR(60)</span></td>
+                <td></td>
+                <td>表示主机名</td>
+            </tr>
+            <tr>
+                <td>Db</td>
+                <td><span class="label label-success">CHAR(64)</span></td>
+                <td></td>
+                <td>表示数据库名</td>
+            </tr>
+            <tr>
+                <td>User</td>
+                <td><span class="label label-success">CHAR(16)</span></td>
+                <td></td>
+                <td>表示用户名</td>
+            </tr>
+            <tr>
+                <td>Table_name</td>
+                <td><span class="label label-success">CHAR(64)</span></td>
+                <td></td>
+                <td>表示表名</td>
+            </tr>
+            <tr>
+                <td>Grantor</td>
+                <td><span class="label label-success">CHAR(77)</span></td>
+                <td></td>
+                <td>表示修改该记录的用户</td>
+            </tr>
+            <tr>
+                <td>Timestamp</td>
+                <td><span class="label label-success">timestamp</span></td>
+                <td>CURRENT_TIMESTAMP</td>
+                <td>表示修改该记录的时间</td>
+            </tr>
+            <tr>
+                <td>Table_priv</td>
+                <td>
+                    <span id="permissions_table_tables_priv_table_priv_tips" class="label label-success" onmouseover="permissionsTableTablesPrivTablePrivTips()">
+                    SET <i class="fa fa-hand-pointer-o" style="display: inline"></i>
+                    </span>
+                </td>
+                <td></td>
+                <td>表示对表的操作权限</td>
+            </tr>
+            <tr>
+                <td>Column_priv</td>
+                <td><span class="label label-success">SET('Select','Insert','Update','References')</span></td>
+                <td></td>
+                <td>表示对表中的列的操作权限</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -686,7 +750,54 @@
         <h3 class="panel-title">columns_priv表</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">MySQL服务器通过权限表来控制用户对数据库的访问，权限表存放在MySQL数据库中，由<b>MySQL_install_db</b>脚本初始化。存储账户权限信息的表主要有<code>user</code>、<code>db</code>、<code>host</code>、<code>tables_priv</code>、<code>columns_priv</code>和<code>procs_priv</code>。</p>
+        <p class="firstLineIndent">columns_priv表用来对表的某一列设置权限。</p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>字段名</th>
+                <th>数据类型</th>
+                <th>默认值</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Host</td>
+                <td><span class="label label-success">CHAR(60)</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Db</td>
+                <td><span class="label label-success">CHAR(64)</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>User</td>
+                <td><span class="label label-success">CHAR(16)</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Table_name</td>
+                <td><span class="label label-success">CHAR(64)</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Column_name</td>
+                <td><span class="label label-success">CHAR(64)</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Timestamp</td>
+                <td><span class="label label-success">timestamp</span></td>
+                <td>CURRENT_TIMESTAMP</td>
+            </tr>
+            <tr>
+                <td>Column_priv</td>
+                <td><span class="label label-success">SET('Select','Insert','Update','References')</span></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="firstLineIndent"><b>Column_priv</b>用来指定对哪些数据列具有操作权限。</p>
     </div>
 </div>
 
@@ -696,7 +807,245 @@
         <h3 class="panel-title">procs_priv表</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">MySQL服务器通过权限表来控制用户对数据库的访问，权限表存放在MySQL数据库中，由<b>MySQL_install_db</b>脚本初始化。存储账户权限信息的表主要有<code>user</code>、<code>db</code>、<code>host</code>、<code>tables_priv</code>、<code>columns_priv</code>和<code>procs_priv</code>。</p>
+        <p class="firstLineIndent">procs_priv可以对存储过程和存储函数设置操作权限。</p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>字段名</th>
+                <th>数据类型</th>
+                <th>默认值</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Host</td>
+                <td><span class="label label-success">CHAR(60)</span></td>
+                <td></td>
+                <td>表示主机名</td>
+            </tr>
+            <tr>
+                <td>Db</td>
+                <td><span class="label label-success">CHAR(64)</span></td>
+                <td></td>
+                <td>表示数据库名</td>
+            </tr>
+            <tr>
+                <td>User</td>
+                <td><span class="label label-success">CHAR(16)</span></td>
+                <td></td>
+                <td>表示用户名</td>
+            </tr>
+            <tr>
+                <td>Routine_name</td>
+                <td><span class="label label-success">CHAR(64)</span></td>
+                <td></td>
+                <td>表示存储过程或存储函数的名称</td>
+            </tr>
+            <tr>
+                <td>Routine_type</td>
+                <td><span class="label label-success">ENUM('FUNCTION','PROCEDURE')</span></td>
+                <td>NULL</td>
+                <td>表示存储过程或存储函数的类型</td>
+            </tr>
+            <tr>
+                <td>Grantor</td>
+                <td><span class="label label-success">CHAR(77)</span></td>
+                <td></td>
+                <td>表示插入或修改该记录的用户</td>
+            </tr>
+            <tr>
+                <td>Proc_priv</td>
+                <td><span class="label label-success">SET('Execute','Alter Routine','Grant')</span></td>
+                <td></td>
+                <td>表示拥有的权限</td>
+            </tr>
+            <tr>
+                <td>Timestamp</td>
+                <td><span class="label label-success">timestamp</span></td>
+                <td>CURRENT_TIMESTAMP</td>
+                <td>表示记录更新时间</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 账户管理-登录和退出MySQL服务器 -->
+<div id="account_management_log_in_and_log_out_of_the_mysql_server" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">登录和退出MySQL服务器</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">通过<code>mysql --help</code>命令可以查看MySQL命令帮助信息。MySQL命令的常用参数如下：</p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>-h</td>
+                <td>表示主机名，可以使用该参数指定<b>主机名</b>或<b>IP</b>，如果不指定，默认是localhost</td>
+            </tr>
+            <tr>
+                <td>-u</td>
+                <td>表示用户名，可以使用该参数指定用户名</td>
+            </tr>
+            <tr>
+                <td>-p</td>
+                <td>
+                    表示密码，可以使用该参数指定登录密码。如果该参数后面有一段字段，则该段字符串将作为用户的密码直接登录。如果后面没有内容，则登陆的时候会提示输入密码。<br/>
+                    <span class="note">注意</span>：该参数后面的字符串和-p之前不能有空格
+                </td>
+            </tr>
+            <tr>
+                <td>-P</td>
+                <td>表示端口号，该参数后面接MySQL服务器的端口号，默认为3306</td>
+            </tr>
+            <tr>
+                <td>数据库名</td>
+                <td>可以在命令的最后指定数据库名</td>
+            </tr>
+            <tr>
+                <td>-e</td>
+                <td>表示执行SQL语句。如果指定了该参数，将在登陆后执行-e后面的命令或SQL语句并退出</td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <td class="bold"><i>示例1：使用root用户登陆到本地MySQL服务器的mysql库中：</i></td>
+            </tr>
+            <tr>
+                <td><code>mysql -h localhost -u root -p123456 mysql</code></td>
+            </tr>
+            <tr>
+                <td class="bold"><i>示例2：使用root用户登录到本地MySQL服务器的test_db数据库中，同时执行一条查询语句：</i></td>
+            </tr>
+            <tr>
+                <td><code>mysql -h localhost -u root -p123456 test_db -e "DESC person;"</code></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 账户管理-创建用户 -->
+<div id="account_management_create_user" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">创建用户</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#1" data-toggle="tab">使用CREATE USER语句创建新用户</a></li>
+            <li><a href="#2" data-toggle="tab">直接操作MySQL用户表</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="1" class="tab-pane fade in active">
+                <p class="firstLineIndent">执行<code>CREATE USER</code>或<code>GRANT</code>语句时，服务器会修改相应的用户授权表，添加或者修改用户及其权限。CREATE USER语句的基本语法格式如下：</p>
+                <p class="firstLineIndent"><code>CREATE USER user_specification [,user_specification]...</code></p>
+                <p class="firstLineIndent">其中，<code>user_specification</code>的具体形式如下：</p>
+                <p class="firstLineIndent"><code>user@host [IDENTIFIED BY [PASSWORD] 'password' | IDENTIFIED WITH auth_plugin [AS 'auth_string']]</code></p>
+                <hr>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>作用</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>user</td>
+                        <td>表示创建的用户的名称</td>
+                    </tr>
+                    <tr>
+                        <td>host</td>
+                        <td>表示允许登录的用户主机名称</td>
+                    </tr>
+                    <tr>
+                        <td>IDENTIFIED BY</td>
+                        <td>表示用来设置用户的密码</td>
+                    </tr>
+                    <tr>
+                        <td>[PASSWORD]</td>
+                        <td>表示使用哈希值设置密码，该参数可选</td>
+                    </tr>
+                    <tr>
+                        <td>'password'</td>
+                        <td>表示用户登录时使用的普通明文密码</td>
+                    </tr>
+                    <tr>
+                        <td>IDENTIFIED WITH</td>
+                        <td>表示为用户指定一个身份验证插件</td>
+                    </tr>
+                    <tr>
+                        <td>auth_plugin</td>
+                        <td>表示插件的名称，插件的名称可以是一个带单引号的字符串或者带双引号的字符串</td>
+                    </tr>
+                    <tr>
+                        <td>auth_string</td>
+                        <td>是可选的字符串参数，该参数将传递给身份验证插件，由该插件解释该参数的意义</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p class="firstLineIndent"><code>CREATE USER</code>语句会添加一个新的MySQL账户。使用<code>CREATE USER</code>语句用户，必须有全局的<code>CREATE USER</code>权限或MySQL数据库的<code>INSERT</code>权限。</p>
+                <p class="firstLineIndent">每添加一个用户，<code>CREATE USER</code>语句会在MySQL.user表中添加一条新纪录，但是新创建的账户没有任何权限。如果添加的账户已经存在，<code>CREATE USER</code>语句会返回一个错误。</p>
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">使用CREATE USER创建一个用户，用户名是jeffery，密码是mypass，主机名是localhost，命令如下：</p>
+                <p class="firstLineIndent"><code>CREATE USER 'jeffery'@'localhost' IDENTIFIED BY 'mypass';</code></p>
+                <p class="firstLineIndent">如果只指定用户名部分’jeffrey‘，主机名部分则默认为’%‘（对所有的主机开放权限）。user_specification告诉MySQL服务器当用户登录时怎么验证用户的登录授权。如果指定用户登录不需要密码，可以省略IDENTIFIED BY部分：</p>
+                <p class="firstLineIndent"><code>CREATE USER 'jeffery'@'localhost';</code></p>
+                <p class="firstLineIndent">此种情况，MySQL服务端使用内建的身份验证机制，用户登录时不能指定密码。</p>
+                <p class="firstLineIndent">如果要创建指定密码的用户，需要IDENTIFIED BY指定明文密码值：</p>
+                <p class="firstLineIndent"><code>CREATE USER 'jeffery'@'localhost' IDENTIFIED BY 'mypass';</code></p>
+                <p class="firstLineIndent">此种情况，MySQL服务端使用内建的身份验证机制，用户登录时必须指定密码。</p>
+                <p class="firstLineIndent">MySQL的某些版本会引入授权表的结构变化，添加新的特权或功能。每当更新MySQL到一个新的版本时，应该更新授权表，以确保它们有最新的结构，确认可以使用任何新功能。</p>
+            </div>
+            <div id="2" class="tab-pane fade">
+                <p class="firstLineIndent">可以使用<code>INSERT</code>语句向user表中直接插入一条记录来创建一个新的用户。使用<code>INSERT</code>语句，必须拥有对MySQL.user表的INSERT权限。使用<code>INSERT</code>语句创建新用户的基本语法格式如下：</p>
+                <p class="firstLineIndent"><code>INSERT INTO MySQL.user(Host,User,authentication_string)</code></p>
+                <p class="firstLineIndent"><code>VALUES('host','username',MD5('password'));</code></p>
+                <hr>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>作用</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Host</td>
+                        <td>表示user表中的主机</td>
+                    </tr>
+                    <tr>
+                        <td>User</td>
+                        <td>表示user表中的用户名称</td>
+                    </tr>
+                    <tr>
+                        <td>authentication_string</td>
+                        <td>表示user表中的密码字段</td>
+                    </tr>
+                    <tr>
+                        <td>MD5()</td>
+                        <td>表示密码加密函数</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">使用INSERT创建一个新账户，用户名称为customer1，主机名称为localhost，密码为aa123456，INSERT语句如下：</p>
+                <p class="firstLineIndent"><code>CREATE USER 'jeffery'@'localhost' IDENTIFIED BY 'mypass';</code></p>
+            </div>
+        </div>
     </div>
 </div>
 
