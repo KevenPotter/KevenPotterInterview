@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>进阶知识-触发器</title>
+    <title>高阶知识-权限与安全管理</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -138,6 +138,36 @@
                             </div>
                             <div class="panel-body">
                                 <div id="permissions_table" style="height:500%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">账户管理</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="account_management" style="height:500%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title tinyHand" onclick="authorityManagementTips()">权限管理 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="authority_management" style="height:500%;"></div>
                             </div>
                         </div>
                     </div>
@@ -943,11 +973,11 @@
     </div>
     <div class="panel-body">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#1" data-toggle="tab">使用CREATE USER语句创建新用户</a></li>
-            <li><a href="#2" data-toggle="tab">直接操作MySQL用户表</a></li>
+            <li class="active"><a href="#account_management_create_user_1" data-toggle="tab">使用CREATE USER语句创建用户</a></li>
+            <li><a href="#account_management_create_user_2" data-toggle="tab">使用INSERT语句创建用户</a></li>
         </ul>
         <div class="tab-content">
-            <div id="1" class="tab-pane fade in active">
+            <div id="account_management_create_user_1" class="tab-pane fade in active">
                 <p class="firstLineIndent">执行<code>CREATE USER</code>或<code>GRANT</code>语句时，服务器会修改相应的用户授权表，添加或者修改用户及其权限。CREATE USER语句的基本语法格式如下：</p>
                 <p class="firstLineIndent"><code>CREATE USER user_specification [,user_specification]...</code></p>
                 <p class="firstLineIndent">其中，<code>user_specification</code>的具体形式如下：</p>
@@ -1009,7 +1039,7 @@
                 <p class="firstLineIndent">此种情况，MySQL服务端使用内建的身份验证机制，用户登录时必须指定密码。</p>
                 <p class="firstLineIndent">MySQL的某些版本会引入授权表的结构变化，添加新的特权或功能。每当更新MySQL到一个新的版本时，应该更新授权表，以确保它们有最新的结构，确认可以使用任何新功能。</p>
             </div>
-            <div id="2" class="tab-pane fade">
+            <div id="account_management_create_user_2" class="tab-pane fade">
                 <p class="firstLineIndent">可以使用<code>INSERT</code>语句向user表中直接插入一条记录来创建一个新的用户。使用<code>INSERT</code>语句，必须拥有对MySQL.user表的INSERT权限。使用<code>INSERT</code>语句创建新用户的基本语法格式如下：</p>
                 <p class="firstLineIndent"><code>INSERT INTO MySQL.user(Host,User,authentication_string)</code></p>
                 <p class="firstLineIndent"><code>VALUES('host','username',MD5('password'));</code></p>
@@ -1043,9 +1073,409 @@
                 <hr>
                 <h4><i class="fa fa-female"></i><b>示例：</b></h4>
                 <p class="firstLineIndent">使用INSERT创建一个新账户，用户名称为customer1，主机名称为localhost，密码为aa123456，INSERT语句如下：</p>
-                <p class="firstLineIndent"><code>CREATE USER 'jeffery'@'localhost' IDENTIFIED BY 'mypass';</code></p>
+                <pre>
+                    <code class="sql">
+    mysql> use mysql;
+    mysql> INSERT INTO user(Host,User,authentication_string)
+        -> VALUES('localhost','customer1',MD5('aa123456'));
+    ERROR  1364(HY000): Field 'ssl_cipher' doesn't have a default value
+    mysql>
+    mysql>
+    mysql> SHOW WARNING;
+    +-----------+-------+---------------------------------------------------+
+    |    Level  |  Code |                  Message                          |
+    +-----------------+-----------------------------------------------------+
+    |    Error  |  1364 | Field 'ssl_cipher' doesn't have a default value   |
+    |    Error  |  1364 | Field 'x509_issuer' doesn't have a default value  |
+    |    Error  |  1364 | Field 'x509_subject' doesn't have a default value |
+    +-----------+-------+---------------------------------------------------+
+    mysql>
+    mysql>
+    mysql> SELECT host,user,authentication_string FROM user;
+    +------------+----------------+-------------------------------------------+
+    |    host    |      user      |         authentication_string             |
+    +------------+----------------+-------------------------------------------+
+    |  localhost |    jeffery     | *6C89852569AGTHH22AADD25EWFASD13FASD31FAF |
+    |  localhost |      root      | *4ACFE3202A5FF5CF467898FC58AAB1D615029441 |
+    |  localhost |  mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
+    |  localhost |    mysql.sys   | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
+    +------------+----------------+-------------------------------------------+
+                    </code>
+                </pre>
+                <P class="firstLineIndent">因为ssl_cipher、x509_issuer和x509_subject三个字段在user表定义中没有设置默认值，所以在这里提示错误信息，影响INSERT语句的执行。</P>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- 账户管理-删除用户 -->
+<div id="account_management_delete_user" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">删除用户</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#account_management_delete_user_1" data-toggle="tab">使用DROP USER语句删除用户</a></li>
+            <li><a href="#account_management_delete_user_2" data-toggle="tab">使用DELETE语句删除用户</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="account_management_delete_user_1" class="tab-pane fade in active">
+                <p class="firstLineIndent">DROP USER语句的基本语法格式如下：</p>
+                <p class="firstLineIndent"><code>DROP USER user [,user]...</code></p>
+                <p class="firstLineIndent"><code>DROP USER</code>语句用于删除一个或多个MySQL账户。要使用<code>DROP USER</code>，必须拥有MySQL数据库的全局CREATE USER权限或DELETE权限。使用与GRANT或REVOKE相同的格式为每个账户命名。例如，“'jeffrey'@'localhost'”账户名称的用户和主机部分与用户表记录的User和Host列值相对应。</p>
+                <p class="firstLineIndent">使用<code>DROP USER</code>，可以删除一个账户和其权限，操作如下：</p>
+                <hr>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>作用</th>
+                        <th>示例</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>删除user在本地登录权限</td>
+                        <td>DROP USER 'user@localhost';</td>
+                    </tr>
+                    <tr>
+                        <td>删除所有授权表的账户权限记录</td>
+                        <td>DROP USER;</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">使用DROP USER删除账户“'jeffery'@'localhost'”，命令如下：</p>
+                <pre>
+                    <code class="sql">
+    mysql> DROP USER 'jeffrey'@'localhost';
+    Query OK, 0 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SELECT host,user,authentication_string FROM user;
+    +------------+----------------+-------------------------------------------+
+    |    host    |      user      |         authentication_string             |
+    +------------+----------------+-------------------------------------------+
+    |  localhost |      root      | *4ACFE3202A5FF5CF467898FC58AAB1D615029441 |
+    |  localhost |  mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
+    |  localhost |    mysql.sys   | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
+    +------------+----------------+-------------------------------------------+
+                    </code>
+                </pre>
+                <p class="firstLineIndent"><span class="note">注意</span>：<code>DROP USER</code>不能自动关闭任何打开的用户对话。而且，如果用户有打开的对话，此时取消用户，命令则不会生效，直到用户对话被关闭后才能生效。一旦对话被关闭，用户也被取消，此用户再次视图登录时将会失败。</p>
+            </div>
+            <div id="account_management_delete_user_2" class="tab-pane fade">
+                <p class="firstLineIndent">DELETE语句的基本语法格式如下：</p>
+                <p class="firstLineIndent"><code>DELETE FROM mysql.user WHERE host='hostname' AND user='username';</code></p>
+                <p class="firstLineIndent">host和user为user表中的两个字段，两个字段的组合确定所要删除的账户记录。</p>
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">使用DELETE删除账户“'customer1'@'localhost'”，命令如下：</p>
+                <pre>
+                    <code class="sql">
+    mysql> CREATE USER 'customer1'@'localhost' IDENTIFIED BY 'my123';
+    Query OK, 0 rows affected (0.12 sec)
+    mysql>
+    mysql>
+    mysql> SELECT host,user,authentication_string FROM user;
+    +------------+----------------+-------------------------------------------+
+    |    host    |      user      |         authentication_string             |
+    +------------+----------------+-------------------------------------------+
+    |  localhost |    customer1   | *7AU8DF8SADF9EFDSAJ98F8DA8FDIUO098F9WE8F8 |
+    |  localhost |      root      | *4ACFE3202A5FF5CF467898FC58AAB1D615029441 |
+    |  localhost |  mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
+    |  localhost |    mysql.sys   | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
+    +------------+----------------+-------------------------------------------+
+    mysql>
+    mysql>
+    mysql> DELETE FROM mysql.user WHERE host = 'localhost' AND user = 'customer1';
+    Query OK, 1 rows affected (0.01 sec)
+    mysql>
+    mysql>
+    mysql> SELECT host,user,authentication_string FROM user;
+    +------------+----------------+-------------------------------------------+
+    |    host    |      user      |         authentication_string             |
+    +------------+----------------+-------------------------------------------+
+    |  localhost |      root      | *4ACFE3202A5FF5CF467898FC58AAB1D615029441 |
+    |  localhost |  mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
+    |  localhost |    mysql.sys   | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
+    +------------+----------------+-------------------------------------------+
+                    </code>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 账户管理-密码管理 -->
+<div id="account_management_password_management" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">密码管理</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#account_management_password_management_1" data-toggle="tab">root用户修改自己的密码</a></li>
+            <li class="dropdown">
+                <a href="#" id="account_management_password_management_2" class="dropdown-toggle" data-toggle="dropdown">root用户修改普通用户的密码<b class="caret"></b></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="account_management_password_management_2">
+                    <li><a href="#account_management_password_management_2_1" tabindex="-1" data-toggle="tab">使用SET语句修改普通用户的密码</a></li>
+                    <li><a href="#account_management_password_management_2_2" tabindex="-1" data-toggle="tab">使用UPDATE语句修改普通用户的密码</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="account_management_password_management_1" class="tab-pane fade in active">
+                <p class="firstLineIndent">root用户的安全对于保证MySQL的安全非常重要，因为root用户拥有很高的权限。</p>
+                <p class="firstLineIndent">因为所有账户信息都保存在user表中，所以可以通过直接修改user表来改变root用户的密码。root用户登录到MySQL服务器后，使用UPDATE语句修改mysql数据库的user表的authentication_string字段，从而修改用户的密码。使用UPDATE语句修改root用户密码的语句如下：</p>
+                <p class="firstLineIndent"><code>UPDATE mysql.user SET authentication_string = MD5('123456') WHERE User = 'root' AND Host = 'localhost';</code></p>
+                <p class="firstLineIndent">PASSWORD()函数用来加密用户密码。执行UPDATE语句后，需要执行<code>FLUSH PRIVILEGES;</code>语句重新加载用户权限。</p>
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">使用UPDATE语句将root用户的密码修改为“123456”：</p>
+                <pre>
+                    <code class="sql">
+    mysql> use mysql;
+    mysql> UPDATE mysql.user SET authentication_string = MD5('123456')
+        -> WHERE User = 'root' AND Host = 'localhost';
+    Query OK, 1 rows affected (0.00 sec)
+    Rows matched: 1 Changed: 1 Warnings: 0
+    mysql> FLUSH PRIVILEGES;
+    Query OK, 0 rows affected (0.11 sec)
+                    </code>
+                </pre>
+                <p class="firstLineIndent">执行完UPDATE语句后，root密码被修改成了123456.使用<code>FLUSH PRIVILEGES;</code>语句重新加载权限，就可以使用新的密码登录root用户了。</p>
+            </div>
+            <div id="account_management_password_management_2_1" class="tab-pane fade">
+                <h4><i class="fa fa-anchor"></i><b>使用SET语句修改普通用户的密码</b></h4>
+                <p class="firstLineIndent">使用SET语句修改普通用户密码的语法格式如下：</p>
+                <p class="firstLineIndent"><code>SET PASSWORD FOR 'user'@'localhost' = 'sa123';</code></p>
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">使用SET语句将user用户的密码修改为“sa123”：</p>
+                <pre>
+                    <code class="sql">
+    mysql> SET PASSWORD FOR 'user'@'localhost' = 'sa123';
+    Query OK, 0 rows affected (0.11 sec)
+                    </code>
+                </pre>
+            </div>
+            <div id="account_management_password_management_2_2" class="tab-pane fade">
+                <h4><i class="fa fa-anchor"></i><b>使用UPDATE语句修改普通用户的密码</b></h4>
+                <p class="firstLineIndent">使用UPDATE语句修改普通用户密码的语法格式如下：</p>
+                <p class="firstLineIndent"><code>UPDATE mysql.user SET authentication_string = MD5('123456')</code></p>
+                <p class="firstLineIndent"><code>WHERE User = 'username' AND Host = 'hostname';</code></p>
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">使用UPDATE语句将user用户的密码修改为“sns123”：</p>
+                <pre>
+                    <code class="sql">
+    mysql> UPDATE mysql.user SET authentication_string = MD5('sns123')
+        -> WHERE User = 'user' AND Host = 'localhost';
+    Query OK, 1 rows affected (0.00 sec)
+    Rows matched: 1 Changed: 1 Warning: 0
+    mysql> FLUSH PRIVILEGES;
+    Query OK, 0 rows affected (0.11 sec)
+                    </code>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 权限管理提示 -->
+<div id="authority_management_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">权限管理</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">授权管理主要是对登录到MySQL的用户进行权限验证。所有用户的权限都存储在MySQL的权限表中，不合理的权限规划会给MySQL服务器带来安全隐患。</p>
+        <p class="firstLineIndent">数据库管理员要对所有用户的权限进行合理规划管理。MySQL权限系统的主要功能是证实连接到一台给定主机的用户，并且赋予该用户在数据库上的SELECT、INSERT、UPDATE和DELETE权限。</p>
+    </div>
+</div>
+
+<!-- 权限管理-MySQL的各种权限 -->
+<div id="authority_management_various_permissions_of_mysql" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQL的各种权限</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">账户权限信息被存储在MySQL数据库的user、db、host、tables_priv、column_priv和procs_priv表中。在MySQL启动时，服务器将这些数据库表中权限信息的内容读入内存。</p>
+        <p class="firstLineIndent">GRANT和REVOKE语句所涉及的权限的名称如下表所示，其中含有在授权表中每个权限的表列名称和每个权限有关的操作对象等。</p>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>权限</th>
+                <th>user表中对应的列</th>
+                <th>权限的范围</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>DROP</td>
+                <td>Drop_priv</td>
+                <td>数据库、表或视图</td>
+            </tr>
+            <tr>
+                <td>GRANT OPTION</td>
+                <td>Grant_priv</td>
+                <td>数据库、表或存储过程</td>
+            </tr>
+            <tr>
+                <td>REFERENCES</td>
+                <td>References_priv</td>
+                <td>数据库或表</td>
+            </tr>
+            <tr>
+                <td>EVENT</td>
+                <td>Event_priv</td>
+                <td>数据库</td>
+            </tr>
+            <tr>
+                <td>ALTER</td>
+                <td>Alter_priv</td>
+                <td>数据库</td>
+            </tr>
+            <tr>
+                <td>DELETE</td>
+                <td>Delete_priv</td>
+                <td>表</td>
+            </tr>
+            <tr>
+                <td>INDEX</td>
+                <td>Index_priv</td>
+                <td>表</td>
+            </tr>
+            <tr>
+                <td>INSERT</td>
+                <td>Insert_priv</td>
+                <td>表</td>
+            </tr>
+            <tr>
+                <td>SELECT</td>
+                <td>Select_priv</td>
+                <td>表或列</td>
+            </tr>
+            <tr>
+                <td>UPDATE</td>
+                <td>Update_priv</td>
+                <td>表或列</td>
+            </tr>
+            <tr>
+                <td>CREATE TEMP</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            <tr>
+                <td>CREATE</td>
+                <td>Create_priv</td>
+                <td>数据库、表或索引</td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <td class="bold"><i>示例1：使用root用户登陆到本地MySQL服务器的mysql库中：</i></td>
+            </tr>
+            <tr>
+                <td><code>mysql -h localhost -u root -p123456 mysql</code></td>
+            </tr>
+            <tr>
+                <td class="bold"><i>示例2：使用root用户登录到本地MySQL服务器的test_db数据库中，同时执行一条查询语句：</i></td>
+            </tr>
+            <tr>
+                <td><code>mysql -h localhost -u root -p123456 test_db -e "DESC person;"</code></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

@@ -6,6 +6,7 @@ $(document).ready(function () {
     $('#database_page_high_level_button').click();
     permissionsTableChart();
     accountManagementChart();
+    authorityManagementChart();
 });
 
 /**
@@ -175,6 +176,13 @@ function accountManagementChart() {
     var accountManagementChart = $('#account_management');
     accountManagementChart.removeAttr("_echarts_instance_");
     var myChart = echarts.init(accountManagementChart[0], 'macarons');
+    myChart.on('mouseover', function (params) {
+        switch (params.name) {
+            case '权限管理':
+                layerTips('详情请移步“权限管理面板”', accountManagementChart);
+                break;
+        }
+    });
     myChart.on('click', function (params) {
         switch (params.name) {
             case '登录和退出MySQL服务器':
@@ -184,13 +192,10 @@ function accountManagementChart() {
                 layerCapture('account_management_create_user', 0, 40, 70);
                 break;
             case '删除用户':
-                layerCapture('permissions_table_host', 0, 40, 26);
+                layerCapture('account_management_delete_user', 0, 40, 70);
                 break;
             case '密码管理':
-                layerCapture('permissions_table_tables_priv', 0, 40, 44);
-                break;
-            case '权限管理':
-                layerCapture('permissions_table_columns_priv', 0, 40, 43);
+                layerCapture('account_management_password_management', 0, 40, 67);
                 break;
         }
     });
@@ -236,6 +241,102 @@ function accountManagementChart() {
                     {value: 1, name: '删除用户'},
                     {value: 1, name: '密码管理'},
                     {value: 1, name: '权限管理'}
+                ],
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 15
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
+}
+
+/**
+ * 权限管理提示
+ */
+function authorityManagementTips() {
+    layerCapture('authority_management_tips', 0, 40, 19);
+}
+
+/**
+ * 权限管理图表
+ */
+function authorityManagementChart() {
+    var authorityManagementChart = $('#authority_management');
+    authorityManagementChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(authorityManagementChart[0], 'macarons');
+    myChart.on('click', function (params) {
+        switch (params.name) {
+            case 'MySQL的各种权限':
+                layerCapture('authority_management_various_permissions_of_mysql', 0, 40, 70);
+                break;
+            case '授权':
+                layerCapture('account_management_create_user', 0, 40, 70);
+                break;
+            case '收回权限':
+                layerCapture('account_management_delete_user', 0, 40, 70);
+                break;
+            case '查看权限':
+                layerCapture('account_management_password_management', 0, 40, 67);
+                break;
+        }
+    });
+    var option = null;
+    option = {
+        title: {
+            text: '权限管理',
+            subtext: '《MySQL8从入门到精通（视频教学版）》-P351',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b} : {c} ({d}%)'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        legend: {
+            bottom: 10,
+            left: 'center',
+            data: ['MySQL的各种权限', '授权', '收回权限', '查看权限'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '75%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: [
+                    {value: 1, name: 'MySQL的各种权限'},
+                    {value: 1, name: '授权'},
+                    {value: 1, name: '收回权限'},
+                    {value: 1, name: '查看权限'}
                 ],
                 label: {
                     normal: {
