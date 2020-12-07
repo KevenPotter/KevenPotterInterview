@@ -198,21 +198,95 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="improve_safety" style="height:500%;"></div>
+                                <div id="improve_safety" style="height:400%;"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="panel">
+                        <div class="panel panel-scrolling">
                             <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="accessControlTips()">访问控制 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <h3 class="panel-title">访问控制</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="access_control" style="height:500%;"></div>
+                                <p class="firstLineIndent">在MySQL 8.0数据库中，角色可以看成是一些权限的集合，为用户赋予统一的角色，权限的修改直接通过角色来进行，无需为每个用户单独授权。</p>
+                                <p class="firstLineIndent">下面通过案例来学习如何管理角色。</p>
+                                <p class="firstLineIndent">创建角色，执行语句如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> CREATE ROLE role_tt; # 创建角色
+    Query OK, 0 rows affected (0.02 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">给角色授予权限，执行语句如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> GRANT SELECT ON db.* to 'role_tt'; # 给角色role_tt授予查询权限
+    Query OK, 0 rows affected (0.10 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">创建用户myusre1，执行语句如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> CREATE USER 'myuser1'@'%' IDENTIFIED BY '123456';
+    Query OK, 0 rows affected (0.07 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">为用户myuser1赋予角色role_tt，执行语句如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> CREATE 'role_tt' TO 'myuser1'@'%';
+    Query OK, 0 rows affected (0.02 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">给角色role_tt增加INSERT权限，执行语句如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> CREATE INSERT ON db.* TO 'role_tt';
+    Query OK, 0 rows affected (0.08 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">给角色role_tt删除INSERT权限，执行语句如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> REVOKE INSERT ON db.* FROM 'role_tt';
+    Query OK, 0 rows affected (0.10 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">查看默认角色信息，执行语句如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> SELECT * FROM mysql.default_roles;
+    +------+---------+-------------------+-------------------+
+    | HOST |   USER  | DEFAULT_ROLE_HOST | DEFAULT_ROLE_USER |
+    +------+---------+-------------------+-------------------+
+    |  %   | myuser1 |        %          |     role_tt       |
+    +------+---------+-------------------+-------------------+
+    1 rows in set (0.01 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">查看角色与用户关系，执行语句如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> SELECT * FROM mysql.role_edges;
+    +-----------+-------------+---------+-------------+-------------------+
+    | FROM_HOST |  FROM_USER  | TO_HOST |   TO_USER   | WITH_ADMIN_OPTION |
+    +-----------+-------------+---------+-------------+-------------------+
+    |     %     |   role_tt   |    %    |   myuser1   |        N          |
+    +-----------+-------------+---------+-------------+-------------------+
+    1 rows in set (0.00 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">删除角色，执行语句如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> DROP ROLE role_tt;
+    Query OK, 0 rows affected (0.04 sec)
+                                    </code>
+                                </pre>
                             </div>
                         </div>
                     </div>
@@ -2000,128 +2074,84 @@
         <h3 class="panel-title">密码到期更换策略</h3>
     </div>
     <div class="panel-body">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#improve_safety_AES_256_1" data-toggle="tab">AES_ENCRYPT</a></li>
-            <li><a href="#improve_safety_AES_256_2" data-toggle="tab">AES_DECRYPT</a></li>
-            <li><a href="#improve_safety_AES_256_3" data-toggle="tab">将加密字符串存储数据表中</a></li>
-        </ul>
-        <div class="tab-content">
-            <div id="improve_safety_AES_256_1" class="tab-pane fade in active">
-                <p class="firstLineIndent">该函数的语法格式如下：</p>
-                <p class="firstLineIndent"><code>AES_ENCRYPT(str,pswd_str)</code></p>
-                <hr>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>参数</th>
-                        <th>作用</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>str</td>
-                        <td>表示需要加密的字符串</td>
-                    </tr>
-                    <tr>
-                        <td>pswd_str</td>
-                        <td>为密钥</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <hr>
-                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">下面将字符串“Adversity does teach who your real friends are”加密，密钥为“key10001”，加密后的串存在@ss中。输入语句如下：</p>
-                <pre>
-                    <code class="sql">
-    mysql> SET @ss=AES_ENCRYPT('Adversity does teach who your real friends are','key10001');
+        <p class="firstLineIndent">MySQL 8.0允许数据库管理员手动设置账户密码过期时间。任何密码超期的账户想要连接服务端时都必须更改密码。通过设置<code>default_password_lifetime</code>参数可以设置账户过期时间。</p>
+        <p class="firstLineIndent">下面通过案例来学习</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">查看系统中的账户过期时间。从结果可以看出，password_lifetime: NULL表示密码永不过期。那么，下面设置root用户密码过期时间为260天：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT `user`,host,password_last_changed,
+        -> password_lifetime,password_expired FROM mysql.user \G;
+    ******************************* 1.row ****************************
+                        user: mysql.infoschema
+                        host: localhost
+       password_last_changed: 2020-12-01 22:44:33
+           password_lifetime: NULL
+            password_expired: N
+    ******************************* 2.row ****************************
+                        user: mysql.session
+                        host: localhost
+       password_last_changed: 2020-12-01 22:44:33
+           password_lifetime: NULL
+            password_expired: N
+    ******************************* 3.row ****************************
+                        user: mysql.sys
+                        host: localhost
+       password_last_changed: 2020-12-01 22:44:33
+           password_lifetime: NULL
+            password_expired: N
+    ******************************* 4.row ****************************
+                        user: root
+                        host: localhost
+       password_last_changed: 2020-12-01 22:44:33
+           password_lifetime: NULL
+            password_expired: N
+    ******************************* 5.row ****************************
+                        user: user
+                        host: localhost
+       password_last_changed: 2020-12-01 22:44:33
+           password_lifetime: NULL
+            password_expired: N
+    5 rows in set (0.03 sec)
+    mysql>
+    mysql>
+    mysql> ALTER USER root@localhost PASSWORD EXPIRE INTERVAL 260 DAY;
+    Query OK, 0 rows affected (0.00 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">再次查看root用户的信息，可以看出root用户的password_lifetime为260天。然后，再将root用户的密码过期时间重新设置为永不过期：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT `user`,host,password_last_changed,
+        -> password_lifetime,password_expired FROM mysql.user
+        -> WHERE user = 'root' \G;
+    ******************************* 1.row ****************************
+                        user: root
+                        host: localhost
+       password_last_changed: 2020-12-07 22:32:09
+           password_lifetime: 260
+            password_expired: N
+    1 rows in set (0.02 sec)
+    mysql>
+    mysql>
+    mysql> ALTER USER root@localhost PASSWORD EXPIRE DEFAULT;
     Query OK, 0 rows affected (0.00 sec)
     mysql>
     mysql>
-    mysql> SELECT @ss;
-    +-----------------------------------------------------------+
-    |  @ss                                                      |
-    +-----------------------------------------------------------+
-    |  HG玫2:eofdas{: H发|套应钱8  8JJh第送hk|融f   a?aajpwqroiu   |
-    +-----------------------------------------------------------+
-    mysql>
-    mysql>
-    mysql> SELECT CHAR_LENGTH(@ss);
-    +--------------------+
-    |  CHAR_LENGTH(@ss)  |
-    +--------------------+
-    |         48         |
-    +--------------------+
-    1 row in set (0.00 sec)
-                    </code>
-                </pre>
-            </div>
-            <div id="improve_safety_AES_256_2" class="tab-pane fade">
-                <p class="firstLineIndent">该函数的语法格式如下：</p>
-                <p class="firstLineIndent"><code>AES_DECRYPT(str,pswd_str)</code></p>
-                <hr>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>参数</th>
-                        <th>作用</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>str</td>
-                        <td>表示需要解密的字符串</td>
-                    </tr>
-                    <tr>
-                        <td>pswd_str</td>
-                        <td>为密钥</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <hr>
-                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">下面将@ss中的字符串解密。输入语句如下：</p>
-                <pre>
-                    <code class="sql">
-    mysql> SELECT AES_DECRYPT(@ss,'key10001');
-    +---------------------------------------------------+
-    |  AES_DECRYPT(@ss,'key10001')                      |
-    +---------------------------------------------------+
-    |  Adversity does teach who your real friends are   |
-    +---------------------------------------------------+
-    1 row in set (0.00 sec)
-                    </code>
-                </pre>
-            </div>
-            <div id="improve_safety_AES_256_3" class="tab-pane fade">
-                <p class="firstLineIndent">用户将加密的字符串存入数据表的过程中经常会出问题，下面将通过案例来学习其方法。</p>
-                <hr>
-                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">创建数据表mm，包含3个字段，属性分别是VARBINARY、BINARY、BLOB。然后将“雨里一家人”、“two things”、“闲看栀子花”加密，密钥为key，存储数据表mm中。输入语句如下：</p>
-                <pre>
-                    <code class="sql">
-    mysql> CREATE TABLE mm(s1 VARBINARY(16),s2 BINARY(16),s3 BLOB);
-    Query OK, 0 rows affected (0.02 sec)
-    mysql>
-    mysql>
-    mysql> INSERT INTO mm VALUES(
-        -> AES_ENCRYPT('雨里一家人','key'),
-        -> AES_ENCRYPT('two things','key'),
-        -> AES_ENCRYPT('闲看栀子花','key')
-        -> );
-    Query OK, 1 rows affected (0.00 sec)
-    mysql>
-    mysql>
-    mysql> SELECT AES_DECRYPT(s1,'key'),AES_DECRYPT(s2,'key'),AES_DECRYPT(s3,'key');
-    +-------------------------+------------------------+------------------------+
-    |  AES_DECRYPT(s1,'key')  | AES_DECRYPT(s1,'key')  | AES_DECRYPT(s1,'key')  |
-    +-------------------------+------------------------+------------------------+
-    |       雨里一家人          |       two things       |        闲看栀子花        |
-    +-------------------------+------------------------+------------------------+
-    1 row in set (0.00 sec)
-                    </code>
-                </pre>
-            </div>
-        </div>
+    mysql> SELECT `use`r,host,password_last_changed,
+        -> password_lifetime,password_expired FROM mysql.user
+        -> WHERE user = 'root' \G;
+    ******************************* 1.row ****************************
+                        user: root
+                        host: localhost
+       password_last_changed: 2020-12-07 22:32:09
+           password_lifetime: NULL
+            password_expired: N
+    1 rows in set (0.02 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">从结果可以看出，password_lifetime又被重新设置NULL，此时该用户的密码将永不过期。</p>
     </div>
 </div>
 
