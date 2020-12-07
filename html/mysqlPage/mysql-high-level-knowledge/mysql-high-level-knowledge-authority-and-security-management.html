@@ -187,6 +187,36 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">提升安全性</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="improve_safety" style="height:500%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title tinyHand" onclick="accessControlTips()">访问控制 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="access_control" style="height:500%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- END MAIN CONTENT -->
@@ -1830,6 +1860,291 @@
             管理权限，因此MySQL只检查user表。另外，如果请求的权限操作不被允许，MySQL也不会继续检查下一层级的表。
         </p>
         <div id="mysql_request_verification_process" style="flex-grow: 1; height: 800px; background-color: #282c34;"></div>
+    </div>
+</div>
+
+<!-- 提升安全性-AES 256加密 -->
+<div id="improve_safety_AES_256" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">AES 256加密</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#improve_safety_AES_256_1" data-toggle="tab">AES_ENCRYPT</a></li>
+            <li><a href="#improve_safety_AES_256_2" data-toggle="tab">AES_DECRYPT</a></li>
+            <li><a href="#improve_safety_AES_256_3" data-toggle="tab">将加密字符串存储数据表中</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="improve_safety_AES_256_1" class="tab-pane fade in active">
+                <p class="firstLineIndent">该函数的语法格式如下：</p>
+                <p class="firstLineIndent"><code>AES_ENCRYPT(str,pswd_str)</code></p>
+                <hr>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>作用</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>str</td>
+                        <td>表示需要加密的字符串</td>
+                    </tr>
+                    <tr>
+                        <td>pswd_str</td>
+                        <td>为密钥</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">下面将字符串“Adversity does teach who your real friends are”加密，密钥为“key10001”，加密后的串存在@ss中。输入语句如下：</p>
+                <pre>
+                    <code class="sql">
+    mysql> SET @ss=AES_ENCRYPT('Adversity does teach who your real friends are','key10001');
+    Query OK, 0 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SELECT @ss;
+    +-----------------------------------------------------------+
+    |  @ss                                                      |
+    +-----------------------------------------------------------+
+    |  HG玫2:eofdas{: H发|套应钱8  8JJh第送hk|融f   a?aajpwqroiu   |
+    +-----------------------------------------------------------+
+    mysql>
+    mysql>
+    mysql> SELECT CHAR_LENGTH(@ss);
+    +--------------------+
+    |  CHAR_LENGTH(@ss)  |
+    +--------------------+
+    |         48         |
+    +--------------------+
+    1 row in set (0.00 sec)
+                    </code>
+                </pre>
+            </div>
+            <div id="improve_safety_AES_256_2" class="tab-pane fade">
+                <p class="firstLineIndent">该函数的语法格式如下：</p>
+                <p class="firstLineIndent"><code>AES_DECRYPT(str,pswd_str)</code></p>
+                <hr>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>作用</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>str</td>
+                        <td>表示需要解密的字符串</td>
+                    </tr>
+                    <tr>
+                        <td>pswd_str</td>
+                        <td>为密钥</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">下面将@ss中的字符串解密。输入语句如下：</p>
+                <pre>
+                    <code class="sql">
+    mysql> SELECT AES_DECRYPT(@ss,'key10001');
+    +---------------------------------------------------+
+    |  AES_DECRYPT(@ss,'key10001')                      |
+    +---------------------------------------------------+
+    |  Adversity does teach who your real friends are   |
+    +---------------------------------------------------+
+    1 row in set (0.00 sec)
+                    </code>
+                </pre>
+            </div>
+            <div id="improve_safety_AES_256_3" class="tab-pane fade">
+                <p class="firstLineIndent">用户将加密的字符串存入数据表的过程中经常会出问题，下面将通过案例来学习其方法。</p>
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">创建数据表mm，包含3个字段，属性分别是VARBINARY、BINARY、BLOB。然后将“雨里一家人”、“two things”、“闲看栀子花”加密，密钥为key，存储数据表mm中。输入语句如下：</p>
+                <pre>
+                    <code class="sql">
+    mysql> CREATE TABLE mm(s1 VARBINARY(16),s2 BINARY(16),s3 BLOB);
+    Query OK, 0 rows affected (0.02 sec)
+    mysql>
+    mysql>
+    mysql> INSERT INTO mm VALUES(
+        -> AES_ENCRYPT('雨里一家人','key'),
+        -> AES_ENCRYPT('two things','key'),
+        -> AES_ENCRYPT('闲看栀子花','key')
+        -> );
+    Query OK, 1 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SELECT AES_DECRYPT(s1,'key'),AES_DECRYPT(s2,'key'),AES_DECRYPT(s3,'key');
+    +-------------------------+------------------------+------------------------+
+    |  AES_DECRYPT(s1,'key')  | AES_DECRYPT(s1,'key')  | AES_DECRYPT(s1,'key')  |
+    +-------------------------+------------------------+------------------------+
+    |       雨里一家人          |       two things       |        闲看栀子花        |
+    +-------------------------+------------------------+------------------------+
+    1 row in set (0.00 sec)
+                    </code>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 提升安全性-密码到期更换策略 -->
+<div id="improve_safety_password_expiration_replacement_policy" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">密码到期更换策略</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#improve_safety_AES_256_1" data-toggle="tab">AES_ENCRYPT</a></li>
+            <li><a href="#improve_safety_AES_256_2" data-toggle="tab">AES_DECRYPT</a></li>
+            <li><a href="#improve_safety_AES_256_3" data-toggle="tab">将加密字符串存储数据表中</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="improve_safety_AES_256_1" class="tab-pane fade in active">
+                <p class="firstLineIndent">该函数的语法格式如下：</p>
+                <p class="firstLineIndent"><code>AES_ENCRYPT(str,pswd_str)</code></p>
+                <hr>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>作用</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>str</td>
+                        <td>表示需要加密的字符串</td>
+                    </tr>
+                    <tr>
+                        <td>pswd_str</td>
+                        <td>为密钥</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">下面将字符串“Adversity does teach who your real friends are”加密，密钥为“key10001”，加密后的串存在@ss中。输入语句如下：</p>
+                <pre>
+                    <code class="sql">
+    mysql> SET @ss=AES_ENCRYPT('Adversity does teach who your real friends are','key10001');
+    Query OK, 0 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SELECT @ss;
+    +-----------------------------------------------------------+
+    |  @ss                                                      |
+    +-----------------------------------------------------------+
+    |  HG玫2:eofdas{: H发|套应钱8  8JJh第送hk|融f   a?aajpwqroiu   |
+    +-----------------------------------------------------------+
+    mysql>
+    mysql>
+    mysql> SELECT CHAR_LENGTH(@ss);
+    +--------------------+
+    |  CHAR_LENGTH(@ss)  |
+    +--------------------+
+    |         48         |
+    +--------------------+
+    1 row in set (0.00 sec)
+                    </code>
+                </pre>
+            </div>
+            <div id="improve_safety_AES_256_2" class="tab-pane fade">
+                <p class="firstLineIndent">该函数的语法格式如下：</p>
+                <p class="firstLineIndent"><code>AES_DECRYPT(str,pswd_str)</code></p>
+                <hr>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>作用</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>str</td>
+                        <td>表示需要解密的字符串</td>
+                    </tr>
+                    <tr>
+                        <td>pswd_str</td>
+                        <td>为密钥</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">下面将@ss中的字符串解密。输入语句如下：</p>
+                <pre>
+                    <code class="sql">
+    mysql> SELECT AES_DECRYPT(@ss,'key10001');
+    +---------------------------------------------------+
+    |  AES_DECRYPT(@ss,'key10001')                      |
+    +---------------------------------------------------+
+    |  Adversity does teach who your real friends are   |
+    +---------------------------------------------------+
+    1 row in set (0.00 sec)
+                    </code>
+                </pre>
+            </div>
+            <div id="improve_safety_AES_256_3" class="tab-pane fade">
+                <p class="firstLineIndent">用户将加密的字符串存入数据表的过程中经常会出问题，下面将通过案例来学习其方法。</p>
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">创建数据表mm，包含3个字段，属性分别是VARBINARY、BINARY、BLOB。然后将“雨里一家人”、“two things”、“闲看栀子花”加密，密钥为key，存储数据表mm中。输入语句如下：</p>
+                <pre>
+                    <code class="sql">
+    mysql> CREATE TABLE mm(s1 VARBINARY(16),s2 BINARY(16),s3 BLOB);
+    Query OK, 0 rows affected (0.02 sec)
+    mysql>
+    mysql>
+    mysql> INSERT INTO mm VALUES(
+        -> AES_ENCRYPT('雨里一家人','key'),
+        -> AES_ENCRYPT('two things','key'),
+        -> AES_ENCRYPT('闲看栀子花','key')
+        -> );
+    Query OK, 1 rows affected (0.00 sec)
+    mysql>
+    mysql>
+    mysql> SELECT AES_DECRYPT(s1,'key'),AES_DECRYPT(s2,'key'),AES_DECRYPT(s3,'key');
+    +-------------------------+------------------------+------------------------+
+    |  AES_DECRYPT(s1,'key')  | AES_DECRYPT(s1,'key')  | AES_DECRYPT(s1,'key')  |
+    +-------------------------+------------------------+------------------------+
+    |       雨里一家人          |       two things       |        闲看栀子花        |
+    +-------------------------+------------------------+------------------------+
+    1 row in set (0.00 sec)
+                    </code>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 提升安全性-安全模式安装 -->
+<div id="improve_safety_safe_mode_installation" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">安全模式安装</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent"><b>MySQL新增了“安全模式”的安装形式，从而可以避免用户的数据被泄漏。用户可以通过以下方式来提升MySQL安装的安全性：</b></p>
+        <ol>
+            <li>为root账户设置密码</li>
+            <li>移除能从本地主机以外的地址访问数据库的root账户</li>
+            <li>移除匿名账户</li>
+            <li>移除test数据库，该数据库默认可被任意用户甚至匿名账户访问</li>
+        </ol>
+        <p class="firstLineIndent"><b>使用mysqld -initialize命令来安装MySQL实例默认是安全的，主要原因如下：</b></p>
+        <ol>
+            <li>在安装过程中只创建一个root账户'root'@'localhost'，自动为这个账户生成一个随机密码并标记密码过期</li>
+            <li>数据库管理员必须用root账户及该随机密码登录并设置一个新密码后才能对数据库进行正常操作</li>
+            <li>安装过程不创建任何匿名账户</li>
+            <li>安装过程不创建test数据库</li>
+        </ol>
     </div>
 </div>
 

@@ -8,6 +8,7 @@ $(document).ready(function () {
     accountManagementChart();
     authorityManagementChart();
     accessControlChart();
+    improveSafetyChart();
 });
 
 /**
@@ -724,4 +725,89 @@ function load() {
         '{"from":4, "to":-2, "fromPort":"B", "toPort":"T"}' +
         ' ]}'
     );
+}
+
+/**
+ * 提升安全性图表
+ */
+function improveSafetyChart() {
+    var improveSafetyChart = $('#improve_safety');
+    improveSafetyChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(improveSafetyChart[0], 'macarons');
+    myChart.on('click', function (params) {
+        switch (params.name) {
+            case 'AES 256':
+                layerCapture('improve_safety_AES_256', 0, 40, 70);
+                break;
+            case '密码到期更换策略':
+                layerCapture('improve_safety_password_expiration_replacement_policy', 0, 40, 70);
+                break;
+            case '安全模式安装':
+                layerCapture('improve_safety_safe_mode_installation', 0, 40, 32);
+                break;
+        }
+    });
+    var option = null;
+    option = {
+        title: {
+            text: '提升安全性',
+            subtext: '《MySQL8从入门到精通（视频教学版）》-P358',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b} : {c} ({d}%)'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        legend: {
+            bottom: 10,
+            left: 'center',
+            data: ['AES 256', '密码到期更换策略', '安全模式安装'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '75%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: [
+                    {value: 1, name: 'AES 256'},
+                    {value: 1, name: '密码到期更换策略'},
+                    {value: 1, name: '安全模式安装'}
+                ],
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 15
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
 }
