@@ -19,6 +19,7 @@
     <script type="text/javascript" src="../../../assets/scripts/klorofil-common.js"></script>
     <script type="text/javascript" src="../../../assets/vendor/ui-choose/js/ui-choose.js"></script>
     <script type="text/javascript" src="../../../assets/vendor/highlight/highlight.pack.js"></script>
+    <script type="text/javascript" src="../../../assets/vendor/js/go.js"></script>
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="../../../assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../assets/vendor/bootstrap-select/css/bootstrap-select.min.css">
@@ -39,7 +40,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="../../../assets/img/favicon.png">
 </head>
 
-<body>
+<body onload="init()">
 <!-- WRAPPER -->
 <div id="wrapper">
     <!-- NAVBAR -->
@@ -174,14 +175,14 @@
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">账户管理</h3>
+                                <h3 class="panel-title tinyHand" onclick="accessControlTips()">访问控制 <i class="fa fa-hand-pointer-o"></i></h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="account_management" style="height:500%;"></div>
+                                <div id="access_control" style="height:500%;"></div>
                             </div>
                         </div>
                     </div>
@@ -1299,183 +1300,536 @@
         <h3 class="panel-title">MySQL的各种权限</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">账户权限信息被存储在MySQL数据库的user、db、host、tables_priv、column_priv和procs_priv表中。在MySQL启动时，服务器将这些数据库表中权限信息的内容读入内存。</p>
-        <p class="firstLineIndent">GRANT和REVOKE语句所涉及的权限的名称如下表所示，其中含有在授权表中每个权限的表列名称和每个权限有关的操作对象等。</p>
-        <hr>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#authority_management_various_permissions_of_mysql_1" data-toggle="tab">GRANT和REVOKE语句中可以使用的权限</a></li>
+            <li><a href="#authority_management_various_permissions_of_mysql_2" data-toggle="tab">不同权限下可以使用的MySQLadmin命令</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="authority_management_various_permissions_of_mysql_1" class="tab-pane fade in active">
+                <p class="firstLineIndent">账户权限信息被存储在MySQL数据库的user、db、host、tables_priv、column_priv和procs_priv表中。在MySQL启动时，服务器将这些数据库表中权限信息的内容读入内存。</p>
+                <p class="firstLineIndent">GRANT和REVOKE语句所涉及的权限的名称如下表所示，其中含有在授权表中每个权限的表列名称和每个权限有关的操作对象等。</p>
+                <hr>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>权限</th>
+                        <th>user表中对应的列</th>
+                        <th>权限的范围</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>CREATE</td>
+                        <td>Create_priv</td>
+                        <td>数据库、表或索引</td>
+                    </tr>
+                    <tr>
+                        <td>DROP</td>
+                        <td>Drop_priv</td>
+                        <td>数据库、表或视图</td>
+                    </tr>
+                    <tr>
+                        <td>GRANT OPTION</td>
+                        <td>Grant_priv</td>
+                        <td>数据库、表或存储过程</td>
+                    </tr>
+                    <tr>
+                        <td>REFERENCES</td>
+                        <td>References_priv</td>
+                        <td>数据库或表</td>
+                    </tr>
+                    <tr>
+                        <td>EVENT</td>
+                        <td>Event_priv</td>
+                        <td>数据库</td>
+                    </tr>
+                    <tr>
+                        <td>ALTER</td>
+                        <td>Alter_priv</td>
+                        <td>数据库</td>
+                    </tr>
+                    <tr>
+                        <td>DELETE</td>
+                        <td>Delete_priv</td>
+                        <td>表</td>
+                    </tr>
+                    <tr>
+                        <td>INDEX</td>
+                        <td>Index_priv</td>
+                        <td>表</td>
+                    </tr>
+                    <tr>
+                        <td>INSERT</td>
+                        <td>Insert_priv</td>
+                        <td>表</td>
+                    </tr>
+                    <tr>
+                        <td>SELECT</td>
+                        <td>Select_priv</td>
+                        <td>表或列</td>
+                    </tr>
+                    <tr>
+                        <td>UPDATE</td>
+                        <td>Update_priv</td>
+                        <td>表或列</td>
+                    </tr>
+                    <tr>
+                        <td>CREATE TEMPORARY TABLES</td>
+                        <td>Create_tmp_table_priv</td>
+                        <td>表</td>
+                    </tr>
+                    <tr>
+                        <td>LOCK TABLES</td>
+                        <td>Lock_tables_priv</td>
+                        <td>表</td>
+                    </tr>
+                    <tr>
+                        <td>TRIGGER</td>
+                        <td>Trigger_priv</td>
+                        <td>表</td>
+                    </tr>
+                    <tr>
+                        <td>CREATE VIEW</td>
+                        <td>Create_view_priv</td>
+                        <td>视图</td>
+                    </tr>
+                    <tr>
+                        <td>SHOW VIEW</td>
+                        <td>Show_view_priv</td>
+                        <td>视图</td>
+                    </tr>
+                    <tr>
+                        <td>ALTER ROUTINE</td>
+                        <td>Alter_routine_priv</td>
+                        <td>存储过程和函数</td>
+                    </tr>
+                    <tr>
+                        <td>CREATE ROUTINE</td>
+                        <td>Create_routine_priv</td>
+                        <td>存储过程和函数</td>
+                    </tr>
+                    <tr>
+                        <td>EXECUTE</td>
+                        <td>Execute_priv</td>
+                        <td>存储过程和函数</td>
+                    </tr>
+                    <tr>
+                        <td>FILE</td>
+                        <td>File_priv</td>
+                        <td>访问服务器上的文件</td>
+                    </tr>
+                    <tr>
+                        <td>CREATE TABLESPACE</td>
+                        <td>Create_tablespace_priv</td>
+                        <td>服务器管理</td>
+                    </tr>
+                    <tr>
+                        <td>CREATE USER</td>
+                        <td>Create_user_priv</td>
+                        <td>服务器管理</td>
+                    </tr>
+                    <tr>
+                        <td>PROCESS</td>
+                        <td>Process_priv</td>
+                        <td>存储过程和函数</td>
+                    </tr>
+                    <tr>
+                        <td>RELOAD</td>
+                        <td>Reload_priv</td>
+                        <td>访问服务器上的文件</td>
+                    </tr>
+                    <tr>
+                        <td>REPLICATION CLIENT</td>
+                        <td>Repl_client_priv</td>
+                        <td>服务器管理</td>
+                    </tr>
+                    <tr>
+                        <td>REPLICATION SLAVE</td>
+                        <td>Repl_slave_priv</td>
+                        <td>服务器管理</td>
+                    </tr>
+                    <tr>
+                        <td>SHOW DATABASES</td>
+                        <td>Show_db_priv</td>
+                        <td>服务器管理</td>
+                    </tr>
+                    <tr>
+                        <td>SHUTDOWN</td>
+                        <td>Shutdown_priv</td>
+                        <td>服务器管理</td>
+                    </tr>
+                    <tr>
+                        <td>SUPER</td>
+                        <td>Super_priv</td>
+                        <td>服务器管理</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <ol>
+                    <li><code>CREATE</code>和<code>DROP</code>权限，可以创建新数据库和表，或删除（移掉）已有数据库和表。如果将MySQL数据库中的<code>DROP</code>权限授予某用户，用户可以删掉MySQL访问权限保存的数据库</li>
+                    <li><code>SELECT</code>、<code>INSERT</code>、<code>UPDATE</code>和<code>DELETE</code>权限允许在一个数据库现有的表上实时操作</li>
+                    <li><code>SELECT</code>权限只有在它们真正从一个表中检索行时才被用到</li>
+                    <li><code>INDEX</code>权限允许创建或删除索引，<code>INDEX</code>适用已有表。如果具有某个表的<code>CREATE</code>权限，可以在<code>CREATE TABLE</code>语句中包括索引定义</li>
+                    <li><code>ALTER</code>权限，可以使用<code>ALTER TABLE</code>来更改表的结构和重新命名表</li>
+                    <li><code>CREATE ROUTINE</code>权限用来创建保存的程序（函数和程序），<code>ALTER ROUTINE</code>权限用来更改和删除保存的程序，<code>EXECUTE</code>权限用来执行保存的程序</li>
+                    <li><code>GRANT</code>权限允许授权给其他用户，可用于数据库、表和保存的程序</li>
+                    <li>
+                        <code>FILE</code>权限给予用户使用<code>LOAD DATA INFILE</code>和<code>SELECT...INTO OUTFILE</code>语句读或写服务器上的文件，任何被授予<code>FILE</code>权限的用户都能读或写MySQL服务器上的任何文件（说明用户可以读任何数据库目录下的文件，因为服务器可以访问这些文件）。
+                        <code>FILE</code>权限允许用户在MySQL服务器具有写权限的目录下创建新文件，但不能覆盖已有文件。
+                    </li>
+                </ol>
+            </div>
+            <div id="authority_management_various_permissions_of_mysql_2" class="tab-pane fade">
+                <p class="firstLineIndent">其余的权限用于<b>管理性</b>操作，它使用<b>MySQLadmin</b>程序或<b>SQL</b>语句实施。</p>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>权限</th>
+                        <th>权限拥有者允许执行的命令</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>RELOAD</td>
+                        <td>flush-hosts、flush-logs、flush-privileges、flush-status、flush-tables、flush-threads、refresh、reload</td>
+                    </tr>
+                    <tr>
+                        <td>SHUTDOWN</td>
+                        <td>shutdown</td>
+                    </tr>
+                    <tr>
+                        <td>PROCESS</td>
+                        <td>processlist</td>
+                    </tr>
+                    <tr>
+                        <td>SUPER</td>
+                        <td>kill</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <ol>
+                    <li>
+                        <code>reload</code>命令告诉服务器将授权表重新读入内存；<code>flush-privileges</code>是<code>reload</code>的同义词；<code>refresh</code>命令清空所有表并关闭/打开记录文件；其他<code>flush-xxx</code>命令执行类似<code>refresh</code>功能，但是范围更有限，
+                        并且在某些情况下可能更好用。例如，如果只是想清空记录文件，<code>flush-logs</code>是比<code>refresh</code>更好的选择。
+                    </li>
+                    <li><code>shutdown</code>命令关掉服务器。只能从MySQLadmin发出命令</li>
+                    <li><code>processlist</code>命令显示在服务器内执行的线程的信息（其他账户相关的客户端执行的语句）。<code>kill</code>命令杀死服务器线程。用户总是能显示或杀死自己的线程，但是需要<code>PROCESS</code>权限来显示或杀死其他用户和<code>SUPER</code>权限启动的线程</li>
+                    <li><code>kill</code>命令能用来终止其他用户或更改服务器的操作方式</li>
+                </ol>
+                <p class="firstLineIndent">总的来说，只授予权限给需要它们的那些用户。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 权限管理-授权 -->
+<div id="authority_management_authorization" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">授权</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">授权就是为某个用户授予权限。合理的授权可以保证数据库的安全。MySQL中可以使用<code>GRANT</code>语句为用户授予权限。</p>
+        <p class="firstLineIndent">授予的权限可以分为多个层级：</p>
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>权限</th>
-                <th>user表中对应的列</th>
-                <th>权限的范围</th>
+                <th>层级</th>
+                <th>描述</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
+                <td>全局层级</td>
+                <td>全局权限适用于一个给定服务器中的所有数据库。这些权限存储在mysql.user表中。<br/><code>GRANT ALL ON *.*</code>和<code>REVOKE ALL ON *.*</code>只授予和撤销全局权限</td>
             </tr>
             <tr>
-                <td>DROP</td>
-                <td>Drop_priv</td>
-                <td>数据库、表或视图</td>
+                <td>数据库层级</td>
+                <td>数据库权限适用于一个给定数据库中的所有目标。这些权限存储在mysql.db和mysql.host表中。<br/><code>GRANT ALL ON db_name.*</code>和<code>REVOKE ALL ON db_name.*</code>只授予和撤销数据库权限。</td>
             </tr>
             <tr>
-                <td>GRANT OPTION</td>
-                <td>Grant_priv</td>
-                <td>数据库、表或存储过程</td>
+                <td>表层级</td>
+                <td>表权限适用于一个给定表中的所有列。这些权限存储在mysql.tables_priv表中。<br/><code>GRANT ALL ON db_name.tbl_name</code>和<code>REVOKE ALL ON db_name.tbl_name</code>只授予和撤销表权限。</td>
             </tr>
             <tr>
-                <td>REFERENCES</td>
-                <td>References_priv</td>
-                <td>数据库或表</td>
+                <td>列层级</td>
+                <td>列权限适用于一个给定表中的单一列。这些权限存储在mysql.columns_priv表中。<br/>当使用REVOKE时，必须指定与被授权列相同的列。</td>
             </tr>
             <tr>
-                <td>EVENT</td>
-                <td>Event_priv</td>
-                <td>数据库</td>
+                <td>子程序层级</td>
+                <td><code>CREATE ROUTINE</code>、<code>ALTER ROUTINE</code>、<code>EXECUTE</code>和<code>GRANT</code>权限适用于已存储的子程序。<br/>这些权限可以被授予为<b>全局层级</b>和<b>数据库层级</b>。<br/>而且，除了<code>CREATE ROUTINE</code>外，这些权限可以被授予子程序层级，并存储在mysql.procs_priv表中。</td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <p class="firstLineIndent">在MySQL中，必须是拥有<b>GRANT</b>权限的用户才可以执行GRANT语句。</p>
+        <p class="firstLineIndent">要使用GRANT或REVOKE，必须拥有<code>GRANT OPTION</code>权限，并且必须用于正在授予或撤销的权限。GRANT的语法如下：</p>
+        <p class="firstLineIndent"><code>GRANT priv_type [(columns)] [,priv_type [(columns)]]...</code></p>
+        <p class="firstLineIndent"><code>ON [object_type] table1,table2,...,tablen</code></p>
+        <p class="firstLineIndent"><code>TO user IDENTIFIED BY 'password' [WITH GRANT OPTION]</code></p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>priv_type</td>
+                <td>表示权限类型</td>
             </tr>
             <tr>
-                <td>ALTER</td>
-                <td>Alter_priv</td>
-                <td>数据库</td>
+                <td>columns</td>
+                <td>表示权限作用于哪些列上，不指定该参数，表示作用于整个表</td>
             </tr>
             <tr>
-                <td>DELETE</td>
-                <td>Delete_priv</td>
-                <td>表</td>
+                <td>table1,table2,...,tablen</td>
+                <td>表示授予权限的列所在的表</td>
             </tr>
             <tr>
-                <td>INDEX</td>
-                <td>Index_priv</td>
-                <td>表</td>
+                <td>object_type</td>
+                <td>指定授权作用的对象类型，包括TABLE（表）、FUNCTION（函数）和PROCEDURE（存储过程），当从旧版本的MySQL升级时，要使用object_type子句，必须升级授权表</td>
             </tr>
             <tr>
-                <td>INSERT</td>
-                <td>Insert_priv</td>
-                <td>表</td>
+                <td>user</td>
+                <td>表示用户账户，由用户名和主机名构成，形式是“'username'@'hostname'”</td>
             </tr>
             <tr>
-                <td>SELECT</td>
-                <td>Select_priv</td>
-                <td>表或列</td>
+                <td>IDENTIFIED BY</td>
+                <td>用于设置密码</td>
             </tr>
             <tr>
-                <td>UPDATE</td>
-                <td>Update_priv</td>
-                <td>表或列</td>
-            </tr>
-            <tr>
-                <td>CREATE TEMP</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
-            </tr>
-            <tr>
-                <td>CREATE</td>
-                <td>Create_priv</td>
-                <td>数据库、表或索引</td>
+                <td>WITH</td>
+                <td class="tinyHand" onclick="authorityManagementAuthorizationWithTips()">这个参数后面可以跟一个或多个with_option参数。这个参数有5个选项。 <i class="fa fa-hand-pointer-o"></i></td>
             </tr>
             </tbody>
         </table>
         <hr>
         <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-        <table class="table table-bordered">
+        <p class="firstLineIndent">使用GRANT语句创建一个新的用户grantUser，密码为“grantpwd”。用户grantUser对所有的数据有查询、插入权限，并授予GRANT权限。：</p>
+        <pre>
+            <code class="sql">
+    mysql> GRANT SELECT,INSERT ON *.* TO 'grantUser'@'localhost'
+        -> IDENTIFIED BY 'grantpwd'
+        -> WITH GRANT OPTION;
+    Query OK, 0 rows affected (0.03 sec)
+    mysql>
+    mysql>
+    mysql> SELECT Host,User,Select_priv,Insert_priv,Grant_priv FROM mysql.user WHERE User = 'grantUser';
+    +------------+----------------+---------------+---------------+-------------+
+    |    Host    |      User      |  Select_priv  |  Insert_priv  | Grant_priv  |
+    +------------+----------------+---------------+---------------+-------------+
+    |  localhost |    grantUser   |       Y       |       Y       |      Y      |
+    +------------+----------------+---------------+---------------+-------------+
+    1 row in set (0.00 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">查询结果显示用户grantUser被创建成功，并被赋予SELECT、INSERT和GRANT权限，其相应字段值均为‘Y’。被授予GRANT权限的用户可以登录MySQL并创建其他用户账户，在这里为名称是grantUser的用户。</p>
+    </div>
+</div>
+
+<!-- 权限管理-授权-WITH提示 -->
+<div id="authority_management_authorization_with_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">WITH</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
             <tbody>
             <tr>
-                <td class="bold"><i>示例1：使用root用户登陆到本地MySQL服务器的mysql库中：</i></td>
+                <td>GRANT OPTION</td>
+                <td>被授权的用户可以将这些权限赋予别的用户</td>
             </tr>
             <tr>
-                <td><code>mysql -h localhost -u root -p123456 mysql</code></td>
+                <td>MAX_QUERIES_PER_HOUR count</td>
+                <td>设置每个小时可以执行count次查询</td>
             </tr>
             <tr>
-                <td class="bold"><i>示例2：使用root用户登录到本地MySQL服务器的test_db数据库中，同时执行一条查询语句：</i></td>
+                <td>MAX_UPDATES_PER_HOUR count</td>
+                <td>设置每个小时可以执行count次更新</td>
             </tr>
             <tr>
-                <td><code>mysql -h localhost -u root -p123456 test_db -e "DESC person;"</code></td>
+                <td>MAX_CONNECTIONS_PER_HOUR count</td>
+                <td>设置每个小时可以建立count个连接</td>
+            </tr>
+            <tr>
+                <td>MAX_USER_CONNECTIONS count</td>
+                <td>设置单个用户可以同时建立count个连接</td>
             </tr>
             </tbody>
         </table>
+    </div>
+</div>
+
+<!-- 权限管理-收回授权 -->
+<div id="authority_management_withdraw_permission" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">收回权限</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">收回权限就是取消已经赋予用户的某些权限。收回用户不必要的权限可以在一定程度上保证系统的安全性。MySQL中使用<code>REVOKE</code>语句取消用户的某些权限。</p>
+        <p class="firstLineIndent">使用<code>REVOKE</code>收回权限之后，用户账户的记录将从db、host、tables_priv和columns_priv表中删除，但是用户账号记录仍然在user表中保存。</p>
+        <p class="firstLineIndent">在将用户账户从user表删除之前，应该收回相应用户的所有权限。<code>REVOKE</code>语句有两种语法格式。</p>
+        <p class="firstLineIndent">第一种语法是收回所有用户的所有权限，用于取消对于已命名的用户的所有全局层级、数据库层级、表层级和列层级的权限，具体如下：</p>
+        <p class="firstLineIndent"><code>REVOKE ALL PRIVILEGES, GRANT OPTION</code></p>
+        <p class="firstLineIndent"><code>FROM 'user'@'host' [,'user'@'host' ...]</code></p>
+        <p class="firstLineIndent"><code>REVOKE</code>语句必须和<code>FROM</code>语句一起使用。<code>FROM</code>语句指明需要收回权限的账户。</p>
+        <p class="firstLineIndent">另一种为长格式的<code>REVOKE</code>语句，该语法收回指定的权限。基本语法如下：</p>
+        <p class="firstLineIndent"><code>REVOKE priv_type [(columns)] [,priv_type [(columns)]] ...</code></p>
+        <p class="firstLineIndent"><code>ON table1,table2,...,tablen</code></p>
+        <p class="firstLineIndent"><code>FROM 'user'@'host' [, 'user'@'host' ...]</code></p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>priv_type</td>
+                <td>表示权限类型</td>
+            </tr>
+            <tr>
+                <td>columns</td>
+                <td>表示权限作用于哪些列上，不指定该参数，表示作用于整个表</td>
+            </tr>
+            <tr>
+                <td>table1,table2,...,tablen</td>
+                <td>表示从哪个表中收回权限</td>
+            </tr>
+            <tr>
+                <td>'user'@'host'</td>
+                <td>表示用户账户，由用户名和主机名构成</td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="firstLineIndent">要使用<code>REVOKE</code>语句，必须拥有MySQL数据库的全局CREATE USER权限或UPDATE权限。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用REVOKE语句取消用户user的更新权限。REVOKE语句及其执行结果如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> REVOKE UPDATE ON *.* FROM 'user'@'localhost';
+    Query OK, 0 rows affected (0.03 sec)
+    mysql>
+    mysql>
+    mysql> SELECT Host,User,Select_priv,Update_priv,Grant_priv FROM mysql.user WHERE User = 'user';
+    +------------+----------------+---------------+---------------+-------------+
+    |    Host    |      User      |  Select_priv  |  Update_priv  | Grant_priv  |
+    +------------+----------------+---------------+---------------+-------------+
+    |  localhost |    grantUser   |       Y       |       N       |      Y      |
+    +------------+----------------+---------------+---------------+-------------+
+    1 row in set (0.00 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">查询结果显示用户user的Update_priv字段值为‘N’，UPDATE权限已经被收回。</p>
+        <p class="firstLineIndent"><span class="note">注意</span>：当从旧版本的MySQL升级时，如果要使用EXECUTE、CREATE VIEW、SHOW VIEW、CREATE USER、CREATE ROUTINE和ALTER ROUTINE权限，必须首先升级授权表。</p>
+    </div>
+</div>
+
+<!-- 权限管理-查看授权 -->
+<div id="authority_management_view_permissions" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">查看权限</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent"><code>SHOW GRANTS</code>语句可以显示指定用户的权限信息，使用<code>SHOW GRANTS</code>查看账户信息的基本语法格式如下：</p>
+        <p class="firstLineIndent"><code>SHOW GRANTS FOR 'user'@'host';</code></p>
+        <p class="firstLineIndent">授予的权限可以分为多个层级：</p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>user</td>
+                <td>表示登录用户的名称</td>
+            </tr>
+            <tr>
+                <td>host</td>
+                <td>表示登录的主机名称或者IP地址</td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="firstLineIndent">在使用该语句时，要确保指定的用户名和主机名都要用单引号括起来，并使用‘@’符号将两个名字分隔开。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用SHOW GRANTS语句查询用户user的权限信息。SHOW GRANTS语句及其执行结果如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SHOW GRANTS FOR 'user'@'localhost';
+    +---------------------------------------------------------------------------+
+    |                         Grants for user@localhost                         |
+    +---------------------------------------------------------------------------+
+    |  GRANT SELECT, INSERT ON *.* TO `user`@`localhost` WITH GRANT OPTION      |
+    +---------------------------------------------------------------------------+
+    1 row in set (0.00 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">返回的结果显示了user表中的账户信息。接下来的行以“GRANT SELECT, INSERT ON”关键字开头，表示用户被授予了SELECT和INSERT权限；*.*表示SELECT和INSERT权限作用于所有数据库的所有数据表。</p>
+        <p class="firstLineIndent">在这里，只是定义了个别的用户权限，GRANT可以显示更加详细的权限信息，包括全局级的和非全局级的权限，如果表层级或者列层级的权限被授予用户，那么它们也能在结果中显示出来。</p>
+        <p class="firstLineIndent">在前面创建用户时，查看新建的账户时使用SELECT语句，也可以通过SELECT语句查看user表中的各个权限字段以确定用户的权限信息，其基本语法格式如下：</p>
+        <p class="firstLineIndent"><code>SELECT privileges_list FROM user WHERE user = 'username',host = 'hostname';</code></p>
+        <p class="firstLineIndent">其中，privileges_list为想要查看的权限字段，可以为Select_priv、Insert_priv等。</p>
+    </div>
+</div>
+
+<!-- 访问控制提示 -->
+<div id="access_control_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">访问控制</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">正常情况下，并不希望每个用户都可以执行所有所有的数据库操作。当MySQL允许一个用户执行各种操作时，它将首先核实该用户向MySQL服务器发送的连接请求，然后确认用户的操作请求是否被允许。</p>
+        <p class="firstLineIndent">MySQL的访问控制分为两个阶段：<b>连接核实阶段</b>和<b>请求核实阶段</b>。</p>
+    </div>
+</div>
+
+<!-- 访问控制-连接核实阶段 -->
+<div id="access_control_connection_verification_phase" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">连接核实阶段</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">
+            当连接MySQL服务器时，服务器基于用户的身份以及用户是否通过正确的密码身份验证来接受或拒绝连接，即客户端用户连接请求中会提供用户名称、主机地址名和密码。
+            MySQL使用user表中的3个字段（Host、User和authentication_string）执行身份检查，服务器只有在user表记录的Host和User字段匹配客户端主机名和用户名并且提供正确的密码时才接受连接。
+            如果连接核实没有通过，服务器完全拒绝访问；否则，服务器接受连接，然后进入阶段2等待用户请求。
+        </p>
+    </div>
+</div>
+
+<!-- 访问控制-请求核实阶段 -->
+<div id="access_control_request_verification_stage" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">请求核实阶段</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">
+            建立了连接之后，服务器进入访问控制的阶段2。对在此连接上的每个请求，服务器检查用户要执行的操作，然后检查是否有足够的权限来执行它。这正是在授权表中的权限列发挥作用的地方。这些权限可以来自user、
+            db、host、tables_priv或columns_priv表。
+        </p>
+        <p class="firstLineIndent">
+            确认权限时，MySQL首先检查user表，如果指定的权限没有在user表中被授权；MySQL将检查db表，db表是下一安全层级，其中的权限限定于数据库层级，在该层级的SELECT权限允许用户查看指定数据库所有表中的数据；
+            如果在该层级没有找到限定的权限，则MySQL继续检查tables_priv表以及columns_privs表，如果所有权限表都检查完毕，但还是没有找到允许的权限操作，MySQL将返回错误信息，用户请求的操作不能执行，操作失败。
+        </p>
+        <p class="firstLineIndent">
+            <span class="note">注意</span>：MySQL通过向下层级的顺序检查权限表（从user表到columns_privs表），但并不是所有的权限都要执行该过程。例如，一个用户登录到MySQL服务器之后只执行对MySQL的管理操作，此时，只涉及
+            管理权限，因此MySQL只检查user表。另外，如果请求的权限操作不被允许，MySQL也不会继续检查下一层级的表。
+        </p>
+        <div id="mysql_request_verification_process" style="flex-grow: 1; height: 800px; background-color: #282c34;"></div>
     </div>
 </div>
 
