@@ -126,19 +126,19 @@
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
-                <h3 id="authority_and_security_management_page_title" class="page-title tinyHand" onclick="authorityAndSecurityManagementTips()">数据库备份与恢复 <i class="fa fa-hand-pointer-o"></i></h3>
+                <h3 class="page-title tinyHand" onclick="databaseBackupAndRecoveryTips()">数据库备份与恢复 <i class="fa fa-hand-pointer-o"></i></h3>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="permissionsTableTips()">权限表 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <h3 class="panel-title">数据备份</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="permissions_table" style="height:500%;"></div>
+                                <div id="data_backup" style="height:500%;"></div>
                             </div>
                         </div>
                     </div>
@@ -306,787 +306,226 @@
 </div>
 <!-- END WRAPPER -->
 
-<!-- 权限与安全管理提示 -->
-<div id="authority_and_security_management_tips" class="panel" style="display: none">
+<!-- 数据库备份与恢复提示 -->
+<div id="database_backup_and_recovery_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">权限与安全管理</h3>
+        <h3 class="panel-title">数据库备份与恢复</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">MySQL是一个多用户数据库，具有功能强大的访问控制系统，可以为不同用户指定允许的权限。MySQL用户可以分为<b>普通用户</b>和<b>root用户</b>。root用户是超级管理员，拥有所有权限，包括<b>创建用户</b>、<b>删除用户</b>和<b>修改用户</b>的密码等管理权限；普通用户只拥有被授予的各种权限。</p>
-        <p class="firstLineIndent">用户管理包括管理用户账户、权限等。</p>
-    </div>
-</div>
-
-<!-- 权限表提示 -->
-<div id="permissions_table_tips" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">权限表</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">MySQL服务器通过权限表来控制用户对数据库的访问，权限表存放在MySQL数据库中，由<b>MySQL_install_db</b>脚本初始化。存储账户权限信息的表主要有<code>user</code>、<code>db</code>、<code>host</code>、<code>tables_priv</code>、<code>columns_priv</code>和<code>procs_priv</code>。</p>
-    </div>
-</div>
-
-<!-- 权限表-user -->
-<div id="permissions_table_user" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">user表</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">user表是MySQL中最重要的一个权限表，记录允许连接到服务器的账号信息，里面的权限是全局级的。例如，一个用户在user表中被授予了DELETE权限，则该用户可以删除MySQL服务器上所有数据库中的任何记录。</p>
         <p class="firstLineIndent">
-            MySQL 8.0中user表有42个字段，这些字段可以分为4类，分别是
-            <span class="bold tinyHand" onclick="permissionsTableUserUserColumnTips()">用户列 <i class="fa fa-hand-pointer-o" style="display: inline"></i></span>、
-            <span class="bold tinyHand" onclick="permissionsTableUserPermissionColumnTips()">权限列 <i class="fa fa-hand-pointer-o" style="display: inline"></i></span>、
-            <span class="bold tinyHand" onclick="permissionsTableUserSafeColumnTips()">安全列 <i class="fa fa-hand-pointer-o" style="display: inline"></i></span>和
-            <span class="bold tinyHand" onclick="permissionsTableUserResourceControlColumnTips()">资源控制列 <i class="fa fa-hand-pointer-o" style="display: inline"></i></span>。
+            尽管采取了一些管理措施来保证数据库的安全，但是不确定的意外情况总是有可能造成数据的损失，例如意外的停电、管理员不小心的操作失误都可能会造成数据的丢失。保证数据安全最重要的一个措施是确保对数据进行定期备份。
+            如果数据库中的数据丢失或者出现错误，可以使用备份的数据进行恢复，这样就尽可能地降低了意外原因导致的损失。MySQL提供了多种方法对数据进行备份和恢复。
         </p>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>字段名</th>
-                <th>数据类型</th>
-                <th>默认值</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Host</td>
-                <td><span class="label label-success">CHAR(60)</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>User</td>
-                <td><span class="label label-success">CHAR(16)</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>authentication_string</td>
-                <td><span class="label label-success">text</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Select_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Insert_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Update_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Delete_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Create_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Drop_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Reload_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Shutdown_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Process_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>File_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Grant_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>References_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Index_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Alter_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Show_db_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Super_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Create_tmp_table_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Lock_tables_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Execute_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Repl_slave_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Repl_client_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Create_view_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Show_view_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Create_routine_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Alter_routine_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Create_user_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Event_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Trigger_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Create_tablespace_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>ssl_type</td>
-                <td><span class="label label-success">ENUM('','ANY','X509','SPECIFIED')</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>ssl_cipher</td>
-                <td><span class="label label-success">BLOB</span></td>
-                <td>NULL</td>
-            </tr>
-            <tr>
-                <td>x509_issuer</td>
-                <td><span class="label label-success">BLOB</span></td>
-                <td>NULL</td>
-            </tr>
-            <tr>
-                <td>x509_subject</td>
-                <td><span class="label label-success">BLOB</span></td>
-                <td>NULL</td>
-            </tr>
-            <tr>
-                <td>max_questions</td>
-                <td><span class="label label-success">INT(11) UNSIGNED</span></td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>max_updates</td>
-                <td><span class="label label-success">INT(11) UNSIGNED</span></td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>max_connections</td>
-                <td><span class="label label-success">INT(11) UNSIGNED</span></td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>max_user_connections</td>
-                <td><span class="label label-success">INT(11) UNSIGNED</span></td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>plugin</td>
-                <td><span class="label label-success">CHAR(64)</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>authentication_string</td>
-                <td><span class="label label-success">TEXT</span></td>
-                <td>NULL</td>
-            </tr>
-            </tbody>
-        </table>
     </div>
 </div>
 
-<!-- 权限表-user-用户列提示 -->
-<div id="permissions_table_user_user_column_tips" class="panel" style="display: none">
+<!-- 数据备份-使用MySQLdump命令备份 -->
+<div id="data_backup_use_mysqldump_command_to_backup" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">用户列</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">user表的用户列包括<b>Host</b>、<b>User</b>、<b>authentication_string</b>，分别表示<b>主机名</b>、<b>用户名</b>和<b>密码</b>。其中User和Host为user表的联合主键。</p>
-        <p class="firstLineIndent">当用户与服务器之间建立连接时，输入的账户信息中的用户名称、主机名和密码必须匹配user表中对应的字段，只有3个值都匹配的时候，才允许连接的建立。这3个字段的值就是创建账户时保存的账户信息。修改用户密码时，实际就是修改user表的<b>authentication_string</b>字段的值。</p>
-    </div>
-</div>
-
-<!-- 权限表-user-权限列提示 -->
-<div id="permissions_table_user_permission_column_tips" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">权限列</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">权限列的字段决定了用户的权限，描述了在全局范围内允许对数据和数据库进行的操作。包括<b>查询权限</b>、<b>修改权限</b>等普通权限，还包括了<b>关闭服务器</b>、<b>超级权限</b>和<b>加载用户</b>等高级权限。普通权限用于操作数据库；高级权限用于数据库管理。</p>
-        <p class="firstLineIndent">user表中对应的权限是针对所有用户数据库的。这些字段值的类型为<span class="note">ENUM</span>，可以取的值只能为<b>Y</b>和<b>N</b>，Y表示该用户有对应的权限；N表示用户没有对应的权限。</p>
-        <p class="firstLineIndent">查看user表的结构可以看到，这些字段的默认值都是N。如果要修改权限，可以使用<code>GRANT</code>语句或<code>UPDATE</code>语句更改user表的这些字段来修改用户对应的权限。</p>
-    </div>
-</div>
-
-<!-- 权限表-user-安全列提示 -->
-<div id="permissions_table_user_safe_column_tips" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">安全列</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">安全列只有6个字段，其中两个是ssl相关的，两个是x509相关的，另外两个是授权插件相关的。ssl用于加密；x509标准可用于标识用户；Plugin字段标识可以用于验证用户身份的插件，如果该字段为空，服务器使用内建授权验证机制验证用户身份。</p>
-        <p class="firstLineIndent">我们可以通过<code>SHOW VARIABLES LIKE 'have_openssl;'</code>语句来查询服务器是否支持ssl功能。</p>
-    </div>
-</div>
-
-<!-- 权限表-user-资源控制列提示 -->
-<div id="permissions_table_user_resource_control_column_tips" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">资源控制列</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">资源控制列的字段用来限制用户使用的资源，包含4个字段，分别为</p>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>字段名</th>
-                <th>作用</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>max_questions</td>
-                <td>用户每小时允许执行的查询操作次数</td>
-            </tr>
-            <tr>
-                <td>max_updates</td>
-                <td>用户每小时允许执行的更新操作次数</td>
-            </tr>
-            <tr>
-                <td>max_connections</td>
-                <td>用户每小时允许执行的连接操作次数</td>
-            </tr>
-            <tr>
-                <td>max_user_connections</td>
-                <td>用户允许同时建立的连接次数</td>
-            </tr>
-            </tbody>
-        </table>
-        <p class="firstLineIndent">一个小时内用户查询或者连接数量超过资源控制限制，用户将被锁定，知道下一个小时，才可以在此执行对应的操作。可以使用<code>GRANT</code>语句更新这些字段的值。</p>
-    </div>
-</div>
-
-<!-- 权限表-db -->
-<div id="permissions_table_db" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">db表</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">db表是MySQL数据库中非常重要的权限表。db表中存储了用户对某个数据库的操作权限，决定用户能从哪个主机存取哪个数据库。db表比较常用。也可分为
-            <span class="bold tinyHand" onclick="permissionsTableDBUserColumnTips()">用户列 <i class="fa fa-hand-pointer-o" style="display: inline"></i></span>和
-            <span class="bold tinyHand" onclick="permissionsTableDBPermissionColumnTips()">权限列 <i class="fa fa-hand-pointer-o" style="display: inline"></i></span>。
-        </p>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>字段名</th>
-                <th>数据类型</th>
-                <th>默认值</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Host</td>
-                <td><span class="label label-success">CHAR(60)</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Db</td>
-                <td><span class="label label-success">CHAR(64)</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>User</td>
-                <td><span class="label label-success">CHAR(32)</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Select_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Insert_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Update_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Delete_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Create_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Drop_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Grant_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>References_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Index_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Alter_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Create_tmp_table_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Lock_tables_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Create_view_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Show_view_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Create_routine_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Alter_routine_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Execute_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Event_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            <tr>
-                <td>Trigger_priv</td>
-                <td><span class="label label-success">ENUM('N','Y')</span></td>
-                <td>N</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- 权限表-db-用户列提示 -->
-<div id="permissions_table_db_user_column_tips" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">用户列</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">db表用户列有3个字段，分别是<b>Host</b>、<b>User</b>、<b>Db</b>，标识从某个主机连接某个用户对某个数据库的操作权限，这3个字段的组合构成了db表的主键。host表不存储用户名称，用户列只有2个字段，分别是<b>Host</b>和<b>Db</b>，表示从某个主机连接的用户对某个数据库的操作权限，其主键包括<b>Host</b>和<b>Db</b>两个字段。host很少用到，一般情况下db表就可以满足权限控制需求了。</p>
-    </div>
-</div>
-
-<!-- 权限表-db-权限列提示 -->
-<div id="permissions_table_db_permission_column_tips" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">权限列</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">db表中<b>create_routine_priv</b>和<b>alter_routine_priv</b>这两个字段表明用户是否有创建和修改存储过程的权限。</p>
-        <p class="firstLineIndent">user表中的权限是针对所有数据库的，如果希望用户只对某个数据库有操作权限，那么需要将user表中对应的权限设置为N，然后在Db表中设置对应数据库的操作权限。</p>
-        <p class="firstLineIndent">例如，有一个名称为ZhangTing的用户分别从名称为large.domain.com和small.domain.com的两个主机连接到数据库，并需要操作books数据库。这时，可以将用户名称ZhangTing添加到db表中，而db表中的host字段值为空，然后将两个主机地址分别作为两条记录的host字段添加到host表中，并将两个表的数据库字段设置为相同的值books。</p>
-        <p class="firstLineIndent">当有用户连接到MySQL服务器时，db表中没有用户登录的主机名称，则MySQL会从host表中查找相匹配的值，并根据查询的结果决定用户的操作是否被允许。</p>
-    </div>
-</div>
-
-<!-- 权限表-host -->
-<div id="permissions_table_host" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">host表</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">host表不存储用户名称，用户列只有2个字段，分别是<b>Host</b>和<b>Db</b>，表示从某个主机连接的用户对某个数据库的操作权限，其主键包括<b>Host</b>和<b>Db</b>两个字段。host很少用到，一般情况下db表就可以满足权限控制需求了。</p>
-        <p class="firstLineIndent">例如，有一个名称为ZhangTing的用户分别从名称为large.domain.com和small.domain.com的两个主机连接到数据库，并需要操作books数据库。这时，可以将用户名称ZhangTing添加到db表中，而db表中的host字段值为空，然后将两个主机地址分别作为两条记录的host字段添加到host表中，并将两个表的数据库字段设置为相同的值books。</p>
-        <p class="firstLineIndent">当有用户连接到MySQL服务器时，db表中没有用户登录的主机名称，则MySQL会从host表中查找相匹配的值，并根据查询的结果决定用户的操作是否被允许。</p>
-    </div>
-</div>
-
-<!-- 权限表-tables_priv -->
-<div id="permissions_table_tables_priv" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">tables_priv表</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">tables_priv表用来对表设置操作权限。</p>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>字段名</th>
-                <th>数据类型</th>
-                <th>默认值</th>
-                <th>作用</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Host</td>
-                <td><span class="label label-success">CHAR(60)</span></td>
-                <td></td>
-                <td>表示主机名</td>
-            </tr>
-            <tr>
-                <td>Db</td>
-                <td><span class="label label-success">CHAR(64)</span></td>
-                <td></td>
-                <td>表示数据库名</td>
-            </tr>
-            <tr>
-                <td>User</td>
-                <td><span class="label label-success">CHAR(16)</span></td>
-                <td></td>
-                <td>表示用户名</td>
-            </tr>
-            <tr>
-                <td>Table_name</td>
-                <td><span class="label label-success">CHAR(64)</span></td>
-                <td></td>
-                <td>表示表名</td>
-            </tr>
-            <tr>
-                <td>Grantor</td>
-                <td><span class="label label-success">CHAR(77)</span></td>
-                <td></td>
-                <td>表示修改该记录的用户</td>
-            </tr>
-            <tr>
-                <td>Timestamp</td>
-                <td><span class="label label-success">timestamp</span></td>
-                <td>CURRENT_TIMESTAMP</td>
-                <td>表示修改该记录的时间</td>
-            </tr>
-            <tr>
-                <td>Table_priv</td>
-                <td>
-                    <span id="permissions_table_tables_priv_table_priv_tips" class="label label-success" onmouseover="permissionsTableTablesPrivTablePrivTips()">
-                    SET <i class="fa fa-hand-pointer-o" style="display: inline"></i>
-                    </span>
-                </td>
-                <td></td>
-                <td>表示对表的操作权限</td>
-            </tr>
-            <tr>
-                <td>Column_priv</td>
-                <td><span class="label label-success">SET('Select','Insert','Update','References')</span></td>
-                <td></td>
-                <td>表示对表中的列的操作权限</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- 权限表-columns_priv -->
-<div id="permissions_table_columns_priv" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">columns_priv表</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">columns_priv表用来对表的某一列设置权限。</p>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>字段名</th>
-                <th>数据类型</th>
-                <th>默认值</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Host</td>
-                <td><span class="label label-success">CHAR(60)</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Db</td>
-                <td><span class="label label-success">CHAR(64)</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>User</td>
-                <td><span class="label label-success">CHAR(16)</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Table_name</td>
-                <td><span class="label label-success">CHAR(64)</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Column_name</td>
-                <td><span class="label label-success">CHAR(64)</span></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Timestamp</td>
-                <td><span class="label label-success">timestamp</span></td>
-                <td>CURRENT_TIMESTAMP</td>
-            </tr>
-            <tr>
-                <td>Column_priv</td>
-                <td><span class="label label-success">SET('Select','Insert','Update','References')</span></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-        <p class="firstLineIndent"><b>Column_priv</b>用来指定对哪些数据列具有操作权限。</p>
-    </div>
-</div>
-
-<!-- 权限表-procs_priv -->
-<div id="permissions_table_procs_priv" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">procs_priv表</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">procs_priv可以对存储过程和存储函数设置操作权限。</p>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>字段名</th>
-                <th>数据类型</th>
-                <th>默认值</th>
-                <th>作用</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Host</td>
-                <td><span class="label label-success">CHAR(60)</span></td>
-                <td></td>
-                <td>表示主机名</td>
-            </tr>
-            <tr>
-                <td>Db</td>
-                <td><span class="label label-success">CHAR(64)</span></td>
-                <td></td>
-                <td>表示数据库名</td>
-            </tr>
-            <tr>
-                <td>User</td>
-                <td><span class="label label-success">CHAR(16)</span></td>
-                <td></td>
-                <td>表示用户名</td>
-            </tr>
-            <tr>
-                <td>Routine_name</td>
-                <td><span class="label label-success">CHAR(64)</span></td>
-                <td></td>
-                <td>表示存储过程或存储函数的名称</td>
-            </tr>
-            <tr>
-                <td>Routine_type</td>
-                <td><span class="label label-success">ENUM('FUNCTION','PROCEDURE')</span></td>
-                <td>NULL</td>
-                <td>表示存储过程或存储函数的类型</td>
-            </tr>
-            <tr>
-                <td>Grantor</td>
-                <td><span class="label label-success">CHAR(77)</span></td>
-                <td></td>
-                <td>表示插入或修改该记录的用户</td>
-            </tr>
-            <tr>
-                <td>Proc_priv</td>
-                <td><span class="label label-success">SET('Execute','Alter Routine','Grant')</span></td>
-                <td></td>
-                <td>表示拥有的权限</td>
-            </tr>
-            <tr>
-                <td>Timestamp</td>
-                <td><span class="label label-success">timestamp</span></td>
-                <td>CURRENT_TIMESTAMP</td>
-                <td>表示记录更新时间</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- 账户管理-登录和退出MySQL服务器 -->
-<div id="account_management_log_in_and_log_out_of_the_mysql_server" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">登录和退出MySQL服务器</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">通过<code>mysql --help</code>命令可以查看MySQL命令帮助信息。MySQL命令的常用参数如下：</p>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>参数</th>
-                <th>作用</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>-h</td>
-                <td>表示主机名，可以使用该参数指定<b>主机名</b>或<b>IP</b>，如果不指定，默认是localhost</td>
-            </tr>
-            <tr>
-                <td>-u</td>
-                <td>表示用户名，可以使用该参数指定用户名</td>
-            </tr>
-            <tr>
-                <td>-p</td>
-                <td>
-                    表示密码，可以使用该参数指定登录密码。如果该参数后面有一段字段，则该段字符串将作为用户的密码直接登录。如果后面没有内容，则登陆的时候会提示输入密码。<br/>
-                    <span class="note">注意</span>：该参数后面的字符串和-p之前不能有空格
-                </td>
-            </tr>
-            <tr>
-                <td>-P</td>
-                <td>表示端口号，该参数后面接MySQL服务器的端口号，默认为3306</td>
-            </tr>
-            <tr>
-                <td>数据库名</td>
-                <td>可以在命令的最后指定数据库名</td>
-            </tr>
-            <tr>
-                <td>-e</td>
-                <td>表示执行SQL语句。如果指定了该参数，将在登陆后执行-e后面的命令或SQL语句并退出</td>
-            </tr>
-            </tbody>
-        </table>
-        <hr>
-        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-        <table class="table table-bordered">
-            <tbody>
-            <tr>
-                <td class="bold"><i>示例1：使用root用户登陆到本地MySQL服务器的mysql库中：</i></td>
-            </tr>
-            <tr>
-                <td><code>mysql -h localhost -u root -p123456 mysql</code></td>
-            </tr>
-            <tr>
-                <td class="bold"><i>示例2：使用root用户登录到本地MySQL服务器的test_db数据库中，同时执行一条查询语句：</i></td>
-            </tr>
-            <tr>
-                <td><code>mysql -h localhost -u root -p123456 test_db -e "DESC person;"</code></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- 账户管理-创建用户 -->
-<div id="account_management_create_user" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">创建用户</h3>
+        <h3 class="panel-title tinyHand" onclick="useMysqldumpCommandToBackupTips()">使用MySQLdump命令备份 <i class="fa fa-hand-pointer-o"></i></h3>
     </div>
     <div class="panel-body">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#account_management_create_user_1" data-toggle="tab">使用CREATE USER语句创建用户</a></li>
-            <li><a href="#account_management_create_user_2" data-toggle="tab">使用INSERT语句创建用户</a></li>
+            <li class="active"><a href="#data_backup_use_mysqldump_command_to_backup_1" data-toggle="tab">使用MySQLdump备份单个数据库中的所有表</a></li>
+            <li><a href="#data_backup_use_mysqldump_command_to_backup_2" data-toggle="tab">使用MySQLdump备份数据库中的某个表</a></li>
+            <li><a href="#data_backup_use_mysqldump_command_to_backup_3" data-toggle="tab">使用MySQLdump备份多个数据库</a></li>
         </ul>
         <div class="tab-content">
-            <div id="account_management_create_user_1" class="tab-pane fade in active">
-                <p class="firstLineIndent">执行<code>CREATE USER</code>或<code>GRANT</code>语句时，服务器会修改相应的用户授权表，添加或者修改用户及其权限。CREATE USER语句的基本语法格式如下：</p>
-                <p class="firstLineIndent"><code>CREATE USER user_specification [,user_specification]...</code></p>
-                <p class="firstLineIndent">其中，<code>user_specification</code>的具体形式如下：</p>
-                <p class="firstLineIndent"><code>user@host [IDENTIFIED BY [PASSWORD] 'password' | IDENTIFIED WITH auth_plugin [AS 'auth_string']]</code></p>
+            <div id="data_backup_use_mysqldump_command_to_backup_1" class="tab-pane fade in active">
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">使用MySQLdump命令备份数据库中的所有表，执行过程如下：</p>
+                <pre>
+                    <code class="sql">
+    mysql> CREATE DATABASE booksDB;
+    mysql> use booksDB;
+    mysql> CREATE TABLE books(
+        -> bk_id INT NOT NULL PRIMARY KEY,
+        -> bk_title VARCHAR(50) NOT NULL,
+        -> copyright YEAR NOT NULL
+        -> );
+    mysql> INSERT INTO books
+        -> VALUES (11078,'Learning MySQL',2010),
+        -> (11033,'Study Html',2011),
+        -> (11035,'How to use php',2003),
+        -> (11072,'Teach yourself javascript',2005),
+        -> (11028,'Learning C++',2005),
+        -> (11069,'MySQL professional',2009),
+        -> (11026,'Guide to MySQL 8.0',2008),
+        -> (11041,'Inside VC++',2011);
+    mysql>
+    mysql>
+    mysql> CREATE TABLE authors(
+        -> auth_id INT NOT NULL PRIMARY KEY,
+        -> auth_name VARCHAR(20),
+        -> auth_gender CHAR(1)
+        -> );
+    mysql> INSERT INTO authors
+        -> VALUES (1001,'WriterX','F'),
+        -> (1002,'WriterA','F'),
+        -> (1003,'WriterB','M'),
+        -> (1004,'WriterC','F'),
+        -> (1011,'WriterD','F'),
+        -> (1012,'WriterE','M'),
+        -> (1013,'WriterF','M'),
+        -> (1014,'WriterG','F'),
+        -> (1015,'WriterH','F');
+    mysql>
+    mysql>
+    mysql> CREATE TABLE author_book(
+        -> auth_id INT NOT NULL,
+        -> bk_id INT NOT NULL,
+        -> PRIMARY KEY (auth_id,bk_id),
+        -> FOREIGN KEY (auth_id) REFERENCES authors (auth_id),
+        -> FOREIGN KEY (bk_id) REFERENCES books (bk_id)
+        -> );
+    mysql> INSERT INTO author_book
+        -> VALUES (1001,11033),(1002,11035),(1003,11072),(1004,11028),
+        -> (1011,11078),(1012,11026),(1012,11041),(1014,11069);
+                    </code>
+                </pre>
+                <p class="firstLineIndent">完成数据插入后，打开操作系统命令行输入窗口，输入备份命令如下（备份文件路径一定要存在，否则将提示错误信息：系统找不到指定的路径）：</p>
+                <pre>
+                    <code class="sql">
+    C:\ >mysqldump -u root -p booksdb > C:/backup/booksdbBackup.sql
+    Enter password: *********
+                    </code>
+                </pre>
+                <p class="firstLineIndent">输入密码之后，MySQL便对数据库进行了备份，在C:\backup文件夹下面查看刚才备份过的文件，使用文本查看器打开文件可以看到其部分文件内容大致如下：</p>
+                <pre>
+                    <code class="sql">
+    -- MySQL dump 10.13 Distrib 8.0.13, for Win64 (x86_64)
+    --
+    -- Host: localhost      Database: booksdb
+    -- -----------------------------------------------------
+    -- Server version    8.0.13
+
+
+    /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+    /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+    /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+     SET NAMES utf8mb4 ;
+    /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+    /*!40103 SET TIME_ZONE='+00:00' */;
+    /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+    /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+    /*!40111 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+    /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+    --
+    -- Table structure for table `author_book`
+    --
+
+
+    DROP TABLE IF EXISTS `author_book`;
+    /*!40101 SET @saved_cs_client = @@character_set_client */
+    SET character_set_client = utf8mb4;
+    CREATE TABLE `author_book` (
+    `auth_id` int(11) NOT NULL,
+    `bk_id` int(11) NOT NULL,
+    PRIMARY KEY (`auth_id`,`bk_id`),
+    KEY `bk_id` (`bk_id`),
+    CONSTRAINT `author_book_ibfk_1` FOREIGN KEY (`auth_id`) REFERENCES `authors`(`auth_id`),
+    CONSTRAINT `author_book_ibfk_2` FOREIGN KEY (`bk_id`) REFERENCES `books`(`bk_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    /*!40101 SET character_set_client = @saved_cs_client */;
+
+
+    --
+    -- Dumping data for table `author_book`
+    --
+
+
+    LOCK TABLES `author_book` WRITE;
+    /*!40000 ALTER TABLE `author_book` DISABLE KEYS */;
+    INSERT INTO `author_book` VALUES (1001,11033),(1002,11035),(1003,11072),(1004,11028),(1011,11078),(1012,11026),(1012,11041),(1014,11069);
+    /*!40000 ALTER TABLE `author_book` ENABLE KEYS */;
+    UNLOCK TABLES;
+
+
+    --
+    -- Table structure for table `authors`
+    --
+
+
+    DROP TABLE IF EXISTS `authors`;
+    /*!40101 SET @saved_cs_client = @@character_set_client */
+    SET character_set_client = utf8mb4;
+    CREATE TABLE authors(
+    `auth_id` int(11) NOT NULL,
+    `auth_name` varchar(20) DEFAULT NULL,
+    `auth_gender` char(1) DEFAULT NULL,
+    PRIMARY KEY (`auth_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    /*!40101 SET character_set_client = @saved_cs_client */;
+
+
+    --
+    -- Dumping data for table `authors`
+    --
+
+
+    LOCK TABLES `authors` WRITE;
+    /*!40000 ALTER TABLE `authors` DISABLE KEYS */;
+    INSERT INTO `authors` VALUES (1001,'WriterX','F'),(1002,'WriterA','F'),(1003,'WriterB','M'),(1004,'WriterC','F'),(1011,'WriterD','F'),(1012,'WriterE','M'),(1013,'WriterF','M'),(1014,'WriterG','F'),(1015,'WriterH','F');
+    /*!40000 ALTER TABLE `authors` ENABLE KEYS */;
+    UNLOCK TABLES;
+
+
+    --
+    -- Table structure for table `books`
+    --
+
+
+    DROP TABLE IF EXISTS `books`;
+    /*!40101 SET @saved_cs_client = @@character_set_client */
+    SET character_set_client = utf8mb4;
+    CREATE TABLE books(
+    `bk_id` int(11) NOT NULL,
+    `bk_title` varchar(50) NOT NULL,
+    `copyright` year(4) NOT NULL,
+    PRIMARY KEY (`bk_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    /*!40101 SET character_set_client = @saved_cs_client */;
+
+
+    --
+    -- Dumping data for table `books`
+    --
+
+
+    LOCK TABLES `books` WRITE;
+    /*!40000 ALTER TABLE `books` DISABLE KEYS */;
+    INSERT INTO `books` VALUES (11078,'Learning MySQL',2010),(11033,'Study Html',2011),(11035,'How to use php',2003),(11072,'Teach yourself javascript',2005),(11028,'Learning C++',2005),(11069,'MySQL professional',2009),(11026,'Guide to MySQL 8.0',2008),(11041,'Inside VC++',2011);
+    /*!40000 ALTER TABLE `books` ENABLE KEYS */;
+    UNLOCK TABLES;
+    /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+    /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+    /*!40104 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+    /*!40104 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+    /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+    /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+    /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+    /*!40101 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
+    -- Dump completed on 20220-12-08 23:15:29
+                    </code>
+                </pre>
+                <p class="firstLineIndent">可以看到备份文件包含了一些信息，文件开头首先声明了备份文件使用的MySQLdump工具的版本号；然后是备份账户的名称和主机信息，以及备份的数据库名称，最后是MySQL服务器的版本号，在这里为8.0.13。</p>
+                <p class="firstLineIndent">备份文件接下来的部分是一些SET语句，这些语句将一些系统变量值赋给用户定义变量，以确保被恢复的数据库的系统变量和原来备份时的变量相同，例如：</p>
+                <pre><code class="sql">/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;</code></pre>
+                <p class="firstLineIndent">该SET语句将当前系统变量character_set_client的值赋给用户定义变量@old_character_set_client。其他变量与此类似。</p>
+                <p class="firstLineIndent">备份文件的最后几行MySQL使用SET语句恢复服务器系统变量原来的值，例如：</p>
+                <pre><code class="sql">/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;</code></pre>
+                <p class="firstLineIndent">该语句将用户定义的变量@old_character_set_client中保存的值赋给实际的系统变量character_set_client。</p>
+                <p class="firstLineIndent">备份文件中以“--”字符开头的行为注释语句；以“/*!”开头、“*/”结尾的语句为可执行的MySQL注释，这些语句可以被MySQL执行，但在其他数据库管理系统中将被作为注释忽略，以提高数据库的可移植性。</p>
+                <p class="firstLineIndent">另外，备份文件开始的一些语句以数字开头，代表的是MySQL版本号，这些语句只有在指定的MySQL版本或者比该版本高的情况下才能执行。例如，40101，表明这些语句只有在MySQL版本号为4.01.01或者更高的条件下才可以被执行。</p>
+            </div>
+            <div id="data_backup_use_mysqldump_command_to_backup_2" class="tab-pane fade">
+                <p class="firstLineIndent">如果要使用MySQLdump备份数据库中的某个表，其语法格式为：</p>
+                <p class="firstLineIndent"><code>mysqldump -u user -h host -ppassword dbname[tbname,[tbname...]] > filename.sql</code></p>
                 <hr>
                 <table class="table table-bordered">
                     <thead>
@@ -1097,57 +536,26 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>user</td>
-                        <td>表示创建的用户的名称</td>
-                    </tr>
-                    <tr>
-                        <td>host</td>
-                        <td>表示允许登录的用户主机名称</td>
-                    </tr>
-                    <tr>
-                        <td>IDENTIFIED BY</td>
-                        <td>表示用来设置用户的密码</td>
-                    </tr>
-                    <tr>
-                        <td>[PASSWORD]</td>
-                        <td>表示使用哈希值设置密码，该参数可选</td>
-                    </tr>
-                    <tr>
-                        <td>'password'</td>
-                        <td>表示用户登录时使用的普通明文密码</td>
-                    </tr>
-                    <tr>
-                        <td>IDENTIFIED WITH</td>
-                        <td>表示为用户指定一个身份验证插件</td>
-                    </tr>
-                    <tr>
-                        <td>auth_plugin</td>
-                        <td>表示插件的名称，插件的名称可以是一个带单引号的字符串或者带双引号的字符串</td>
-                    </tr>
-                    <tr>
-                        <td>auth_string</td>
-                        <td>是可选的字符串参数，该参数将传递给身份验证插件，由该插件解释该参数的意义</td>
+                        <td>tbname</td>
+                        <td>表示数据库中的表名，多个表名之间用空格隔开</td>
                     </tr>
                     </tbody>
                 </table>
-                <p class="firstLineIndent"><code>CREATE USER</code>语句会添加一个新的MySQL账户。使用<code>CREATE USER</code>语句用户，必须有全局的<code>CREATE USER</code>权限或MySQL数据库的<code>INSERT</code>权限。</p>
-                <p class="firstLineIndent">每添加一个用户，<code>CREATE USER</code>语句会在MySQL.user表中添加一条新纪录，但是新创建的账户没有任何权限。如果添加的账户已经存在，<code>CREATE USER</code>语句会返回一个错误。</p>
+                <p class="firstLineIndent">备份表和备份数据库中所有表的语句不同的地方在于，要在数据库名称dbname之后指定需要备份的表名称。</p>
                 <hr>
                 <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">使用CREATE USER创建一个用户，用户名是jeffery，密码是mypass，主机名是localhost，命令如下：</p>
-                <p class="firstLineIndent"><code>CREATE USER 'jeffery'@'localhost' IDENTIFIED BY 'mypass';</code></p>
-                <p class="firstLineIndent">如果只指定用户名部分’jeffrey‘，主机名部分则默认为’%‘（对所有的主机开放权限）。user_specification告诉MySQL服务器当用户登录时怎么验证用户的登录授权。如果指定用户登录不需要密码，可以省略IDENTIFIED BY部分：</p>
-                <p class="firstLineIndent"><code>CREATE USER 'jeffery'@'localhost';</code></p>
-                <p class="firstLineIndent">此种情况，MySQL服务端使用内建的身份验证机制，用户登录时不能指定密码。</p>
-                <p class="firstLineIndent">如果要创建指定密码的用户，需要IDENTIFIED BY指定明文密码值：</p>
-                <p class="firstLineIndent"><code>CREATE USER 'jeffery'@'localhost' IDENTIFIED BY 'mypass';</code></p>
-                <p class="firstLineIndent">此种情况，MySQL服务端使用内建的身份验证机制，用户登录时必须指定密码。</p>
-                <p class="firstLineIndent">MySQL的某些版本会引入授权表的结构变化，添加新的特权或功能。每当更新MySQL到一个新的版本时，应该更新授权表，以确保它们有最新的结构，确认可以使用任何新功能。</p>
+                <p class="firstLineIndent">备份booksdb数据库中的books表。输入语句如下：</p>
+                <pre>
+                    <code class="sql">
+    C:\ >mysqldump -u root -p booksdb books > C:/backup/booksdbBooksBackup.sql
+    Enter password: *********
+                    </code>
+                </pre>
+                <p class="firstLineIndent">该语句创建名称为booksdbBooksBackup.sql的备份文件，文件中包含SET语句等内容，不同的是，该文件只包含books表的CREATE和INSERT语句。</p>
             </div>
-            <div id="account_management_create_user_2" class="tab-pane fade">
-                <p class="firstLineIndent">可以使用<code>INSERT</code>语句向user表中直接插入一条记录来创建一个新的用户。使用<code>INSERT</code>语句，必须拥有对MySQL.user表的INSERT权限。使用<code>INSERT</code>语句创建新用户的基本语法格式如下：</p>
-                <p class="firstLineIndent"><code>INSERT INTO MySQL.user(Host,User,authentication_string)</code></p>
-                <p class="firstLineIndent"><code>VALUES('host','username',MD5('password'));</code></p>
+            <div id="data_backup_use_mysqldump_command_to_backup_3" class="tab-pane fade">
+                <p class="firstLineIndent">如果要使用MySQLdump备份多个数据库，就需要使用--databases参数，其语法格式为：</p>
+                <p class="firstLineIndent"><code>mysqldump -u user -h host -ppassword --databases [dbname,[dbname...]] > filename.sql</code></p>
                 <hr>
                 <table class="table table-bordered">
                     <thead>
@@ -1158,697 +566,49 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>Host</td>
-                        <td>表示user表中的主机</td>
-                    </tr>
-                    <tr>
-                        <td>User</td>
-                        <td>表示user表中的用户名称</td>
-                    </tr>
-                    <tr>
-                        <td>authentication_string</td>
-                        <td>表示user表中的密码字段</td>
-                    </tr>
-                    <tr>
-                        <td>MD5()</td>
-                        <td>表示密码加密函数</td>
+                        <td>--databases</td>
+                        <td>其参数之后必须指定至少一个数据库的名称，多个数据库名称之间用空格隔开</td>
                     </tr>
                     </tbody>
                 </table>
                 <hr>
                 <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">使用INSERT创建一个新账户，用户名称为customer1，主机名称为localhost，密码为aa123456，INSERT语句如下：</p>
+                <p class="firstLineIndent">使用MySQLdump备份boosdb和test_db数据库，输入语句如下：</p>
                 <pre>
                     <code class="sql">
-    mysql> use mysql;
-    mysql> INSERT INTO user(Host,User,authentication_string)
-        -> VALUES('localhost','customer1',MD5('aa123456'));
-    ERROR  1364(HY000): Field 'ssl_cipher' doesn't have a default value
-    mysql>
-    mysql>
-    mysql> SHOW WARNING;
-    +-----------+-------+---------------------------------------------------+
-    |    Level  |  Code |                  Message                          |
-    +-----------------+-----------------------------------------------------+
-    |    Error  |  1364 | Field 'ssl_cipher' doesn't have a default value   |
-    |    Error  |  1364 | Field 'x509_issuer' doesn't have a default value  |
-    |    Error  |  1364 | Field 'x509_subject' doesn't have a default value |
-    +-----------+-------+---------------------------------------------------+
-    mysql>
-    mysql>
-    mysql> SELECT host,user,authentication_string FROM user;
-    +------------+----------------+-------------------------------------------+
-    |    host    |      user      |         authentication_string             |
-    +------------+----------------+-------------------------------------------+
-    |  localhost |    jeffery     | *6C89852569AGTHH22AADD25EWFASD13FASD31FAF |
-    |  localhost |      root      | *4ACFE3202A5FF5CF467898FC58AAB1D615029441 |
-    |  localhost |  mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
-    |  localhost |    mysql.sys   | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
-    +------------+----------------+-------------------------------------------+
+    C:\ >mysqldump -u root -p --databases booksdb test_db > C:/backup/booksdbAndtest_dbBackup.sql
+    Enter password: *********
                     </code>
                 </pre>
-                <P class="firstLineIndent">因为ssl_cipher、x509_issuer和x509_subject三个字段在user表定义中没有设置默认值，所以在这里提示错误信息，影响INSERT语句的执行。</P>
+                <p class="firstLineIndent">该语句创建名称为booksdbAndtest_dbBackup.sql的备份文件，该文件中包含了创建两个数据库booksdb和test_db所必需的所有语句。</p>
+                <p class="firstLineIndent">另外，使用--all-databases参数可以备份系统中所有的数据库，语句如下：</p>
+                <p class="firstLineIndent"><code>mysqldump -u user -h host -ppassword --all-databases > filename.sql</code></p>
+                <hr>
+                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                <p class="firstLineIndent">使用MySQLdump备份服务器中的所有数据库，输入语句如下：</p>
+                <pre>
+                    <code class="sql">
+    C:\ >mysqldump -u root -p --all-databases > C:/backup/alldbinMySQL.sql
+    Enter password: *********
+                    </code>
+                </pre>
+                <p class="firstLineIndent">该语句创建名称为alldbinMySQL.sql的备份文件，文件中包含了对系统中所有数据库的备份信息。</p>
+                <p class="firstLineIndent">如果在服务器上备份，并且表均为MyISAM表，就应该考虑使用MySQLhotcopy，因为可以更快地进行备份和恢复。</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 账户管理-删除用户 -->
-<div id="account_management_delete_user" class="panel" style="display: none">
+<!-- 使用MySQLdump命令备份提示 -->
+<div id="use_mysqldump_command_to_backup_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">删除用户</h3>
+        <h3 class="panel-title">使用MySQLdump命令备份</h3>
     </div>
     <div class="panel-body">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#account_management_delete_user_1" data-toggle="tab">使用DROP USER语句删除用户</a></li>
-            <li><a href="#account_management_delete_user_2" data-toggle="tab">使用DELETE语句删除用户</a></li>
-        </ul>
-        <div class="tab-content">
-            <div id="account_management_delete_user_1" class="tab-pane fade in active">
-                <p class="firstLineIndent">DROP USER语句的基本语法格式如下：</p>
-                <p class="firstLineIndent"><code>DROP USER user [,user]...</code></p>
-                <p class="firstLineIndent"><code>DROP USER</code>语句用于删除一个或多个MySQL账户。要使用<code>DROP USER</code>，必须拥有MySQL数据库的全局CREATE USER权限或DELETE权限。使用与GRANT或REVOKE相同的格式为每个账户命名。例如，“'jeffrey'@'localhost'”账户名称的用户和主机部分与用户表记录的User和Host列值相对应。</p>
-                <p class="firstLineIndent">使用<code>DROP USER</code>，可以删除一个账户和其权限，操作如下：</p>
-                <hr>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>作用</th>
-                        <th>示例</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>删除user在本地登录权限</td>
-                        <td>DROP USER 'user@localhost';</td>
-                    </tr>
-                    <tr>
-                        <td>删除所有授权表的账户权限记录</td>
-                        <td>DROP USER;</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <hr>
-                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">使用DROP USER删除账户“'jeffery'@'localhost'”，命令如下：</p>
-                <pre>
-                    <code class="sql">
-    mysql> DROP USER 'jeffrey'@'localhost';
-    Query OK, 0 rows affected (0.00 sec)
-    mysql>
-    mysql>
-    mysql> SELECT host,user,authentication_string FROM user;
-    +------------+----------------+-------------------------------------------+
-    |    host    |      user      |         authentication_string             |
-    +------------+----------------+-------------------------------------------+
-    |  localhost |      root      | *4ACFE3202A5FF5CF467898FC58AAB1D615029441 |
-    |  localhost |  mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
-    |  localhost |    mysql.sys   | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
-    +------------+----------------+-------------------------------------------+
-                    </code>
-                </pre>
-                <p class="firstLineIndent"><span class="note">注意</span>：<code>DROP USER</code>不能自动关闭任何打开的用户对话。而且，如果用户有打开的对话，此时取消用户，命令则不会生效，直到用户对话被关闭后才能生效。一旦对话被关闭，用户也被取消，此用户再次视图登录时将会失败。</p>
-            </div>
-            <div id="account_management_delete_user_2" class="tab-pane fade">
-                <p class="firstLineIndent">DELETE语句的基本语法格式如下：</p>
-                <p class="firstLineIndent"><code>DELETE FROM mysql.user WHERE host='hostname' AND user='username';</code></p>
-                <p class="firstLineIndent">host和user为user表中的两个字段，两个字段的组合确定所要删除的账户记录。</p>
-                <hr>
-                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">使用DELETE删除账户“'customer1'@'localhost'”，命令如下：</p>
-                <pre>
-                    <code class="sql">
-    mysql> CREATE USER 'customer1'@'localhost' IDENTIFIED BY 'my123';
-    Query OK, 0 rows affected (0.12 sec)
-    mysql>
-    mysql>
-    mysql> SELECT host,user,authentication_string FROM user;
-    +------------+----------------+-------------------------------------------+
-    |    host    |      user      |         authentication_string             |
-    +------------+----------------+-------------------------------------------+
-    |  localhost |    customer1   | *7AU8DF8SADF9EFDSAJ98F8DA8FDIUO098F9WE8F8 |
-    |  localhost |      root      | *4ACFE3202A5FF5CF467898FC58AAB1D615029441 |
-    |  localhost |  mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
-    |  localhost |    mysql.sys   | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
-    +------------+----------------+-------------------------------------------+
-    mysql>
-    mysql>
-    mysql> DELETE FROM mysql.user WHERE host = 'localhost' AND user = 'customer1';
-    Query OK, 1 rows affected (0.01 sec)
-    mysql>
-    mysql>
-    mysql> SELECT host,user,authentication_string FROM user;
-    +------------+----------------+-------------------------------------------+
-    |    host    |      user      |         authentication_string             |
-    +------------+----------------+-------------------------------------------+
-    |  localhost |      root      | *4ACFE3202A5FF5CF467898FC58AAB1D615029441 |
-    |  localhost |  mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
-    |  localhost |    mysql.sys   | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
-    +------------+----------------+-------------------------------------------+
-                    </code>
-                </pre>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 账户管理-密码管理 -->
-<div id="account_management_password_management" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">密码管理</h3>
-    </div>
-    <div class="panel-body">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#account_management_password_management_1" data-toggle="tab">root用户修改自己的密码</a></li>
-            <li class="dropdown">
-                <a href="#" id="account_management_password_management_2" class="dropdown-toggle" data-toggle="dropdown">root用户修改普通用户的密码<b class="caret"></b></a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="account_management_password_management_2">
-                    <li><a href="#account_management_password_management_2_1" tabindex="-1" data-toggle="tab">使用SET语句修改普通用户的密码</a></li>
-                    <li><a href="#account_management_password_management_2_2" tabindex="-1" data-toggle="tab">使用UPDATE语句修改普通用户的密码</a></li>
-                </ul>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div id="account_management_password_management_1" class="tab-pane fade in active">
-                <p class="firstLineIndent">root用户的安全对于保证MySQL的安全非常重要，因为root用户拥有很高的权限。</p>
-                <p class="firstLineIndent">因为所有账户信息都保存在user表中，所以可以通过直接修改user表来改变root用户的密码。root用户登录到MySQL服务器后，使用UPDATE语句修改mysql数据库的user表的authentication_string字段，从而修改用户的密码。使用UPDATE语句修改root用户密码的语句如下：</p>
-                <p class="firstLineIndent"><code>UPDATE mysql.user SET authentication_string = MD5('123456') WHERE User = 'root' AND Host = 'localhost';</code></p>
-                <p class="firstLineIndent">PASSWORD()函数用来加密用户密码。执行UPDATE语句后，需要执行<code>FLUSH PRIVILEGES;</code>语句重新加载用户权限。</p>
-                <hr>
-                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">使用UPDATE语句将root用户的密码修改为“123456”：</p>
-                <pre>
-                    <code class="sql">
-    mysql> use mysql;
-    mysql> UPDATE mysql.user SET authentication_string = MD5('123456')
-        -> WHERE User = 'root' AND Host = 'localhost';
-    Query OK, 1 rows affected (0.00 sec)
-    Rows matched: 1 Changed: 1 Warnings: 0
-    mysql> FLUSH PRIVILEGES;
-    Query OK, 0 rows affected (0.11 sec)
-                    </code>
-                </pre>
-                <p class="firstLineIndent">执行完UPDATE语句后，root密码被修改成了123456.使用<code>FLUSH PRIVILEGES;</code>语句重新加载权限，就可以使用新的密码登录root用户了。</p>
-            </div>
-            <div id="account_management_password_management_2_1" class="tab-pane fade">
-                <h4><i class="fa fa-anchor"></i><b>使用SET语句修改普通用户的密码</b></h4>
-                <p class="firstLineIndent">使用SET语句修改普通用户密码的语法格式如下：</p>
-                <p class="firstLineIndent"><code>SET PASSWORD FOR 'user'@'localhost' = 'sa123';</code></p>
-                <hr>
-                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">使用SET语句将user用户的密码修改为“sa123”：</p>
-                <pre>
-                    <code class="sql">
-    mysql> SET PASSWORD FOR 'user'@'localhost' = 'sa123';
-    Query OK, 0 rows affected (0.11 sec)
-                    </code>
-                </pre>
-            </div>
-            <div id="account_management_password_management_2_2" class="tab-pane fade">
-                <h4><i class="fa fa-anchor"></i><b>使用UPDATE语句修改普通用户的密码</b></h4>
-                <p class="firstLineIndent">使用UPDATE语句修改普通用户密码的语法格式如下：</p>
-                <p class="firstLineIndent"><code>UPDATE mysql.user SET authentication_string = MD5('123456')</code></p>
-                <p class="firstLineIndent"><code>WHERE User = 'username' AND Host = 'hostname';</code></p>
-                <hr>
-                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">使用UPDATE语句将user用户的密码修改为“sns123”：</p>
-                <pre>
-                    <code class="sql">
-    mysql> UPDATE mysql.user SET authentication_string = MD5('sns123')
-        -> WHERE User = 'user' AND Host = 'localhost';
-    Query OK, 1 rows affected (0.00 sec)
-    Rows matched: 1 Changed: 1 Warning: 0
-    mysql> FLUSH PRIVILEGES;
-    Query OK, 0 rows affected (0.11 sec)
-                    </code>
-                </pre>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 权限管理提示 -->
-<div id="authority_management_tips" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">权限管理</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">授权管理主要是对登录到MySQL的用户进行权限验证。所有用户的权限都存储在MySQL的权限表中，不合理的权限规划会给MySQL服务器带来安全隐患。</p>
-        <p class="firstLineIndent">数据库管理员要对所有用户的权限进行合理规划管理。MySQL权限系统的主要功能是证实连接到一台给定主机的用户，并且赋予该用户在数据库上的SELECT、INSERT、UPDATE和DELETE权限。</p>
-    </div>
-</div>
-
-<!-- 权限管理-MySQL的各种权限 -->
-<div id="authority_management_various_permissions_of_mysql" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">MySQL的各种权限</h3>
-    </div>
-    <div class="panel-body">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#authority_management_various_permissions_of_mysql_1" data-toggle="tab">GRANT和REVOKE语句中可以使用的权限</a></li>
-            <li><a href="#authority_management_various_permissions_of_mysql_2" data-toggle="tab">不同权限下可以使用的MySQLadmin命令</a></li>
-        </ul>
-        <div class="tab-content">
-            <div id="authority_management_various_permissions_of_mysql_1" class="tab-pane fade in active">
-                <p class="firstLineIndent">账户权限信息被存储在MySQL数据库的user、db、host、tables_priv、column_priv和procs_priv表中。在MySQL启动时，服务器将这些数据库表中权限信息的内容读入内存。</p>
-                <p class="firstLineIndent">GRANT和REVOKE语句所涉及的权限的名称如下表所示，其中含有在授权表中每个权限的表列名称和每个权限有关的操作对象等。</p>
-                <hr>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>权限</th>
-                        <th>user表中对应的列</th>
-                        <th>权限的范围</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>CREATE</td>
-                        <td>Create_priv</td>
-                        <td>数据库、表或索引</td>
-                    </tr>
-                    <tr>
-                        <td>DROP</td>
-                        <td>Drop_priv</td>
-                        <td>数据库、表或视图</td>
-                    </tr>
-                    <tr>
-                        <td>GRANT OPTION</td>
-                        <td>Grant_priv</td>
-                        <td>数据库、表或存储过程</td>
-                    </tr>
-                    <tr>
-                        <td>REFERENCES</td>
-                        <td>References_priv</td>
-                        <td>数据库或表</td>
-                    </tr>
-                    <tr>
-                        <td>EVENT</td>
-                        <td>Event_priv</td>
-                        <td>数据库</td>
-                    </tr>
-                    <tr>
-                        <td>ALTER</td>
-                        <td>Alter_priv</td>
-                        <td>数据库</td>
-                    </tr>
-                    <tr>
-                        <td>DELETE</td>
-                        <td>Delete_priv</td>
-                        <td>表</td>
-                    </tr>
-                    <tr>
-                        <td>INDEX</td>
-                        <td>Index_priv</td>
-                        <td>表</td>
-                    </tr>
-                    <tr>
-                        <td>INSERT</td>
-                        <td>Insert_priv</td>
-                        <td>表</td>
-                    </tr>
-                    <tr>
-                        <td>SELECT</td>
-                        <td>Select_priv</td>
-                        <td>表或列</td>
-                    </tr>
-                    <tr>
-                        <td>UPDATE</td>
-                        <td>Update_priv</td>
-                        <td>表或列</td>
-                    </tr>
-                    <tr>
-                        <td>CREATE TEMPORARY TABLES</td>
-                        <td>Create_tmp_table_priv</td>
-                        <td>表</td>
-                    </tr>
-                    <tr>
-                        <td>LOCK TABLES</td>
-                        <td>Lock_tables_priv</td>
-                        <td>表</td>
-                    </tr>
-                    <tr>
-                        <td>TRIGGER</td>
-                        <td>Trigger_priv</td>
-                        <td>表</td>
-                    </tr>
-                    <tr>
-                        <td>CREATE VIEW</td>
-                        <td>Create_view_priv</td>
-                        <td>视图</td>
-                    </tr>
-                    <tr>
-                        <td>SHOW VIEW</td>
-                        <td>Show_view_priv</td>
-                        <td>视图</td>
-                    </tr>
-                    <tr>
-                        <td>ALTER ROUTINE</td>
-                        <td>Alter_routine_priv</td>
-                        <td>存储过程和函数</td>
-                    </tr>
-                    <tr>
-                        <td>CREATE ROUTINE</td>
-                        <td>Create_routine_priv</td>
-                        <td>存储过程和函数</td>
-                    </tr>
-                    <tr>
-                        <td>EXECUTE</td>
-                        <td>Execute_priv</td>
-                        <td>存储过程和函数</td>
-                    </tr>
-                    <tr>
-                        <td>FILE</td>
-                        <td>File_priv</td>
-                        <td>访问服务器上的文件</td>
-                    </tr>
-                    <tr>
-                        <td>CREATE TABLESPACE</td>
-                        <td>Create_tablespace_priv</td>
-                        <td>服务器管理</td>
-                    </tr>
-                    <tr>
-                        <td>CREATE USER</td>
-                        <td>Create_user_priv</td>
-                        <td>服务器管理</td>
-                    </tr>
-                    <tr>
-                        <td>PROCESS</td>
-                        <td>Process_priv</td>
-                        <td>存储过程和函数</td>
-                    </tr>
-                    <tr>
-                        <td>RELOAD</td>
-                        <td>Reload_priv</td>
-                        <td>访问服务器上的文件</td>
-                    </tr>
-                    <tr>
-                        <td>REPLICATION CLIENT</td>
-                        <td>Repl_client_priv</td>
-                        <td>服务器管理</td>
-                    </tr>
-                    <tr>
-                        <td>REPLICATION SLAVE</td>
-                        <td>Repl_slave_priv</td>
-                        <td>服务器管理</td>
-                    </tr>
-                    <tr>
-                        <td>SHOW DATABASES</td>
-                        <td>Show_db_priv</td>
-                        <td>服务器管理</td>
-                    </tr>
-                    <tr>
-                        <td>SHUTDOWN</td>
-                        <td>Shutdown_priv</td>
-                        <td>服务器管理</td>
-                    </tr>
-                    <tr>
-                        <td>SUPER</td>
-                        <td>Super_priv</td>
-                        <td>服务器管理</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <hr>
-                <ol>
-                    <li><code>CREATE</code>和<code>DROP</code>权限，可以创建新数据库和表，或删除（移掉）已有数据库和表。如果将MySQL数据库中的<code>DROP</code>权限授予某用户，用户可以删掉MySQL访问权限保存的数据库</li>
-                    <li><code>SELECT</code>、<code>INSERT</code>、<code>UPDATE</code>和<code>DELETE</code>权限允许在一个数据库现有的表上实时操作</li>
-                    <li><code>SELECT</code>权限只有在它们真正从一个表中检索行时才被用到</li>
-                    <li><code>INDEX</code>权限允许创建或删除索引，<code>INDEX</code>适用已有表。如果具有某个表的<code>CREATE</code>权限，可以在<code>CREATE TABLE</code>语句中包括索引定义</li>
-                    <li><code>ALTER</code>权限，可以使用<code>ALTER TABLE</code>来更改表的结构和重新命名表</li>
-                    <li><code>CREATE ROUTINE</code>权限用来创建保存的程序（函数和程序），<code>ALTER ROUTINE</code>权限用来更改和删除保存的程序，<code>EXECUTE</code>权限用来执行保存的程序</li>
-                    <li><code>GRANT</code>权限允许授权给其他用户，可用于数据库、表和保存的程序</li>
-                    <li>
-                        <code>FILE</code>权限给予用户使用<code>LOAD DATA INFILE</code>和<code>SELECT...INTO OUTFILE</code>语句读或写服务器上的文件，任何被授予<code>FILE</code>权限的用户都能读或写MySQL服务器上的任何文件（说明用户可以读任何数据库目录下的文件，因为服务器可以访问这些文件）。
-                        <code>FILE</code>权限允许用户在MySQL服务器具有写权限的目录下创建新文件，但不能覆盖已有文件。
-                    </li>
-                </ol>
-            </div>
-            <div id="authority_management_various_permissions_of_mysql_2" class="tab-pane fade">
-                <p class="firstLineIndent">其余的权限用于<b>管理性</b>操作，它使用<b>MySQLadmin</b>程序或<b>SQL</b>语句实施。</p>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>权限</th>
-                        <th>权限拥有者允许执行的命令</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>RELOAD</td>
-                        <td>flush-hosts、flush-logs、flush-privileges、flush-status、flush-tables、flush-threads、refresh、reload</td>
-                    </tr>
-                    <tr>
-                        <td>SHUTDOWN</td>
-                        <td>shutdown</td>
-                    </tr>
-                    <tr>
-                        <td>PROCESS</td>
-                        <td>processlist</td>
-                    </tr>
-                    <tr>
-                        <td>SUPER</td>
-                        <td>kill</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <hr>
-                <ol>
-                    <li>
-                        <code>reload</code>命令告诉服务器将授权表重新读入内存；<code>flush-privileges</code>是<code>reload</code>的同义词；<code>refresh</code>命令清空所有表并关闭/打开记录文件；其他<code>flush-xxx</code>命令执行类似<code>refresh</code>功能，但是范围更有限，
-                        并且在某些情况下可能更好用。例如，如果只是想清空记录文件，<code>flush-logs</code>是比<code>refresh</code>更好的选择。
-                    </li>
-                    <li><code>shutdown</code>命令关掉服务器。只能从MySQLadmin发出命令</li>
-                    <li><code>processlist</code>命令显示在服务器内执行的线程的信息（其他账户相关的客户端执行的语句）。<code>kill</code>命令杀死服务器线程。用户总是能显示或杀死自己的线程，但是需要<code>PROCESS</code>权限来显示或杀死其他用户和<code>SUPER</code>权限启动的线程</li>
-                    <li><code>kill</code>命令能用来终止其他用户或更改服务器的操作方式</li>
-                </ol>
-                <p class="firstLineIndent">总的来说，只授予权限给需要它们的那些用户。</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 权限管理-授权 -->
-<div id="authority_management_authorization" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">授权</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">授权就是为某个用户授予权限。合理的授权可以保证数据库的安全。MySQL中可以使用<code>GRANT</code>语句为用户授予权限。</p>
-        <p class="firstLineIndent">授予的权限可以分为多个层级：</p>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>层级</th>
-                <th>描述</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>全局层级</td>
-                <td>全局权限适用于一个给定服务器中的所有数据库。这些权限存储在mysql.user表中。<br/><code>GRANT ALL ON *.*</code>和<code>REVOKE ALL ON *.*</code>只授予和撤销全局权限</td>
-            </tr>
-            <tr>
-                <td>数据库层级</td>
-                <td>数据库权限适用于一个给定数据库中的所有目标。这些权限存储在mysql.db和mysql.host表中。<br/><code>GRANT ALL ON db_name.*</code>和<code>REVOKE ALL ON db_name.*</code>只授予和撤销数据库权限。</td>
-            </tr>
-            <tr>
-                <td>表层级</td>
-                <td>表权限适用于一个给定表中的所有列。这些权限存储在mysql.tables_priv表中。<br/><code>GRANT ALL ON db_name.tbl_name</code>和<code>REVOKE ALL ON db_name.tbl_name</code>只授予和撤销表权限。</td>
-            </tr>
-            <tr>
-                <td>列层级</td>
-                <td>列权限适用于一个给定表中的单一列。这些权限存储在mysql.columns_priv表中。<br/>当使用REVOKE时，必须指定与被授权列相同的列。</td>
-            </tr>
-            <tr>
-                <td>子程序层级</td>
-                <td><code>CREATE ROUTINE</code>、<code>ALTER ROUTINE</code>、<code>EXECUTE</code>和<code>GRANT</code>权限适用于已存储的子程序。<br/>这些权限可以被授予为<b>全局层级</b>和<b>数据库层级</b>。<br/>而且，除了<code>CREATE ROUTINE</code>外，这些权限可以被授予子程序层级，并存储在mysql.procs_priv表中。</td>
-            </tr>
-            </tbody>
-        </table>
+        <p class="firstLineIndent">MySQLdump是MySQL提供的一个非常有用的数据库本分工具。MySQLdump命令执行时，可以将数据库备份成一个文本文件，该文件中实际包含了多个<code>CREATE</code>和<code>INSERT</code>语句，使用这些语句可以重新创建表和插入数据。</p>
+        <p class="firstLineIndent">MySQLdump备份数据库语句的基本语法格式如下：</p>
+        <p class="firstLineIndent"><code>mysqldump -u user -h host -ppassword dbname[tbname,[tbname...]] > filename.sql;</code></p>
         <hr>
-        <p class="firstLineIndent">在MySQL中，必须是拥有<b>GRANT</b>权限的用户才可以执行GRANT语句。</p>
-        <p class="firstLineIndent">要使用GRANT或REVOKE，必须拥有<code>GRANT OPTION</code>权限，并且必须用于正在授予或撤销的权限。GRANT的语法如下：</p>
-        <p class="firstLineIndent"><code>GRANT priv_type [(columns)] [,priv_type [(columns)]]...</code></p>
-        <p class="firstLineIndent"><code>ON [object_type] table1,table2,...,tablen</code></p>
-        <p class="firstLineIndent"><code>TO user IDENTIFIED BY 'password' [WITH GRANT OPTION]</code></p>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>参数</th>
-                <th>作用</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>priv_type</td>
-                <td>表示权限类型</td>
-            </tr>
-            <tr>
-                <td>columns</td>
-                <td>表示权限作用于哪些列上，不指定该参数，表示作用于整个表</td>
-            </tr>
-            <tr>
-                <td>table1,table2,...,tablen</td>
-                <td>表示授予权限的列所在的表</td>
-            </tr>
-            <tr>
-                <td>object_type</td>
-                <td>指定授权作用的对象类型，包括TABLE（表）、FUNCTION（函数）和PROCEDURE（存储过程），当从旧版本的MySQL升级时，要使用object_type子句，必须升级授权表</td>
-            </tr>
-            <tr>
-                <td>user</td>
-                <td>表示用户账户，由用户名和主机名构成，形式是“'username'@'hostname'”</td>
-            </tr>
-            <tr>
-                <td>IDENTIFIED BY</td>
-                <td>用于设置密码</td>
-            </tr>
-            <tr>
-                <td>WITH</td>
-                <td class="tinyHand" onclick="authorityManagementAuthorizationWithTips()">这个参数后面可以跟一个或多个with_option参数。这个参数有5个选项。 <i class="fa fa-hand-pointer-o"></i></td>
-            </tr>
-            </tbody>
-        </table>
-        <hr>
-        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-        <p class="firstLineIndent">使用GRANT语句创建一个新的用户grantUser，密码为“grantpwd”。用户grantUser对所有的数据有查询、插入权限，并授予GRANT权限。：</p>
-        <pre>
-            <code class="sql">
-    mysql> GRANT SELECT,INSERT ON *.* TO 'grantUser'@'localhost'
-        -> IDENTIFIED BY 'grantpwd'
-        -> WITH GRANT OPTION;
-    Query OK, 0 rows affected (0.03 sec)
-    mysql>
-    mysql>
-    mysql> SELECT Host,User,Select_priv,Insert_priv,Grant_priv FROM mysql.user WHERE User = 'grantUser';
-    +------------+----------------+---------------+---------------+-------------+
-    |    Host    |      User      |  Select_priv  |  Insert_priv  | Grant_priv  |
-    +------------+----------------+---------------+---------------+-------------+
-    |  localhost |    grantUser   |       Y       |       Y       |      Y      |
-    +------------+----------------+---------------+---------------+-------------+
-    1 row in set (0.00 sec)
-            </code>
-        </pre>
-        <p class="firstLineIndent">查询结果显示用户grantUser被创建成功，并被赋予SELECT、INSERT和GRANT权限，其相应字段值均为‘Y’。被授予GRANT权限的用户可以登录MySQL并创建其他用户账户，在这里为名称是grantUser的用户。</p>
-    </div>
-</div>
-
-<!-- 权限管理-授权-WITH提示 -->
-<div id="authority_management_authorization_with_tips" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">WITH</h3>
-    </div>
-    <div class="panel-body">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>参数</th>
-                <th>作用</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>GRANT OPTION</td>
-                <td>被授权的用户可以将这些权限赋予别的用户</td>
-            </tr>
-            <tr>
-                <td>MAX_QUERIES_PER_HOUR count</td>
-                <td>设置每个小时可以执行count次查询</td>
-            </tr>
-            <tr>
-                <td>MAX_UPDATES_PER_HOUR count</td>
-                <td>设置每个小时可以执行count次更新</td>
-            </tr>
-            <tr>
-                <td>MAX_CONNECTIONS_PER_HOUR count</td>
-                <td>设置每个小时可以建立count个连接</td>
-            </tr>
-            <tr>
-                <td>MAX_USER_CONNECTIONS count</td>
-                <td>设置单个用户可以同时建立count个连接</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- 权限管理-收回授权 -->
-<div id="authority_management_withdraw_permission" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">收回权限</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">收回权限就是取消已经赋予用户的某些权限。收回用户不必要的权限可以在一定程度上保证系统的安全性。MySQL中使用<code>REVOKE</code>语句取消用户的某些权限。</p>
-        <p class="firstLineIndent">使用<code>REVOKE</code>收回权限之后，用户账户的记录将从db、host、tables_priv和columns_priv表中删除，但是用户账号记录仍然在user表中保存。</p>
-        <p class="firstLineIndent">在将用户账户从user表删除之前，应该收回相应用户的所有权限。<code>REVOKE</code>语句有两种语法格式。</p>
-        <p class="firstLineIndent">第一种语法是收回所有用户的所有权限，用于取消对于已命名的用户的所有全局层级、数据库层级、表层级和列层级的权限，具体如下：</p>
-        <p class="firstLineIndent"><code>REVOKE ALL PRIVILEGES, GRANT OPTION</code></p>
-        <p class="firstLineIndent"><code>FROM 'user'@'host' [,'user'@'host' ...]</code></p>
-        <p class="firstLineIndent"><code>REVOKE</code>语句必须和<code>FROM</code>语句一起使用。<code>FROM</code>语句指明需要收回权限的账户。</p>
-        <p class="firstLineIndent">另一种为长格式的<code>REVOKE</code>语句，该语法收回指定的权限。基本语法如下：</p>
-        <p class="firstLineIndent"><code>REVOKE priv_type [(columns)] [,priv_type [(columns)]] ...</code></p>
-        <p class="firstLineIndent"><code>ON table1,table2,...,tablen</code></p>
-        <p class="firstLineIndent"><code>FROM 'user'@'host' [, 'user'@'host' ...]</code></p>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>参数</th>
-                <th>作用</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>priv_type</td>
-                <td>表示权限类型</td>
-            </tr>
-            <tr>
-                <td>columns</td>
-                <td>表示权限作用于哪些列上，不指定该参数，表示作用于整个表</td>
-            </tr>
-            <tr>
-                <td>table1,table2,...,tablen</td>
-                <td>表示从哪个表中收回权限</td>
-            </tr>
-            <tr>
-                <td>'user'@'host'</td>
-                <td>表示用户账户，由用户名和主机名构成</td>
-            </tr>
-            </tbody>
-        </table>
-        <p class="firstLineIndent">要使用<code>REVOKE</code>语句，必须拥有MySQL数据库的全局CREATE USER权限或UPDATE权限。</p>
-        <hr>
-        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-        <p class="firstLineIndent">使用REVOKE语句取消用户user的更新权限。REVOKE语句及其执行结果如下：</p>
-        <pre>
-            <code class="sql">
-    mysql> REVOKE UPDATE ON *.* FROM 'user'@'localhost';
-    Query OK, 0 rows affected (0.03 sec)
-    mysql>
-    mysql>
-    mysql> SELECT Host,User,Select_priv,Update_priv,Grant_priv FROM mysql.user WHERE User = 'user';
-    +------------+----------------+---------------+---------------+-------------+
-    |    Host    |      User      |  Select_priv  |  Update_priv  | Grant_priv  |
-    +------------+----------------+---------------+---------------+-------------+
-    |  localhost |    grantUser   |       Y       |       N       |      Y      |
-    +------------+----------------+---------------+---------------+-------------+
-    1 row in set (0.00 sec)
-            </code>
-        </pre>
-        <p class="firstLineIndent">查询结果显示用户user的Update_priv字段值为‘N’，UPDATE权限已经被收回。</p>
-        <p class="firstLineIndent"><span class="note">注意</span>：当从旧版本的MySQL升级时，如果要使用EXECUTE、CREATE VIEW、SHOW VIEW、CREATE USER、CREATE ROUTINE和ALTER ROUTINE权限，必须首先升级授权表。</p>
-    </div>
-</div>
-
-<!-- 权限管理-查看授权 -->
-<div id="authority_management_view_permissions" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">查看权限</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent"><code>SHOW GRANTS</code>语句可以显示指定用户的权限信息，使用<code>SHOW GRANTS</code>查看账户信息的基本语法格式如下：</p>
-        <p class="firstLineIndent"><code>SHOW GRANTS FOR 'user'@'host';</code></p>
-        <p class="firstLineIndent">授予的权限可以分为多个层级：</p>
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -1859,322 +619,54 @@
             <tbody>
             <tr>
                 <td>user</td>
-                <td>表示登录用户的名称</td>
+                <td>表示用户名称</td>
             </tr>
             <tr>
                 <td>host</td>
-                <td>表示登录的主机名称或者IP地址</td>
+                <td>表示登录用户的主机名称</td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td>表示登录密码</td>
+            </tr>
+            <tr>
+                <td>dbname</td>
+                <td>表示为需要备份的数据库名称</td>
+            </tr>
+            <tr>
+                <td>tbname</td>
+                <td>表示数据库中需要备份的数据表，可以指定多个需要备份的表</td>
+            </tr>
+            <tr>
+                <td>&gt;</td>
+                <td>告诉MySQLdump将备份数据表的定义和数据写入备份文件</td>
+            </tr>
+            <tr>
+                <td>filename.sql</td>
+                <td>表示为备份文件的名称</td>
             </tr>
             </tbody>
         </table>
-        <p class="firstLineIndent">在使用该语句时，要确保指定的用户名和主机名都要用单引号括起来，并使用‘@’符号将两个名字分隔开。</p>
-        <hr>
-        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-        <p class="firstLineIndent">使用SHOW GRANTS语句查询用户user的权限信息。SHOW GRANTS语句及其执行结果如下：</p>
-        <pre>
-            <code class="sql">
-    mysql> SHOW GRANTS FOR 'user'@'localhost';
-    +---------------------------------------------------------------------------+
-    |                         Grants for user@localhost                         |
-    +---------------------------------------------------------------------------+
-    |  GRANT SELECT, INSERT ON *.* TO `user`@`localhost` WITH GRANT OPTION      |
-    +---------------------------------------------------------------------------+
-    1 row in set (0.00 sec)
-            </code>
-        </pre>
-        <p class="firstLineIndent">返回的结果显示了user表中的账户信息。接下来的行以“GRANT SELECT, INSERT ON”关键字开头，表示用户被授予了SELECT和INSERT权限；*.*表示SELECT和INSERT权限作用于所有数据库的所有数据表。</p>
-        <p class="firstLineIndent">在这里，只是定义了个别的用户权限，GRANT可以显示更加详细的权限信息，包括全局级的和非全局级的权限，如果表层级或者列层级的权限被授予用户，那么它们也能在结果中显示出来。</p>
-        <p class="firstLineIndent">在前面创建用户时，查看新建的账户时使用SELECT语句，也可以通过SELECT语句查看user表中的各个权限字段以确定用户的权限信息，其基本语法格式如下：</p>
-        <p class="firstLineIndent"><code>SELECT privileges_list FROM user WHERE user = 'username',host = 'hostname';</code></p>
-        <p class="firstLineIndent">其中，privileges_list为想要查看的权限字段，可以为Select_priv、Insert_priv等。</p>
     </div>
 </div>
 
-<!-- 访问控制提示 -->
-<div id="access_control_tips" class="panel" style="display: none">
+<!-- 数据备份-直接复制整个数据库目录 -->
+<div id="data_backup_copy_the_entire_database_directory_directly" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">访问控制</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">正常情况下，并不希望每个用户都可以执行所有所有的数据库操作。当MySQL允许一个用户执行各种操作时，它将首先核实该用户向MySQL服务器发送的连接请求，然后确认用户的操作请求是否被允许。</p>
-        <p class="firstLineIndent">MySQL的访问控制分为两个阶段：<b>连接核实阶段</b>和<b>请求核实阶段</b>。</p>
-    </div>
-</div>
-
-<!-- 访问控制-连接核实阶段 -->
-<div id="access_control_connection_verification_phase" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">连接核实阶段</h3>
+        <h3 class="panel-title">直接复制整个数据库目录</h3>
     </div>
     <div class="panel-body">
         <p class="firstLineIndent">
-            当连接MySQL服务器时，服务器基于用户的身份以及用户是否通过正确的密码身份验证来接受或拒绝连接，即客户端用户连接请求中会提供用户名称、主机地址名和密码。
-            MySQL使用user表中的3个字段（Host、User和authentication_string）执行身份检查，服务器只有在user表记录的Host和User字段匹配客户端主机名和用户名并且提供正确的密码时才接受连接。
-            如果连接核实没有通过，服务器完全拒绝访问；否则，服务器接受连接，然后进入阶段2等待用户请求。
-        </p>
-    </div>
-</div>
-
-<!-- 访问控制-请求核实阶段 -->
-<div id="access_control_request_verification_stage" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">请求核实阶段</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">
-            建立了连接之后，服务器进入访问控制的阶段2。对在此连接上的每个请求，服务器检查用户要执行的操作，然后检查是否有足够的权限来执行它。这正是在授权表中的权限列发挥作用的地方。这些权限可以来自user、
-            db、host、tables_priv或columns_priv表。
+            因为MySQL表保存为文件方式，所以可以直接复制MySQL数据库的存储目录及文件进行备份。MySQL的数据库目录位置不一定相同，在Windows平台下，MySQL 8.0存放数据库的目录通常
+            默认为“C:\Documents and Setting\All Users\Application Data\MySQL\MySQL Server 8.0\data”或者其他用户自定义目录；在Linux平台下，数据库目录通常为
+            /var/lib/MySQL/，不同Linux版本下目录会有所不同，读者应在自己使用的平台下查找该目录。
         </p>
         <p class="firstLineIndent">
-            确认权限时，MySQL首先检查user表，如果指定的权限没有在user表中被授权；MySQL将检查db表，db表是下一安全层级，其中的权限限定于数据库层级，在该层级的SELECT权限允许用户查看指定数据库所有表中的数据；
-            如果在该层级没有找到限定的权限，则MySQL继续检查tables_priv表以及columns_privs表，如果所有权限表都检查完毕，但还是没有找到允许的权限操作，MySQL将返回错误信息，用户请求的操作不能执行，操作失败。
+            这是一种简单、快速、有效的备份方式。要想保持备份的一致性，备份前需要对相关表执行LOCK TABLES操作，然后对表执行FLUSH TABLES。这样当复制数据库目录中的文件时，允许其他客户继续
+            查询表。需要FLUSH TABLES语句来确保开始备份前将所有激活的索引页写入磁盘。当然，也可以停止MySQL服务再进行备份操作。
         </p>
-        <p class="firstLineIndent">
-            <span class="note">注意</span>：MySQL通过向下层级的顺序检查权限表（从user表到columns_privs表），但并不是所有的权限都要执行该过程。例如，一个用户登录到MySQL服务器之后只执行对MySQL的管理操作，此时，只涉及
-            管理权限，因此MySQL只检查user表。另外，如果请求的权限操作不被允许，MySQL也不会继续检查下一层级的表。
-        </p>
-        <div id="mysql_request_verification_process" style="flex-grow: 1; height: 800px; background-color: #282c34;"></div>
-    </div>
-</div>
-
-<!-- 提升安全性-AES 256加密 -->
-<div id="improve_safety_AES_256" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">AES 256加密</h3>
-    </div>
-    <div class="panel-body">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#improve_safety_AES_256_1" data-toggle="tab">AES_ENCRYPT</a></li>
-            <li><a href="#improve_safety_AES_256_2" data-toggle="tab">AES_DECRYPT</a></li>
-            <li><a href="#improve_safety_AES_256_3" data-toggle="tab">将加密字符串存储数据表中</a></li>
-        </ul>
-        <div class="tab-content">
-            <div id="improve_safety_AES_256_1" class="tab-pane fade in active">
-                <p class="firstLineIndent">该函数的语法格式如下：</p>
-                <p class="firstLineIndent"><code>AES_ENCRYPT(str,pswd_str)</code></p>
-                <hr>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>参数</th>
-                        <th>作用</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>str</td>
-                        <td>表示需要加密的字符串</td>
-                    </tr>
-                    <tr>
-                        <td>pswd_str</td>
-                        <td>为密钥</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <hr>
-                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">下面将字符串“Adversity does teach who your real friends are”加密，密钥为“key10001”，加密后的串存在@ss中。输入语句如下：</p>
-                <pre>
-                    <code class="sql">
-    mysql> SET @ss=AES_ENCRYPT('Adversity does teach who your real friends are','key10001');
-    Query OK, 0 rows affected (0.00 sec)
-    mysql>
-    mysql>
-    mysql> SELECT @ss;
-    +-----------------------------------------------------------+
-    |  @ss                                                      |
-    +-----------------------------------------------------------+
-    |  HG玫2:eofdas{: H发|套应钱8  8JJh第送hk|融f   a?aajpwqroiu   |
-    +-----------------------------------------------------------+
-    mysql>
-    mysql>
-    mysql> SELECT CHAR_LENGTH(@ss);
-    +--------------------+
-    |  CHAR_LENGTH(@ss)  |
-    +--------------------+
-    |         48         |
-    +--------------------+
-    1 row in set (0.00 sec)
-                    </code>
-                </pre>
-            </div>
-            <div id="improve_safety_AES_256_2" class="tab-pane fade">
-                <p class="firstLineIndent">该函数的语法格式如下：</p>
-                <p class="firstLineIndent"><code>AES_DECRYPT(str,pswd_str)</code></p>
-                <hr>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>参数</th>
-                        <th>作用</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>str</td>
-                        <td>表示需要解密的字符串</td>
-                    </tr>
-                    <tr>
-                        <td>pswd_str</td>
-                        <td>为密钥</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <hr>
-                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">下面将@ss中的字符串解密。输入语句如下：</p>
-                <pre>
-                    <code class="sql">
-    mysql> SELECT AES_DECRYPT(@ss,'key10001');
-    +---------------------------------------------------+
-    |  AES_DECRYPT(@ss,'key10001')                      |
-    +---------------------------------------------------+
-    |  Adversity does teach who your real friends are   |
-    +---------------------------------------------------+
-    1 row in set (0.00 sec)
-                    </code>
-                </pre>
-            </div>
-            <div id="improve_safety_AES_256_3" class="tab-pane fade">
-                <p class="firstLineIndent">用户将加密的字符串存入数据表的过程中经常会出问题，下面将通过案例来学习其方法。</p>
-                <hr>
-                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">创建数据表mm，包含3个字段，属性分别是VARBINARY、BINARY、BLOB。然后将“雨里一家人”、“two things”、“闲看栀子花”加密，密钥为key，存储数据表mm中。输入语句如下：</p>
-                <pre>
-                    <code class="sql">
-    mysql> CREATE TABLE mm(s1 VARBINARY(16),s2 BINARY(16),s3 BLOB);
-    Query OK, 0 rows affected (0.02 sec)
-    mysql>
-    mysql>
-    mysql> INSERT INTO mm VALUES(
-        -> AES_ENCRYPT('雨里一家人','key'),
-        -> AES_ENCRYPT('two things','key'),
-        -> AES_ENCRYPT('闲看栀子花','key')
-        -> );
-    Query OK, 1 rows affected (0.00 sec)
-    mysql>
-    mysql>
-    mysql> SELECT AES_DECRYPT(s1,'key'),AES_DECRYPT(s2,'key'),AES_DECRYPT(s3,'key');
-    +-------------------------+------------------------+------------------------+
-    |  AES_DECRYPT(s1,'key')  | AES_DECRYPT(s1,'key')  | AES_DECRYPT(s1,'key')  |
-    +-------------------------+------------------------+------------------------+
-    |       雨里一家人          |       two things       |        闲看栀子花        |
-    +-------------------------+------------------------+------------------------+
-    1 row in set (0.00 sec)
-                    </code>
-                </pre>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 提升安全性-密码到期更换策略 -->
-<div id="improve_safety_password_expiration_replacement_policy" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">密码到期更换策略</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent">MySQL 8.0允许数据库管理员手动设置账户密码过期时间。任何密码超期的账户想要连接服务端时都必须更改密码。通过设置<code>default_password_lifetime</code>参数可以设置账户过期时间。</p>
-        <p class="firstLineIndent">下面通过案例来学习</p>
-        <hr>
-        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-        <p class="firstLineIndent">查看系统中的账户过期时间。从结果可以看出，password_lifetime: NULL表示密码永不过期。那么，下面设置root用户密码过期时间为260天：</p>
-        <pre>
-            <code class="sql">
-    mysql> SELECT `user`,host,password_last_changed,
-        -> password_lifetime,password_expired FROM mysql.user \G;
-    ******************************* 1.row ****************************
-                        user: mysql.infoschema
-                        host: localhost
-       password_last_changed: 2020-12-01 22:44:33
-           password_lifetime: NULL
-            password_expired: N
-    ******************************* 2.row ****************************
-                        user: mysql.session
-                        host: localhost
-       password_last_changed: 2020-12-01 22:44:33
-           password_lifetime: NULL
-            password_expired: N
-    ******************************* 3.row ****************************
-                        user: mysql.sys
-                        host: localhost
-       password_last_changed: 2020-12-01 22:44:33
-           password_lifetime: NULL
-            password_expired: N
-    ******************************* 4.row ****************************
-                        user: root
-                        host: localhost
-       password_last_changed: 2020-12-01 22:44:33
-           password_lifetime: NULL
-            password_expired: N
-    ******************************* 5.row ****************************
-                        user: user
-                        host: localhost
-       password_last_changed: 2020-12-01 22:44:33
-           password_lifetime: NULL
-            password_expired: N
-    5 rows in set (0.03 sec)
-    mysql>
-    mysql>
-    mysql> ALTER USER root@localhost PASSWORD EXPIRE INTERVAL 260 DAY;
-    Query OK, 0 rows affected (0.00 sec)
-            </code>
-        </pre>
-        <p class="firstLineIndent">再次查看root用户的信息，可以看出root用户的password_lifetime为260天。然后，再将root用户的密码过期时间重新设置为永不过期：</p>
-        <pre>
-            <code class="sql">
-    mysql> SELECT `user`,host,password_last_changed,
-        -> password_lifetime,password_expired FROM mysql.user
-        -> WHERE user = 'root' \G;
-    ******************************* 1.row ****************************
-                        user: root
-                        host: localhost
-       password_last_changed: 2020-12-07 22:32:09
-           password_lifetime: 260
-            password_expired: N
-    1 rows in set (0.02 sec)
-    mysql>
-    mysql>
-    mysql> ALTER USER root@localhost PASSWORD EXPIRE DEFAULT;
-    Query OK, 0 rows affected (0.00 sec)
-    mysql>
-    mysql>
-    mysql> SELECT `use`r,host,password_last_changed,
-        -> password_lifetime,password_expired FROM mysql.user
-        -> WHERE user = 'root' \G;
-    ******************************* 1.row ****************************
-                        user: root
-                        host: localhost
-       password_last_changed: 2020-12-07 22:32:09
-           password_lifetime: NULL
-            password_expired: N
-    1 rows in set (0.02 sec)
-            </code>
-        </pre>
-        <p class="firstLineIndent">从结果可以看出，password_lifetime又被重新设置NULL，此时该用户的密码将永不过期。</p>
-    </div>
-</div>
-
-<!-- 提升安全性-安全模式安装 -->
-<div id="improve_safety_safe_mode_installation" class="panel" style="display: none">
-    <div class="panel-heading">
-        <h3 class="panel-title">安全模式安装</h3>
-    </div>
-    <div class="panel-body">
-        <p class="firstLineIndent"><b>MySQL新增了“安全模式”的安装形式，从而可以避免用户的数据被泄漏。用户可以通过以下方式来提升MySQL安装的安全性：</b></p>
-        <ol>
-            <li>为root账户设置密码</li>
-            <li>移除能从本地主机以外的地址访问数据库的root账户</li>
-            <li>移除匿名账户</li>
-            <li>移除test数据库，该数据库默认可被任意用户甚至匿名账户访问</li>
-        </ol>
-        <p class="firstLineIndent"><b>使用mysqld -initialize命令来安装MySQL实例默认是安全的，主要原因如下：</b></p>
-        <ol>
-            <li>在安装过程中只创建一个root账户'root'@'localhost'，自动为这个账户生成一个随机密码并标记密码过期</li>
-            <li>数据库管理员必须用root账户及该随机密码登录并设置一个新密码后才能对数据库进行正常操作</li>
-            <li>安装过程不创建任何匿名账户</li>
-            <li>安装过程不创建test数据库</li>
-        </ol>
+        <p class="firstLineIndent">这种方法虽然简单，但并不是最好的方法。因为这种方法对InnoDB存储引擎的表不适用。使用这种方法备份的数据最好恢复到相同版本的服务器中，不同的版本可能不兼容。</p>
+        <p class="firstLineIndent"><span class="note">注意</span>：在MySQL版本号中，第一个数字表示版本号，主版本号相同的MySQL数据库文件格式相同。</p>
     </div>
 </div>
 
