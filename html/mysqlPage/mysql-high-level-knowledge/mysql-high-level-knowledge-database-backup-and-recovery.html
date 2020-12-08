@@ -145,148 +145,14 @@
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">账户管理</h3>
+                                <h3 class="panel-title tinyHand" onclick="dataRecoveryTips()">数据恢复 <i class="fa fa-hand-pointer-o"></i></h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="account_management" style="height:500%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="authorityManagementTips()">权限管理 <i class="fa fa-hand-pointer-o"></i></h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="authority_management" style="height:500%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="accessControlTips()">访问控制 <i class="fa fa-hand-pointer-o"></i></h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="access_control" style="height:500%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">提升安全性</h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div id="improve_safety" style="height:400%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="panel panel-scrolling">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">访问控制</h3>
-                                <div class="right">
-                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
-                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <p class="firstLineIndent">在MySQL 8.0数据库中，角色可以看成是一些权限的集合，为用户赋予统一的角色，权限的修改直接通过角色来进行，无需为每个用户单独授权。</p>
-                                <p class="firstLineIndent">下面通过案例来学习如何管理角色。</p>
-                                <p class="firstLineIndent">创建角色，执行语句如下：</p>
-                                <pre>
-                                    <code class="sql">
-    mysql> CREATE ROLE role_tt; # 创建角色
-    Query OK, 0 rows affected (0.02 sec)
-                                    </code>
-                                </pre>
-                                <p class="firstLineIndent">给角色授予权限，执行语句如下：</p>
-                                <pre>
-                                    <code class="sql">
-    mysql> GRANT SELECT ON db.* to 'role_tt'; # 给角色role_tt授予查询权限
-    Query OK, 0 rows affected (0.10 sec)
-                                    </code>
-                                </pre>
-                                <p class="firstLineIndent">创建用户myusre1，执行语句如下：</p>
-                                <pre>
-                                    <code class="sql">
-    mysql> CREATE USER 'myuser1'@'%' IDENTIFIED BY '123456';
-    Query OK, 0 rows affected (0.07 sec)
-                                    </code>
-                                </pre>
-                                <p class="firstLineIndent">为用户myuser1赋予角色role_tt，执行语句如下：</p>
-                                <pre>
-                                    <code class="sql">
-    mysql> CREATE 'role_tt' TO 'myuser1'@'%';
-    Query OK, 0 rows affected (0.02 sec)
-                                    </code>
-                                </pre>
-                                <p class="firstLineIndent">给角色role_tt增加INSERT权限，执行语句如下：</p>
-                                <pre>
-                                    <code class="sql">
-    mysql> CREATE INSERT ON db.* TO 'role_tt';
-    Query OK, 0 rows affected (0.08 sec)
-                                    </code>
-                                </pre>
-                                <p class="firstLineIndent">给角色role_tt删除INSERT权限，执行语句如下：</p>
-                                <pre>
-                                    <code class="sql">
-    mysql> REVOKE INSERT ON db.* FROM 'role_tt';
-    Query OK, 0 rows affected (0.10 sec)
-                                    </code>
-                                </pre>
-                                <p class="firstLineIndent">查看默认角色信息，执行语句如下：</p>
-                                <pre>
-                                    <code class="sql">
-    mysql> SELECT * FROM mysql.default_roles;
-    +------+---------+-------------------+-------------------+
-    | HOST |   USER  | DEFAULT_ROLE_HOST | DEFAULT_ROLE_USER |
-    +------+---------+-------------------+-------------------+
-    |  %   | myuser1 |        %          |     role_tt       |
-    +------+---------+-------------------+-------------------+
-    1 rows in set (0.01 sec)
-                                    </code>
-                                </pre>
-                                <p class="firstLineIndent">查看角色与用户关系，执行语句如下：</p>
-                                <pre>
-                                    <code class="sql">
-    mysql> SELECT * FROM mysql.role_edges;
-    +-----------+-------------+---------+-------------+-------------------+
-    | FROM_HOST |  FROM_USER  | TO_HOST |   TO_USER   | WITH_ADMIN_OPTION |
-    +-----------+-------------+---------+-------------+-------------------+
-    |     %     |   role_tt   |    %    |   myuser1   |        N          |
-    +-----------+-------------+---------+-------------+-------------------+
-    1 rows in set (0.00 sec)
-                                    </code>
-                                </pre>
-                                <p class="firstLineIndent">删除角色，执行语句如下：</p>
-                                <pre>
-                                    <code class="sql">
-    mysql> DROP ROLE role_tt;
-    Query OK, 0 rows affected (0.04 sec)
-                                    </code>
-                                </pre>
+                                <div id="data_recovery" style="height:500%;"></div>
                             </div>
                         </div>
                     </div>
@@ -667,6 +533,136 @@
         </p>
         <p class="firstLineIndent">这种方法虽然简单，但并不是最好的方法。因为这种方法对InnoDB存储引擎的表不适用。使用这种方法备份的数据最好恢复到相同版本的服务器中，不同的版本可能不兼容。</p>
         <p class="firstLineIndent"><span class="note">注意</span>：在MySQL版本号中，第一个数字表示版本号，主版本号相同的MySQL数据库文件格式相同。</p>
+    </div>
+</div>
+
+<!-- 数据备份-使用MySQLhostcopy工具快速备份 -->
+<div id="data_backup_use_mysqlhostcopy_tool_to_quickly_backup" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">使用MySQLhostcopy工具快速备份</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">
+            MySQLhotcopy是一个Perl脚本，最初由Tim Bunce编写并提供。它使用LOCK TABLES、FLUSH TABLES和cp或scp来快速备份数据库。它是备份数据库或单个表最快的途径，
+            但它只能运行在数据库目录所在的机器上，并且只能备份MyISAM类型的表。MySQLhotcopy在UNIX系统中运行。
+        </p>
+        <p class="firstLineIndent">MySQLhostcopy命令语法格式如下：</p>
+        <p class="firstLineIndent"><code>mysqlhostcopy db_name_1,...db_name_n /path/to/new_directory</code></p>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>db_name_1...</td>
+                <td>分别为需要备份的数据库的名称</td>
+            </tr>
+            <tr>
+                <td>/path/to/new_directory</td>
+                <td>指定备份文件目录</td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用MySQLhotcopy备份test_db数据库到/usr/backup目录下，输入语句如下：</p>
+        <pre>
+            <code class="sql">
+    mysqlhotcopy -u root -p test_db /usr/backup
+            </code>
+        </pre>
+        <p class="firstLineIndent">要想执行MySQLhotcopy，必须可以访问备份的表文件，具有那些表的SELECT权限、RELOAD权限（以便能够执行FLUSH TABLES）和LOCK TABLES权限。</p>
+        <p class="firstLineIndent"><span class="note">注意</span>：MySQLhotcopy只是将表所在的目录复制到另一个位置，只能用于备份MyISAM和ARCHIVE表。备份InnoDB类型的数据表时会出现错误信息。由于它复制本地格式的文件，因此也不能种植到其他硬件或操作系统下。</p>
+    </div>
+</div>
+
+<!-- 数据恢复提示 -->
+<div id="data_recovery_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">数据恢复</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">
+            管理人员操作的失误、计算机故障以及其他意外情况，都会导致数据的丢失和破坏。当数据丢失或意外破坏时，可以通过恢复已经备份的数据尽量减少数据丢失和破坏
+            造成的损失。
+        </p>
+    </div>
+</div>
+
+<!-- 数据恢复-使用MySQL命令恢复 -->
+<div id="data_recovery_use_mysql_command_to_restore" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">使用MySQL命令恢复</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">对于已经备份的包含CREATE、INSERT语句的文本文件，可以使用MySQL命令导入到数据库中。</p>
+        <p class="firstLineIndent">备份的sql文件中包含CREATE、INSERT语句（有时也会有DROP语句）。MySQL命令可以直接执行文件中的这些语句。其语法如下：</p>
+        <p class="firstLineIndent"><code>mysql -u user -p [dbname] < filename.sql</code></p>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>user</td>
+                <td>是执行filename.sql中语句的用户名</td>
+            </tr>
+            <tr>
+                <td>-p</td>
+                <td>表示输入用户密码</td>
+            </tr>
+            <tr>
+                <td>dbname</td>
+                <td>表示数据库名</td>
+            </tr>
+            <tr>
+                <td>filename.sql</td>
+                <td>备份有SQL语句的文件。如果文件为MySQLdump工具创建的包含创建数据库语句的文件，执行的时候不需要指定数据库名</td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用MySQL命令将C:\backup\booksdb_20201208.sql文件中的备份导入到数据库中，输入语句如下：</p>
+        <pre>
+            <code class="sql">
+    mysql -u root -p booksdb < C:/backup/booksdb_20201208.sql
+            </code>
+        </pre>
+        <p class="firstLineIndent">执行语句前，必须现在MySQL服务器中创建booksdb数据库，如果不存在恢复过程将会出错。命令执行成功之后booksdb_20201208.sql文件中的语句就会在指定的数据库中恢复以前的表。</p>
+        <p class="firstLineIndent">如果已经登录MySQL服务器，还可以使用<code>source</code>命令导入sql文件。<code>source</code>语句语法如下：</p>
+        <p class="firstLineIndent"><code>source filename</code></p>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用root用户登录到服务器，然后使用source导入本地的备份文件booksdb_20201208.sql，输入语句如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> use booksdb;
+    Database changed
+    mysql> source C:\backup\booksdb_20201208.sql
+            </code>
+        </pre>
+        <p class="firstLineIndent">命令执行后，会列出备份文件booksdb_20201208.sql中每一条语句的执行结果。source命令执行成功后，booksdb_20201208.sql中的语句会全部导入到现有数据库中。</p>
+        <p class="firstLineIndent"><span class="note">注意</span>：执行source命令前，必须使用use语句选择数据库。不然，恢复过程中会出现“ERROR 1046(3D000):No database selected”的错误。</p>
+    </div>
+</div>
+
+<!-- 数据恢复-直接复制到数据库目录 -->
+<div id="data_recovery_copy_directly_to_the_database_directory" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">直接复制到数据库目录</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">
+            如果数据库
+        </p>
     </div>
 </div>
 
