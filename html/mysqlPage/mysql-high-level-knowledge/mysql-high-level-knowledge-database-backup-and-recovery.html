@@ -157,6 +157,36 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title tinyHand" onclick="databaseMigrationTips()">数据库迁移 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="database_migration" style="height:500%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title tinyHand" onclick="tableExportAndImportTips()">表的导出和导入 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="table_export_and_import" style="height:500%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- END MAIN CONTENT -->
@@ -185,22 +215,22 @@
     </div>
 </div>
 
-<!-- 数据备份-使用MySQLdump命令备份 -->
+<!-- 数据备份-使用mysqldump命令备份 -->
 <div id="data_backup_use_mysqldump_command_to_backup" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title tinyHand" onclick="useMysqldumpCommandToBackupTips()">使用MySQLdump命令备份 <i class="fa fa-hand-pointer-o"></i></h3>
+        <h3 class="panel-title tinyHand" onclick="useMysqldumpCommandToBackupTips()">使用mysqldump命令备份 <i class="fa fa-hand-pointer-o"></i></h3>
     </div>
     <div class="panel-body">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#data_backup_use_mysqldump_command_to_backup_1" data-toggle="tab">使用MySQLdump备份单个数据库中的所有表</a></li>
-            <li><a href="#data_backup_use_mysqldump_command_to_backup_2" data-toggle="tab">使用MySQLdump备份数据库中的某个表</a></li>
-            <li><a href="#data_backup_use_mysqldump_command_to_backup_3" data-toggle="tab">使用MySQLdump备份多个数据库</a></li>
+            <li class="active"><a href="#data_backup_use_mysqldump_command_to_backup_1" data-toggle="tab">使用mysqldump备份单个数据库中的所有表</a></li>
+            <li><a href="#data_backup_use_mysqldump_command_to_backup_2" data-toggle="tab">使用mysqldump备份数据库中的某个表</a></li>
+            <li><a href="#data_backup_use_mysqldump_command_to_backup_3" data-toggle="tab">使用mysqldump备份多个数据库</a></li>
         </ul>
         <div class="tab-content">
             <div id="data_backup_use_mysqldump_command_to_backup_1" class="tab-pane fade in active">
                 <hr>
                 <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">使用MySQLdump命令备份数据库中的所有表，执行过程如下：</p>
+                <p class="firstLineIndent">使用mysqldump命令备份数据库中的所有表，执行过程如下：</p>
                 <pre>
                     <code class="sql">
     mysql> CREATE DATABASE booksDB;
@@ -379,7 +409,7 @@
     -- Dump completed on 20220-12-08 23:15:29
                     </code>
                 </pre>
-                <p class="firstLineIndent">可以看到备份文件包含了一些信息，文件开头首先声明了备份文件使用的MySQLdump工具的版本号；然后是备份账户的名称和主机信息，以及备份的数据库名称，最后是MySQL服务器的版本号，在这里为8.0.13。</p>
+                <p class="firstLineIndent">可以看到备份文件包含了一些信息，文件开头首先声明了备份文件使用的mysqldump工具的版本号；然后是备份账户的名称和主机信息，以及备份的数据库名称，最后是MySQL服务器的版本号，在这里为8.0.13。</p>
                 <p class="firstLineIndent">备份文件接下来的部分是一些SET语句，这些语句将一些系统变量值赋给用户定义变量，以确保被恢复的数据库的系统变量和原来备份时的变量相同，例如：</p>
                 <pre><code class="sql">/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;</code></pre>
                 <p class="firstLineIndent">该SET语句将当前系统变量character_set_client的值赋给用户定义变量@old_character_set_client。其他变量与此类似。</p>
@@ -390,7 +420,7 @@
                 <p class="firstLineIndent">另外，备份文件开始的一些语句以数字开头，代表的是MySQL版本号，这些语句只有在指定的MySQL版本或者比该版本高的情况下才能执行。例如，40101，表明这些语句只有在MySQL版本号为4.01.01或者更高的条件下才可以被执行。</p>
             </div>
             <div id="data_backup_use_mysqldump_command_to_backup_2" class="tab-pane fade">
-                <p class="firstLineIndent">如果要使用MySQLdump备份数据库中的某个表，其语法格式为：</p>
+                <p class="firstLineIndent">如果要使用mysqldump备份数据库中的某个表，其语法格式为：</p>
                 <p class="firstLineIndent"><code>mysqldump -u user -h host -ppassword dbname[tbname,[tbname...]] > filename.sql</code></p>
                 <hr>
                 <table class="table table-bordered">
@@ -420,7 +450,7 @@
                 <p class="firstLineIndent">该语句创建名称为booksdbBooksBackup.sql的备份文件，文件中包含SET语句等内容，不同的是，该文件只包含books表的CREATE和INSERT语句。</p>
             </div>
             <div id="data_backup_use_mysqldump_command_to_backup_3" class="tab-pane fade">
-                <p class="firstLineIndent">如果要使用MySQLdump备份多个数据库，就需要使用--databases参数，其语法格式为：</p>
+                <p class="firstLineIndent">如果要使用mysqldump备份多个数据库，就需要使用--databases参数，其语法格式为：</p>
                 <p class="firstLineIndent"><code>mysqldump -u user -h host -ppassword --databases [dbname,[dbname...]] > filename.sql</code></p>
                 <hr>
                 <table class="table table-bordered">
@@ -439,7 +469,7 @@
                 </table>
                 <hr>
                 <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">使用MySQLdump备份boosdb和test_db数据库，输入语句如下：</p>
+                <p class="firstLineIndent">使用mysqldump备份boosdb和test_db数据库，输入语句如下：</p>
                 <pre>
                     <code class="sql">
     C:\ >mysqldump -u root -p --databases booksdb test_db > C:/backup/booksdbAndtest_dbBackup.sql
@@ -451,7 +481,7 @@
                 <p class="firstLineIndent"><code>mysqldump -u user -h host -ppassword --all-databases > filename.sql</code></p>
                 <hr>
                 <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-                <p class="firstLineIndent">使用MySQLdump备份服务器中的所有数据库，输入语句如下：</p>
+                <p class="firstLineIndent">使用mysqldump备份服务器中的所有数据库，输入语句如下：</p>
                 <pre>
                     <code class="sql">
     C:\ >mysqldump -u root -p --all-databases > C:/backup/alldbinMySQL.sql
@@ -459,20 +489,20 @@
                     </code>
                 </pre>
                 <p class="firstLineIndent">该语句创建名称为alldbinMySQL.sql的备份文件，文件中包含了对系统中所有数据库的备份信息。</p>
-                <p class="firstLineIndent">如果在服务器上备份，并且表均为MyISAM表，就应该考虑使用MySQLhotcopy，因为可以更快地进行备份和恢复。</p>
+                <p class="firstLineIndent">如果在服务器上备份，并且表均为MyISAM表，就应该考虑使用mysqlhotcopy，因为可以更快地进行备份和恢复。</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 使用MySQLdump命令备份提示 -->
+<!-- 使用mysqldump命令备份提示 -->
 <div id="use_mysqldump_command_to_backup_tips" class="panel" style="display: none">
     <div class="panel-heading">
-        <h3 class="panel-title">使用MySQLdump命令备份</h3>
+        <h3 class="panel-title">使用mysqldump命令备份</h3>
     </div>
     <div class="panel-body">
-        <p class="firstLineIndent">MySQLdump是MySQL提供的一个非常有用的数据库本分工具。MySQLdump命令执行时，可以将数据库备份成一个文本文件，该文件中实际包含了多个<code>CREATE</code>和<code>INSERT</code>语句，使用这些语句可以重新创建表和插入数据。</p>
-        <p class="firstLineIndent">MySQLdump备份数据库语句的基本语法格式如下：</p>
+        <p class="firstLineIndent">mysqldump是MySQL提供的一个非常有用的数据库本分工具。mysqldump命令执行时，可以将数据库备份成一个文本文件，该文件中实际包含了多个<code>CREATE</code>和<code>INSERT</code>语句，使用这些语句可以重新创建表和插入数据。</p>
+        <p class="firstLineIndent">mysqldump备份数据库语句的基本语法格式如下：</p>
         <p class="firstLineIndent"><code>mysqldump -u user -h host -ppassword dbname[tbname,[tbname...]] > filename.sql;</code></p>
         <hr>
         <table class="table table-bordered">
@@ -505,7 +535,7 @@
             </tr>
             <tr>
                 <td>&gt;</td>
-                <td>告诉MySQLdump将备份数据表的定义和数据写入备份文件</td>
+                <td>告诉mysqldump将备份数据表的定义和数据写入备份文件</td>
             </tr>
             <tr>
                 <td>filename.sql</td>
@@ -543,8 +573,8 @@
     </div>
     <div class="panel-body">
         <p class="firstLineIndent">
-            MySQLhotcopy是一个Perl脚本，最初由Tim Bunce编写并提供。它使用LOCK TABLES、FLUSH TABLES和cp或scp来快速备份数据库。它是备份数据库或单个表最快的途径，
-            但它只能运行在数据库目录所在的机器上，并且只能备份MyISAM类型的表。MySQLhotcopy在UNIX系统中运行。
+            mysqlhotcopy是一个Perl脚本，最初由Tim Bunce编写并提供。它使用LOCK TABLES、FLUSH TABLES和cp或scp来快速备份数据库。它是备份数据库或单个表最快的途径，
+            但它只能运行在数据库目录所在的机器上，并且只能备份MyISAM类型的表。mysqlhotcopy在UNIX系统中运行。
         </p>
         <p class="firstLineIndent">MySQLhostcopy命令语法格式如下：</p>
         <p class="firstLineIndent"><code>mysqlhostcopy db_name_1,...db_name_n /path/to/new_directory</code></p>
@@ -569,14 +599,14 @@
         </table>
         <hr>
         <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-        <p class="firstLineIndent">使用MySQLhotcopy备份test_db数据库到/usr/backup目录下，输入语句如下：</p>
+        <p class="firstLineIndent">使用mysqlhotcopy备份test_db数据库到/usr/backup目录下，输入语句如下：</p>
         <pre>
             <code class="sql">
     mysqlhotcopy -u root -p test_db /usr/backup
             </code>
         </pre>
-        <p class="firstLineIndent">要想执行MySQLhotcopy，必须可以访问备份的表文件，具有那些表的SELECT权限、RELOAD权限（以便能够执行FLUSH TABLES）和LOCK TABLES权限。</p>
-        <p class="firstLineIndent"><span class="note">注意</span>：MySQLhotcopy只是将表所在的目录复制到另一个位置，只能用于备份MyISAM和ARCHIVE表。备份InnoDB类型的数据表时会出现错误信息。由于它复制本地格式的文件，因此也不能种植到其他硬件或操作系统下。</p>
+        <p class="firstLineIndent">要想执行mysqlhotcopy，必须可以访问备份的表文件，具有那些表的SELECT权限、RELOAD权限（以便能够执行FLUSH TABLES）和LOCK TABLES权限。</p>
+        <p class="firstLineIndent"><span class="note">注意</span>：mysqlhotcopy只是将表所在的目录复制到另一个位置，只能用于备份MyISAM和ARCHIVE表。备份InnoDB类型的数据表时会出现错误信息。由于它复制本地格式的文件，因此也不能种植到其他硬件或操作系统下。</p>
     </div>
 </div>
 
@@ -625,7 +655,7 @@
             </tr>
             <tr>
                 <td>filename.sql</td>
-                <td>备份有SQL语句的文件。如果文件为MySQLdump工具创建的包含创建数据库语句的文件，执行的时候不需要指定数据库名</td>
+                <td>备份有SQL语句的文件。如果文件为mysqldump工具创建的包含创建数据库语句的文件，执行的时候不需要指定数据库名</td>
             </tr>
             </tbody>
         </table>
@@ -661,8 +691,591 @@
     </div>
     <div class="panel-body">
         <p class="firstLineIndent">
-            如果数据库
+            如果数据库通过复制数据库文件备份，可以直接复制备份的文件到MySQL数据目录下实现恢复。通过这种方式恢复时，保存备份数据的数据库和待恢复的数据库服务器的主版本号必须相同。而且这种方式只对MyISAM引擎的表
+            有效，对于InnoDB引擎的表不可用。
         </p>
+        <p class="firstLineIndent">执行恢复以前关闭MySQL服务，将备份的文件或目录覆盖MySQL的data目录，启动MySQL服务。对于Linux/UNIX操作系统来说，复制完文件需要将文件的用户和组更改为MySQL运行的用户和组，通常用户是MySQL，组也是MySQL。</p>
+    </div>
+</div>
+
+<!-- 数据恢复-MySQLhostcopy快速恢复 -->
+<div id="data_recovery_mysqlhostcopy_quick_recovery" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">MySQLhostcopy快速恢复</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">MySQLhostcopy备份后的文件也可以用来恢复数据库，在MySQL服务器停止运行时，将备份的数据库文件复制到MySQL存放数据的位置（MySQL的data文件夹），重新启动MySQL服务即可。如果以根用户执行该操作，必须指定 数据库文件的所有者，输入语句如下：</p>
+        <p class="firstLineIndent"><code>chown -R mysql.mysql /var/lib/mysql/dbname</code></p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">从mysqlhotcopy复制的备份恢复数据库，输入语句如下：</p>
+        <pre>
+            <code class="sql">
+    cp -R /usr/backup/test usr/local/mysql/data
+            </code>
+        </pre>
+        <p class="firstLineIndent">执行完该语句，重启服务器，MySQL将恢复到备份状态。如果需要恢复的数据库已经存在，则在使用DROP语句删除已经存在的数据库之后，恢复才能成功。另外，MySQL不同版本之间必须兼容，恢复之后的数据才可以使用。</p>
+    </div>
+</div>
+
+<!-- 数据库迁移提示 -->
+<div id="database_Migration_Tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">数据库迁移</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">数据库迁移就是把数据从一个系统移动到另一个系统上。数据迁移有以下原因：</p>
+        <ol>
+            <li>需要安装新的数据库服务器</li>
+            <li>MySQL版本更新</li>
+            <li>数据库管理系统的变更（如从Microsoft SQL Server迁移到MySQL）</li>
+        </ol>
+    </div>
+</div>
+
+<!-- 数据库迁移-相同版本的MySQL数据库之间的迁移 -->
+<div id="database_migration_migration_between_mysql_databases_of_the_same_version" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">相同版本的MySQL数据库之间的迁移</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">相同版本的MySQL数据库之间的迁移就是在主版本号相同的MySQL数据库之间进行数据库移动。迁移过程其实就是在源数据库备份和目标数据库恢复过程的组合。</p>
+        <p class="firstLineIndent">因为，最简单的方式是通过复制数据库文件目录，但是此种方法只适用于MyISAM引擎的表。而对于InnoDB表，不能用直接复制文件的方式备份数据库，因此最常用的和最安全的方式是使用mysqldump命令导出数据，然后在目标数据库服务器使用MySQL命令导入。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">将www.abc.com主机上的MySQL数据库全部迁移到www.bcd.com主机上。在www.abc.com主机上执行的命令如下：</p>
+        <pre>
+            <code class="sql">
+    mysqldump -h www.abc.com -u root -ppassword dbname | mysql -h www.bcd.com -u root -ppassword
+            </code>
+        </pre>
+        <p class="firstLineIndent">mysqldump导入的数据直接通过管道符“|”传给MySQL命令导入到主机www.bcd.com数据库中，dbname为需要迁移的数据库名称，如果要迁移全部的数据库，可使用参数--all-databases。</p>
+    </div>
+</div>
+
+<!-- 数据库迁移-不同版本的MySQL数据库之间的迁移 -->
+<div id="database_migration_migration_between_different_versions_of_mysql_databases" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">不同版本的MySQL数据库之间的迁移</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">
+            因为数据库升级等原因，需要将较旧版本MySQL数据库中的数据迁移到较新版本的数据库中。MySQL服务器升级时，需要先停止服务，然后卸载旧版本，并重新安装新版的MySQL，这种更新方法很简单，如果想保留旧版本中的用户
+            访问控制信息，就需要备份MySQL中的mysql数据库，在新版本MySQL安装完成之后，重新读入MySQL备份文件中的信息。
+        </p>
+        <p class="firstLineIndent">
+            旧版本与新版本的MySQL可能使用不同的默认字符集，例如MySQL 8.0版本之前，默认字符集为latin1，而MySQL 8.0版本默认字符集为utf8mb4。数据库中有中文数据的，迁移过程中需要对默认字符集进行修改，不然可能无法正常显示结果。
+        </p>
+        <p class="firstLineIndent">
+            新版本会对旧版本有一定兼容性。从旧版本的MySQL向新版本的MySQL迁移时，对于MyISAM引擎的表，可以直接复制数据库文件，也可以使用mysqlhotcopy工具、mysqldump工具。对于InnoDB引擎的表，一般只能使用mysqldump将
+            数据导出。然后使用mysql命令导入到目标服务器上。从新版本向旧版本MySQL迁移数据时要特别小心，最好使用mysqldump命令导出，然后导入目标数据库中。
+        </p>
+    </div>
+</div>
+
+<!-- 数据库迁移-不同数据库之间的迁移 -->
+<div id="database_migration_migration_between_different_databases" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">不同数据库之间的迁移</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">不同类型的数据库之间的迁移，是指把MySQL的数据库迁移到其它类型的数据库，例如从MySQL迁移到Oracle，从Oracle迁移到MySQL，从MySQL迁移到SQL Server等。</p>
+        <p class="firstLineIndent">
+            迁移之前，需要了解不同数据库的架构，比较它们之间的差异。不同数据库中定义相同类型的数据的关键字可能会不同。例如，MySQL中日期字段分为DATE和TIME两种，而Oracle日期字段只有DATE。另外，数据库厂商
+            并没有完全按照SQL标准来设计数据库系统，导致不同的数据库系统的SQL语句有差别。例如，MySQL几乎完全支持标准SQL语言，而Microsoft SQL Server使用的是T-SQL语言，T-SQL中有一些非标准的SQL语句，
+            因此在迁移时必须对这些语句进行语句映射处理。
+        </p>
+        <p class="firstLineIndent">数据库迁移可以使用一些工具，例如在Windows系统下，可以使用MyODBC实现MySQL和SQL Server之间的迁移。MySQL官方提供的工具MySQL Migration Toolkit也可以在不同数据空间进行数据迁移。</p>
+    </div>
+</div>
+
+<!-- 表的导出和导入提示 -->
+<div id="table_export_and_import_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">表的导出和导入</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">有时会需要将MySQL数据库中的数据导出到外部存储文件中，MySQL数据库中的数据可以导出成sql文本文件、xml文件或者html文件。同样，这些导出文件也可以导入到MySQL数据库中。</p>
+    </div>
+</div>
+
+<!-- 表的导出和导入-使用SELECT...INTO OUTFILE导出文本文件 -->
+<div id="table_export_and_import_select_into_outfile" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">使用SELECT...INTO OUTFILE导出文本文件</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">
+            MySQL数据库导出数据时，允许使用包含导出定义的<code>SELECT</code>语句进行数据的导出操作。该文件被创建到服务器主机上，因此必须拥有文件的写入权限（FILE权限）才能使用此语法。
+            “SELECT...INTO OUTFILE 'filename'”形式的SELECT语句可以把被选择的行写入一个文件中，并且filename不能是一个已经存在的文件。SELECT...INTO OUTFILE语句的基本格式如下：
+        </p>
+        <p class="firstLineIndent"><code>SELECT columnList FROM table WHERE condition INTO OUTFILE 'filename' [OPTIONS]</code></p>
+        <p class="firstLineIndent"><span class="bold">--OPTIONS 选项</span></p>
+        <p class="firstLineIndent"><code>FIELDS TERMINATED BY 'value'</code></p>
+        <p class="firstLineIndent"><code>FIELDS [OPTIONALLY] ENCLOSED BY 'value'</code></p>
+        <p class="firstLineIndent"><code>FIELDS ESCAPED BY 'value'</code></p>
+        <p class="firstLineIndent"><code>LINES STARTING BY 'value'</code></p>
+        <p class="firstLineIndent"><code>LINES TERMINATED BY 'value'</code></p>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>SELECT...condition</td>
+                <td>为一个查询语句，查询结果返回满足指定条件的一条或多条记录</td>
+            </tr>
+            <tr>
+                <td>INTO OUTFILE</td>
+                <td>把上面的SELECT语句查询出来的结果导出到名称为“filename”的外部文件中</td>
+            </tr>
+            <tr>
+                <td>[OPTIONS]</td>
+                <td class="tinyHand" onclick="tableExportAndImportSelectIntoOutfileOptionsTips()">为可选参数选项，OPTIONS部分的语法包括FIELDS和LINES子句 <i class="fa fa-hand-pointer-o"></i></td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <p class="firstLineIndent"><b>FIELDS和LINES两个子句都是自选的，但是如果两个都被指定了，FIELDS必须位于LINES的前面。</b></p>
+        <p class="firstLineIndent">
+            SELECT...INTO OUTFILE语句可以非常快速地把一个表转储到服务器上。如果想要在服务器主机之外的部分客户主机上创建结果文件，不能使用SELECT...INTO OUTFILE。在这种情况下，应该在客户主机上使用比如
+            “mysql -e "SELECT ..." > filename”的命令来生成文件。
+        </p>
+        <p class="firstLineIndent">SELECT...INTO OUTFILE是LOAD DATA INFILE的补语。用于语句的OPTIONS部分的语法包括部分FIELDS和LINES子句，这些子句与LOAD DATA INFILE语句同时使用。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用SELECT...INTO OUTFILE将test_db数据库中的person表中的记录导出到文本文件，输入命令如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FROM test_db.person INTO OUTFILE 'D:/person0.txt';
+            </code>
+        </pre>
+        <p class="firstLineIndent">执行后报错信息如下：</p>
+        <p class="firstLineIndent"><b>ERROR 1290(HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement</b></p>
+        <p class="firstLineIndent">这是因为MySQL默认对导出的目录有权限限制，也就是说使用命令行进行导出的时候，需要指定目录进行操作。那么指定的目录是什么呢？</p>
+        <p class="firstLineIndent">查询指定目录的命令如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SHOW GLOBAL variables LIKE '%secure%';
+    +----------------------------+--------------------------------------------------+
+    |       Variable_name        |                      Value                       |
+    +----------------------------+--------------------------------------------------+
+    |  require_secure_transport  |                       OFF                        |
+    |  secure_file_priv          | C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\   |
+    +----------------------------+--------------------------------------------------+
+            </code>
+        </pre>
+        <p class="firstLineIndent">
+            因为secure_file_priv配置的关系，所以必须导出到C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\目录下。如果想自定义导出路径，需要修改my.ini配置文件。打开路径
+            C:\ProgramData\MySQL\MySQL Server 8.0，用记事本打开my.ini，然后搜索到以下代码：
+        </p>
+        <p class="firstLineIndent"><b>secure-file_priv="C:/ProgramData/MySQL/MySQL Server 8.0/Uploads\"</b></p>
+        <p class="firstLineIndent">在上述代码前添加#，然后添加以下内容：</p>
+        <p class="firstLineIndent"><b>secure-file-priv="D:/"</b></p>
+        <p class="firstLineIndent">再次使用SELECT...INTO OUTFILE将test_db数据库中person表中的记录导出到文本文件，输入命令如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FROM test_db.person INTO OUTFILE 'D:/person0.txt';
+    Query OK, 1 row affected (0.01 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">由于指定了INTO OUTFILE子句，因此SELECT会将查询出来的3个字段值保存到D:\person0.txt文件中。打开文件，内容如下：</p>
+        <pre>
+            <code class="sql">
+    1   Green    21     Lawyer
+    2   Suse     22     dancer
+    3   Mary     24     Musician
+    4   Willam   20     sports man
+    5   Laura    25     \N
+    6   Evans    27     secretary
+    7   Dale     22     cook
+    8   Edison   28     singer
+    9   Harry    21     magician
+    10  Harriet  19     pianist
+            </code>
+        </pre>
+        <p class="firstLineIndent">默认情况下，MySQL使用制表符“\t”分隔不同的字段，字段没有被其他字符括起来。另外，第5行中有一个字段值为“\N”，表示该字段的值为NULL。默认情况下，如果遇到NULL值，将会返回“\N”，代表空值，其中的反斜线“\”表示转义字符，如果使用ESCAPED BY选项，则N前面为指定的转义字符。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用SELECT...INTO OUTFILE将test_db数据库person表中的记录导出到文本文件，使用FIELDS选项和LINES选项，要求字段之间使用逗号“,”间隔，所有字段值用双引号括起来，定义转义字符为单引号“'”，执行的命令如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FROM test_db.person INTO OUTFILE 'D:/person1.txt'
+        -> FIELDS
+        -> TERMINATED BY ','
+        -> ENCLOSED BY '\"'
+        -> ESCAPED BY '\''
+        -> LINES
+        -> TERMINATED BY '\r\n';
+    Query OK, 1 row affected (0.01 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">该语句将把person表中所有记录导入到D盘目录下的person1.txt文本文件中。</p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>TERMINATED BY ','</td>
+                <td>表示字段之间用逗号分隔</td>
+            </tr>
+            <tr>
+                <td>ENCLOSED BY '\"'</td>
+                <td>表示每个字段用双引号括起来</td>
+            </tr>
+            <tr>
+                <td>ESCAPED BY '\''</td>
+                <td>表示将系统默认的转义字符替换为单引号</td>
+            </tr>
+            <tr>
+                <td>TERMINATED BY '\r\n'</td>
+                <td>表示每行以回车换行符为结尾，保证每一条记录占一行</td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="firstLineIndent">执行成功后，在目录D盘下生成一个person1.txt文件。打开文件，内容如下：</p>
+        <pre>
+            <code class="sql">
+    “1“,"Green","21","Lawyer"
+    ”2“,"Suse","22","dancer"
+    ”3“,"Mary","24","Musician"
+    ”4“,"Willam","20","sports man"
+    ”5“,"Laura","25",'N'
+    ”6“,"Evans","27","secretary"
+    ”7“,"Dale","22","cook"
+    ”8“,"Edison","28","singer"
+    ”9“,"Harry","21","magician"
+    ”10","Harriet","19","pianist"
+            </code>
+        </pre>
+        <p class="firstLineIndent">可以看到，所有的字段值都被双引号包括；第5条记录中空值的表示形式为<b>'N'</b>，即使用单引号替换了反斜线转义字符。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用SELECT...INTO OUTFILE将test_db数据库person表中的记录导出到文本文件，使用FIELDS选项和LINES选项，要求每行记录以字符串”&gt;&nbsp;“开始、以”&lt;end&gt;“字符串结尾，执行的命令如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FROM test_db.person INTO OUTFILE 'D:/person2.txt'
+        -> LINES
+        -> STARTING BY '&gt;&nbsp;'
+        -> TERMINATED BY '&lt;end&gt;';
+    Query OK, 1 row affected (0.01 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">执行成功后，在目录D盘下生成一个person2.txt文件。打开文件，内容如下：</p>
+        <pre>
+            <code class="sql">
+    &gt;&nbsp;1  Green   21   Lawyer  &lt;end&gt;&gt;&nbsp;2  Suse   22   dancer  &lt;end&gt;&gt;&nbsp;3  Mary   24   Musician  &lt;end&gt;&gt;&nbsp;4  Willam   20   sports man  &lt;end&gt;&gt;&nbsp;5  Laura   25   \N  &lt;end&gt;&gt;&nbsp;6  Evans   27   secretary  &lt;end&gt;&gt;&nbsp;7  Dale   22   cook  &lt;end&gt;&gt;&nbsp;8  Edison   28   singer  &lt;end&gt;&gt;&nbsp;9  Harry   21   magician  &lt;end&gt;&gt;&nbsp;10  Harriet   19   pianist  &lt;end&gt;
+            </code>
+        </pre>
+        <p class="firstLineIndent">可以看到，虽然将所有的字段值导出到文本文件中，但是所有的记录没有分行区分，出现这种情况是因为TERMINATED BY选项替换了系统默认的”\n“换行符，如果希望换行显示，则需要修改导出语句：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FROM test_db.person INTO OUTFILE 'D:/person2.txt'
+        -> LINES
+        -> STARTING BY '&gt;&nbsp;'
+        -> TERMINATED BY '&lt;end&gt;\r\n';
+    Query OK, 1 row affected (0.01 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">执行完语句之后，换行显示每条记录，结果如下：</p>
+        <pre>
+            <code class="sql">
+    &gt;&nbsp;1  Green     21   Lawyer  &lt;end&gt;
+    &gt;&nbsp;2  Suse      22   dancer  &lt;end&gt;
+    &gt;&nbsp;3  Mary      24   Musician  &lt;end&gt;
+    &gt;&nbsp;4  Willam    20   sports man  &lt;end&gt;
+    &gt;&nbsp;5  Laura     25   \N  &lt;end&gt;
+    &gt;&nbsp;6  Evans     27   secretary  &lt;end&gt;
+    &gt;&nbsp;7  Dale      22   cook  &lt;end&gt;
+    &gt;&nbsp;8  Edison    28   singer  &lt;end&gt;
+    &gt;&nbsp;9  Harry     21   magician  &lt;end&gt;
+    &gt;&nbsp;10 Harriet   19   pianist  &lt;end&gt;
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 表的导出和导入-使用SELECT...INTO OUTFILE导出文本文件-OPTIONS提示 -->
+<div id="table_export_and_import_select_into_outfile_options_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">OPTIONS</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>FIELDS TERMINATED BY 'value'</td>
+                <td>设置字段之间的分割字符，可以为单个或多个字符，默认情况下为制表符‘\t’</td>
+            </tr>
+            <tr>
+                <td>FIELDS [OPTIONALLY] ENCLOSED BY 'value'</td>
+                <td>设置字段的包围字符，只能为单个字符，若使用了OPTIONALLY则只有CHAR和VARCHAR等字符数据字段被包括</td>
+            </tr>
+            <tr>
+                <td>FIELDS ESCAPED BY 'value'</td>
+                <td>设置如何写入或读取特殊字符，只能为单个字符，即设置转义字符，默认值为‘\’</td>
+            </tr>
+            <tr>
+                <td>LINES STARTING BY 'value'</td>
+                <td>设置每行数据开头的字符，可以为单个或多个字符，默认情况下不使用任何字符</td>
+            </tr>
+            <tr>
+                <td>LINES TERMINATED BY 'value'</td>
+                <td>设置每行数据结尾的字符，可以为单个或多个字符，默认值为‘\n’</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 表的导出和导入-使用mysqldump命令导出文本文件 -->
+<div id="table_export_and_import_mysqldump" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">使用mysqldump命令导出文本文件</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">除了使用<code>SELECT...INTO OUTFILE</code>语句导出文本文件外，还可以使用mysqldump。该工具不仅可以将数据导出为包含<code>CREATE</code>、<code>INSERT</code>的sql文件，也可以导出为纯文本文件。</p>
+        <p class="firstLineIndent">mysqldump创建一个包含创建表的<code>CREATE TABLE</code>语句的tablename.sql文件和一个包含其数据的tablename.txt文件。mysqldump导出文本文件的基本语法格式如下：</p>
+        <p class="firstLineIndent"><code>mysqldump -T path -u root -p dbname [tables] [OPTIONS]</code></p>
+        <p class="firstLineIndent"><span class="bold">--OPTIONS 选项</span></p>
+        <p class="firstLineIndent"><code>--fields-terminated-by=value</code></p>
+        <p class="firstLineIndent"><code>--fields-enclosed-by=value</code></p>
+        <p class="firstLineIndent"><code>--fields-optionally-enclosed-by=value</code></p>
+        <p class="firstLineIndent"><code>--fields-escaped-by=value</code></p>
+        <p class="firstLineIndent"><code>--lines-terminated-by=value</code></p>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>-T</td>
+                <td>只有指定了这个参数才可以导出纯文本文件</td>
+            </tr>
+            <tr>
+                <td>path</td>
+                <td>表示导出数据的目录</td>
+            </tr>
+            <tr>
+                <td>tables</td>
+                <td>表示指定要导出的表名称，如果不指定，将导出数据库dbname中所有的表</td>
+            </tr>
+            <tr>
+                <td>[OPTIONS]</td>
+                <td class="tinyHand" onclick="tableExportAndImportMysqldumpOptionsTips()">为可选参数选项，这些选项需要结合-T选项使用 <i class="fa fa-hand-pointer-o"></i></td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用mysqldump将test_db数据库中的person表中的记录导出到文本文件，执行的命令如下：</p>
+        <pre>
+            <code class="sql">
+    C:\>mysqldump -T D:\ test_db person -u root -p
+            </code>
+        </pre>
+        <p class="firstLineIndent">语句执行成功，系统D盘目录下面将会有两个文件，分别为person.sql和person.txt。person.sql包含创建person表的CREATE语句，其内容如下：</p>
+        <pre>
+            <code class="sql">
+    -- MySQL dump 10.13 Distrib 8.0.13, for Win64 (x8_64)
+    --
+    +----------------------------+--------------------------------------------------+
+    |       Variable_name        |                      Value                       |
+    +----------------------------+--------------------------------------------------+
+    |  require_secure_transport  |                       OFF                        |
+    |  secure_file_priv          | C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\   |
+    +----------------------------+--------------------------------------------------+
+            </code>
+        </pre>
+        <p class="firstLineIndent">
+            因为secure_file_priv配置的关系，所以必须导出到C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\目录下。如果想自定义导出路径，需要修改my.ini配置文件。打开路径
+            C:\ProgramData\MySQL\MySQL Server 8.0，用记事本打开my.ini，然后搜索到以下代码：
+        </p>
+        <p class="firstLineIndent"><b>secure-file_priv="C:/ProgramData/MySQL/MySQL Server 8.0/Uploads\"</b></p>
+        <p class="firstLineIndent">在上述代码前添加#，然后添加以下内容：</p>
+        <p class="firstLineIndent"><b>secure-file-priv="D:/"</b></p>
+        <p class="firstLineIndent">再次使用SELECT...INTO OUTFILE将test_db数据库中person表中的记录导出到文本文件，输入命令如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FROM test_db.person INTO OUTFILE 'D:/person0.txt';
+    Query OK, 1 row affected (0.01 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">由于指定了INTO OUTFILE子句，因此SELECT会将查询出来的3个字段值保存到D:\person0.txt文件中。打开文件，内容如下：</p>
+        <pre>
+            <code class="sql">
+    1   Green    21     Lawyer
+    2   Suse     22     dancer
+    3   Mary     24     Musician
+    4   Willam   20     sports man
+    5   Laura    25     \N
+    6   Evans    27     secretary
+    7   Dale     22     cook
+    8   Edison   28     singer
+    9   Harry    21     magician
+    10  Harriet  19     pianist
+            </code>
+        </pre>
+        <p class="firstLineIndent">默认情况下，MySQL使用制表符“\t”分隔不同的字段，字段没有被其他字符括起来。另外，第5行中有一个字段值为“\N”，表示该字段的值为NULL。默认情况下，如果遇到NULL值，将会返回“\N”，代表空值，其中的反斜线“\”表示转义字符，如果使用ESCAPED BY选项，则N前面为指定的转义字符。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用SELECT...INTO OUTFILE将test_db数据库person表中的记录导出到文本文件，使用FIELDS选项和LINES选项，要求字段之间使用逗号“,”间隔，所有字段值用双引号括起来，定义转义字符为单引号“'”，执行的命令如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FROM test_db.person INTO OUTFILE 'D:/person1.txt'
+        -> FIELDS
+        -> TERMINATED BY ','
+        -> ENCLOSED BY '\"'
+        -> ESCAPED BY '\''
+        -> LINES
+        -> TERMINATED BY '\r\n';
+    Query OK, 1 row affected (0.01 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">该语句将把person表中所有记录导入到D盘目录下的person1.txt文本文件中。</p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>TERMINATED BY ','</td>
+                <td>表示字段之间用逗号分隔</td>
+            </tr>
+            <tr>
+                <td>ENCLOSED BY '\"'</td>
+                <td>表示每个字段用双引号括起来</td>
+            </tr>
+            <tr>
+                <td>ESCAPED BY '\''</td>
+                <td>表示将系统默认的转义字符替换为单引号</td>
+            </tr>
+            <tr>
+                <td>TERMINATED BY '\r\n'</td>
+                <td>表示每行以回车换行符为结尾，保证每一条记录占一行</td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="firstLineIndent">执行成功后，在目录D盘下生成一个person1.txt文件。打开文件，内容如下：</p>
+        <pre>
+            <code class="sql">
+    “1“,"Green","21","Lawyer"
+    ”2“,"Suse","22","dancer"
+    ”3“,"Mary","24","Musician"
+    ”4“,"Willam","20","sports man"
+    ”5“,"Laura","25",'N'
+    ”6“,"Evans","27","secretary"
+    ”7“,"Dale","22","cook"
+    ”8“,"Edison","28","singer"
+    ”9“,"Harry","21","magician"
+    ”10","Harriet","19","pianist"
+            </code>
+        </pre>
+        <p class="firstLineIndent">可以看到，所有的字段值都被双引号包括；第5条记录中空值的表示形式为<b>'N'</b>，即使用单引号替换了反斜线转义字符。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用SELECT...INTO OUTFILE将test_db数据库person表中的记录导出到文本文件，使用FIELDS选项和LINES选项，要求每行记录以字符串”&gt;&nbsp;“开始、以”&lt;end&gt;“字符串结尾，执行的命令如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FROM test_db.person INTO OUTFILE 'D:/person2.txt'
+        -> LINES
+        -> STARTING BY '&gt;&nbsp;'
+        -> TERMINATED BY '&lt;end&gt;';
+    Query OK, 1 row affected (0.01 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">执行成功后，在目录D盘下生成一个person2.txt文件。打开文件，内容如下：</p>
+        <pre>
+            <code class="sql">
+    &gt;&nbsp;1  Green   21   Lawyer  &lt;end&gt;&gt;&nbsp;2  Suse   22   dancer  &lt;end&gt;&gt;&nbsp;3  Mary   24   Musician  &lt;end&gt;&gt;&nbsp;4  Willam   20   sports man  &lt;end&gt;&gt;&nbsp;5  Laura   25   \N  &lt;end&gt;&gt;&nbsp;6  Evans   27   secretary  &lt;end&gt;&gt;&nbsp;7  Dale   22   cook  &lt;end&gt;&gt;&nbsp;8  Edison   28   singer  &lt;end&gt;&gt;&nbsp;9  Harry   21   magician  &lt;end&gt;&gt;&nbsp;10  Harriet   19   pianist  &lt;end&gt;
+            </code>
+        </pre>
+        <p class="firstLineIndent">可以看到，虽然将所有的字段值导出到文本文件中，但是所有的记录没有分行区分，出现这种情况是因为TERMINATED BY选项替换了系统默认的”\n“换行符，如果希望换行显示，则需要修改导出语句：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FROM test_db.person INTO OUTFILE 'D:/person2.txt'
+        -> LINES
+        -> STARTING BY '&gt;&nbsp;'
+        -> TERMINATED BY '&lt;end&gt;\r\n';
+    Query OK, 1 row affected (0.01 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">执行完语句之后，换行显示每条记录，结果如下：</p>
+        <pre>
+            <code class="sql">
+    &gt;&nbsp;1  Green     21   Lawyer  &lt;end&gt;
+    &gt;&nbsp;2  Suse      22   dancer  &lt;end&gt;
+    &gt;&nbsp;3  Mary      24   Musician  &lt;end&gt;
+    &gt;&nbsp;4  Willam    20   sports man  &lt;end&gt;
+    &gt;&nbsp;5  Laura     25   \N  &lt;end&gt;
+    &gt;&nbsp;6  Evans     27   secretary  &lt;end&gt;
+    &gt;&nbsp;7  Dale      22   cook  &lt;end&gt;
+    &gt;&nbsp;8  Edison    28   singer  &lt;end&gt;
+    &gt;&nbsp;9  Harry     21   magician  &lt;end&gt;
+    &gt;&nbsp;10 Harriet   19   pianist  &lt;end&gt;
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 表的导出和导入-使用mysqldump命令导出文本文件-OPTIONS提示 -->
+<div id="table_export_and_import_mysqldump_options_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">OPTIONS</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>--fields-terminated-by=value</td>
+                <td>设置字段之间的分割字符，可以为单个或多个字符，默认情况下为制表符‘\t’</td>
+            </tr>
+            <tr>
+                <td>--fields-enclosed-by=value</td>
+                <td>设置字段的包围字符</td>
+            </tr>
+            <tr>
+                <td>--fields-optionally-enclosed-by=value</td>
+                <td>设置字段的包围字符，只能为单个字符，只能包括CHAR和VARCHAR等字段字符数据字段</td>
+            </tr>
+            <tr>
+                <td>--fields-escaped-by=value</td>
+                <td>控制如何写入或读取特殊字符，只能为单个字符，即设置转义字符，默认值为反斜线”\“</td>
+            </tr>
+            <tr>
+                <td>--lines-terminated-by=value</td>
+                <td>设置每行数据结尾的字符，可以为单个或多个字符，默认值为‘\n’</td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="firstLineIndent"><b>与<code>SELECT...INTO OUTFILE</code>语句中的OPTIONS各个参数设置不同，这里OPTIONS各个选项等号后面的value值不要用引号括起来。</b></p>
     </div>
 </div>
 
