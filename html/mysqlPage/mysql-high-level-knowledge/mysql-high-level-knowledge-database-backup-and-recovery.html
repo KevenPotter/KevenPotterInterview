@@ -406,7 +406,7 @@
     /*!40101 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 
-    -- Dump completed on 20220-12-08 23:15:29
+    -- Dump completed on 2020-12-08 23:15:29
                     </code>
                 </pre>
                 <p class="firstLineIndent">可以看到备份文件包含了一些信息，文件开头首先声明了备份文件使用的mysqldump工具的版本号；然后是备份账户的名称和主机信息，以及备份的数据库名称，最后是MySQL服务器的版本号，在这里为8.0.13。</p>
@@ -944,16 +944,16 @@
         <p class="firstLineIndent">执行成功后，在目录D盘下生成一个person1.txt文件。打开文件，内容如下：</p>
         <pre>
             <code class="sql">
-    “1“,"Green","21","Lawyer"
-    ”2“,"Suse","22","dancer"
-    ”3“,"Mary","24","Musician"
-    ”4“,"Willam","20","sports man"
-    ”5“,"Laura","25",'N'
-    ”6“,"Evans","27","secretary"
-    ”7“,"Dale","22","cook"
-    ”8“,"Edison","28","singer"
-    ”9“,"Harry","21","magician"
-    ”10","Harriet","19","pianist"
+    "1","Green","21","Lawyer"
+    "2","Suse","22","dancer"
+    "3","Mary","24","Musician"
+    "4","Willam","20","sports man"
+    "5","Laura","25",'N'
+    "6","Evans","27","secretary"
+    "7","Dale","22","cook"
+    "8","Edison","28","singer"
+    "9","Harry","21","magician"
+    "10","Harriet","19","pianist"
             </code>
         </pre>
         <p class="firstLineIndent">可以看到，所有的字段值都被双引号包括；第5条记录中空值的表示形式为<b>'N'</b>，即使用单引号替换了反斜线转义字符。</p>
@@ -1095,31 +1095,55 @@
         <p class="firstLineIndent">语句执行成功，系统D盘目录下面将会有两个文件，分别为person.sql和person.txt。person.sql包含创建person表的CREATE语句，其内容如下：</p>
         <pre>
             <code class="sql">
-    -- MySQL dump 10.13 Distrib 8.0.13, for Win64 (x8_64)
+    -- MySQL dump 10.13 Distrib 8.0.13, for Win64 (x86_64)
     --
-    +----------------------------+--------------------------------------------------+
-    |       Variable_name        |                      Value                       |
-    +----------------------------+--------------------------------------------------+
-    |  require_secure_transport  |                       OFF                        |
-    |  secure_file_priv          | C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\   |
-    +----------------------------+--------------------------------------------------+
+    -- Host: localhost      Database: test_db
+    -- -----------------------------------------------------
+    -- Server version    8.0.13
+
+
+    /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+    /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+    /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+     SET NAMES utf8mb4 ;
+    /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+    /*!40103 SET TIME_ZONE='+00:00' */;
+    /*!40111 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+    /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+    --
+    -- Table structure for table `person`
+    --
+
+
+    DROP TABLE IF EXISTS `person`;
+    /*!40101 SET @saved_cs_client = @@character_set_client */
+    /*!40101 SET character_set_client = utf8 */
+    CREATE TABLE `person` (
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `name` char(40) NOT NULL DEFAULT '',
+    `age` int(11) NOT NULL DEFAULT '0',
+    `info` char(50) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+    /*!40101 SET character_set_client = @saved_cs_client */;
+
+
+    /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+
+    /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+    /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+    /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+    /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+    /*!40101 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
+    -- Dump completed on 2020-12-09 22:36:11
             </code>
         </pre>
-        <p class="firstLineIndent">
-            因为secure_file_priv配置的关系，所以必须导出到C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\目录下。如果想自定义导出路径，需要修改my.ini配置文件。打开路径
-            C:\ProgramData\MySQL\MySQL Server 8.0，用记事本打开my.ini，然后搜索到以下代码：
-        </p>
-        <p class="firstLineIndent"><b>secure-file_priv="C:/ProgramData/MySQL/MySQL Server 8.0/Uploads\"</b></p>
-        <p class="firstLineIndent">在上述代码前添加#，然后添加以下内容：</p>
-        <p class="firstLineIndent"><b>secure-file-priv="D:/"</b></p>
-        <p class="firstLineIndent">再次使用SELECT...INTO OUTFILE将test_db数据库中person表中的记录导出到文本文件，输入命令如下：</p>
-        <pre>
-            <code class="sql">
-    mysql> SELECT * FROM test_db.person INTO OUTFILE 'D:/person0.txt';
-    Query OK, 1 row affected (0.01 sec)
-            </code>
-        </pre>
-        <p class="firstLineIndent">由于指定了INTO OUTFILE子句，因此SELECT会将查询出来的3个字段值保存到D:\person0.txt文件中。打开文件，内容如下：</p>
+        <p class="firstLineIndent">person.txt包含数据包中的数据，其内容如下：</p>
         <pre>
             <code class="sql">
     1   Green    21     Lawyer
@@ -1134,108 +1158,31 @@
     10  Harriet  19     pianist
             </code>
         </pre>
-        <p class="firstLineIndent">默认情况下，MySQL使用制表符“\t”分隔不同的字段，字段没有被其他字符括起来。另外，第5行中有一个字段值为“\N”，表示该字段的值为NULL。默认情况下，如果遇到NULL值，将会返回“\N”，代表空值，其中的反斜线“\”表示转义字符，如果使用ESCAPED BY选项，则N前面为指定的转义字符。</p>
         <hr>
         <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-        <p class="firstLineIndent">使用SELECT...INTO OUTFILE将test_db数据库person表中的记录导出到文本文件，使用FIELDS选项和LINES选项，要求字段之间使用逗号“,”间隔，所有字段值用双引号括起来，定义转义字符为单引号“'”，执行的命令如下：</p>
+        <p class="firstLineIndent">使用mysqldump将test_db数据库person表中的记录导出到文本文件，使用FIELDS选项，要求字段之间使用逗号“,”间隔，所有字符类型字段值用双引号括起来，定义转义字符为问号“?”，每行记录以回车换行符“\r\n”结尾，执行的命令如下：</p>
         <pre>
             <code class="sql">
-    mysql> SELECT * FROM test_db.person INTO OUTFILE 'D:/person1.txt'
-        -> FIELDS
-        -> TERMINATED BY ','
-        -> ENCLOSED BY '\"'
-        -> ESCAPED BY '\''
-        -> LINES
-        -> TERMINATED BY '\r\n';
-    Query OK, 1 row affected (0.01 sec)
+    C:\>mysqldump -T D:\ test_db person -u root -p --fields-terminated-by=, --fields-optionally-enclosed-by=\" --fields-escaped-by=? --lines-terminated-by=\r\n
+    Enter password: ********
             </code>
         </pre>
-        <p class="firstLineIndent">该语句将把person表中所有记录导入到D盘目录下的person1.txt文本文件中。</p>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>参数</th>
-                <th>作用</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>TERMINATED BY ','</td>
-                <td>表示字段之间用逗号分隔</td>
-            </tr>
-            <tr>
-                <td>ENCLOSED BY '\"'</td>
-                <td>表示每个字段用双引号括起来</td>
-            </tr>
-            <tr>
-                <td>ESCAPED BY '\''</td>
-                <td>表示将系统默认的转义字符替换为单引号</td>
-            </tr>
-            <tr>
-                <td>TERMINATED BY '\r\n'</td>
-                <td>表示每行以回车换行符为结尾，保证每一条记录占一行</td>
-            </tr>
-            </tbody>
-        </table>
-        <p class="firstLineIndent">执行成功后，在目录D盘下生成一个person1.txt文件。打开文件，内容如下：</p>
+        <p class="firstLineIndent">上面语句要在一行中输入，语句执行成功，系统D盘目录下面将会有两个文件，分别为person.sql和person.txt。person.sql包含创建person表的CREATE语句，其内容与前面例子中的相同，person.txt文件的内容与上一个例子不同，显示如下：</p>
         <pre>
             <code class="sql">
-    “1“,"Green","21","Lawyer"
-    ”2“,"Suse","22","dancer"
-    ”3“,"Mary","24","Musician"
-    ”4“,"Willam","20","sports man"
-    ”5“,"Laura","25",'N'
-    ”6“,"Evans","27","secretary"
-    ”7“,"Dale","22","cook"
-    ”8“,"Edison","28","singer"
-    ”9“,"Harry","21","magician"
-    ”10","Harriet","19","pianist"
+    1,"Green",21,"Lawyer"
+    2,"Suse",22,"dancer"
+    3,"Mary",24,"Musician"
+    4,"Willam",20,"sports man"
+    5,"Laura",25,?N
+    6,"Evans",27,"secretary"
+    7,"Dale",22,"cook"
+    8,"Edison",28,"singer"
+    9,"Harry",21,"magician"
+    10,"Harriet",19,"pianist"
             </code>
         </pre>
-        <p class="firstLineIndent">可以看到，所有的字段值都被双引号包括；第5条记录中空值的表示形式为<b>'N'</b>，即使用单引号替换了反斜线转义字符。</p>
-        <hr>
-        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-        <p class="firstLineIndent">使用SELECT...INTO OUTFILE将test_db数据库person表中的记录导出到文本文件，使用FIELDS选项和LINES选项，要求每行记录以字符串”&gt;&nbsp;“开始、以”&lt;end&gt;“字符串结尾，执行的命令如下：</p>
-        <pre>
-            <code class="sql">
-    mysql> SELECT * FROM test_db.person INTO OUTFILE 'D:/person2.txt'
-        -> LINES
-        -> STARTING BY '&gt;&nbsp;'
-        -> TERMINATED BY '&lt;end&gt;';
-    Query OK, 1 row affected (0.01 sec)
-            </code>
-        </pre>
-        <p class="firstLineIndent">执行成功后，在目录D盘下生成一个person2.txt文件。打开文件，内容如下：</p>
-        <pre>
-            <code class="sql">
-    &gt;&nbsp;1  Green   21   Lawyer  &lt;end&gt;&gt;&nbsp;2  Suse   22   dancer  &lt;end&gt;&gt;&nbsp;3  Mary   24   Musician  &lt;end&gt;&gt;&nbsp;4  Willam   20   sports man  &lt;end&gt;&gt;&nbsp;5  Laura   25   \N  &lt;end&gt;&gt;&nbsp;6  Evans   27   secretary  &lt;end&gt;&gt;&nbsp;7  Dale   22   cook  &lt;end&gt;&gt;&nbsp;8  Edison   28   singer  &lt;end&gt;&gt;&nbsp;9  Harry   21   magician  &lt;end&gt;&gt;&nbsp;10  Harriet   19   pianist  &lt;end&gt;
-            </code>
-        </pre>
-        <p class="firstLineIndent">可以看到，虽然将所有的字段值导出到文本文件中，但是所有的记录没有分行区分，出现这种情况是因为TERMINATED BY选项替换了系统默认的”\n“换行符，如果希望换行显示，则需要修改导出语句：</p>
-        <pre>
-            <code class="sql">
-    mysql> SELECT * FROM test_db.person INTO OUTFILE 'D:/person2.txt'
-        -> LINES
-        -> STARTING BY '&gt;&nbsp;'
-        -> TERMINATED BY '&lt;end&gt;\r\n';
-    Query OK, 1 row affected (0.01 sec)
-            </code>
-        </pre>
-        <p class="firstLineIndent">执行完语句之后，换行显示每条记录，结果如下：</p>
-        <pre>
-            <code class="sql">
-    &gt;&nbsp;1  Green     21   Lawyer  &lt;end&gt;
-    &gt;&nbsp;2  Suse      22   dancer  &lt;end&gt;
-    &gt;&nbsp;3  Mary      24   Musician  &lt;end&gt;
-    &gt;&nbsp;4  Willam    20   sports man  &lt;end&gt;
-    &gt;&nbsp;5  Laura     25   \N  &lt;end&gt;
-    &gt;&nbsp;6  Evans     27   secretary  &lt;end&gt;
-    &gt;&nbsp;7  Dale      22   cook  &lt;end&gt;
-    &gt;&nbsp;8  Edison    28   singer  &lt;end&gt;
-    &gt;&nbsp;9  Harry     21   magician  &lt;end&gt;
-    &gt;&nbsp;10 Harriet   19   pianist  &lt;end&gt;
-            </code>
-        </pre>
+        <p class="firstLineIndent">可以看到，只有字符类型的值被双引号括了起来，而数值类型的值没有；第5行记录中NULL值的表示为<b>?N</b>，使用问号“?”替代了系统默认的反斜线转义字符“\”。</p>
     </div>
 </div>
 
@@ -1276,6 +1223,450 @@
             </tbody>
         </table>
         <p class="firstLineIndent"><b>与<code>SELECT...INTO OUTFILE</code>语句中的OPTIONS各个参数设置不同，这里OPTIONS各个选项等号后面的value值不要用引号括起来。</b></p>
+    </div>
+</div>
+
+<!-- 表的导出和导入-使用mysql命令导出文本文件 -->
+<div id="table_export_and_import_mysql" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">使用mysql命令导出文本文件</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent"><code>mysql</code>是一个功能丰富的工具命令，使用mysql还可以在命令行模式下执行SQL指令，将查询结果导入到文本文件中。相比<code>mysqldump</code>，<code>mysql</code>工具导出的结果可读性更强。</p>
+        <p class="firstLineIndent">如果MySQL服务器是单独的服务器，用户是在一个client上进行操作，用户要把数据结果导入到client机器上。可以使用mysql -e语句。</p>
+        <p class="firstLineIndent">使用mysql导出数据文本文件语句的基本格式如下：</p>
+        <p class="firstLineIndent"><code>mysql -u root -p --execute = "SELECT语句" db_name > filename.txt</code></p>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>--execute</td>
+                <td>表示执行该选项后面的语句并退出，后面的语句必须用双引号括起来</td>
+            </tr>
+            <tr>
+                <td>db_name</td>
+                <td>表示要导出的数据库名称</td>
+            </tr>
+            <tr>
+                <td>filename.txt</td>
+                <td>表示导出文件。导出的文件中不同列之间使用制表符分隔，第1行包含了各个字段的名称</td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用mysql语句，导出test_db数据库中的person表中的记录导出到文本文件，输入语句如下：</p>
+        <pre>
+            <code class="sql">
+    C:\>mysql -u root -p --execute="SELECT * FROM person;" test_db > D:\person3.txt
+            </code>
+        </pre>
+        <p class="firstLineIndent">语句执行完毕之后，系统D盘目录下面将会有名称为person3.txt的文本文件，其内容如下：</p>
+        <pre>
+            <code class="sql">
+    id  name     age    info
+    1   Green    21     Lawyer
+    2   Suse     22     dancer
+    3   Mary     24     Musician
+    4   Willam   20     sports man
+    5   Laura    25     \N
+    6   Evans    27     secretary
+    7   Dale     22     cook
+    8   Edison   28     singer
+    9   Harry    21     magician
+    10  Harriet  19     pianist
+            </code>
+        </pre>
+        <p class="firstLineIndent">可以看到，person3.txt文件中包含了每个字段的名称和各条记录，该显示格式与mysql命令行下SELECT查询结果显示相同。</p>
+        <p class="firstLineIndent">使用<code>mysql</code>命令还可以指定查询结果的显示格式，如果某行记录字段很多，可能一行不能完全显示，可以使用<b>--vertical</b>参数，将每条记录分为多行显示。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用mysql命令，导出test_db数据库中的person表中的记录导出到文本文件，使用--vertical参数显示结果，输入语句如下：</p>
+        <pre>
+            <code class="sql">
+    C:\>mysql -u root -p --vertical --execute="SELECT * FROM person;" test_db > D:\person4.txt
+            </code>
+        </pre>
+        <p class="firstLineIndent">语句执行完毕之后，系统D盘目录下面将会有名称为person4.txt的文本文件，其内容如下：</p>
+        <pre>
+            <code class="sql">
+    ***** 1.row *****
+    id: 1
+    name: Green
+    age: 21
+    info: Lawyer
+    ***** 2.row *****
+    id: 2
+    name: Suse
+    age: 22
+    info: dancer
+    ***** 3.row *****
+    id: 3
+    name: Mary
+    age: 24
+    info: Musician
+    ***** 4.row *****
+    id: 4
+    name: Willam
+    age: 20
+    info: sports man
+    ***** 5.row *****
+    id: 5
+    name: Laura
+    age: 25
+    info: NULL
+    ***** 6.row *****
+    id: 6
+    name: Evans
+    age: 27
+    info: secretary
+    ***** 7.row *****
+    id: 7
+    name: Dale
+    age: 22
+    info: cook
+    ***** 8.row *****
+    id: 8
+    name: Edison
+    age: 28
+    info: singer
+    ***** 9.row *****
+    id: 9
+    name: Harry
+    age: 21
+    info: magician
+    ***** 10.row *****
+    id: 10
+    name: Harriet
+    age: 19
+    info: pianist
+            </code>
+        </pre>
+        <p class="firstLineIndent">可以看到，SELECT的查询结果导出到文本文件之后，显示格式发生了变化，如果person表中记录内容很长，这样显示将会更加容易阅读。</p>
+        <p class="firstLineIndent"><code>mysql</code>可以将查询结果导出到html文件中，使用<b>--html</b>选项即可。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用mysql命令，导出test_db数据库中的person表中的记录导出到html文件，输入语句如下：</p>
+        <pre>
+            <code class="sql">
+    C:\>mysql -u root -p --html --execute="SELECT * FROM person;" test_db > D:\person5.html
+            </code>
+        </pre>
+        <p class="firstLineIndent">语句执行成功，系统D盘目录下面将会有名称为person5.html的文件，该文件在浏览器打开即可。</p>
+        <p class="firstLineIndent">如果要将表数据导出到xml文件中，可使用<b>--xml</b>选项。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用mysql命令，导出test_db数据库中的person表中的记录导出到xml文件，输入语句如下：</p>
+        <pre>
+            <code class="sql">
+    C:\>mysql -u root -p --xml --execute="SELECT * FROM person;" test_db > D:\person6.xml
+            </code>
+        </pre>
+        <p class="firstLineIndent">语句执行成功，系统D盘目录下面将会有名称为person6.xml的文件，该文件在浏览器打开即可。</p>
+    </div>
+</div>
+
+<!-- 表的导出和导入-使用LOAD DATA INFILE方式导入文本文件 -->
+<div id="table_export_and_import_load_data_infile" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">使用LOAD DATA INFILE方式导入文本文件</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">
+            MySQL允许将数据导出到外部文件，也可以从外部文件导入数据。MySQL提供了一些导入数据的工具，包括<code>LOAD DATA</code>语句、<code>source</code>命令和<code>mysql</code>命令。
+            <code>LOAD DATA INFILE</code>语句用于高速地从一个文本文件中读取行，并装入一个表中。文件名称必须为文字字符串。
+        </p>
+        <p class="firstLineIndent">LOAD DATA语句的基本格式如下：</p>
+        <p class="firstLineIndent"><code>LOAD DATA INFILE 'filename.txt' INTO TABLE tablename [OPTIONS] [IGNORE number LINES]</code></p>
+        <p class="firstLineIndent"><span class="bold">--OPTIONS 选项</span></p>
+        <p class="firstLineIndent"><code>FIELDS TERMINATED BY 'value'</code></p>
+        <p class="firstLineIndent"><code>FIELDS [OPTIONALLY] ENCLOSED BY 'value'</code></p>
+        <p class="firstLineIndent"><code>FIELDS ESCAPED BY 'value'</code></p>
+        <p class="firstLineIndent"><code>LINES STARTING BY 'value'</code></p>
+        <p class="firstLineIndent"><code>LINES TERMINATED BY 'value'</code></p>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>filename</td>
+                <td>为导入数据的来源文件</td>
+            </tr>
+            <tr>
+                <td>tablename</td>
+                <td>表示待导入的数据表名称</td>
+            </tr>
+            <tr>
+                <td>[OPTIONS]</td>
+                <td class="tinyHand" onclick="tableExportAndImportLoadDataInfileOptionsTips()">为可选参数选项，OPTIONS部分的语法包括FIELDS和LINES子句 <i class="fa fa-hand-pointer-o"></i></td>
+            </tr>
+            <tr>
+                <td>[IGNORE number LINES]</td>
+                <td>表示忽略文件开始处的行数，number表示忽略的行数</td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="firstLineIndent">执行<code>LOAD DATA</code>语句需要FILE权限</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用LOAD DATA命令D:\person0.txt文件中的数据导入到test_db数据库的person表中，输入语句如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> USE test_db;
+    Database changed;
+    mysql> DELETE FROM person;
+    Query OK, 10 rows affected (0.00 sec)
+    Records: 10 Deleted: 0 Skipped: 0 Warning: 0
+    mysql>
+    mysql>
+    mysql> LOAD DATA INFILE 'D:\person0.txt' INTO TABLE test_db.person;
+    Query OK, 10 rows affected (0.00 sec)
+    Records: 10 Deleted: 0 Skipped: 0 Warning: 0
+    mysql>
+    mysql>
+    mysql> SELECT * FROM person;
+    +----+-----------+-------+--------------+
+    | id |  name     |  age  |  info        |
+    +----+-----------+-------+--------------+
+    | 1  |  Green    |  21   |  Lawyer      |
+    | 2  |  Suse     |  22   |  dancer      |
+    | 3  |  Mary     |  24   |  Musician    |
+    | 4  |  Willam   |  20   |  sports man  |
+    | 5  |  Laura    |  25   |  \N          |
+    | 6  |  Evans    |  27   |  secretary   |
+    | 7  |  Dale     |  22   |  cook        |
+    | 8  |  Edison   |  28   |  singer      |
+    | 9  |  Harry    |  21   |  magician    |
+    | 10 |  Harriet  |  19   |  pianist     |
+    +----+-----------+-------+--------------+
+            </code>
+        </pre>
+        <p class="firstLineIndent">可以看到，语句执行成功之后，原来的数据重新恢复到了person表中。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">
+            使用LOAD DATA命令D:\person1.txt文件中的数据导入到test_db数据库的person表。使用FIELDS选项和LINES选项，要求字段之间使用逗号“,”间隔，所有字段值用双引号
+            括起来，定义转义字符为单引号“\'”，每行记录以回车换行符“\r\n”结尾，输入语句如下：
+        </p>
+        <pre>
+            <code class="sql">
+    mysql> USE test_db;
+    Database changed;
+    mysql> DELETE FROM person;
+    Query OK, 10 rows affected (0.00 sec)
+    Records: 10 Deleted: 0 Skipped: 0 Warning: 0
+    mysql>
+    mysql>
+    mysql> LOAD DATA INFILE 'D:\person1.txt' INTO TABLE test_db.person
+        -> FIELDS
+        -> TERMINATED BY '.'
+        -> ENCLOSED BY '\"'
+        -> ESCAPED BY '\''
+        -> LINES
+        -> TERMINATED BY '\r\n';
+    Query OK, 10 rows affected (0.00 sec)
+    Records: 10 Deleted: 0 Skipped: 0 Warning: 0
+    mysql>
+    mysql>
+    mysql> SELECT * FROM person;
+    +----+-----------+-------+--------------+
+    | id |  name     |  age  |  info        |
+    +----+-----------+-------+--------------+
+    | 1  |  Green    |  21   |  Lawyer      |
+    | 2  |  Suse     |  22   |  dancer      |
+    | 3  |  Mary     |  24   |  Musician    |
+    | 4  |  Willam   |  20   |  sports man  |
+    | 5  |  Laura    |  25   |  \N          |
+    | 6  |  Evans    |  27   |  secretary   |
+    | 7  |  Dale     |  22   |  cook        |
+    | 8  |  Edison   |  28   |  singer      |
+    | 9  |  Harry    |  21   |  magician    |
+    | 10 |  Harriet  |  19   |  pianist     |
+    +----+-----------+-------+--------------+
+            </code>
+        </pre>
+        <p class="firstLineIndent">语句执行成功，使用SELECT语句查看person表中的记录，结果与前一个例子相同。</p>
+    </div>
+</div>
+
+<!-- 表的导出和导入-使用LOAD DATA INFILE方式导入文本文件-OPTIONS提示 -->
+<div id="table_export_and_import_load_data_infile_options_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">OPTIONS</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>FIELDS TERMINATED BY 'value'</td>
+                <td>设置字段之间的分割字符，可以为单个或多个字符，默认情况下为制表符‘\t’</td>
+            </tr>
+            <tr>
+                <td>FIELDS [OPTIONALLY] ENCLOSED BY 'value'</td>
+                <td>设置字段的包围字符，只能为单个字符，若使用了OPTIONALLY则只有CHAR和VARCHAR等字符数据字段被包括</td>
+            </tr>
+            <tr>
+                <td>FIELDS ESCAPED BY 'value'</td>
+                <td>设置如何写入或读取特殊字符，只能为单个字符，即设置转义字符，默认值为‘\’</td>
+            </tr>
+            <tr>
+                <td>LINES STARTING BY 'value'</td>
+                <td>设置每行数据开头的字符，可以为单个或多个字符，默认情况下不使用任何字符</td>
+            </tr>
+            <tr>
+                <td>LINES TERMINATED BY 'value'</td>
+                <td>设置每行数据结尾的字符，可以为单个或多个字符，默认值为‘\n’</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 表的导出和导入-使用mysqlimport命令导入文本文件 -->
+<div id="table_export_and_import_mysqlimport" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">使用mysqlimport命令导入文本文件</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">
+            使用<code>mysqlimport</code>可以导入文本文件，并且不需要登录MySQL客户端。<code>mysqlimport</code>命令提供许多与<code>LOAD DATA INFILE</code>语句相同的功能，
+            大多数选项直接对应<code>LOAD DATA INFILE</code>子句。使用<code>mysqlimport</code>语句需要指定所需的选项、导入的数据库名称以及导入的数据文件的路径和名称。<code>mysqlimport</code>
+            命令的基本语法格式如下：
+        </p>
+        <p class="firstLineIndent"><code>mysqlimport -u root -p dbname filename.txt [OPTIONS]</code></p>
+        <p class="firstLineIndent"><span class="bold">--OPTIONS 选项</span></p>
+        <p class="firstLineIndent"><code>--fields-terminated-by=value</code></p>
+        <p class="firstLineIndent"><code>--fields-enclosed-by=value</code></p>
+        <p class="firstLineIndent"><code>--fields-optionally-enclosed-by=value</code></p>
+        <p class="firstLineIndent"><code>--fields-escaped-by=value</code></p>
+        <p class="firstLineIndent"><code>--lines-terminated-by=value</code></p>
+        <p class="firstLineIndent"><code>--ignore-lines=n</code></p>
+
+
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>filename</td>
+                <td>为导入数据的来源文件</td>
+            </tr>
+            <tr>
+                <td>tablename</td>
+                <td>表示待导入的数据表名称</td>
+            </tr>
+            <tr>
+                <td>[OPTIONS]</td>
+                <td class="tinyHand" onclick="tableExportAndImportLoadDataInfileOptionsTips()">为可选参数选项，OPTIONS部分的语法包括FIELDS和LINES子句 <i class="fa fa-hand-pointer-o"></i></td>
+            </tr>
+            <tr>
+                <td>[IGNORE number LINES]</td>
+                <td>表示忽略文件开始处的行数，number表示忽略的行数</td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="firstLineIndent">执行<code>LOAD DATA</code>语句需要FILE权限</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用LOAD DATA命令D:\person0.txt文件中的数据导入到test_db数据库的person表中，输入语句如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> USE test_db;
+    Database changed;
+    mysql> DELETE FROM person;
+    Query OK, 10 rows affected (0.00 sec)
+    Records: 10 Deleted: 0 Skipped: 0 Warning: 0
+    mysql>
+    mysql>
+    mysql> LOAD DATA INFILE 'D:\person0.txt' INTO TABLE test_db.person;
+    Query OK, 10 rows affected (0.00 sec)
+    Records: 10 Deleted: 0 Skipped: 0 Warning: 0
+    mysql>
+    mysql>
+    mysql> SELECT * FROM person;
+    +----+-----------+-------+--------------+
+    | id |  name     |  age  |  info        |
+    +----+-----------+-------+--------------+
+    | 1  |  Green    |  21   |  Lawyer      |
+    | 2  |  Suse     |  22   |  dancer      |
+    | 3  |  Mary     |  24   |  Musician    |
+    | 4  |  Willam   |  20   |  sports man  |
+    | 5  |  Laura    |  25   |  \N          |
+    | 6  |  Evans    |  27   |  secretary   |
+    | 7  |  Dale     |  22   |  cook        |
+    | 8  |  Edison   |  28   |  singer      |
+    | 9  |  Harry    |  21   |  magician    |
+    | 10 |  Harriet  |  19   |  pianist     |
+    +----+-----------+-------+--------------+
+            </code>
+        </pre>
+        <p class="firstLineIndent">可以看到，语句执行成功之后，原来的数据重新恢复到了person表中。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">
+            使用LOAD DATA命令D:\person1.txt文件中的数据导入到test_db数据库的person表。使用FIELDS选项和LINES选项，要求字段之间使用逗号“,”间隔，所有字段值用双引号
+            括起来，定义转义字符为单引号“\'”，每行记录以回车换行符“\r\n”结尾，输入语句如下：
+        </p>
+        <pre>
+            <code class="sql">
+    mysql> USE test_db;
+    Database changed;
+    mysql> DELETE FROM person;
+    Query OK, 10 rows affected (0.00 sec)
+    Records: 10 Deleted: 0 Skipped: 0 Warning: 0
+    mysql>
+    mysql>
+    mysql> LOAD DATA INFILE 'D:\person1.txt' INTO TABLE test_db.person
+        -> FIELDS
+        -> TERMINATED BY '.'
+        -> ENCLOSED BY '\"'
+        -> ESCAPED BY '\''
+        -> LINES
+        -> TERMINATED BY '\r\n';
+    Query OK, 10 rows affected (0.00 sec)
+    Records: 10 Deleted: 0 Skipped: 0 Warning: 0
+    mysql>
+    mysql>
+    mysql> SELECT * FROM person;
+    +----+-----------+-------+--------------+
+    | id |  name     |  age  |  info        |
+    +----+-----------+-------+--------------+
+    | 1  |  Green    |  21   |  Lawyer      |
+    | 2  |  Suse     |  22   |  dancer      |
+    | 3  |  Mary     |  24   |  Musician    |
+    | 4  |  Willam   |  20   |  sports man  |
+    | 5  |  Laura    |  25   |  \N          |
+    | 6  |  Evans    |  27   |  secretary   |
+    | 7  |  Dale     |  22   |  cook        |
+    | 8  |  Edison   |  28   |  singer      |
+    | 9  |  Harry    |  21   |  magician    |
+    | 10 |  Harriet  |  19   |  pianist     |
+    +----+-----------+-------+--------------+
+            </code>
+        </pre>
+        <p class="firstLineIndent">语句执行成功，使用SELECT语句查看person表中的记录，结果与前一个例子相同。</p>
     </div>
 </div>
 

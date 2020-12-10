@@ -401,3 +401,10 @@ function tableExportAndImportSelectIntoOutfileOptionsTips() {
 function tableExportAndImportMysqldumpOptionsTips() {
     layerCapture('table_export_and_import_mysqldump_options_tips', 0, 40, 34);
 }
+
+/**
+ * 表的导出和导入-使用LOAD DATA INFILE方式导入文本文件-OPTIONS提示
+ */
+function tableExportAndImportLoadDataInfileOptionsTips() {
+    layerCapture('table_export_and_import_load_data_infile_options_tips', 0, 40, 33);
+}
