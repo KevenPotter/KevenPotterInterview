@@ -408,3 +408,10 @@ function tableExportAndImportMysqldumpOptionsTips() {
 function tableExportAndImportLoadDataInfileOptionsTips() {
     layerCapture('table_export_and_import_load_data_infile_options_tips', 0, 40, 33);
 }
+
+/**
+ * 表的导出和导入-使用mysqlimport命令导入文本文件-OPTIONS提示
+ */
+function tableExportAndImportMysqlImportOptionsTips() {
+    layerCapture('table_export_and_import_mysqlimport_options_tips', 0, 40, 33);
+}

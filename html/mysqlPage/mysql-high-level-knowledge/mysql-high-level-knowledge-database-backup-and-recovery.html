@@ -1210,7 +1210,7 @@
             </tr>
             <tr>
                 <td>--fields-optionally-enclosed-by=value</td>
-                <td>设置字段的包围字符，只能为单个字符，只能包括CHAR和VARCHAR等字段字符数据字段</td>
+                <td>设置字段的包围字符，只能为单个字符，包括CHAR和VARCHAR等字符数据字段</td>
             </tr>
             <tr>
                 <td>--fields-escaped-by=value</td>
@@ -1420,7 +1420,7 @@
         <p class="firstLineIndent">执行<code>LOAD DATA</code>语句需要FILE权限</p>
         <hr>
         <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-        <p class="firstLineIndent">使用LOAD DATA命令D:\person0.txt文件中的数据导入到test_db数据库的person表中，输入语句如下：</p>
+        <p class="firstLineIndent">使用LOAD DATA命令将D:\person0.txt文件中的数据导入到test_db数据库的person表中，输入语句如下：</p>
         <pre>
             <code class="sql">
     mysql> USE test_db;
@@ -1456,7 +1456,7 @@
         <hr>
         <h4><i class="fa fa-female"></i><b>示例：</b></h4>
         <p class="firstLineIndent">
-            使用LOAD DATA命令D:\person1.txt文件中的数据导入到test_db数据库的person表。使用FIELDS选项和LINES选项，要求字段之间使用逗号“,”间隔，所有字段值用双引号
+            使用LOAD DATA命令将D:\person1.txt文件中的数据导入到test_db数据库的person表。使用FIELDS选项和LINES选项，要求字段之间使用逗号“,”间隔，所有字段值用双引号
             括起来，定义转义字符为单引号“\'”，每行记录以回车换行符“\r\n”结尾，输入语句如下：
         </p>
         <pre>
@@ -1558,8 +1558,6 @@
         <p class="firstLineIndent"><code>--fields-escaped-by=value</code></p>
         <p class="firstLineIndent"><code>--lines-terminated-by=value</code></p>
         <p class="firstLineIndent"><code>--ignore-lines=n</code></p>
-
-
         <hr>
         <table class="table table-bordered">
             <thead>
@@ -1570,103 +1568,150 @@
             </thead>
             <tbody>
             <tr>
-                <td>filename</td>
-                <td>为导入数据的来源文件</td>
-            </tr>
-            <tr>
-                <td>tablename</td>
-                <td>表示待导入的数据表名称</td>
+                <td>dabname</td>
+                <td>为导入的表所在的数据库名称。<span class="note">注意</span>：mysqlimport命令不指定导入数据库的表名称，数据表的名称由导入文件名称确定，即文件名作为表名，导入数据之前该表必须存在</td>
             </tr>
             <tr>
                 <td>[OPTIONS]</td>
-                <td class="tinyHand" onclick="tableExportAndImportLoadDataInfileOptionsTips()">为可选参数选项，OPTIONS部分的语法包括FIELDS和LINES子句 <i class="fa fa-hand-pointer-o"></i></td>
-            </tr>
-            <tr>
-                <td>[IGNORE number LINES]</td>
-                <td>表示忽略文件开始处的行数，number表示忽略的行数</td>
+                <td class="tinyHand" onclick="tableExportAndImportMysqlImportOptionsTips()">为可选参数选项 <i class="fa fa-hand-pointer-o"></i></td>
             </tr>
             </tbody>
         </table>
-        <p class="firstLineIndent">执行<code>LOAD DATA</code>语句需要FILE权限</p>
         <hr>
         <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-        <p class="firstLineIndent">使用LOAD DATA命令D:\person0.txt文件中的数据导入到test_db数据库的person表中，输入语句如下：</p>
+        <p class="firstLineIndent">使用mysqlimport命令将D盘目录下的person.txt文件内容导入到test_db数据库中，字段之间使用“,”间隔，字符类型字段值用双引号括起来，将转义字符定义为问号“?”，每行记录以回车换行符“\r\n”结尾，执行的命令如下：</p>
         <pre>
             <code class="sql">
-    mysql> USE test_db;
-    Database changed;
-    mysql> DELETE FROM person;
-    Query OK, 10 rows affected (0.00 sec)
-    Records: 10 Deleted: 0 Skipped: 0 Warning: 0
-    mysql>
-    mysql>
-    mysql> LOAD DATA INFILE 'D:\person0.txt' INTO TABLE test_db.person;
-    Query OK, 10 rows affected (0.00 sec)
-    Records: 10 Deleted: 0 Skipped: 0 Warning: 0
-    mysql>
-    mysql>
-    mysql> SELECT * FROM person;
-    +----+-----------+-------+--------------+
-    | id |  name     |  age  |  info        |
-    +----+-----------+-------+--------------+
-    | 1  |  Green    |  21   |  Lawyer      |
-    | 2  |  Suse     |  22   |  dancer      |
-    | 3  |  Mary     |  24   |  Musician    |
-    | 4  |  Willam   |  20   |  sports man  |
-    | 5  |  Laura    |  25   |  \N          |
-    | 6  |  Evans    |  27   |  secretary   |
-    | 7  |  Dale     |  22   |  cook        |
-    | 8  |  Edison   |  28   |  singer      |
-    | 9  |  Harry    |  21   |  magician    |
-    | 10 |  Harriet  |  19   |  pianist     |
-    +----+-----------+-------+--------------+
+    C:\ >mysqlimport -u root -p test_db D:\person.txt --fields-terminated-by=, --fields-optionally-enclosed-by=\" --fields-escaped-by=? --lines-terminated-by=\r\n
             </code>
         </pre>
-        <p class="firstLineIndent">可以看到，语句执行成功之后，原来的数据重新恢复到了person表中。</p>
+        <p class="firstLineIndent">上面的语句要在一行中输入，语句执行成功，将把person.txt中的数据导入到数据库。</p>
         <hr>
-        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
-        <p class="firstLineIndent">
-            使用LOAD DATA命令D:\person1.txt文件中的数据导入到test_db数据库的person表。使用FIELDS选项和LINES选项，要求字段之间使用逗号“,”间隔，所有字段值用双引号
-            括起来，定义转义字符为单引号“\'”，每行记录以回车换行符“\r\n”结尾，输入语句如下：
-        </p>
-        <pre>
-            <code class="sql">
-    mysql> USE test_db;
-    Database changed;
-    mysql> DELETE FROM person;
-    Query OK, 10 rows affected (0.00 sec)
-    Records: 10 Deleted: 0 Skipped: 0 Warning: 0
-    mysql>
-    mysql>
-    mysql> LOAD DATA INFILE 'D:\person1.txt' INTO TABLE test_db.person
-        -> FIELDS
-        -> TERMINATED BY '.'
-        -> ENCLOSED BY '\"'
-        -> ESCAPED BY '\''
-        -> LINES
-        -> TERMINATED BY '\r\n';
-    Query OK, 10 rows affected (0.00 sec)
-    Records: 10 Deleted: 0 Skipped: 0 Warning: 0
-    mysql>
-    mysql>
-    mysql> SELECT * FROM person;
-    +----+-----------+-------+--------------+
-    | id |  name     |  age  |  info        |
-    +----+-----------+-------+--------------+
-    | 1  |  Green    |  21   |  Lawyer      |
-    | 2  |  Suse     |  22   |  dancer      |
-    | 3  |  Mary     |  24   |  Musician    |
-    | 4  |  Willam   |  20   |  sports man  |
-    | 5  |  Laura    |  25   |  \N          |
-    | 6  |  Evans    |  27   |  secretary   |
-    | 7  |  Dale     |  22   |  cook        |
-    | 8  |  Edison   |  28   |  singer      |
-    | 9  |  Harry    |  21   |  magician    |
-    | 10 |  Harriet  |  19   |  pianist     |
-    +----+-----------+-------+--------------+
-            </code>
-        </pre>
-        <p class="firstLineIndent">语句执行成功，使用SELECT语句查看person表中的记录，结果与前一个例子相同。</p>
+        <p class="firstLineIndent">除了前面介绍的几个选项之外，mysqlimport支持许多选项，常见的有以下选项：</p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>--columns=column_list,<br/>-c column_list</td>
+                <td>采用逗号分隔的列名作为其值。列名的顺序指示如何匹配数据文件列和表列</td>
+            </tr>
+            <tr>
+                <td>--compress,<br/>-C</td>
+                <td>压缩在客户端和服务器之间发送的所有信息（如果二者均支持压缩）</td>
+            </tr>
+            <tr>
+                <td>--delete,<br/>-d</td>
+                <td>导入文本文件前清空表</td>
+            </tr>
+            <tr>
+                <td>--force,<br/>-f</td>
+                <td>忽视错误。例如，某个文本文件的表不存在，继续处理其他文件。不适用--force，如果表不存在，则mysqlimport退出</td>
+            </tr>
+            <tr>
+                <td>--host=host_name,<br/>-h host_name</td>
+                <td>将数据导入给定主机上的MySQL服务器。默认主机是localhost</td>
+            </tr>
+            <tr>
+                <td>--ignore,<br/>-i</td>
+                <td>参见--replace选项的描述</td>
+            </tr>
+            <tr>
+                <td>--ignore-lines=n</td>
+                <td>忽视数据文件的前n行</td>
+            </tr>
+            <tr>
+                <td>--local,<br/>-L</td>
+                <td>从本地客户端读入输入文件</td>
+            </tr>
+            <tr>
+                <td>--lock-tables,<br/>-l</td>
+                <td>处理文本文件前锁定所有表，以便写入。这样可以确保所有表在服务器上保持同步</td>
+            </tr>
+            <tr>
+                <td>--password[=password],<br/>-p[password]</td>
+                <td>当连接服务器时使用的密码。如果使用短选项形式（-p），选项和密码之间不能有空格。如果在命令行中--password或-p选项后面没有密码值，则提示输入一个密码</td>
+            </tr>
+            <tr>
+                <td>--port=port_num,<br/>-P port_num</td>
+                <td>用于连接的TCP/IP端口号</td>
+            </tr>
+            <tr>
+                <td>--protocol=[TCP|SOCKET|PIPE|MEMORY]</td>
+                <td>使用的连接协议</td>
+            </tr>
+            <tr>
+                <td>--replace,<br/>-r</td>
+                <td>
+                    --replace和--ignore选项控制复制唯一键值已有记录的输入记录的处理。如果指定--replace，新行替换有相同的唯一键值的已有行；如果指定--ignore，复制已有的唯一键值的输入行被跳过；如果不指定
+                    这两个选项，当发现一个复制键值时会出现一个错误，并且忽视文本文件的剩余部分
+                </td>
+            </tr>
+            <tr>
+                <td>--silent,<br/>-s</td>
+                <td>沉默模式。只有出现错误时才输出信息。</td>
+            </tr>
+            <tr>
+                <td>--user=user_name,<br/>-u user_name</td>
+                <td>当连接服务器时MySQL使用的用户名</td>
+            </tr>
+            <tr>
+                <td>--verbose,<br/>-v</td>
+                <td>冗长模式。打印出程序操作的详细信息</td>
+            </tr>
+            <tr>
+                <td>--version,<br/>-V</td>
+                <td>显示版本信息并退出</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 表的导出和导入-使用mysqlimport命令导入文本文件-OPTIONS提示 -->
+<div id="table_export_and_import_mysqlimport_options_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">OPTIONS</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>--fields-terminated-by=value</td>
+                <td>设置字段之间的分割字符，可以为单个或多个字符，默认情况下为制表符‘\t’</td>
+            </tr>
+            <tr>
+                <td>--fields-enclosed-by=value</td>
+                <td>设置字段的包围字符</td>
+            </tr>
+            <tr>
+                <td>--fields-optionally-enclosed-by=value</td>
+                <td>设置字段的包围字符，只能为单个字符，包括CHAR和VARCHAR等字符数据字段</td>
+            </tr>
+            <tr>
+                <td>--fields-escaped-by=value</td>
+                <td>控制如何写入或读取特殊字符，只能为单个字符，即设置转义字符，默认值为反斜线”\“</td>
+            </tr>
+            <tr>
+                <td>--lines-terminated-by=value</td>
+                <td>设置每行数据结尾的字符，可以为单个或多个字符，默认值为‘\n’</td>
+            </tr>
+            <tr>
+                <td>--ignore-lines=n</td>
+                <td>忽视数据文件的前n行</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
