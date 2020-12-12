@@ -8,10 +8,10 @@ $(document).ready(function () {
 });
 
 /**
- * mysql日志提示
+ * mysql日志与性能优化提示
  */
-function mysqlLogTips() {
-    layerCapture('mysql_log_tips', 0, 40, 17);
+function mysqlLogAndPerformanceOptimizationTips() {
+    layerCapture('mysql_log_and_performance_optimization_tips', 0, 40, 70);
 }
 
 /**
@@ -34,13 +34,13 @@ function logClassificationChart() {
                 layerCapture('log_classification_binary_log', 0, 50, 70);
                 break;
             case '错误日志':
-                layerCapture('database_migration_migration_between_different_versions_of_mysql_databases', 0, 50, 28);
+                layerCapture('log_classification_error_log', 0, 50, 56);
                 break;
             case '通用查询日志':
-                layerCapture('database_migration_migration_between_different_databases', 0, 50, 28);
+                layerCapture('log_classification_general_query_log', 0, 50, 70);
                 break;
             case '慢查询日志':
-                layerCapture('database_migration_migration_between_different_databases', 0, 50, 28);
+                layerCapture('log_classification_slow_query_log', 0, 50, 70);
                 break;
         }
     });
@@ -122,4 +122,39 @@ function logClassificationBinaryLogTips() {
  */
 function logClassificationBinaryLog1LogBinTips() {
     layerCapture('log_classification_binary_log_1_log_bin_tips', 0, 40, 27);
+}
+
+/**
+ * 日志分类-二进制日志-使用二进制日志恢复数据库-mysqlbinlog-option提示
+ */
+function logClassificationBinaryLog4MysqlbinlogOptionTips() {
+    layerCapture('log_classification_binary_log_4_mysqlbinlog_option_tips', 0, 40, 28);
+}
+
+/**
+ * 日志分类-错误日志提示
+ */
+function logClassificationErrorLogTips() {
+    layerCapture('log_classification_error_log_tips', 0, 40, 15);
+}
+
+/**
+ * 日志分类-通用查询日志提示
+ */
+function logClassificationGeneralQueryLogTips() {
+    layerCapture('log_classification_general_query_log_tips', 0, 40, 13);
+}
+
+/**
+ * 日志分类-慢查询日志提示
+ */
+function logClassificationSlowQueryLogTips() {
+    layerCapture('log_classification_slow_query_log_tips', 0, 40, 13);
+}
+
+/**
+ * 日志分类更详细提示
+ */
+function logClassificationIsMoreDetailedTips() {
+    layerCapture('log_classification_is_more_detailed_tips', 0, 50, 52);
 }
