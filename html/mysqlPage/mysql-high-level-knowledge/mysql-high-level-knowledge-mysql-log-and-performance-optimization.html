@@ -147,14 +147,15 @@
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="dataRecoveryTips()">数据恢复 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <h3 class="panel-title tinyHand" onclick="analyzeQueryStatementsTips()">分析查询语句 <i class="fa fa-hand-pointer-o"></i></h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="data_recovery" style="height:500%;"></div>
+                                <div id="analyze_query_statements" style="height:500%;"></div>
+                                <h3 class="panel-title tinyHand" onclick="logClassificationIsMoreDetailedTips()">查看MySQL 8.0的日志新特性——日志分类更详细 <i class="fa fa-hand-pointer-o"></i></h3>
                             </div>
                         </div>
                     </div>
@@ -213,7 +214,57 @@
         <p class="fa fa-fire"> MySQL日志</p>
         <p class="firstLineIndent">MySQL日志记录了MySQL数据库日常操作和错误信息。MySQL有不同类型的日志文件（各自存储了不同类型的日志），从日志当中可以查询到MySQL数据库的运行情况、用户操作、错误信息等，可以为MySQL管理和优化提供必要的信息。对于MySQL的管理工作而言，这些日志文件是不可缺少的。</p>
         <p class="fa fa-fire"> 性能优化</p>
-        <p class="firstLineIndent"></p>
+        <p class="firstLineIndent">
+            优化MySQL数据库是数据库管理员和数据库开发人员的必备技能。MySQL优化，一方面是找出系统的瓶颈，提高MySQL数据库整体的性能；另一方面需要合理的结构设计和参数调整，以提高用户操作响应速度；同时
+            还要尽可能节省系统资源，以便系统可以提供更大负荷的服务。
+        </p>
+        <p class="firstLineIndent">MySQL数据库优化是多方面的，原则是减少系统的瓶颈，减少资源的占用，增加系统的反应速度。例如，通过优化文件系统，提高磁盘I/O的读写速度；通过优化操作系统调度策略，提高MySQL在高负荷情况下的负载能力；优化表结构、索引、查询语句等使查询响应更快。</p>
+        <p class="firstLineIndent">在MySQL中，可以使用<code>SHOW STATUS</code>语句查询一些MySQL数据库的性能参数。SHOW STATUS语句的语法如下：</p>
+        <p class="firstLineIndent"><code class="firstLineIndent">SHOW STATUS LIKE 'value';</code></p>
+        <p class="firstLineIndent">其中，value是要查询的参数值，一些常用的性能参数如下：</p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Connections</td>
+                <td>连接MySQL服务器的次数</td>
+            </tr>
+            <tr>
+                <td>Uptime</td>
+                <td>MySQL服务器的上线时间</td>
+            </tr>
+            <tr>
+                <td>Slow_queries</td>
+                <td>慢查询的次数</td>
+            </tr>
+            <tr>
+                <td>Com_select</td>
+                <td>查询操作的次数</td>
+            </tr>
+            <tr>
+                <td>Com_insert</td>
+                <td>插入操作的次数</td>
+            </tr>
+            <tr>
+                <td>Com_update</td>
+                <td>更新操作的次数</td>
+            </tr>
+            <tr>
+                <td>Com_delete</td>
+                <td>删除操作的次数</td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="firstLineIndent">查询MySQL服务器的连接次数，可以执行如下语句：</p>
+        <p class="firstLineIndent"><code>SHOW STATUS LIKE 'Connections';</code></p>
+        <p class="firstLineIndent">查询MySQL服务器的慢查询次数，可以执行如下语句：</p>
+        <p class="firstLineIndent"><code>SHOW STATUS LIKE 'Slow_queries';</code></p>
+        <p class="firstLineIndent">查询其他参数的方法和两个参数的查询方法相同。慢查询次数参数可以结合慢查询日志，找出慢查询语句，然后针对慢查询语句进行表结构优化或者查询语句优化。</p>
     </div>
 </div>
 
@@ -977,6 +1028,191 @@
     2020-12-12T20:02:56.040295+08:00    0   [Warning]   [MY-010311]  [Server]   'proxies_priv'  entry   '@ root@localhost'               ignored in --skip-name-resolve mode.
     2020-12-12T20:02:56.040520+08:00    0   [Warning]   [MY-010311]  [Server]   'tables_priv'   entry   'user mysql.session@localhost'   ignored in --skip-name-resolve mode.
     2020-12-12T20:02:56.040542+08:00    0   [Warning]   [MY-010311]  [Server]   'tables_priv'   entry   'sys_config mysql.sys@localhost' ignored in --skip-name-resolve mode.
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 分析查询语句提示 -->
+<div id="analyze_query_statements_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">分析查询语句</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">通过对查询语句的分析，可以了解查询语句执行情况，找出查询语句执行的瓶颈，从而优化查询语句。MySQL中提供了<code>EXPLAIN</code>语句和<code>DESCRIBE</code>语句，用来分析查询语句。</p>
+        <p class="firstLineIndent">EXPLAIN语句的基本语法如下：</p>
+        <p class="firstLineIndent"><code>EXPLAIN [EXTENDED] SELECT select_options;</code></p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>[EXTENDED]</td>
+                <td>使用该关键字，EXPLAIN语句将产生附加信息</td>
+            </tr>
+            <tr>
+                <td>select_options</td>
+                <td>是SELECT语句的查询选项，包括FROM WHERE子句等</td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="firstLineIndent">执行<code>EXPLAIN</code>语句，可以分析后面<code>SELECT</code>语句的执行情况，并且能够分析出所查询表的的一些特征。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">使用EXPLAIN语句来分析一个查询语句，可执行如下语句：</p>
+        <pre>
+            <code class="sql">
+    mysql> EXPLAIN SELECT * FROM fruits;
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------+
+    | id | select_type | table  | type | possible_keys | key  | key_len | ref  | rows | Extra |
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------+
+    | 1  |   SIMPLE    | fruits | ALL  |      NULL     | NULL |   NULL  | NULL |  16  |       |
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------+
+    1 row in set (0.00 sec)
+            </code>
+        </pre>
+    </div>
+</div>
+
+<!-- 分析查询语句-EXPLAIN-id -->
+<div id="analyze_query_statements_explain_id" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">id</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">id代表SELECT标识符。这是SELECT的查询序列号。</p>
+    </div>
+</div>
+
+<!-- 分析查询语句-EXPLAIN-select_type -->
+<div id="analyze_query_statements_explain_select_type" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">select_type</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">select_type表示SELECT语句的类型，它可以是以下几种取值：</p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>SIMPLE</td>
+                <td>表示简单查询，其中不包括连接查询和子查询</td>
+            </tr>
+            <tr>
+                <td>PRIMARY</td>
+                <td>表示主查询，或者是最外层的查询语句</td>
+            </tr>
+            <tr>
+                <td>UNION</td>
+                <td>表示连接查询的第2个或后面的查询语句</td>
+            </tr>
+            <tr>
+                <td>DEPENDENT UNION</td>
+                <td>连接查询中的第2个或后面的SELECT语句，取决于外面的查询</td>
+            </tr>
+            <tr>
+                <td>UNION RESULT</td>
+                <td>连接查询的结果</td>
+            </tr>
+            <tr>
+                <td>SUBQUERY</td>
+                <td>子查询中的第1个SELECT语句</td>
+            </tr>
+            <tr>
+                <td>DEPENDENT SUBQUERY</td>
+                <td>子查询中的第1个SELECT，取决于外面的查询</td>
+            </tr>
+            <tr>
+                <td>DERIVED</td>
+                <td>导出表的SELECT（FROM子句的子查询）</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 分析查询语句-EXPLAIN-table -->
+<div id="analyze_query_statements_explain_table" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">table</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">table表示查询的表。</p>
+    </div>
+</div>
+
+<!-- 分析查询语句-EXPLAIN-type -->
+<div id="analyze_query_statements_explain_type" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">type</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">type表示表的连接类型，下面按照从最佳类型到最差类型的顺序给出各种连接类型：</p>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>作用</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>system</td>
+                <td>该表是仅有一行的系统表。这是<code>const</code>连接类型的一个特例</td>
+            </tr>
+            <tr>
+                <td>const</td>
+                <td class="tinyHand" onclick="analyzeQueryStatementsExplainTypeConstTips()">数据表最多只有一个匹配行，将在查询开始时被读取，并在余下的查询优化中作为常量对待。const表查询速度很快，因为它们只读取一次。const用于使用常数值比较<code>PRIMARY KEY</code>或<code>UNIQUE</code>索引的所有部分的场合 <i class="fa fa-hand-pointer-o"></i></td>
+            </tr>
+            <tr>
+                <td>eq_ref</td>
+                <td>表示连接查询的第2个或后面的查询语句</td>
+            </tr>
+            <tr>
+                <td>DEPENDENT UNION</td>
+                <td>连接查询中的第2个或后面的SELECT语句，取决于外面的查询</td>
+            </tr>
+            <tr>
+                <td>UNION RESULT</td>
+                <td>连接查询的结果</td>
+            </tr>
+            <tr>
+                <td>SUBQUERY</td>
+                <td>子查询中的第1个SELECT语句</td>
+            </tr>
+            <tr>
+                <td>DEPENDENT SUBQUERY</td>
+                <td>子查询中的第1个SELECT，取决于外面的查询</td>
+            </tr>
+            <tr>
+                <td>DERIVED</td>
+                <td>导出表的SELECT（FROM子句的子查询）</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 分析查询语句-EXPLAIN-type-const -->
+<div id="analyze_query_statements_explain_type_const_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">const</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">在下面的查询中，tb1_name可用于const表：</p>
+        <pre>
+            <code class="sql">
+    SELECT * FROM tb1_name WHERE primary_key = 1;
+    SELECT * FROM tb1_name WHERE primary_key_part1 = 1 AND primary_key_part2 = 2;
             </code>
         </pre>
     </div>
