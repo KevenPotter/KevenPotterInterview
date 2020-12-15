@@ -6,6 +6,7 @@ $(document).ready(function () {
     $('#database_page_high_level_button').click();
     logClassificationChart();
     analyzeQueryStatementsChart();
+    optimizeDatabaseStructureChart();
 });
 
 /**
@@ -313,4 +314,111 @@ function analyzeQueryStatementsExplainTypeRefOrNUllTips() {
  */
 function analyzeQueryStatementsExplainTypeRangeTips() {
     layerCapture('analyze_query_statements_explain_type_range_tips', 0, 40, 41);
+}
+
+/**
+ * 优化子查询提示
+ */
+function optimizeSubqueriesTips() {
+    layerCapture('optimize_subqueries_tips', 0, 50, 21);
+}
+
+/**
+ * 优化数据库结构提示
+ */
+function optimizeDatabaseStructureTips() {
+    layerCapture('optimize_database_structure_tips', 0, 50, 15);
+}
+
+/**
+ * 优化数据库结构图表
+ */
+function optimizeDatabaseStructureChart() {
+    var optimizeDatabaseStructureChart = $('#optimize_database_structure');
+    optimizeDatabaseStructureChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(optimizeDatabaseStructureChart[0], 'macarons');
+    myChart.on('click', function (params) {
+        switch (params.name) {
+            case '将字段很多的表分解成多个表':
+                layerCapture('optimize_database_structure_break_a_table_with_many_fields_into_multiple_tables', 0, 50, 13);
+                break;
+            case '增加中间表':
+                layerCapture('optimize_database_structure', 0, 50, 44);
+                break;
+            case '增加冗余字段':
+                layerCapture('optimize_database_structure', 0, 50, 13);
+                break;
+            case '优化插入记录的速度':
+                layerCapture('optimize_database_structure', 0, 50, 66);
+                break;
+            case '分析表、检查表和优化表':
+                layerCapture('optimize_database_structure', 0, 50, 15);
+                break;
+        }
+    });
+    var option = null;
+    option = {
+        title: {
+            text: '分析查询语句',
+            subtext: '《MySQL8从入门到精通（视频教学版）》-P427',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b} : {c} ({d}%)'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        legend: {
+            bottom: 10,
+            left: 'center',
+            data: ['将字段很多的表分解成多个表', '增加中间表', '增加冗余字段', '优化插入记录的速度', '分析表、检查表和优化表'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '75%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: [
+                    {value: 1, name: '将字段很多的表分解成多个表'},
+                    {value: 1, name: '增加中间表'},
+                    {value: 1, name: '增加冗余字段'},
+                    {value: 1, name: '优化插入记录的速度'},
+                    {value: 1, name: '分析表、检查表和优化表'}
+                ],
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 15
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
 }

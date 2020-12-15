@@ -155,7 +155,7 @@
                             </div>
                             <div class="panel-body">
                                 <div id="analyze_query_statements" style="height:500%;"></div>
-                                <h3 class="panel-title tinyHand" onclick="logClassificationIsMoreDetailedTips()">查看MySQL 8.0的日志新特性——日志分类更详细 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <h3 class="panel-title tinyHand" onclick="optimizeSubqueriesTips()">优化子查询 <i class="fa fa-hand-pointer-o"></i></h3>
                             </div>
                         </div>
                     </div>
@@ -164,17 +164,14 @@
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">索引对查询速度的影响</h3>
+                                <h3 class="panel-title tinyHand" onclick="optimizeDatabaseStructureTips()">优化数据库结构 <i class="fa fa-hand-pointer-o"></i></h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <p class="firstLineIndent">
-                                    MySQL中提高性能的一个有效方式就是对数据表设计合理的索引。索引
-                                </p>
-                                <p class="firstLineIndent"></p>
+                                <div id="optimize_database_structure" style="height:500%;"></div>
                             </div>
                         </div>
                     </div>
@@ -1416,6 +1413,100 @@
         <p class="firstLineIndent">
             表示MySQL在处理查询时的详细信息
         </p>
+    </div>
+</div>
+
+<!-- 优化子查询提示 -->
+<div id="optimize_subqueries_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">优化子查询</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">
+            MySQL从4.1版本开始支持子查询，使用子查询可以进行SELECT语句的嵌套查询，即<b>一个SELECT查询的结果作为另一个SELECT语句的条件。</b>子查询可以一次性完成很多逻辑上
+            需要多个步骤才能完成的SQL操作。子查询虽然可以使查询语句很灵活，但执行效率不高。执行子查询时，MySQL需要为内层查询语句的查询结果建立一个临时表。然后外层查询语句从临时
+            表中查询记录。查询完毕后，再撤销这些临时表。因此，子查询的速度会受到一定的影响。如果查询的数据量比较大，这种影响就会随之增大。
+        </p>
+        <p class="firstLineIndent">
+            在MySQL中，可以使用连接（<code>JOIN</code>）查询来替代子查询。连接查询不需要建立临时表，其速度比子查询要快，如果查询中使用索引，性能会更好。连接之所以更有效，是
+            因为MySQL不需要在内存中创建临时表来完成查询工作。
+        </p>
+    </div>
+</div>
+
+<!-- 优化数据库结构提示 -->
+<div id="optimize_database_structure_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">优化数据库结构</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">
+            一个好的数据库设计方案对于数据库的性能常常会起到事半功倍的效果。合理的数据库结构不仅可以使数据库占用更小的磁盘空间，而且能够使查询速度更快。数据库结构的设计，需要考虑数据冗余、查询和更新的速度、
+            字段的数据类型是否合理等多方面的内容。
+        </p>
+    </div>
+</div>
+
+<!-- 优化数据库结构-将字段很多的表分解成多个表 -->
+<div id="optimize_database_structure_break_a_table_with_many_fields_into_multiple_tables" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">将字段很多的表分解成多个表</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">对于字段较多的表，如果有些字段的使用频率很低，可以将这些字段分离出来，形成新表。因为当一个表的数据量很大时，会由于使用频率低的字段的存在而变慢。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">
+            假设会员表存储会员登录认证信息，该表中有很多字段，如id、姓名、密码、地址、电话、个人描述字段。其中，地址、电话、个人描述等字段并不常用。可以将这些不常用字段分解出另外一个表。
+            将这个表取名叫members_detail。表中有member_id、address、telephone、description等字段。其中，member_id是会员编号，address字段存储地址信息，telephone字段存储
+            电话信息，description字段存储会员个人描述信息。这样就把会员表分成两个表，分别为members表和members_detail表。
+        </p>
+        <p class="firstLineIndent">创建这两个表的SQL语句如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> CREATE TABLE members (
+        -> id int(11) NOT NULL AUTO_INCREMENT,
+        -> username varchar(255) DEFAULT NULL,
+        -> password varchar(255) DEFAULT NULL,
+        -> last_login_time datetime DEFAULT NULL,
+        -> last_login_ip varchar(255) DEFAULT NULL,
+        -> PRIMARY KEY(id)
+        -> );
+    mysql> CREATE TABLE members_detail (
+        -> member_id int(11) NOT NULL DEFAULT 0,
+        -> address varchar(255) DEFAULT NULL,
+        -> telephone varchar(255) DEFAULT NULL,
+        -> description text
+        -> );
+            </code>
+        </pre>
+        <p class="firstLineIndent">这两个表的结构如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> DESC members;
+    +-----------------+--------------+------+-----+---------+----------------+
+    |      Field      |     Type     | Null | Key | Default |      Extra     |
+    +-----------------+--------------+------+-----+---------+----------------+
+    |       id        | int(11)      | NO   | PRI | NULL    | auto_increment |
+    |    username     | varchar(255) | YES  |     | NULL    |                |
+    |    password     | varchar(255) | YES  |     | NULL    |                |
+    | last_login_time | datetime     | YES  |     | NULL    |                |
+    | last_login_ip   | varchar(255) | YES  |     | NULL    |                |
+    +-----------------+--------------+------+-----+---------+----------------+
+    5 rows in set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> DESC members_detail;
+    +-----------------+--------------+------+-----+---------+----------------+
+    |      Field      |     Type     | Null | Key | Default |      Extra     |
+    +-----------------+--------------+------+-----+---------+----------------+
+    |       id        | int(11)      | NO   | PRI | NULL    | auto_increment |
+    |    username     | varchar(255) | YES  |     | NULL    |                |
+    |    password     | varchar(255) | YES  |     | NULL    |                |
+    | last_login_ip   | varchar(255) | YES  |     | NULL    |                |
+    +-----------------+--------------+------+-----+---------+----------------+
+            </code>
+        </pre>
     </div>
 </div>
 

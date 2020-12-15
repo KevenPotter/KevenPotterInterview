@@ -442,7 +442,7 @@ function pointsToNoteWhenUsingIndexQueriesChart() {
     var option = null;
     option = {
         title: {
-            text: 'MySQL的数据类型',
+            text: '使用索引查询注意点',
             subtext: '《MySQL8从入门到精通（视频教学版）》-P424',
             left: 'center'
         },
