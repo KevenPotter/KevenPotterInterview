@@ -164,7 +164,7 @@ function logClassificationIsMoreDetailedTips() {
  * 分析查询语句提示
  */
 function analyzeQueryStatementsTips() {
-    layerCapture('analyze_query_statements_tips', 0, 40, 64);
+    layerCapture('analyze_query_statements_tips', 0, 40, 70);
 }
 
 /**
@@ -186,7 +186,25 @@ function analyzeQueryStatementsChart() {
                 layerCapture('analyze_query_statements_explain_table', 0, 50, 13);
                 break;
             case 'type':
-                layerCapture('analyze_query_statements_explain_type', 0, 50, 70);
+                layerCapture('analyze_query_statements_explain_type', 0, 50, 66);
+                break;
+            case 'possible_keys':
+                layerCapture('analyze_query_statements_explain_possible_keys', 0, 50, 15);
+                break;
+            case 'key':
+                layerCapture('analyze_query_statements_explain_key', 0, 50, 15);
+                break;
+            case 'key_len':
+                layerCapture('analyze_query_statements_explain_key_len', 0, 50, 13);
+                break;
+            case 'ref':
+                layerCapture('analyze_query_statements_explain_ref', 0, 50, 13);
+                break;
+            case 'rows':
+                layerCapture('analyze_query_statements_explain_rows', 0, 50, 13);
+                break;
+            case 'Extra':
+                layerCapture('analyze_query_statements_explain_extra', 0, 50, 13);
                 break;
         }
     });
@@ -263,8 +281,36 @@ function analyzeQueryStatementsChart() {
 }
 
 /**
- * 分析查询语句-EXPLAIN-type-const
+ * 分析查询语句-EXPLAIN-type-const提示
  */
 function analyzeQueryStatementsExplainTypeConstTips() {
-    layerCapture('analyze_query_statements_explain_type_const_tips', 0, 40, 27);
+    layerCapture('analyze_query_statements_explain_type_const_tips', 0, 40, 33);
+}
+
+/**
+ * 分析查询语句-EXPLAIN-type-eq_ref提示
+ */
+function analyzeQueryStatementsExplainTypeEqrefTips() {
+    layerCapture('analyze_query_statements_explain_type_eq_ref_tips', 0, 40, 33);
+}
+
+/**
+ * 分析查询语句-EXPLAIN-type-ref提示
+ */
+function analyzeQueryStatementsExplainTypeRefTips() {
+    layerCapture('analyze_query_statements_explain_type_ref_tips', 0, 40, 36);
+}
+
+/**
+ * 分析查询语句-EXPLAIN-type-ref_or_null提示
+ */
+function analyzeQueryStatementsExplainTypeRefOrNUllTips() {
+    layerCapture('analyze_query_statements_explain_type_ref_or_null_tips', 0, 40, 27);
+}
+
+/**
+ * 分析查询语句-EXPLAIN-type-range提示
+ */
+function analyzeQueryStatementsExplainTypeRangeTips() {
+    layerCapture('analyze_query_statements_explain_type_range_tips', 0, 40, 41);
 }

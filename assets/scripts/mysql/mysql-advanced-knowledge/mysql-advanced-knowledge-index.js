@@ -8,6 +8,7 @@ $(document).ready(function () {
     createIndex_CREATE_TABLE_Chart();
     createIndex_ALTER_TABLE_Chart();
     createIndex_CREATE_INDEX_Chart();
+    pointsToNoteWhenUsingIndexQueriesChart();
 });
 
 /**
@@ -416,4 +417,89 @@ function createIndexCreateIndexPanelTitleTips() {
  */
 function histogramTips() {
     layerCapture('histogram_tips', 0, 35, 31);
+}
+
+/**
+ * 使用索引查询注意点图表
+ */
+function pointsToNoteWhenUsingIndexQueriesChart() {
+    var pointsToNoteWhenUsingIndexQueriesChart = $('#points_to_note_when_using_index_queries');
+    pointsToNoteWhenUsingIndexQueriesChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(pointsToNoteWhenUsingIndexQueriesChart[0], 'macarons');
+    myChart.on('click', function (params) {
+        switch (params.name) {
+            case '使用LIKE关键字的查询语句':
+                layerCapture('points_to_note_when_using_index_queries_query_statement_using_the_like_keyword', 0, 40, 64);
+                break;
+            case '使用多列索引的查询语句':
+                layerCapture('points_to_note_when_using_index_queries_query_statement_using_multi_column_index', 0, 40, 74);
+                break;
+            case '使用OR关键字的查询语句':
+                layerCapture('points_to_note_when_using_index_queries_query_statement_using_or_keyword', 0, 40, 70);
+                break;
+        }
+    });
+    var option = null;
+    option = {
+        title: {
+            text: 'MySQL的数据类型',
+            subtext: '《MySQL8从入门到精通（视频教学版）》-P424',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b} : {c} ({d}%)'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        legend: {
+            bottom: 10,
+            left: 'center',
+            data: ['使用LIKE关键字的查询语句', '使用多列索引的查询语句', '使用OR关键字的查询语句'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '75%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: [
+                    {value: 1, name: '使用LIKE关键字的查询语句'},
+                    {value: 1, name: '使用多列索引的查询语句'},
+                    {value: 1, name: '使用OR关键字的查询语句'}
+                ],
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 15
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
 }

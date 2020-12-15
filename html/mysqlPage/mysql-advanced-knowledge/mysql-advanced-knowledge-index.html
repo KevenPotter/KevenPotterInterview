@@ -263,7 +263,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="panel panel-scrolling">
                             <div class="panel-heading">
                                 <h3 class="panel-title">删除索引、降序索引与统计直方图</h3>
@@ -356,6 +356,94 @@ mysql> ANALYZE TABLE production DROP HISTOGRAM ON tm,count;
                                     </code>
                                 </pre>
                                 <p class="bold note tinyHand" onclick="histogramTips()">查看提示 <i class="fa fa-hand-pointer-o"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-scrolling">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">索引对查询速度的影响（《MySQL8从入门到精通（视频教学版）》-P423）</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <p class="firstLineIndent">
+                                    MySQL中提高性能的一个有效方式就是对数据表设计合理的索引。索引提供了高效访问数据的方法，并且可加快查询的速度，因此，索引对查询的速度有着至关重要的影响。
+                                    使用索引可以快速地定位表中的某条记录，从而提高数据库查询的速度、提高数据库的性能。
+                                </p>
+                                <p class="firstLineIndent">
+                                    如果查询时没有使用索引，查询语句将扫描表中的所有记录。在数据量大的情况下，这样查询的速度会很慢。如果使用索引进行查询，查询语句可以根据索引快速定位到待查询记录，
+                                    从而减少查询的记录数，达到提高查询速度的目的。
+                                </p>
+                                <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+                                <p class="firstLineIndent">下面是查询语句中不使用索引和使用索引的对比。首先，分析未使用索引时的查询情况，EXPLAIN语句执行如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> EXPLAIN SELECT * FROM fruits WHERE f_name = 'apple';
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------------+
+    | id | select_type | table  | type | possible_keys | key  | key_len | ref  | rows |    Extra    |
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------------+
+    | 1  |   SIMPLE    | fruits | ALL  |      NULL     | NULL |   NULL  | NULL |  15  | Using where |
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------------+
+    1 row in set (0.00 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">可以看到，rows列的值是15，说明“SELECT * FROM fruits WHERE f_name = 'apple';”这个查询语句扫描了表中的15条记录。</p>
+                                <p class="firstLineIndent">然后，在fruits表的f_name字段上加上索引。执行添加索引的语句及结果如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> CREATE INDEX index_name ON fruits(f_name);
+    Query OK, 0 rows affected (0.04 sec)
+    Records:0 Duplicates: 0 Warnings: 0
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">现在，再分析上面的查询语句。执行的EXPLAIN语句及结果如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> EXPLAIN SELECT * FROM fruits WHERE f_name = 'apple';
+    +----+-------------+--------+------+---------------+------------+---------+-------+------+-------------+
+    | id | select_type | table  | type | possible_keys |    key     | key_len | ref   | rows |    Extra    |
+    +----+-------------+--------+------+---------------+------------+---------+-------+------+-------------+
+    | 1  |   SIMPLE    | fruits | ref  |  index_name   | index_name |   255   | const |  1   | Using where |
+    +----+-------------+--------+------+---------------+------------+---------+-------+------+-------------+
+    1 row in set (0.00 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">
+                                    结果显示，rows列的值为1，表示这个查询语句只扫描了表中的一条记录，其查询速度自然比扫描15条记录快；而且possible_keys和key的值都是index_name，
+                                    说明查询时使用了index_name索引。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">使用索引查询注意点</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="points_to_note_when_using_index_queries" style="height:500%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-scrolling">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">索引对查询速度的影响（《MySQL8从入门到精通（视频教学版）》-P423）</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
+                                    <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
                             </div>
                         </div>
                     </div>
@@ -616,6 +704,122 @@ CREATE TABLE t6 (
         <p class="firstLineIndent">建立直方图的时候，MySQL服务器会将所有数据读到内存中，然后在内存中进行操作，包括排序。如果对一个很大的表建立直方图，可能会需要将几百兆的数据都读到内存中。为了规避这种风险MySQL会根据给定的<code>histogram_generation_max_mem_size</code>的值计算该将多少行数据读到内存中。</p>
         <p class="firstLineIndent">设置<code>histogram_generation_max_mem_size</code>值得方法如下：</p>
         <pre><code class="sql">SET histogram_generation_max_mem_size = 10000;</code></pre>
+    </div>
+</div>
+
+<!-- 使用索引查询注意点-使用LIKE关键字的查询语句 -->
+<div id="points_to_note_when_using_index_queries_query_statement_using_the_like_keyword" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">使用LIKE关键字的查询语句</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">在使用<code>LIKE</code>关键字进行查询的查询语句中，如果匹配字符串的第一个字符为“%”，索引不会起作用。只有“%”不在第一个位置，索引才会起作用。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">查询语句中使用LIKE关键字，并且匹配的字符串中含有“%”字符，EXPLAIN语句执行如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> EXPLAIN SELECT * FROM fruits WHERE f_name LIKE '%x';
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------------+
+    | id | select_type | table  | type | possible_keys | key  | key_len | ref  | rows |    Extra    |
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------------+
+    | 1  |   SIMPLE    | fruits | ALL  |      NULL     | NULL |   NULL  | NULL |  16  | Using where |
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------------+
+    1 row in set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> EXPLAIN SELECT * FROM fruits WHERE f_name LIKE 'x%';
+    +----+-------------+--------+-------+---------------+------------+---------+------+------+-------------+
+    | id | select_type | table  | type  | possible_keys |    key     | key_len | ref  | rows |    Extra    |
+    +----+-------------+--------+-------+---------------+------------+---------+------+------+-------------+
+    | 1  |   SIMPLE    | fruits | range |  index_name   | index_name |   150   | NULL |  4   | Using where |
+    +----+-------------+--------+-------+---------------+------------+---------+------+------+-------------+
+    1 row in set (0.00 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">
+            已知f_name字段上有索引index_name。第1个查询语句执行后，rows列的值为16，表示这次查询过程中扫描了表中所有的16条记录；第2个查询语句执行后，rows列的值为4，表示
+            这次查询过程扫描了4条记录。第1个查询语句中的索引没有起作用，因为第1个查询语句中LIKE关键字后的字符串以“%”开头，而第2个查询语句使用了索引index_name。
+        </p>
+    </div>
+</div>
+
+<!-- 使用索引查询注意点-使用多列索引的查询语句 -->
+<div id="points_to_note_when_using_index_queries_query_statement_using_multi_column_index" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">使用多列索引的查询语句</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">MySQL可以为多个字段创建索引。一个索引可以包括16个字段。对于多列索引，只有查询条件中使用了这些字段中的第1个字段时索引才会被使用。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">在表fruits中f_id、f_price字段上创建多列索引，验证多列索引的使用情况：</p>
+        <pre>
+            <code class="sql">
+    mysql> CREATE INDEX index_id_price ON fruits(f_id,f_price);
+    Query OK, 0 rows affected (0.39 sec)
+    Records: 0 Duplicates: 0 Warnings: 0
+    mysql>
+    mysql>
+    mysql> EXPLAIN SELECT * FROM fruits WHERE f_id = '12';
+    +----+-------------+--------+-------+------------------------+---------+---------+-------+------+-------+
+    | id | select_type | table  | type  |      possible_keys     |   key   | key_len |  ref  | rows | Extra |
+    +----+-------------+--------+-------+------------------------+---------+---------+-------+------+-------+
+    | 1  |   SIMPLE    | fruits | const | PRIMARY,index_id_price | PRIMARY |    20   | const |   1  |       |
+    +----+-------------+--------+-------+------------------------+---------+---------+-------+------+-------+
+    1 row in set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> EXPLAIN SELECT * FROM fruits WHERE f_price = 5.2;
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------------+
+    | id | select_type | table  | type | possible_keys | key  | key_len | ref  | rows |    Extra    |
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------------+
+    | 1  |   SIMPLE    | fruits | ALL  |      NULL     | NULL |   NULL  | NULL |  16  | Using where |
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------------+
+    1 row in set (0.00 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">
+            从第1条语句查询结果可以看出，“f_id = 12”的记录有1条。第1条语句共扫描了1条记录，并且使用了索引index_id_price。从第2条语句查询结果可以看出，rows列的值是16，
+            说明查询语句共扫描了16条记录，并且key列值为NULL，说明“SELECT * FROM fruits WHERE f_price = 5.2;”语句并没有使用索引。因为f_price字段是多列索引的第2个
+            字段，只有查询条件中使用了f_id字段才会使index_id_price索引起作用。
+        </p>
+    </div>
+</div>
+
+<!-- 使用索引查询注意点-使用OR关键字的查询语句 -->
+<div id="points_to_note_when_using_index_queries_query_statement_using_or_keyword" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">使用OR关键字的查询语句</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">查询语句的查询条件中只有<code>OR</code>关键字，且<code>OR</code>前后的两个条件中的列都是索引时，查询中查询中才使用索引；否则，查询将不使用索引。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">查询语句使用OR关键字的情况：</p>
+        <pre>
+            <code class="sql">
+    mysql> EXPLAIN SELECT * FROM fruits WHERE f_name = 'apple' OR s_id = 101;
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------------+
+    | id | select_type | table  | type | possible_keys | key  | key_len | ref  | rows |    Extra    |
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------------+
+    | 1  |   SIMPLE    | fruits | ALL  |  index_name   | NULL |   NULL  | NULL |  16  | Using where |
+    +----+-------------+--------+------+---------------+------+---------+------+------+-------------+
+    1 row in set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> EXPLAIN SELECT * FROM fruits WHERE f_name = 'apple' OR f_id = '12';
+    +----+-------------+--------+-------------+-----------------------------------+--------------------+---------+------+------+----------------------------------------------+
+    | id | select_type | table  |     type    |         possible_keys             |         key        | key_len | ref  | rows |                     Extra                    |
+    +----+-------------+--------+-------------+-----------------------------------+--------------------+---------+------+------+----------------------------------------------+
+    | 1  |   SIMPLE    | fruits | index_merge | PRIMARY,index_name,index_id_price | index_name,PRIMARY | 510,20  | NULL |  2   | Using union(index_name,PRIMARY); Using where |
+    +----+-------------+--------+-------------+-----------------------------------+--------------------+---------+------+------+----------------------------------------------+
+    1 row in set (0.00 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">
+            因为s_id字段上没有索引，所以第1条查询语句没有使用索引，总共查询了16条记录；第2条查询语句使用了f_name和f_id这两个索引，因为id字段和name字段上都有索引，所以查询的记录数为2条。
+        </p>
     </div>
 </div>
 
