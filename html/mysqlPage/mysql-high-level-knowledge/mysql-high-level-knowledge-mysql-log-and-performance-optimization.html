@@ -1575,17 +1575,135 @@
     3 rows in set (0.00 sec)
             </code>
         </pre>
-        <p class="firstLineIndent">已知现在有一个</p>
-
-
+        <p class="firstLineIndent">
+            已知现在有一个模块需要经常查询带有会员组名称、会员组备注（remark）、会员用户名信息的会员信息。根据这种情况可以创建一个temp_vip表。temp_vip表中存储
+            用户名（user_name）、会员组名称（group_name）和会员组备注（group_remark）信息。创建表的语句如下：
+        </p>
         <pre>
             <code class="sql">
-    mysql> SELECT * FROM members
-        -> LEFT JOIN members_detail
-        -> ON members.id = members_detail.member_id;
+    mysql> CREATE TABLE temp_vip (
+        -> id int(11) NOT NULL AUTO_INCREMENT,
+        -> user_name varchar(255) DEFAULT NULL,
+        -> group_name varchar(255) DEFAULT NULL,
+        -> group_remark varchar(255) DEFAULT NULL,
+        -> PRIMARY KEY(id)
+        -> );
             </code>
         </pre>
-        <p class="firstLineIndent">通过这种分解，可以提高表的查询效率。对于字段很多且有些字段使用不频繁的表，可以通过这种分解的方式来优化数据库的性能。</p>
+        <p class="firstLineIndent">接下来，从会员信息表和会员组表中查询相关信息存储到临时表中</p>
+        <pre>
+            <code class="sql">
+    mysql> INSERT INTO temp_vip(user_name,group_name,group_remark)
+        -> SELECT v.username,g.name,g.remark
+        -> FROM vip AS v,vip_group AS g
+        -> WHERE v.groupId = g.id;
+    Query OK, 0 rows affected (0.95 sec)
+    Records: 0 Duplicates: 0 Warnings: 0
+            </code>
+        </pre>
+        <p class="firstLineIndent">以后，可以直接从temp_vip表中查询会员名、会员组名称和会员组备注，而不用每次都进行联合查询。这样可以提高数据库的查询速度。</p>
+    </div>
+</div>
+
+<!-- 优化数据库结构-增加冗余字段 -->
+<div id="optimize_database_structure_add_redundant_fields" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">增加冗余字段</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">设计数据库表时应尽量遵循范式理论的规约，尽可能减少冗余字段，让数据库设计看起来精致、优雅。但是，合理地加入冗余字段可以提高查询速度。</p>
+        <p class="firstLineIndent">
+            表的规范化程度越高，表与表之间的关系就越多，需要连接查询的情况也就越多。例如，员工的信息存储在staff表中，部门信息存储在department表中。通过staff表
+            中的department_id字段与department表建立关联关系。如果要查询一个员工所在部门的名称，必须从staff表中查找员工所在部门的编号（department_id），然后根据
+            这个编号去department表查找部门的名称。如果经常需要进行这个操作，连接查询会浪费很多时间。可以在staff表中增加一个冗余字段department_name，该字段用来存
+            储员工所在部门的名称，这样就不用每次都进行连接操作了。
+        </p>
+        <p class="firstLineIndent">
+            <span class="note">注意</span>：冗余字段会导致一些问题。比如，冗余字段的值在一个表中被修改了，就要想办法在其他表中更新该字段，否则就会使原本一致的数据
+            变得不一致。分解表、增加中间表和增加冗余字段都浪费了一定的磁盘空间。从数据库性能来看，为了提高查询速度而增加少量的冗余大部分时候是可以接受的。是否通过增
+            加冗余来提高数据库性能，这要根据实际需求综合分析。
+        </p>
+    </div>
+</div>
+
+<!-- 优化数据库结构-优化插入记录的速度 -->
+<div id="optimize_database_structure_optimize_the_speed_of_inserting_records" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title tinyHand" onclick="optimizeDatabaseStructureOptimizeTheSpeedOfInsertingRecordsTips()">优化插入记录的速度 <i class="fa fa-hand-pointer-o"></i></h3>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-tabs">
+            <li class="dropdown">
+                <a href="#" id="optimize_database_structure_optimize_the_speed_of_inserting_records_1" class="dropdown-toggle" data-toggle="dropdown">对于MyISAM引擎的表<b class="caret"></b></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="optimize_database_structure_optimize_the_speed_of_inserting_records_1">
+                    <li><a href="#optimize_database_structure_optimize_the_speed_of_inserting_records_1_1" tabindex="-1" data-toggle="tab">禁用索引</a></li>
+                    <li><a href="#optimize_database_structure_optimize_the_speed_of_inserting_records_1_2" tabindex="-1" data-toggle="tab">禁用唯一性检查</a></li>
+                    <li><a href="#optimize_database_structure_optimize_the_speed_of_inserting_records_1_3" tabindex="-1" data-toggle="tab">使用批量插入</a></li>
+                    <li><a href="#optimize_database_structure_optimize_the_speed_of_inserting_records_1_4" tabindex="-1" data-toggle="tab">使用LOAD DATA INFILE批量导入</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" id="optimize_database_structure_optimize_the_speed_of_inserting_records_2" class="dropdown-toggle" data-toggle="dropdown">对于InnoDB引擎的表<b class="caret"></b></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="optimize_database_structure_optimize_the_speed_of_inserting_records_2">
+                    <li><a href="#optimize_database_structure_optimize_the_speed_of_inserting_records_2_1" tabindex="-1" data-toggle="tab">禁用唯一性检查</a></li>
+                    <li><a href="#optimize_database_structure_optimize_the_speed_of_inserting_records_2_2" tabindex="-1" data-toggle="tab">禁用外键检查</a></li>
+                    <li><a href="#optimize_database_structure_optimize_the_speed_of_inserting_records_2_3" tabindex="-1" data-toggle="tab">禁止自动提交</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="optimize_database_structure_optimize_the_speed_of_inserting_records_1_1" class="tab-pane fade in active">
+                <p class="firstLineIndent">
+                    对于非空表，插入记录时，MySQL会根据表的索引对插入的记录建立索引。如果插入大量数据，建立索引会降低插入记录的速度。为了解决这种情况，可以在插入记录之前
+                    禁用索引，数据插入完毕后再开启索引。禁用索引的语句如下：
+                </p>
+                <p class="firstLineIndent"><code>ALTER TABLE table_name DISABLE KEYS;</code></p>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>作用</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>table_name</td>
+                        <td>禁用索引的表的表名</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p class="firstLineIndent">重新开启索引的语句如下：</p>
+                <p class="firstLineIndent"><code>ALTER TABLE table_name ENABLE KEYS;</code></p>
+                <p class="firstLineIndent">对于空表批量导入数据，则不需要进行此操作，因为MyISAM引擎的表是在导入数据之后才建立索引的。</p>
+            </div>
+            <div id="optimize_database_structure_optimize_the_speed_of_inserting_records_1_2" class="tab-pane fade">
+                <p class="firstLineIndent">
+                    插入数据时，MySQL会对插入的记录进行唯一性校验。这种唯一性校验
+                </p>
+            </div>
+            <div id="optimize_database_structure_optimize_the_speed_of_inserting_records_1_3" class="tab-pane fade">
+            </div>
+            <div id="optimize_database_structure_optimize_the_speed_of_inserting_records_1_4" class="tab-pane fade">
+            </div>
+            <div id="optimize_database_structure_optimize_the_speed_of_inserting_records_2_1" class="tab-pane fade">
+            </div>
+            <div id="optimize_database_structure_optimize_the_speed_of_inserting_records_2_2" class="tab-pane fade">
+            </div>
+            <div id="optimize_database_structure_optimize_the_speed_of_inserting_records_2_3" class="tab-pane fade">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 优化数据库结构-优化插入记录的速度提示 -->
+<div id="optimize_database_structure_optimize_the_speed_of_inserting_records_tips" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">优化插入记录的速度</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">
+            插入记录时，影响插入速度的主要是索引、唯一性校验、一次插入记录条数等。根据这些情况，可以分别进行优化。
+        </p>
     </div>
 </div>
 

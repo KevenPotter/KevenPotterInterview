@@ -346,10 +346,10 @@ function optimizeDatabaseStructureChart() {
                 layerCapture('optimize_database_structure_add_intermediate_table', 0, 50, 70);
                 break;
             case '增加冗余字段':
-                layerCapture('optimize_database_structure', 0, 50, 70);
+                layerCapture('optimize_database_structure_add_redundant_fields', 0, 50, 27);
                 break;
             case '优化插入记录的速度':
-                layerCapture('optimize_database_structure', 0, 50, 70);
+                layerCapture('optimize_database_structure_optimize_the_speed_of_inserting_records', 0, 50, 70);
                 break;
             case '分析表、检查表和优化表':
                 layerCapture('optimize_database_structure', 0, 50, 70);
@@ -359,7 +359,7 @@ function optimizeDatabaseStructureChart() {
     var option = null;
     option = {
         title: {
-            text: '分析查询语句',
+            text: '优化数据库结构',
             subtext: '《MySQL8从入门到精通（视频教学版）》-P427',
             left: 'center'
         },
@@ -421,4 +421,11 @@ function optimizeDatabaseStructureChart() {
         myChart.setOption(option, true);
     }
     resize(myChart);
+}
+
+/**
+ * 优化数据库结构-优化插入记录的速度提示
+ */
+function optimizeDatabaseStructureOptimizeTheSpeedOfInsertingRecordsTips() {
+    layerCapture('optimize_database_structure_optimize_the_speed_of_inserting_records_tips', 0, 40, 13);
 }
