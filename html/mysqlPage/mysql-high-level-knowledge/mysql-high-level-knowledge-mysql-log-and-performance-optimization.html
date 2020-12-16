@@ -1475,7 +1475,7 @@
     mysql> CREATE TABLE members_detail (
         -> member_id int(11) NOT NULL DEFAULT 0,
         -> address varchar(255) DEFAULT NULL,
-        -> telephone varchar(255) DEFAULT NULL,
+        -> telephone varchar(16) DEFAULT NULL,
         -> description text
         -> );
             </code>
@@ -1497,16 +1497,95 @@
     mysql>
     mysql>
     mysql> DESC members_detail;
-    +-----------------+--------------+------+-----+---------+----------------+
-    |      Field      |     Type     | Null | Key | Default |      Extra     |
-    +-----------------+--------------+------+-----+---------+----------------+
-    |       id        | int(11)      | NO   | PRI | NULL    | auto_increment |
-    |    username     | varchar(255) | YES  |     | NULL    |                |
-    |    password     | varchar(255) | YES  |     | NULL    |                |
-    | last_login_ip   | varchar(255) | YES  |     | NULL    |                |
-    +-----------------+--------------+------+-----+---------+----------------+
+    +-------------+--------------+------+-----+---------+-------+
+    |   Field     |     Type     | Null | Key | Default | Extra |
+    +-------------+--------------+------+-----+---------+-------+
+    | member_id   | int(11)      | NO   |     | 0       |       |
+    | address     | varchar(255) | YES  |     | NULL    |       |
+    | telephone   | varchar(16)  | YES  |     | NULL    |       |
+    | description | text         | YES  |     | NULL    |       |
+    +-------------+--------------+------+-----+---------+--------+
+    4 rows in set (0.00 sec)
             </code>
         </pre>
+        <p class="firstLineIndent">如果需要查询会员的详细信息，可以用会员的id来查询。如果需要将会员的基本信息和详细信息同时显示，可以将members表和members_detail表进行联合查询，查询语句如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FROM members
+        -> LEFT JOIN members_detail
+        -> ON members.id = members_detail.member_id;
+            </code>
+        </pre>
+        <p class="firstLineIndent">通过这种分解，可以提高表的查询效率。对于字段很多且有些字段使用不频繁的表，可以通过这种分解的方式来优化数据库的性能。</p>
+    </div>
+</div>
+
+<!-- 优化数据库结构-增加中间表 -->
+<div id="optimize_database_structure_add_intermediate_table" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">增加中间表</h3>
+    </div>
+    <div class="panel-body">
+        <p class="firstLineIndent">对于需要经常联合查询的表，可以建立中间表，以提高查询效率。通过建立中间表，把需要经常联合查询的数据插入到中间表中，然后将原来的联合查询改为对中间表的查询，以此来提高查询效率。</p>
+        <p class="firstLineIndent">首先，分析经常联合查询表中的字段。然后，使用这些字段建立一个中间表，并将原来联合查询的表的数据插入到中间表中。最后，使用中间表进行查询。</p>
+        <hr>
+        <h4><i class="fa fa-female"></i><b>示例：</b></h4>
+        <p class="firstLineIndent">会员信息表和会员组信息表的SQL语句如下：</p>
+        <p class="firstLineIndent">创建这两个表的SQL语句如下：</p>
+        <pre>
+            <code class="sql">
+    mysql> CREATE TABLE vip (
+        -> id int(11) NOT NULL AUTO_INCREMENT,
+        -> username varchar(255) DEFAULT NULL,
+        -> password varchar(255) DEFAULT NULL,
+        -> groupId int(11) DEFAULT 0,
+        -> PRIMARY KEY(id)
+        -> );
+    mysql> CREATE TABLE vip_group (
+        -> id int(11) NOT NULL AUTO_INCREMENT,
+        -> name varchar(255) DEFAULT NULL,
+        -> remark varchar(255) DEFAULT NULL,
+        -> PRIMARY KEY(id)
+        -> );
+            </code>
+        </pre>
+        <p class="firstLineIndent">查询会员信息表和会员组信息表：</p>
+        <pre>
+            <code class="sql">
+    mysql> DESC vip;
+    +----------+--------------+------+-----+---------+----------------+
+    |  Field   |     Type     | Null | Key | Default |      Extra     |
+    +----------+--------------+------+-----+---------+----------------+
+    |   id     | int(11)      | NO   | PRI | NULL    | auto_increment |
+    | username | varchar(255) | YES  |     | NULL    |                |
+    | password | varchar(255) | YES  |     | NULL    |                |
+    | groupId  | int(11)      | YES  |     | 0       |                |
+    +----------+--------------+------+-----+---------+----------------+
+    4 rows in set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> DESC vip_group;
+    +--------+--------------+------+-----+---------+----------------+
+    | Field  |     Type     | Null | Key | Default |     Extra      |
+    +--------+--------------+------+-----+---------+----------------+
+    | id     | int(11)      | NO   | PRI | NULL    | auto_increment |
+    | name   | varchar(255) | YES  |     | NULL    |                |
+    | remark | varchar(255) | YES  |     | NULL    |                |
+    +--------+--------------+------+-----+---------+----------------+
+    3 rows in set (0.00 sec)
+            </code>
+        </pre>
+        <p class="firstLineIndent">已知现在有一个</p>
+
+
+        <pre>
+            <code class="sql">
+    mysql> SELECT * FROM members
+        -> LEFT JOIN members_detail
+        -> ON members.id = members_detail.member_id;
+            </code>
+        </pre>
+        <p class="firstLineIndent">通过这种分解，可以提高表的查询效率。对于字段很多且有些字段使用不频繁的表，可以通过这种分解的方式来优化数据库的性能。</p>
     </div>
 </div>
 

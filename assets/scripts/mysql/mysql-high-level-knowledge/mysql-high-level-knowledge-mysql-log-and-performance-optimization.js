@@ -340,19 +340,19 @@ function optimizeDatabaseStructureChart() {
     myChart.on('click', function (params) {
         switch (params.name) {
             case '将字段很多的表分解成多个表':
-                layerCapture('optimize_database_structure_break_a_table_with_many_fields_into_multiple_tables', 0, 50, 13);
+                layerCapture('optimize_database_structure_break_a_table_with_many_fields_into_multiple_tables', 0, 50, 70);
                 break;
             case '增加中间表':
-                layerCapture('optimize_database_structure', 0, 50, 44);
+                layerCapture('optimize_database_structure_add_intermediate_table', 0, 50, 70);
                 break;
             case '增加冗余字段':
-                layerCapture('optimize_database_structure', 0, 50, 13);
+                layerCapture('optimize_database_structure', 0, 50, 70);
                 break;
             case '优化插入记录的速度':
-                layerCapture('optimize_database_structure', 0, 50, 66);
+                layerCapture('optimize_database_structure', 0, 50, 70);
                 break;
             case '分析表、检查表和优化表':
-                layerCapture('optimize_database_structure', 0, 50, 15);
+                layerCapture('optimize_database_structure', 0, 50, 70);
                 break;
         }
     });
