@@ -192,7 +192,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="panel">
+                        <div class="panel panel-scrolling">
                             <div class="panel-heading">
                                 <h3 class="panel-title">临时表性能优化</h3>
                                 <div class="right">
@@ -204,26 +204,150 @@
                                 <p class="firstLineIndent">在MySQL 8.0中，用户可以把数据库和表归组到逻辑和物理表空间中，这样做可以提高资源的利用率。</p>
                                 <p class="firstLineIndent">
                                     MySQL 8.0使用<code>CREATE TABLESPACE</code>语句来创建一个<b>通用表空间</b>。这个功能可以让用户自由地选择表和表空间之间的映射。例如，创建表空间
-                                    和设置这个表空间应该含有什么样的表。这也让在同一个表空间的用户对所有的表分组，
+                                    和设置这个表空间应该含有什么样的表。这也让在同一个表空间的用户对所有的表分组，因此在文件系统一个单独的文件内持有他们所有的数据，同时为通用表空间实
+                                    现了<b>元数据锁</b>。
                                 </p>
-                                <p class="firstLineIndent"></p>
-                                <p class="firstLineIndent"></p>
-                                <p class="firstLineIndent"></p>
-                                <p class="firstLineIndent"></p>
+                                <p class="firstLineIndent">
+                                    优化普通SQL临时表性能是MySQL 8.0的目标之一。首先，通过优化临时表在磁盘中的不必要步骤，使得临时表的创建和移除成为一个轻量级的操作。将临时表移动到一
+                                    个单独的表空间中，恢复临时表的过程就变得非常简单，就是在启动时重新创建临时表的单一过程。
+                                </p>
+                                <p class="firstLineIndent">
+                                    MySQL 8.0去掉了临时表中不必要的持久化。临时表仅仅在连接和会话内被创建，然后通过服务的生命周期绑定它们。通过移除不必要的UNDO和REDO日志，改变缓冲和
+                                    锁，从而为临时表做了优化操作。
+                                </p>
+                                <p class="firstLineIndent">
+                                    MySQL 8.0增加了UNDO日志一个额外的类型，这个类型的日志被保存在一个单独的临时表空间中，在恢复期间不会被调用，而是在回滚操作中才会被调用。
+                                </p>
+                                <p class="firstLineIndent">
+                                    MySQL 8.0为了提高临时表相关的性能，对临时表相关的部分进行了大幅修改，包括引入新的临时表空间（ibtmp1）；对于临时表的DDL，不持久化相关表定义；对于
+                                    临时表的DML，不写redo、关闭change buffer等。
+                                </p>
+                                <p class="firstLineIndent">
+                                    InnoDB临时表元数据不再存储于InnoDB系统表，而是存储在<code>innodb_temp_table_info</code>中，包含所有用户和系统创建的临时表信息。该表在第一次运行
+                                    SELECT时被创建，下面举例说明。
+                                </p>
+                                <pre>
+                                    <code class="sql">
+    mysql> SELECT * FROM information_schema.innodb_temp_table_info;
+    Empty set (0.00 sec)
+    mysql>
+    mysql>
+    mysql> CREATE TEMPORARY TABLE temp_1(
+        -> id int,
+        -> name varchar(100)
+        -> ) DEFAULT CHARSET UTF8;
+    Query OK, 0 rows affected (0.00 sec)
+    mysql> SELECT * FROM information_schema.innodb_temp_table_info;
+    +----------+---------------+--------+------------+
+    | TABLE_ID |      NAME     | N_COLS |   SPACE    |
+    +----------+---------------+--------+------------+
+    |   1065   | #sql11060_8_8 |    5   | 4294566162 |
+    +----------+---------------+--------+------------+
+    1 row in set (0.00 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">
+                                    MySQL 8.0使用了独立的临时表空间来存储临时表数据，但不能是压缩表。临时表空间在实例启动的时候进行创建、shutdown的时候进行删除，即为所有非压缩的innodb临时表
+                                    提供了一个独立的表空间。默认的临时表空间文件为<b>ibtmp1</b>，位于数据目录中。通过<code>innodb_temp_data_file_path</code>参数可指定临时表空间的路径和大小，
+                                    默认为<b>12MB</b>。只有重启实例才能回收临时表空间文件ibtmp1的大小。<code>CREATE TEMPORARY</code>和<code>USING TEMPORARY TABLE</code>将共用这个临时表文件。
+                                </p>
+                                <pre>
+                                    <code class="sql">
+    mysql> SHOW VARIABLES LIKE 'innodb_temp_data_file_path';
+    mysql> SELECT * FROM information_schema.innodb_temp_table_info;
+    +----------------------------+-----------------------+
+    |       Variable_name        |         Value         |
+    +----------------------------+-----------------------+
+    | innodb_temp_data_file_path | ibtmp1:12M:autoextend |
+    +----------------------------+-----------------------+
+    1 row in set, 1 warning (0.00 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">
+                                    在MySQL 8.0中，临时表在连接断开或者数据库实例关闭的时候会进行删除，从而提高了性能。只有临时表的元数据使用了redo保护，保护元数据的完整性，以便异常启动后进行清理工作。
+                                </p>
+                                <p class="firstLineIndent">
+                                    临时表的元数据在MySQL 8.0之后使用了一个独立的表（<code>innodb_temp_table_info</code>）进行保存，不用使用redo保护，元数据也只保存在内存中。但这有一个前提，
+                                    即必须使用共享的临时表空间，如果使用<code>file-per-table</code>，仍然需要持久化元数据，以便异常恢复清理。临时表需要undo log，用于MySQL运行时的回滚。
+                                </p>
+                                <p class="firstLineIndent">
+                                    在MySQL 8.0中，新增一个系统选项<code>internal_tmp_disk_storage_engine</code>，可定义磁盘临时表的引擎类型，默认为InnoDB，可选MyISAM。在这之前，只能使用
+                                    MyISAM。在MySQL 5.6.3以后新增的参数<code>default_tmp_storage_engine</code>是控制<code>CREATE TEMPORARY TABLE</code>创建的临时表存储引擎，在以前默认是
+                                    MEMORY。
+                                </p>
+                                <p class="firstLineIndent">查看结果如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> SHOW VARIABLES LIKE '%engine%';
+    mysql> SELECT * FROM information_schema.innodb_temp_table_info;
+    +----------------------------------+-----------+
+    |           Variable_name          |   Value   |
+    +----------------------------------+-----------+
+    | default_storage_engine           | InnoDB    |
+    | default_tmp_storage_engine       | InnoDB    |
+    | disabled_storage_engines         |           |
+    | internal_tmp_disk_storage_engine | InnoDB    |
+    | internal_tmp_mem_storage_engine  | TempTable |
+    | use_secondary_engine             | ON        |
+    +----------------------------------+-----------+
+    6 rows in set (0.09 sec)
+                                    </code>
+                                </pre>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title tinyHand" onclick="optimizeMysqlServerTips()">优化MySQL服务器 <i class="fa fa-hand-pointer-o"></i></h3>
+                                <h3 class="panel-title">服务器语句超时处理与创建全局通用表空间</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <div id="optimize_mysql_server" style="height:500%;"></div>
+                                <p class="fa fa-fire"> 服务器语句超时处理</p>
+                                <p class="firstLineIndent">在MySQL 8.0中可以设置服务器语句超时的限制，单位可以达到<b>毫秒级别</b>。</p>
+                                <p class="firstLineIndent">当中断的执行语句超过设置的毫秒数后，服务器将终止查询影响不大的事务或连接，然后将错误报给客户端。</p>
+                                <p class="firstLineIndent">设置服务器语句超时的限制，可以通过设置全局变量<code>MAX_EXECUTION_TIME</code>来实现，例如：</p>
+                                <p class="firstLineIndent"><code>SET GLOBAL MAX_EXECUTION_TIME = 2000;</code></p>
+                                <p class="firstLineIndent">默认情况下，<code>MAX_EXECUTION_TIME</code>的值为0，代表没有时间限制。通过上述设置后，如果SELECT语句执行超过2000毫秒，语句将会被终止。</p>
+                                <p class="firstLineIndent">设置服务器语句超时的限制，也可以通过设置会话变量<code>MAX_EXECUTION_TIME</code>来实现。该变量用于设置SELECT语句运行在一个特定的会话里，指定该会话的超时时间，例如：</p>
+                                <p class="firstLineIndent"><code>SET SESSION MAX_EXECUTION_TIME = 2000;</code></p>
+                                <p class="firstLineIndent">通过上述设置后，如果SELECT语句执行超过2000毫秒，会话将会被终止。</p>
+                                <hr>
+                                <p class="fa fa-fire"> 创建全局通用表空间</p>
+                                <p class="firstLineIndent">
+                                    MySQL 8.0支持创建全局通用表空间，全局表空间可以被所有数据库的表共享，而且相比于独享表空间，手动创建共享表空间可以节约元数据方面的内存。可以在创建表的时候指定
+                                    属于哪个表空间，也可以对已有表进行表空间修改，具体的信息可以查看官方文档。
+                                </p>
+                                <p class="firstLineIndent">下面创建名为dxy的共享表空间，SQL语句如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> CREATE TABLESPACE dxy ADD datafile 'dxy.ibd' file_block_size = 16k;
+    Query OK, 0 rows affected (0.10 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">指定表空间，SQL语句如下：</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> CREATE TABLE t1(
+    -> id int,
+    -> name varchar(10)
+    -> ) ENGINE = innodb default charset uf8mb4 TABLESPACE dxy;
+    Query OK, 0 rows affected (0.01 sec)
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">也可以通过<code>ALTER TABLE</code>语句指定表空间，SQL语句如下</p>
+                                <pre>
+                                    <code class="sql">
+    mysql> ALTER TABLE t1 TABLESPACE dxy;
+                                    </code>
+                                </pre>
+                                <p class="firstLineIndent">
+
+                                </p>
+                                <p class="firstLineIndent"></p>
                             </div>
                         </div>
                     </div>
