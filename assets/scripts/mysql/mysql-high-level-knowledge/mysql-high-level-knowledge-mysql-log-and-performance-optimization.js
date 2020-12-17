@@ -7,6 +7,7 @@ $(document).ready(function () {
     logClassificationChart();
     analyzeQueryStatementsChart();
     optimizeDatabaseStructureChart();
+    optimizeMySQLServerChart();
 });
 
 /**
@@ -349,10 +350,10 @@ function optimizeDatabaseStructureChart() {
                 layerCapture('optimize_database_structure_add_redundant_fields', 0, 50, 27);
                 break;
             case '优化插入记录的速度':
-                layerCapture('optimize_database_structure_optimize_the_speed_of_inserting_records', 0, 50, 70);
+                layerCapture('optimize_database_structure_optimize_the_speed_of_inserting_records', 0, 50, 44);
                 break;
             case '分析表、检查表和优化表':
-                layerCapture('optimize_database_structure', 0, 50, 70);
+                layerCapture('optimize_database_structure_analysis_table_check_table_and_optimization_table', 0, 50, 70);
                 break;
         }
     });
@@ -428,4 +429,99 @@ function optimizeDatabaseStructureChart() {
  */
 function optimizeDatabaseStructureOptimizeTheSpeedOfInsertingRecordsTips() {
     layerCapture('optimize_database_structure_optimize_the_speed_of_inserting_records_tips', 0, 40, 13);
+}
+
+/**
+ * 优化数据库结构-分析表、检查表和优化表提示
+ */
+function optimizeDatabaseStructureAnalysisTableCheckTableAndOptimizationTableTips() {
+    layerCapture('optimize_database_structure_analysis_table_check_table_and_optimization_table_tips', 0, 40, 13);
+}
+
+/**
+ * 优化MySQL服务器图表
+ */
+function optimizeMySQLServerChart() {
+    var optimizeMySQLServerChart = $('#optimize_mysql_server');
+    optimizeMySQLServerChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(optimizeMySQLServerChart[0], 'macarons');
+    myChart.on('click', function (params) {
+        switch (params.name) {
+            case '优化服务器硬件':
+                layerCapture('optimize_mysql_server_optimize_server_hardware', 0, 50, 25);
+                break;
+            case '优化MySQL的参数':
+                layerCapture('optimize_mysql_server_optimize_mysql_parameters', 0, 50, 70);
+                break;
+        }
+    });
+    var option = null;
+    option = {
+        title: {
+            text: '优化MySQL服务器',
+            subtext: '《MySQL8从入门到精通（视频教学版）》-P434',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{b} : {c} ({d}%)'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        legend: {
+            bottom: 10,
+            left: 'center',
+            data: ['优化服务器硬件', '优化MySQL的参数'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '75%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: [
+                    {value: 1, name: '优化服务器硬件'},
+                    {value: 2, name: '优化MySQL的参数'}
+                ],
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 15
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
+}
+
+/**
+ * 优化MySQL服务器提示
+ */
+function optimizeMysqlServerTips() {
+    layerCapture('optimize_mysql_server_tips', 0, 40, 17);
 }
